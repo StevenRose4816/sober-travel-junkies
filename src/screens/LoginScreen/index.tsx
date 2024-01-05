@@ -1,11 +1,23 @@
-import {FC} from 'react';
+import {FC, useState} from 'react';
 import {View, Text, TextInput, TouchableOpacity} from 'react-native';
-
-import styles from './styles';
+import auth from '@react-native-firebase/auth';
 import {useNavigation} from '@react-navigation/native';
 
+import styles from './styles';
+
 const LoginScreen: FC = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
   const {navigate} = useNavigation();
+
+  const login = async () => {
+    try {
+      await auth().signInWithEmailAndPassword(email, password);
+    } catch (e: any) {
+      console.log(e);
+    }
+  };
   return (
     <View style={{flex: 3}}>
       <View style={{flex: 1, backgroundColor: 'white'}} />
@@ -20,6 +32,8 @@ const LoginScreen: FC = () => {
             borderWidth: 1,
             borderColor: 'black',
           }}
+          value={email}
+          onChangeText={setEmail}
         />
         <Text style={{marginLeft: 10, marginTop: 10}}>{'password'}</Text>
         <TextInput
@@ -31,8 +45,12 @@ const LoginScreen: FC = () => {
             borderWidth: 1,
             borderColor: 'black',
           }}
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry={true}
         />
         <TouchableOpacity
+          // @ts-ignore
           onPress={() => navigate('SignupScreen')}
           style={{
             marginTop: 10,
@@ -43,6 +61,7 @@ const LoginScreen: FC = () => {
         </TouchableOpacity>
         <View style={{flex: 1, justifyContent: 'flex-end', marginBottom: 60}}>
           <TouchableOpacity
+            onPress={login}
             style={{
               backgroundColor: 'blue',
               minHeight: 50,
