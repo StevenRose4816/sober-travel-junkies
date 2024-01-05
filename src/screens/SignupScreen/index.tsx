@@ -29,6 +29,7 @@ const SignupScreen: FC = () => {
             borderWidth: 1,
             borderColor: 'black',
           }}
+          autoCapitalize={'none'}
           value={email}
           onChangeText={setEmail}
         />
