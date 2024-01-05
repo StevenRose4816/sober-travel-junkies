@@ -2,9 +2,8 @@ import {FC, useEffect, useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {HomeScreen, LoginScreen, SignupScreen} from '../screens';
-import auth from '@react-native-firebase/auth';
+import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
 import {IUser, setUser} from '../store/auth/slice';
-import {useDispatch, useSelector} from 'react-redux';
 import {useAppDispatch, useAppSelector} from '../hooks';
 
 const RootStack = createNativeStackNavigator();
@@ -14,7 +13,7 @@ const RootNavigator: FC = () => {
   const dispatch = useAppDispatch();
   const user = useAppSelector(state => state.auth.user);
 
-  const onAuthStateChanged = (user: any) => {
+  const onAuthStateChanged = (user: FirebaseAuthTypes.User | null) => {
     if (user) {
       const mappedUser: IUser = {
         email: user.email,
@@ -22,7 +21,6 @@ const RootNavigator: FC = () => {
         isAnonymous: user.isAnonymous,
         metadata: user.metadata,
         providerId: user.providerId,
-        refreshToken: user.refreshToken,
         uid: user.uid,
       };
       dispatch(setUser({user: mappedUser}));

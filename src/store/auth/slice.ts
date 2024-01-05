@@ -1,12 +1,11 @@
 import {PayloadAction, createSlice} from '@reduxjs/toolkit';
 
 export interface IUser {
-  email: string;
+  email: string | null;
   emailVerified: boolean;
   isAnonymous: boolean;
   metadata: any;
   providerId: string;
-  refreshToken: string;
   uid: string;
 }
 
