@@ -5,25 +5,25 @@ export interface IUserInfo {
   address: string;
   name: string;
 }
-interface IGlobalStoreState {
-  userInfo: IUserInfo | null;
-}
 
-type SetUserInfo = PayloadAction<{userInfo: any}>;
-
-const initialState: IGlobalStoreState = {
-  userInfo: null,
+const initialState: IUserInfo = {
+  phoneNumber: '',
+  address: '',
+  name: '',
 };
 
-const globalSlice = createSlice({
-  name: 'globalStore',
+const userSlice = createSlice({
+  name: 'userSlice',
   initialState,
   reducers: {
-    setUserInfo: (state, {payload}: SetUserInfo) => {
-      state.userInfo = payload.userInfo;
+    setUserInfo(state, action: PayloadAction<IUserInfo>) {
+      const {name, phoneNumber, address} = action.payload;
+      state.name = name;
+      state.phoneNumber = phoneNumber;
+      state.address = address;
     },
   },
 });
 
-export const {setUserInfo} = globalSlice.actions;
-export const globalStoreReducer = globalSlice.reducer;
+export const {setUserInfo} = userSlice.actions;
+export const globalStoreReducer = userSlice.reducer;

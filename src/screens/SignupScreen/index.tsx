@@ -16,7 +16,7 @@ const SignupScreen: FC = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [address, setAddress] = useState('');
-  const userInfo = useAppSelector(state => state.globalStore.userInfo);
+  const userInfo = useAppSelector(state => state.globalStore);
 
   const toggleModal = () => {
     setModalVisible(!modalVisible);
@@ -31,18 +31,17 @@ const SignupScreen: FC = () => {
         name: name,
       };
       console.log('mappedUserInfo=', mappedUserInfo);
-      dispatch(setUserInfo({userInfo: mappedUserInfo}));
+      dispatch(setUserInfo(mappedUserInfo));
     } else {
       console.log('userInfo', userInfo);
-      dispatch(setUserInfo({userInfo: null}));
     }
   };
 
-  useEffect(() => {
-    console.log('Updated phoneNumber=', phoneNumber);
-    console.log('Updated address=', address);
-    console.log('name=', name);
-  }, [phoneNumber, address, name]);
+  // useEffect(() => {
+  //   console.log('Updated phoneNumber=', phoneNumber);
+  //   console.log('Updated address=', address);
+  //   console.log('name=', name);
+  // }, [phoneNumber, address, name]);
 
   const signUp = async () => {
     try {

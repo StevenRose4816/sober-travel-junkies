@@ -19,7 +19,7 @@ const LoginScreen: FC = () => {
   const [password, setPassword] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  const address = useAppSelector(state => state.globalStore.userInfo?.address);
+  const address = useAppSelector(state => state.globalStore.address);
   console.log(
     'testing address grabbed from textInput on sign up screen=',
     address,
