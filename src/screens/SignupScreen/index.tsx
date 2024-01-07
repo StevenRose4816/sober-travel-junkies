@@ -1,34 +1,76 @@
-import {FC, useState} from 'react';
+import {FC, useEffect, useState} from 'react';
 import {View, Text, TouchableOpacity, TextInput, Modal} from 'react-native';
 import auth from '@react-native-firebase/auth';
 
 import styles from './styles';
+import {useDispatch} from 'react-redux';
+import {IUserInfo, setUserInfo} from '../../store/globalStore/slice';
+import {useAppSelector} from '../../hooks';
 
 const SignupScreen: FC = () => {
+  const dispatch = useDispatch();
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [address, setAddress] = useState('');
+  const userInfo = useAppSelector(state => state.globalStore.userInfo);
 
   const toggleModal = () => {
     setModalVisible(!modalVisible);
   };
 
+  const mapUser = () => {
+    // Captures textInput for phoneNumber and address to access in global state.
+    if (userInfo) {
+      const mappedUserInfo: IUserInfo = {
+        phoneNumber: phoneNumber,
+        address: address,
+        name: name,
+      };
+      console.log('mappedUserInfo=', mappedUserInfo);
+      dispatch(setUserInfo({userInfo: mappedUserInfo}));
+    } else {
+      console.log('userInfo', userInfo);
+      dispatch(setUserInfo({userInfo: null}));
+    }
+  };
+
+  useEffect(() => {
+    console.log('Updated phoneNumber=', phoneNumber);
+    console.log('Updated address=', address);
+    console.log('name=', name);
+  }, [phoneNumber, address, name]);
+
   const signUp = async () => {
     try {
-      await auth().createUserWithEmailAndPassword(email, password);
+      // await auth().createUserWithEmailAndPassword(email, password);
+      mapUser();
     } catch (e: any) {
-      console.log(e);
       setErrorMessage(e);
       toggleModal();
     }
   };
   return (
     <View style={{flex: 3}}>
-      <View style={{flex: 1, backgroundColor: 'white'}} />
       <View style={{flex: 2, backgroundColor: 'white'}}>
-        <Text style={{marginLeft: 10}}>{'email'}</Text>
+        <Text style={{marginLeft: 10, marginTop: 100}}>{'name'}</Text>
+        <TextInput
+          style={{
+            backgroundColor: 'white',
+            marginHorizontal: 10,
+            borderRadius: 5,
+            minHeight: 50,
+            borderWidth: 1,
+            borderColor: 'black',
+          }}
+          value={name}
+          onChangeText={setName}
+          secureTextEntry={false}
+        />
+        <Text style={{marginLeft: 10, marginTop: 10}}>{'email'}</Text>
         <TextInput
           style={{
             backgroundColor: 'white',
@@ -68,9 +110,29 @@ const SignupScreen: FC = () => {
           }}
           value={phoneNumber}
           onChangeText={setPhoneNumber}
-          secureTextEntry={true}
+          secureTextEntry={false}
         />
-        <View style={{flex: 1, justifyContent: 'flex-end', marginBottom: 60}}>
+        <Text style={{marginLeft: 10, marginTop: 10}}>{'address'}</Text>
+        <TextInput
+          style={{
+            backgroundColor: 'white',
+            marginHorizontal: 10,
+            borderRadius: 5,
+            minHeight: 50,
+            borderWidth: 1,
+            borderColor: 'black',
+          }}
+          value={address}
+          onChangeText={setAddress}
+          secureTextEntry={false}
+        />
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'flex-end',
+            marginBottom: 10,
+            backgroundColor: 'white',
+          }}>
           <TouchableOpacity
             onPress={signUp}
             style={{
@@ -79,7 +141,7 @@ const SignupScreen: FC = () => {
               justifyContent: 'center',
               borderRadius: 5,
               marginHorizontal: 10,
-              marginTop: 20,
+              marginTop: 30,
             }}>
             <Text
               style={{
