@@ -1,5 +1,13 @@
 import {FC, useState} from 'react';
-import {View, Text, TextInput, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  Modal,
+  Button,
+  useWindowDimensions,
+} from 'react-native';
 import auth from '@react-native-firebase/auth';
 import {useNavigation} from '@react-navigation/native';
 
@@ -8,6 +16,11 @@ import styles from './styles';
 const LoginScreen: FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const toggleModal = () => {
+    setModalVisible(!modalVisible);
+  };
 
   const {navigate} = useNavigation();
 
@@ -16,12 +29,13 @@ const LoginScreen: FC = () => {
       await auth().signInWithEmailAndPassword(email, password);
     } catch (e: any) {
       console.log(e);
+      toggleModal();
     }
   };
   return (
-    <View style={{flex: 3}}>
-      <View style={{flex: 1, backgroundColor: 'white'}} />
-      <View style={{flex: 2, backgroundColor: 'white'}}>
+    <View style={{flex: 1, backgroundColor: 'white'}}>
+      <View style={{flex: 2, backgroundColor: 'red'}} />
+      <View style={{flex: 3, backgroundColor: 'green'}}>
         <Text style={{marginLeft: 10}}>{'email'}</Text>
         <TextInput
           style={{
@@ -54,13 +68,19 @@ const LoginScreen: FC = () => {
           // @ts-ignore
           onPress={() => navigate('SignupScreen')}
           style={{
-            marginTop: 10,
+            marginTop: 0,
             alignItems: 'flex-end',
             marginRight: 20,
           }}>
           <Text>{'Sign Up'}</Text>
         </TouchableOpacity>
-        <View style={{flex: 1, justifyContent: 'flex-end', marginBottom: 60}}>
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'flex-end',
+            marginBottom: 60,
+            backgroundColor: 'white',
+          }}>
           <TouchableOpacity
             onPress={login}
             style={{
@@ -81,6 +101,55 @@ const LoginScreen: FC = () => {
               {'Login'}
             </Text>
           </TouchableOpacity>
+          <Modal
+            visible={modalVisible}
+            animationType={'slide'}
+            transparent={true}
+            onRequestClose={toggleModal}>
+            <View
+              style={{
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor: 'rgba(0, 0, 0, 0.5)',
+              }}>
+              <View
+                style={{
+                  backgroundColor: 'darkorange',
+                  minHeight: 300,
+                  width: '80%',
+                  justifyContent: 'center',
+                  borderRadius: 5,
+                  padding: 20,
+                }}>
+                <Text style={{textAlign: 'center', color: 'white'}}>
+                  {'The username or password you entered is incorrect.\n'}
+                </Text>
+                <TouchableOpacity
+                  onPress={toggleModal}
+                  style={{
+                    marginTop: 20,
+                    backgroundColor: 'blue',
+                    minHeight: 50,
+                    justifyContent: 'center',
+                    borderRadius: 5,
+                    marginHorizontal: 10,
+                  }}>
+                  <Text
+                    style={{
+                      textAlign: 'center',
+                      color: 'white',
+                      fontSize: 21,
+                      fontWeight: '600',
+                      backgroundColor: 'blue',
+                      borderRadius: 10,
+                    }}>
+                    {'Close'}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </Modal>
         </View>
       </View>
     </View>
