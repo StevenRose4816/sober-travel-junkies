@@ -17,6 +17,7 @@ const LoginScreen: FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const toggleModal = () => {
     setModalVisible(!modalVisible);
@@ -29,13 +30,14 @@ const LoginScreen: FC = () => {
       await auth().signInWithEmailAndPassword(email, password);
     } catch (e: any) {
       console.log(e);
+      setErrorMessage(e);
       toggleModal();
     }
   };
   return (
     <View style={{flex: 1, backgroundColor: 'white'}}>
-      <View style={{flex: 2, backgroundColor: 'red'}} />
-      <View style={{flex: 3, backgroundColor: 'green'}}>
+      <View style={{flex: 2, backgroundColor: 'white'}} />
+      <View style={{flex: 3, backgroundColor: 'white'}}>
         <Text style={{marginLeft: 10}}>{'email'}</Text>
         <TextInput
           style={{
@@ -123,7 +125,7 @@ const LoginScreen: FC = () => {
                   padding: 20,
                 }}>
                 <Text style={{textAlign: 'center', color: 'white'}}>
-                  {'The username or password you entered is incorrect.\n'}
+                  {errorMessage + '\n'}
                 </Text>
                 <TouchableOpacity
                   onPress={toggleModal}
