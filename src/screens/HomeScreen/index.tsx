@@ -9,8 +9,19 @@ const HomeScreen: FC = () => {
     auth().signOut();
   };
   return (
-    <View>
-      <Text>{'HomeScreen'}</Text>
+    <View style={{flex: 1}}>
+      <View style={{flex: 1, backgroundColor: 'red', justifyContent: 'center'}}>
+        <Text
+          style={{
+            textAlign: 'center',
+            fontSize: 25,
+            color: 'white',
+          }}>
+          {'Home Screen'}
+        </Text>
+      </View>
+      <View style={{flex: 1, backgroundColor: 'darkorange'}} />
+      <View style={{flex: 1, backgroundColor: 'green'}} />
       <TouchableOpacity
         onPress={logout}
         style={{
@@ -20,6 +31,7 @@ const HomeScreen: FC = () => {
           borderRadius: 5,
           marginHorizontal: 10,
           marginTop: 20,
+          marginBottom: 20,
         }}>
         <Text
           style={{

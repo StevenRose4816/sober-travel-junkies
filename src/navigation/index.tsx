@@ -44,12 +44,12 @@ const RootNavigator: FC = () => {
     <NavigationContainer>
       {!!user ? (
         <RootStack.Navigator>
-          <RootStack.Screen name={'HomeScreen'} component={HomeScreen} />
+          <RootStack.Screen name={'Home Screen'} component={HomeScreen} />
         </RootStack.Navigator>
       ) : (
         <RootStack.Navigator>
-          <RootStack.Screen name={'LoginScreen'} component={LoginScreen} />
-          <RootStack.Screen name={'SignupScreen'} component={SignupScreen} />
+          <RootStack.Screen name={'Login Screen'} component={LoginScreen} />
+          <RootStack.Screen name={'Signup Screen'} component={SignupScreen} />
         </RootStack.Navigator>
       )}
     </NavigationContainer>

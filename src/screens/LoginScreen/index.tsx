@@ -29,14 +29,22 @@ const LoginScreen: FC = () => {
     try {
       await auth().signInWithEmailAndPassword(email, password);
     } catch (e: any) {
-      console.log(e);
       setErrorMessage(e);
       toggleModal();
     }
   };
   return (
     <View style={{flex: 1, backgroundColor: 'white'}}>
-      <View style={{flex: 2, backgroundColor: 'white'}} />
+      <View style={{flex: 2, backgroundColor: 'red', justifyContent: 'center'}}>
+        <Text
+          style={{
+            textAlign: 'center',
+            fontSize: 25,
+            fontWeight: '600',
+          }}>
+          {"Sojourn Women's Retreats"}
+        </Text>
+      </View>
       <View style={{flex: 3, backgroundColor: 'white'}}>
         <Text style={{marginLeft: 10}}>{'email'}</Text>
         <TextInput
@@ -68,7 +76,7 @@ const LoginScreen: FC = () => {
         />
         <TouchableOpacity
           // @ts-ignore
-          onPress={() => navigate('SignupScreen')}
+          onPress={() => navigate('Signup Screen')}
           style={{
             marginTop: 0,
             alignItems: 'flex-end',
