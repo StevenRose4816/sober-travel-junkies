@@ -10,7 +10,6 @@ import {
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import {useNavigation} from '@react-navigation/native';
-
 import styles from './styles';
 import {useAppSelector} from '../../hooks';
 
@@ -20,10 +19,12 @@ const LoginScreen: FC = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const address = useAppSelector(state => state.globalStore.address);
-  console.log(
-    'testing address grabbed from textInput on sign up screen=',
-    address,
-  );
+  const name = useAppSelector(state => state.globalStore.name);
+
+  useEffect(() => {
+    console.log('Updated address=', address);
+    console.log('name=', name);
+  }, [address, name]);
 
   const toggleModal = () => {
     setModalVisible(!modalVisible);

@@ -38,8 +38,6 @@ const RootNavigator: FC = () => {
     return subscriber; // unsubscribe on unmount
   }, []);
 
-  console.log('user', user);
-
   return (
     <NavigationContainer>
       {!!user ? (

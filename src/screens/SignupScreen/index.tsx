@@ -24,16 +24,15 @@ const SignupScreen: FC = () => {
 
   const mapUser = () => {
     // Captures textInput for phoneNumber and address to access in global state.
-    if (userInfo) {
+    if (!!userInfo) {
       const mappedUserInfo: IUserInfo = {
         phoneNumber: phoneNumber,
         address: address,
         name: name,
       };
-      console.log('mappedUserInfo=', mappedUserInfo);
       dispatch(setUserInfo(mappedUserInfo));
     } else {
-      console.log('userInfo', userInfo);
+      console.log('no userInfo');
     }
   };
 
