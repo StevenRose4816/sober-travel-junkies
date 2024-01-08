@@ -44,30 +44,17 @@ const SignupScreen: FC = () => {
 
   const signUp = async () => {
     try {
-      // await auth().createUserWithEmailAndPassword(email, password);
+      await auth().createUserWithEmailAndPassword(email, password);
       mapUser();
     } catch (e: any) {
+      console.log(e);
       setErrorMessage(e);
       toggleModal();
     }
   };
   return (
-    <View style={{flex: 3}}>
-      <View style={{flex: 2, backgroundColor: 'white'}}>
-        <Text style={{marginLeft: 10, marginTop: 100}}>{'name'}</Text>
-        <TextInput
-          style={{
-            backgroundColor: 'white',
-            marginHorizontal: 10,
-            borderRadius: 5,
-            minHeight: 50,
-            borderWidth: 1,
-            borderColor: 'black',
-          }}
-          value={name}
-          onChangeText={setName}
-          secureTextEntry={false}
-        />
+    <View style={{flex: 1}}>
+      <View style={{flex: 1, backgroundColor: 'white'}}>
         <Text style={{marginLeft: 10, marginTop: 10}}>{'email'}</Text>
         <TextInput
           style={{
@@ -81,6 +68,7 @@ const SignupScreen: FC = () => {
           autoCapitalize={'none'}
           value={email}
           onChangeText={setEmail}
+          secureTextEntry={false}
         />
         <Text style={{marginLeft: 10, marginTop: 10}}>{'password'}</Text>
         <TextInput
@@ -96,37 +84,9 @@ const SignupScreen: FC = () => {
           onChangeText={setPassword}
           secureTextEntry={true}
         />
-        <Text style={{marginLeft: 10, marginTop: 10}}>{'phone number'}</Text>
-        <TextInput
-          style={{
-            backgroundColor: 'white',
-            marginHorizontal: 10,
-            borderRadius: 5,
-            minHeight: 50,
-            borderWidth: 1,
-            borderColor: 'black',
-          }}
-          value={phoneNumber}
-          onChangeText={setPhoneNumber}
-          secureTextEntry={false}
-        />
-        <Text style={{marginLeft: 10, marginTop: 10}}>{'address'}</Text>
-        <TextInput
-          style={{
-            backgroundColor: 'white',
-            marginHorizontal: 10,
-            borderRadius: 5,
-            minHeight: 50,
-            borderWidth: 1,
-            borderColor: 'black',
-          }}
-          value={address}
-          onChangeText={setAddress}
-          secureTextEntry={false}
-        />
         <View
           style={{
-            flex: 1,
+            flex: 2,
             justifyContent: 'flex-end',
             marginBottom: 10,
             backgroundColor: 'white',
@@ -192,7 +152,7 @@ const SignupScreen: FC = () => {
                       fontSize: 21,
                       fontWeight: '600',
                       backgroundColor: 'blue',
-                      borderRadius: 10,
+                      borderRadius: 5,
                     }}>
                     {'Close'}
                   </Text>

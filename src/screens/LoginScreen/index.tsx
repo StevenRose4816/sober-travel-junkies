@@ -20,11 +20,13 @@ const LoginScreen: FC = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const address = useAppSelector(state => state.globalStore.address);
   const name = useAppSelector(state => state.globalStore.name);
+  const phoneNumber = useAppSelector(state => state.globalStore.phoneNumber);
 
   useEffect(() => {
     console.log('Updated address=', address);
     console.log('name=', name);
-  }, [address, name]);
+    console.log('phoneNumber=', phoneNumber);
+  }, [address, name, phoneNumber]);
 
   const toggleModal = () => {
     setModalVisible(!modalVisible);
@@ -42,7 +44,8 @@ const LoginScreen: FC = () => {
   };
   return (
     <View style={{flex: 1, backgroundColor: 'white'}}>
-      <View style={{flex: 2, backgroundColor: 'red', justifyContent: 'center'}}>
+      <View
+        style={{flex: 2, backgroundColor: 'white', justifyContent: 'center'}}>
         <Text
           style={{
             textAlign: 'center',
@@ -72,6 +75,7 @@ const LoginScreen: FC = () => {
           style={{
             backgroundColor: 'white',
             marginHorizontal: 10,
+            marginBottom: 10,
             borderRadius: 5,
             minHeight: 50,
             borderWidth: 1,
@@ -81,16 +85,36 @@ const LoginScreen: FC = () => {
           onChangeText={setPassword}
           secureTextEntry={true}
         />
-        <TouchableOpacity
-          // @ts-ignore
-          onPress={() => navigate('Signup Screen')}
+        <View
           style={{
-            marginTop: 0,
+            flex: 1,
             alignItems: 'flex-end',
-            marginRight: 20,
+            backgroundColor: 'white',
+            marginEnd: 10,
+            marginStart: 10,
           }}>
-          <Text>{'Sign Up'}</Text>
-        </TouchableOpacity>
+          <TouchableOpacity
+            // @ts-ignore
+            onPress={() => navigate('Signup Screen')}
+            style={{
+              backgroundColor: 'blue',
+              borderRadius: 5,
+              marginLeft: 10,
+            }}>
+            <Text
+              style={{
+                color: 'white',
+                fontSize: 12,
+                fontWeight: '600',
+                marginBottom: 10,
+                marginTop: 10,
+                marginRight: 10,
+                marginLeft: 10,
+              }}>
+              {'Sign Up'}
+            </Text>
+          </TouchableOpacity>
+        </View>
         <View
           style={{
             flex: 1,
@@ -159,7 +183,7 @@ const LoginScreen: FC = () => {
                       fontSize: 21,
                       fontWeight: '600',
                       backgroundColor: 'blue',
-                      borderRadius: 10,
+                      borderRadius: 5,
                     }}>
                     {'Close'}
                   </Text>
