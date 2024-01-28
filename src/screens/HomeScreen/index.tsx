@@ -11,18 +11,18 @@ const HomeScreen: FC = () => {
     auth().signOut();
   };
 
-  const user = 'Hello';
-  // const user = auth().currentUser;
+  const user = auth().currentUser;
   const userId = auth().currentUser?.uid;
-  console.log('UserId=', userId);
 
   function create(userId: string | undefined) {
     set(ref(db, 'users/' + userId), {
       username: fullName,
       email: email,
+      address: address,
+      phoneNumber: phoneNumber,
     })
       .then(() => {
-        console.log('data updated');
+        console.log('data pushed to db');
       })
       .catch(error => {
         console.log(error);
@@ -52,11 +52,12 @@ const HomeScreen: FC = () => {
         }}>
         <Text
           style={{
-            textAlign: 'center',
+            textAlign: 'left',
             fontSize: 30,
             color: 'black',
             fontWeight: '600',
             marginTop: 10,
+            marginHorizontal: 10,
           }}>
           {'Hello ' + email + '!\n'}
         </Text>
