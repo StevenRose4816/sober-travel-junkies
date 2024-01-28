@@ -1,10 +1,11 @@
 import {FC, useEffect, useState} from 'react';
 import {View, Text, TouchableOpacity, TextInput} from 'react-native';
 import auth from '@react-native-firebase/auth';
-import {ref, set} from 'firebase/database';
+import {onValue, ref, set} from 'firebase/database';
 import styles from './styles';
 import {useAppSelector} from '../../hooks';
 import {db} from '../HomeScreen/FirebaseConfigurations';
+import {snapshotEqual} from 'firebase/firestore';
 
 const HomeScreen: FC = () => {
   const logout = () => {
@@ -29,8 +30,17 @@ const HomeScreen: FC = () => {
       });
   }
 
+  function readData() {
+    const countRef = ref(db, 'users/' + userId);
+    onValue(countRef, snapshot => {
+      const data = snapshot.val();
+      console.log('Here is the returned data: ', data);
+    });
+  }
+
   useEffect(() => {
     console.log('Hello: ', user);
+    readData();
   }, [user]);
 
   const email = useAppSelector(state => state.auth.user?.email);
