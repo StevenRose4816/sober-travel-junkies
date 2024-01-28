@@ -21,12 +21,14 @@ const LoginScreen: FC = () => {
   const address = useAppSelector(state => state.globalStore.address);
   const name = useAppSelector(state => state.globalStore.name);
   const phoneNumber = useAppSelector(state => state.globalStore.phoneNumber);
+  const user = auth().currentUser;
 
   useEffect(() => {
     console.log('Updated address=', address);
     console.log('name=', name);
     console.log('phoneNumber=', phoneNumber);
-  }, [address, name, phoneNumber]);
+    console.log('user=', user);
+  }, [address, name, phoneNumber, user]);
 
   const toggleModal = () => {
     setModalVisible(!modalVisible);
@@ -68,7 +70,7 @@ const LoginScreen: FC = () => {
           }}
           autoCapitalize={'none'}
           value={email}
-          onChangeText={setEmail}
+          onChangeText={val => setEmail(val)}
         />
         <Text style={{marginLeft: 10, marginTop: 10}}>{'password'}</Text>
         <TextInput
@@ -82,7 +84,7 @@ const LoginScreen: FC = () => {
             borderColor: 'black',
           }}
           value={password}
-          onChangeText={setPassword}
+          onChangeText={val => setPassword(val)}
           secureTextEntry={true}
         />
         <View
