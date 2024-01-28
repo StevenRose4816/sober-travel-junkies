@@ -1,16 +1,33 @@
 import {FC, useEffect, useState} from 'react';
 import {View, Text, TouchableOpacity, TextInput} from 'react-native';
-import auth, {firebase} from '@react-native-firebase/auth';
-
+import auth from '@react-native-firebase/auth';
+import {ref, set} from 'firebase/database';
 import styles from './styles';
 import {useAppSelector} from '../../hooks';
+import {db} from '../HomeScreen/FirebaseConfigurations';
 
 const HomeScreen: FC = () => {
   const logout = () => {
     auth().signOut();
   };
 
-  const user = auth().currentUser;
+  const user = 'Hello';
+  // const user = auth().currentUser;
+  const userId = auth().currentUser?.uid;
+  console.log('UserId=', userId);
+
+  function create(userId: string | undefined) {
+    set(ref(db, 'users/' + userId), {
+      username: fullName,
+      email: email,
+    })
+      .then(() => {
+        console.log('data updated');
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
 
   useEffect(() => {
     console.log('Hello: ', user);
@@ -20,6 +37,11 @@ const HomeScreen: FC = () => {
   const [fullName, setFullName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [address, setAddress] = useState('');
+
+  const onPress = () => {
+    create(userId);
+    console.log('pressed');
+  };
 
   return (
     <View style={{flex: 1}}>
@@ -44,6 +66,7 @@ const HomeScreen: FC = () => {
         <Text style={{marginLeft: 10}}>{'\n\nfull name'}</Text>
         <TextInput
           value={fullName}
+          placeholder=" full name"
           onChangeText={val => setFullName(val)}
           secureTextEntry={false}
           style={{
@@ -59,7 +82,8 @@ const HomeScreen: FC = () => {
         <Text style={{marginLeft: 10}}>{'\nphone number'}</Text>
         <TextInput
           value={phoneNumber}
-          onChangeText={val => setPhoneNumber(val)}
+          placeholder=" phone number"
+          onChangeText={phoneNumber => setPhoneNumber(phoneNumber)}
           secureTextEntry={false}
           style={{
             backgroundColor: 'white',
@@ -74,7 +98,8 @@ const HomeScreen: FC = () => {
         <Text style={{marginLeft: 10}}>{'\naddress'}</Text>
         <TextInput
           value={address}
-          onChangeText={val => setAddress(val)}
+          placeholder=" address"
+          onChangeText={address => setAddress(address)}
           secureTextEntry={false}
           style={{
             backgroundColor: 'white',
@@ -87,6 +112,27 @@ const HomeScreen: FC = () => {
             borderColor: 'black',
           }}></TextInput>
       </View>
+      <TouchableOpacity
+        onPress={onPress}
+        style={{
+          backgroundColor: 'blue',
+          minHeight: 50,
+          justifyContent: 'center',
+          borderRadius: 5,
+          marginHorizontal: 10,
+          marginTop: 10,
+          marginBottom: 0,
+        }}>
+        <Text
+          style={{
+            color: 'white',
+            fontSize: 21,
+            fontWeight: '600',
+            textAlign: 'center',
+          }}>
+          {'Submit'}
+        </Text>
+      </TouchableOpacity>
       <TouchableOpacity
         onPress={logout}
         style={{

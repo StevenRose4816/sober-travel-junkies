@@ -70,7 +70,7 @@ const LoginScreen: FC = () => {
           }}
           autoCapitalize={'none'}
           value={email}
-          onChangeText={val => setEmail(val)}
+          onChangeText={email => setEmail(email)}
         />
         <Text style={{marginLeft: 10, marginTop: 10}}>{'password'}</Text>
         <TextInput
@@ -84,7 +84,7 @@ const LoginScreen: FC = () => {
             borderColor: 'black',
           }}
           value={password}
-          onChangeText={val => setPassword(val)}
+          onChangeText={password => setPassword(password)}
           secureTextEntry={true}
         />
         <View
