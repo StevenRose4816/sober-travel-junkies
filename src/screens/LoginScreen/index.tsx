@@ -7,6 +7,7 @@ import {
   Modal,
   Button,
   useWindowDimensions,
+  Image,
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import {useNavigation} from '@react-navigation/native';
@@ -46,16 +47,10 @@ const LoginScreen: FC = () => {
   };
   return (
     <View style={{flex: 1, backgroundColor: 'white'}}>
-      <View
-        style={{flex: 2, backgroundColor: 'white', justifyContent: 'center'}}>
-        <Text
-          style={{
-            textAlign: 'center',
-            fontSize: 25,
-            fontWeight: '600',
-          }}>
-          {"Sojourn Women's Retreats"}
-        </Text>
+      <View style={{flex: 2, backgroundColor: 'white', alignItems: 'center'}}>
+        <Image
+          source={require('../../Images/STJ_Logo.jpg')}
+          style={{height: 200, width: 200}}></Image>
       </View>
       <View style={{flex: 3, backgroundColor: 'white'}}>
         <Text style={{marginLeft: 10}}>{'email'}</Text>
