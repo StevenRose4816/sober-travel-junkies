@@ -1,8 +1,6 @@
 import {FC, useEffect, useState} from 'react';
 import {View, Text, TouchableOpacity, TextInput, Modal} from 'react-native';
 import auth from '@react-native-firebase/auth';
-
-import styles from './styles';
 import {useDispatch} from 'react-redux';
 import {IUserInfo, setUserInfo} from '../../store/globalStore/slice';
 import {useAppSelector} from '../../hooks';

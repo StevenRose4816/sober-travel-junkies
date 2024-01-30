@@ -1,5 +1,12 @@
 import {FC, useEffect, useState} from 'react';
-import {View, Text, TouchableOpacity, TextInput} from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  TextInput,
+  Image,
+  ScrollView,
+} from 'react-native';
 import auth from '@react-native-firebase/auth';
 import {onValue, ref, set} from 'firebase/database';
 import styles from './styles';
@@ -71,7 +78,7 @@ const HomeScreen: FC = () => {
   };
 
   return (
-    <View style={{flex: 1}}>
+    <ScrollView style={{flex: 1}}>
       <View
         style={{
           flex: 1,
@@ -90,6 +97,9 @@ const HomeScreen: FC = () => {
         </Text>
         {!caughtData && (
           <>
+            <Image
+              style={{height: 200, width: 200, marginLeft: 10}}
+              source={require('../../Images/profile-picture-vector.jpeg')}></Image>
             <Text style={{fontSize: 16, marginLeft: 10, fontWeight: '600'}}>
               {"\nLet's start by getting some informaton."}
             </Text>
@@ -188,7 +198,7 @@ const HomeScreen: FC = () => {
           {'Log Out'}
         </Text>
       </TouchableOpacity>
-    </View>
+    </ScrollView>
   );
 };
 
