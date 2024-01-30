@@ -66,7 +66,6 @@ const HomeScreen: FC = () => {
   }
 
   useEffect(() => {
-    console.log('Hello: ', user);
     readData();
   }, [user]);
 
@@ -100,19 +99,30 @@ const HomeScreen: FC = () => {
         </Text>
         {caughtData && (
           <>
-            <Text>{'Address: ' + address}</Text>
-            <Text>{'Phone number: ' + phoneNumber}</Text>
-            <Text>{'Full name: ' + fullName}</Text>
+            <Text style={{fontWeight: '600', marginLeft: 10}}>
+              {'Does this look right?\n'}
+            </Text>
+            <Text style={{marginLeft: 10}}>{'Address: ' + address}</Text>
+            <Text style={{marginLeft: 10}}>
+              {'Phone number: ' + phoneNumber}
+            </Text>
+            <Text style={{marginLeft: 10}}>{'Full name: ' + fullName}</Text>
           </>
         )}
         {!caughtData && (
           <>
+            <Text
+              style={{
+                fontSize: 16,
+                marginLeft: 10,
+                marginBottom: 20,
+                fontWeight: '600',
+              }}>
+              {"\nLet's start by getting some informaton."}
+            </Text>
             <Image
               style={{height: 200, width: 200, marginLeft: 10}}
               source={require('../../Images/profile-picture-vector.jpeg')}></Image>
-            <Text style={{fontSize: 16, marginLeft: 10, fontWeight: '600'}}>
-              {"\nLet's start by getting some informaton."}
-            </Text>
             <Text style={{marginLeft: 10}}>{'\n\nfull name'}</Text>
             <TextInput
               value={fullName}

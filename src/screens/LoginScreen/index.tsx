@@ -47,7 +47,13 @@ const LoginScreen: FC = () => {
   };
   return (
     <View style={{flex: 1, backgroundColor: 'white'}}>
-      <View style={{flex: 2, backgroundColor: 'white', alignItems: 'center'}}>
+      <View
+        style={{
+          flex: 2,
+          backgroundColor: 'white',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}>
         <Image
           source={require('../../Images/STJ_Logo.jpg')}
           style={{height: 200, width: 200}}></Image>
@@ -119,7 +125,7 @@ const LoginScreen: FC = () => {
           style={{
             flex: 1,
             justifyContent: 'flex-end',
-            marginBottom: 20,
+            marginBottom: 10,
             backgroundColor: 'white',
           }}>
           <TouchableOpacity
