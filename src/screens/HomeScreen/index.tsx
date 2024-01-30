@@ -57,6 +57,9 @@ const HomeScreen: FC = () => {
     onValue(countRef, snapshot => {
       const data = snapshot.val();
       setCaughtData(data);
+      setAddress(data.address);
+      setFullName(data.username);
+      setPhoneNumber(data.phoneNumber);
       console.log('Here is the returned data: ', data);
       console.log('caught data=', caughtData);
     });
@@ -72,7 +75,7 @@ const HomeScreen: FC = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [address, setAddress] = useState('');
 
-  const onPress = () => {
+  const onSubmit = () => {
     create(userId);
     console.log('pressed');
   };
@@ -95,6 +98,13 @@ const HomeScreen: FC = () => {
           }}>
           {'Hello ' + email + '!\n'}
         </Text>
+        {caughtData && (
+          <>
+            <Text>{'Address: ' + address}</Text>
+            <Text>{'Phone number: ' + phoneNumber}</Text>
+            <Text>{'Full name: ' + fullName}</Text>
+          </>
+        )}
         {!caughtData && (
           <>
             <Image
@@ -107,7 +117,7 @@ const HomeScreen: FC = () => {
             <TextInput
               value={fullName}
               placeholder=" full name"
-              onChangeText={val => setFullName(val)}
+              onChangeText={fullName => setFullName(fullName)}
               secureTextEntry={false}
               style={{
                 backgroundColor: 'white',
@@ -156,7 +166,7 @@ const HomeScreen: FC = () => {
       </View>
       {!caughtData && (
         <TouchableOpacity
-          onPress={onPress}
+          onPress={onSubmit}
           style={{
             backgroundColor: 'blue',
             minHeight: 50,

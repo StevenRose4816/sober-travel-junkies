@@ -51,8 +51,11 @@ const LoginScreen: FC = () => {
         <Image
           source={require('../../Images/STJ_Logo.jpg')}
           style={{height: 200, width: 200}}></Image>
+        <Text style={{fontWeight: '300'}}>
+          {'"We used to drink, but now we travel."'}
+        </Text>
       </View>
-      <View style={{flex: 3, backgroundColor: 'white'}}>
+      <View style={{flex: 2, backgroundColor: 'white'}}>
         <Text style={{marginLeft: 10}}>{'email'}</Text>
         <TextInput
           style={{
@@ -116,7 +119,7 @@ const LoginScreen: FC = () => {
           style={{
             flex: 1,
             justifyContent: 'flex-end',
-            marginBottom: 60,
+            marginBottom: 20,
             backgroundColor: 'white',
           }}>
           <TouchableOpacity
