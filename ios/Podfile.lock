@@ -9,32 +9,32 @@ PODS:
     - React-Core (= 0.73.1)
     - React-jsi (= 0.73.1)
     - ReactCommon/turbomodule/core (= 0.73.1)
-  - Firebase/Auth (10.19.0):
+  - Firebase/Auth (10.20.0):
     - Firebase/CoreOnly
-    - FirebaseAuth (~> 10.19.0)
-  - Firebase/CoreOnly (10.19.0):
-    - FirebaseCore (= 10.19.0)
-  - Firebase/Storage (10.19.0):
+    - FirebaseAuth (~> 10.20.0)
+  - Firebase/CoreOnly (10.20.0):
+    - FirebaseCore (= 10.20.0)
+  - Firebase/Storage (10.20.0):
     - Firebase/CoreOnly
-    - FirebaseStorage (~> 10.19.0)
-  - FirebaseAppCheckInterop (10.19.0)
-  - FirebaseAuth (10.19.0):
+    - FirebaseStorage (~> 10.20.0)
+  - FirebaseAppCheckInterop (10.20.0)
+  - FirebaseAuth (10.20.0):
     - FirebaseAppCheckInterop (~> 10.17)
     - FirebaseCore (~> 10.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.8)
     - GoogleUtilities/Environment (~> 7.8)
     - GTMSessionFetcher/Core (< 4.0, >= 2.1)
     - RecaptchaInterop (~> 100.0)
-  - FirebaseAuthInterop (10.19.0)
-  - FirebaseCore (10.19.0):
+  - FirebaseAuthInterop (10.20.0)
+  - FirebaseCore (10.20.0):
     - FirebaseCoreInternal (~> 10.0)
     - GoogleUtilities/Environment (~> 7.12)
     - GoogleUtilities/Logger (~> 7.12)
-  - FirebaseCoreExtension (10.19.0):
+  - FirebaseCoreExtension (10.20.0):
     - FirebaseCore (~> 10.0)
-  - FirebaseCoreInternal (10.19.0):
+  - FirebaseCoreInternal (10.20.0):
     - "GoogleUtilities/NSData+zlib (~> 7.8)"
-  - FirebaseStorage (10.19.0):
+  - FirebaseStorage (10.20.0):
     - FirebaseAppCheckInterop (~> 10.0)
     - FirebaseAuthInterop (~> 10.0)
     - FirebaseCore (~> 10.0)
@@ -57,7 +57,7 @@ PODS:
   - "GoogleUtilities/NSData+zlib (7.12.0)"
   - GoogleUtilities/Reachability (7.12.0):
     - GoogleUtilities/Logger
-  - GTMSessionFetcher/Core (3.2.0)
+  - GTMSessionFetcher/Core (3.3.1)
   - hermes-engine (0.73.1):
     - hermes-engine/Pre-built (= 0.73.1)
   - hermes-engine/Pre-built (0.73.1)
@@ -1104,15 +1104,15 @@ PODS:
     - React-logger (= 0.73.1)
     - React-perflogger (= 0.73.1)
   - RecaptchaInterop (100.0.0)
-  - RNFBApp (18.7.3):
-    - Firebase/CoreOnly (= 10.19.0)
+  - RNFBApp (18.8.0):
+    - Firebase/CoreOnly (= 10.20.0)
     - React-Core
-  - RNFBAuth (18.7.3):
-    - Firebase/Auth (= 10.19.0)
+  - RNFBAuth (18.8.0):
+    - Firebase/Auth (= 10.20.0)
     - React-Core
     - RNFBApp
-  - RNFBStorage (18.7.3):
-    - Firebase/Storage (= 10.19.0)
+  - RNFBStorage (18.8.0):
+    - Firebase/Storage (= 10.20.0)
     - React-Core
     - RNFBApp
   - RNScreens (3.29.0):
@@ -1312,18 +1312,18 @@ SPEC CHECKSUMS:
   DoubleConversion: fea03f2699887d960129cc54bba7e52542b6f953
   FBLazyVector: 2296bacb2fa157a43991048b0a9d71c1c8b65083
   FBReactNativeSpec: df0ebe69acd14ce0be0269cf75b6e338a727259b
-  Firebase: 63ce8ece0d43743dc28eacac0c6867a2d7fd5a9d
-  FirebaseAppCheckInterop: 37884781f3e16a1ba47e7ec80a1e805f987788e3
-  FirebaseAuth: 2492acdcd1245d841fabdf58a050d6aa07dfce3f
-  FirebaseAuthInterop: f90d6820bf6ecf44753b9f13ba941902d00b525a
-  FirebaseCore: dc5c7badf99d47613c52b2e3a57a64cd187f8554
-  FirebaseCoreExtension: c08d14c7b22e07994e876d837e6f58642f340087
-  FirebaseCoreInternal: b444828ea7cfd594fca83046b95db98a2be4f290
-  FirebaseStorage: 1e0b9c9c18fb73ee3c5728a370c0e7355f8e88e3
+  Firebase: 10c8cb12fb7ad2ae0c09ffc86cd9c1ab392a0031
+  FirebaseAppCheckInterop: e81bdb1cdb82f8e0cef353ba5018a8402682032c
+  FirebaseAuth: 9c5c400d2c3055d8ae3a0284944c86fa95d48dac
+  FirebaseAuthInterop: 6142981334978f7942ff0e8a6f8966c3b3c8ff37
+  FirebaseCore: 28045c1560a2600d284b9c45a904fe322dc890b6
+  FirebaseCoreExtension: 0659f035b88c5a7a15a9763c48c2e6ca8c0a2977
+  FirebaseCoreInternal: efeeb171ac02d623bdaefe121539939821e10811
+  FirebaseStorage: 8505bae8ac6662474b5b50e07759fb2765c15746
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
   glog: c5d68082e772fa1c511173d6b30a9de2c05a69a2
   GoogleUtilities: 0759d1a57ebb953965c2dfe0ba4c82e95ccc2e34
-  GTMSessionFetcher: 41b9ef0b4c08a6db4b7eb51a21ae5183ec99a2c8
+  GTMSessionFetcher: 8a1b34ad97ebe6f909fb8b9b77fba99943007556
   hermes-engine: 34df9d5034e90bd9bf1505e1ca198760373935af
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
@@ -1370,13 +1370,13 @@ SPEC CHECKSUMS:
   React-utils: debda2c206770ee2785bdebb7f16d8db9f18838a
   ReactCommon: ddb128564dcbfa0287d3d1a2d10f8c7457c971f6
   RecaptchaInterop: 7d1a4a01a6b2cb1610a47ef3f85f0c411434cb21
-  RNFBApp: c21258de1485419a845efbba9c09ec946c89891d
-  RNFBAuth: 079bb1bc37a912a277aedf366fe5bf4632b069c9
-  RNFBStorage: 7db661842e2109a6a3dbaafbaa8ea5e78c9b9551
+  RNFBApp: 5810d39f89d38272f29d9908cb19ef641922c081
+  RNFBAuth: 22be3e62ac7efaeff8edddd4de93d288382ecdc7
+  RNFBStorage: 6cb106fac789e6981dcff0fa2b1ff7214dd0ef24
   RNScreens: b582cb834dc4133307562e930e8fa914b8c04ef2
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   Yoga: 2b33a7ac96c58cdaa7b810948fc6a2a76ed2d108
 
-PODFILE CHECKSUM: 97900d78e1f78bb2a5a234d5659ee84fef95c6c7
+PODFILE CHECKSUM: 2f285dc467d3277cf8fc517b7775d738f9494953
 
 COCOAPODS: 1.12.1
