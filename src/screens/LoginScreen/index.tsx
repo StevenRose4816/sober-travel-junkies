@@ -13,6 +13,8 @@ import auth from '@react-native-firebase/auth';
 import {useNavigation} from '@react-navigation/native';
 import styles from './styles';
 import {useAppSelector} from '../../hooks';
+import ImagePicker from '../../components/ImagePicker';
+('../../components/ImagePicker');
 
 const LoginScreen: FC = () => {
   const [email, setEmail] = useState('');
@@ -54,6 +56,7 @@ const LoginScreen: FC = () => {
           alignItems: 'center',
           justifyContent: 'center',
         }}>
+        {/* <ImagePicker /> */}
         <Image
           source={require('../../Images/STJ_Logo.jpg')}
           style={{height: 200, width: 200}}></Image>
