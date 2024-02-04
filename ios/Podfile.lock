@@ -14,9 +14,9 @@ PODS:
     - FirebaseAuth (~> 10.20.0)
   - Firebase/CoreOnly (10.20.0):
     - FirebaseCore (= 10.20.0)
-  - Firebase/Storage (10.20.0):
+  - Firebase/Database (10.20.0):
     - Firebase/CoreOnly
-    - FirebaseStorage (~> 10.20.0)
+    - FirebaseDatabase (~> 10.20.0)
   - FirebaseAppCheckInterop (10.20.0)
   - FirebaseAuth (10.20.0):
     - FirebaseAppCheckInterop (~> 10.17)
@@ -25,21 +25,18 @@ PODS:
     - GoogleUtilities/Environment (~> 7.8)
     - GTMSessionFetcher/Core (< 4.0, >= 2.1)
     - RecaptchaInterop (~> 100.0)
-  - FirebaseAuthInterop (10.20.0)
   - FirebaseCore (10.20.0):
     - FirebaseCoreInternal (~> 10.0)
     - GoogleUtilities/Environment (~> 7.12)
     - GoogleUtilities/Logger (~> 7.12)
-  - FirebaseCoreExtension (10.20.0):
-    - FirebaseCore (~> 10.0)
   - FirebaseCoreInternal (10.20.0):
     - "GoogleUtilities/NSData+zlib (~> 7.8)"
-  - FirebaseStorage (10.20.0):
-    - FirebaseAppCheckInterop (~> 10.0)
-    - FirebaseAuthInterop (~> 10.0)
+  - FirebaseDatabase (10.20.0):
+    - FirebaseAppCheckInterop (~> 10.17)
     - FirebaseCore (~> 10.0)
-    - FirebaseCoreExtension (~> 10.0)
-    - GTMSessionFetcher/Core (< 4.0, >= 2.1)
+    - FirebaseSharedSwift (~> 10.0)
+    - leveldb-library (~> 1.22)
+  - FirebaseSharedSwift (10.20.0)
   - fmt (6.2.1)
   - glog (0.3.5)
   - GoogleUtilities/AppDelegateSwizzler (7.12.0):
@@ -61,6 +58,7 @@ PODS:
   - hermes-engine (0.73.1):
     - hermes-engine/Pre-built (= 0.73.1)
   - hermes-engine/Pre-built (0.73.1)
+  - leveldb-library (1.22.2)
   - libevent (2.1.12)
   - PromisesObjC (2.3.1)
   - RCT-Folly (2022.05.16.00):
@@ -1111,8 +1109,8 @@ PODS:
     - Firebase/Auth (= 10.20.0)
     - React-Core
     - RNFBApp
-  - RNFBStorage (18.8.0):
-    - Firebase/Storage (= 10.20.0)
+  - RNFBDatabase (18.8.0):
+    - Firebase/Database (= 10.20.0)
     - React-Core
     - RNFBApp
   - RNScreens (3.29.0):
@@ -1176,7 +1174,7 @@ DEPENDENCIES:
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
   - "RNFBAuth (from `../node_modules/@react-native-firebase/auth`)"
-  - "RNFBStorage (from `../node_modules/@react-native-firebase/storage`)"
+  - "RNFBDatabase (from `../node_modules/@react-native-firebase/database`)"
   - RNScreens (from `../node_modules/react-native-screens`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
@@ -1185,14 +1183,14 @@ SPEC REPOS:
     - Firebase
     - FirebaseAppCheckInterop
     - FirebaseAuth
-    - FirebaseAuthInterop
     - FirebaseCore
-    - FirebaseCoreExtension
     - FirebaseCoreInternal
-    - FirebaseStorage
+    - FirebaseDatabase
+    - FirebaseSharedSwift
     - fmt
     - GoogleUtilities
     - GTMSessionFetcher
+    - leveldb-library
     - libevent
     - PromisesObjC
     - RecaptchaInterop
@@ -1300,8 +1298,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-firebase/app"
   RNFBAuth:
     :path: "../node_modules/@react-native-firebase/auth"
-  RNFBStorage:
-    :path: "../node_modules/@react-native-firebase/storage"
+  RNFBDatabase:
+    :path: "../node_modules/@react-native-firebase/database"
   RNScreens:
     :path: "../node_modules/react-native-screens"
   Yoga:
@@ -1315,16 +1313,16 @@ SPEC CHECKSUMS:
   Firebase: 10c8cb12fb7ad2ae0c09ffc86cd9c1ab392a0031
   FirebaseAppCheckInterop: e81bdb1cdb82f8e0cef353ba5018a8402682032c
   FirebaseAuth: 9c5c400d2c3055d8ae3a0284944c86fa95d48dac
-  FirebaseAuthInterop: 6142981334978f7942ff0e8a6f8966c3b3c8ff37
   FirebaseCore: 28045c1560a2600d284b9c45a904fe322dc890b6
-  FirebaseCoreExtension: 0659f035b88c5a7a15a9763c48c2e6ca8c0a2977
   FirebaseCoreInternal: efeeb171ac02d623bdaefe121539939821e10811
-  FirebaseStorage: 8505bae8ac6662474b5b50e07759fb2765c15746
+  FirebaseDatabase: 7e838abb62ac2e1a1c792cbeb51df3c4b6607f54
+  FirebaseSharedSwift: 2fbf73618288b7a36b2014b957745dcdd781389e
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
   glog: c5d68082e772fa1c511173d6b30a9de2c05a69a2
   GoogleUtilities: 0759d1a57ebb953965c2dfe0ba4c82e95ccc2e34
   GTMSessionFetcher: 8a1b34ad97ebe6f909fb8b9b77fba99943007556
   hermes-engine: 34df9d5034e90bd9bf1505e1ca198760373935af
+  leveldb-library: f03246171cce0484482ec291f88b6d563699ee06
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
   RCT-Folly: 7169b2b1c44399c76a47b5deaaba715eeeb476c0
@@ -1372,11 +1370,11 @@ SPEC CHECKSUMS:
   RecaptchaInterop: 7d1a4a01a6b2cb1610a47ef3f85f0c411434cb21
   RNFBApp: 5810d39f89d38272f29d9908cb19ef641922c081
   RNFBAuth: 22be3e62ac7efaeff8edddd4de93d288382ecdc7
-  RNFBStorage: 6cb106fac789e6981dcff0fa2b1ff7214dd0ef24
+  RNFBDatabase: 0aad687f981c11fb8a27643980ad55753cb34aa8
   RNScreens: b582cb834dc4133307562e930e8fa914b8c04ef2
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   Yoga: 2b33a7ac96c58cdaa7b810948fc6a2a76ed2d108
 
-PODFILE CHECKSUM: 2f285dc467d3277cf8fc517b7775d738f9494953
+PODFILE CHECKSUM: 97900d78e1f78bb2a5a234d5659ee84fef95c6c7
 
-COCOAPODS: 1.12.1
+COCOAPODS: 1.15.0
