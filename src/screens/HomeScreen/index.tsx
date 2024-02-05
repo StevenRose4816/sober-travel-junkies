@@ -38,6 +38,7 @@ const HomeScreen: FC = () => {
       email: email,
       address: address,
       phoneNumber: phoneNumber,
+      userPhoto: userPhoto,
     })
       .then(() => {
         console.log('db updated yo');
@@ -70,6 +71,7 @@ const HomeScreen: FC = () => {
       setAddress(data.address);
       setFullName(data.username);
       setPhoneNumber(data.phoneNumber);
+      setUserPhotoFromDB(data.userPhoto);
       console.log('Here is the returned data: ', data);
       console.log('caught data=', caughtData);
     });
@@ -85,6 +87,7 @@ const HomeScreen: FC = () => {
   const [fullName, setFullName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [address, setAddress] = useState('');
+  const [userPhotoFromDB, setUserPhotoFromDB] = useState('');
 
   const onSubmit = () => {
     create(userId);
@@ -111,9 +114,9 @@ const HomeScreen: FC = () => {
         </Text>
         {caughtData && (
           <>
-            <Text style={{fontWeight: '600', marginLeft: 10}}>
-              {'Does this look right?\n'}
-            </Text>
+            <Image
+              style={{height: 200, width: 200, marginLeft: 10}}
+              source={{uri: userPhotoFromDB}}></Image>
             <Text style={{marginLeft: 10}}>{'Address: ' + address}</Text>
             <Text style={{marginLeft: 10}}>
               {'Phone number: ' + phoneNumber}
@@ -132,21 +135,27 @@ const HomeScreen: FC = () => {
               }}>
               {"\nLet's start by getting some informaton."}
             </Text>
-            <TouchableOpacity
-              onPress={openPicker}
-              style={{
-                backgroundColor: 'white',
-                minHeight: 50,
-                justifyContent: 'center',
-                borderRadius: 5,
-                marginHorizontal: 10,
-                marginTop: 10,
-                marginBottom: 0,
-              }}>
+            {!userPhoto ? (
+              <TouchableOpacity
+                onPress={openPicker}
+                style={{
+                  backgroundColor: 'white',
+                  minHeight: 50,
+                  justifyContent: 'center',
+                  borderRadius: 5,
+                  marginHorizontal: 10,
+                  marginTop: 10,
+                  marginBottom: 0,
+                }}>
+                <Image
+                  style={{height: 200, width: 200}}
+                  source={require('../../Images/profile-picture-vector.jpeg')}></Image>
+              </TouchableOpacity>
+            ) : (
               <Image
-                style={{height: 200, width: 200}}
-                source={require('../../Images/profile-picture-vector.jpeg')}></Image>
-            </TouchableOpacity>
+                style={{height: 200, width: 200, marginLeft: 10}}
+                source={{uri: userPhoto}}></Image>
+            )}
             <Text style={{marginLeft: 10}}>{'\n\nfull name'}</Text>
             <TextInput
               value={fullName}
