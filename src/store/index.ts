@@ -1,10 +1,12 @@
 import {configureStore} from '@reduxjs/toolkit';
 import {authReducer} from './auth/slice';
 import {globalStoreReducer} from './globalStore/slice';
+import {userPhotoReducer} from './user/slice';
 
 const store = configureStore({
   reducer: {
     auth: authReducer,
+    user: userPhotoReducer,
     globalStore: globalStoreReducer,
   },
 });

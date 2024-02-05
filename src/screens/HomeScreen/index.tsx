@@ -12,10 +12,14 @@ import {onValue, ref, set} from 'firebase/database';
 import styles from './styles';
 import {useAppSelector} from '../../hooks';
 import {db} from '../HomeScreen/FirebaseConfigurations';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 
 const HomeScreen: FC = () => {
   const {navigate} = useNavigation();
+  // const {route} = useRoute();
+  // const {userImage} = route.params;
+  // console.log('userImage=', userImage);
+
   const logout = () => {
     auth().signOut();
   };
@@ -76,6 +80,8 @@ const HomeScreen: FC = () => {
   }, [user]);
 
   const email = useAppSelector(state => state.auth.user?.email);
+  const userPhoto = useAppSelector(state => state.user.userPhoto);
+  console.log('userPhoto=', userPhoto);
   const [fullName, setFullName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [address, setAddress] = useState('');
