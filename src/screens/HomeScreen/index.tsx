@@ -117,11 +117,40 @@ const HomeScreen: FC = () => {
             <Image
               style={{height: 200, width: 200, marginLeft: 10}}
               source={{uri: userPhotoFromDB}}></Image>
-            <Text style={{marginLeft: 10}}>{'Address: ' + address}</Text>
+            <Text style={{marginLeft: 10, marginTop: 10}}>
+              {'Address: ' + address}
+            </Text>
             <Text style={{marginLeft: 10}}>
               {'Phone number: ' + phoneNumber}
             </Text>
             <Text style={{marginLeft: 10}}>{'Full name: ' + fullName}</Text>
+            <View
+              style={{
+                flex: 1,
+                alignItems: 'flex-end',
+              }}>
+              <TouchableOpacity
+                style={{
+                  backgroundColor: 'blue',
+                  borderRadius: 5,
+                  marginRight: 10,
+                  width: 100,
+                }}>
+                <Text
+                  style={{
+                    color: 'white',
+                    fontSize: 12,
+                    fontWeight: '600',
+                    marginBottom: 10,
+                    marginTop: 10,
+                    marginRight: 10,
+                    marginLeft: 10,
+                    textAlign: 'center',
+                  }}>
+                  {'Edit'}
+                </Text>
+              </TouchableOpacity>
+            </View>
           </>
         )}
         {!caughtData && (

@@ -53,7 +53,6 @@ const LoginScreen: FC = () => {
           alignItems: 'center',
           justifyContent: 'center',
         }}>
-        {/* <ImagePicker /> */}
         <Image
           source={require('../../Images/STJ_Logo.jpg')}
           style={{height: 200, width: 200}}></Image>
