@@ -13,14 +13,18 @@ import styles from './styles';
 import {useAppSelector} from '../../hooks';
 import {db} from '../HomeScreen/FirebaseConfigurations';
 import {useNavigation, useRoute} from '@react-navigation/native';
+import {useDispatch} from 'react-redux';
+import {setUserPhoto} from '../../store/user/slice';
 
 const HomeScreen: FC = () => {
   const {navigate} = useNavigation();
   // const {route} = useRoute();
   // const {userImage} = route.params;
   // console.log('userImage=', userImage);
+  const dispatch = useDispatch();
 
   const logout = () => {
+    dispatch(setUserPhoto({userPhoto: null}));
     auth().signOut();
   };
 
@@ -95,12 +99,8 @@ const HomeScreen: FC = () => {
   };
 
   return (
-    <ScrollView style={{flex: 1}}>
-      <View
-        style={{
-          flex: 1,
-          backgroundColor: 'white',
-        }}>
+    <View style={{flex: 1, backgroundColor: 'white'}}>
+      <ScrollView style={{flex: 1, backgroundColor: 'white'}}>
         <Text
           style={{
             textAlign: 'left',
@@ -206,30 +206,30 @@ const HomeScreen: FC = () => {
               }}></TextInput>
           </>
         )}
-      </View>
-      {!caughtData && (
-        <TouchableOpacity
-          onPress={onSubmit}
-          style={{
-            backgroundColor: 'blue',
-            minHeight: 50,
-            justifyContent: 'center',
-            borderRadius: 5,
-            marginHorizontal: 10,
-            marginTop: 10,
-            marginBottom: 0,
-          }}>
-          <Text
+        {!caughtData && (
+          <TouchableOpacity
+            onPress={onSubmit}
             style={{
-              color: 'white',
-              fontSize: 21,
-              fontWeight: '600',
-              textAlign: 'center',
+              backgroundColor: 'blue',
+              minHeight: 50,
+              justifyContent: 'center',
+              borderRadius: 5,
+              marginHorizontal: 10,
+              marginTop: 10,
+              marginBottom: 0,
             }}>
-            {'Submit'}
-          </Text>
-        </TouchableOpacity>
-      )}
+            <Text
+              style={{
+                color: 'white',
+                fontSize: 21,
+                fontWeight: '600',
+                textAlign: 'center',
+              }}>
+              {'Submit'}
+            </Text>
+          </TouchableOpacity>
+        )}
+      </ScrollView>
       <TouchableOpacity
         onPress={logout}
         style={{
@@ -251,7 +251,7 @@ const HomeScreen: FC = () => {
           {'Log Out'}
         </Text>
       </TouchableOpacity>
-    </ScrollView>
+    </View>
   );
 };
 
