@@ -14,11 +14,14 @@ const ImagePicker = () => {
     };
 
     launchImageLibrary(options, response => {
+      console.log('Response = ', response);
       if (response.didCancel) {
         console.log('User cancelled image picker');
       } else if (response.error) {
         console.log('Image picker error: ', response.error);
       } else {
+        console.log('response.uri=', response.uri);
+        console.log('response.assets.[0].uri=', response.assets?.[0]?.uri);
         let imageUri = response.uri || response.assets?.[0]?.uri;
         setSelectedImage(imageUri);
       }

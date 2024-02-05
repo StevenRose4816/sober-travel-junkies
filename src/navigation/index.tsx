@@ -5,6 +5,7 @@ import {HomeScreen, LoginScreen, SignupScreen} from '../screens';
 import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
 import {IUser, setUser} from '../store/auth/slice';
 import {useAppDispatch, useAppSelector} from '../hooks';
+import ImagePicker from '../components/ImagePicker.jsx';
 
 const RootStack = createNativeStackNavigator();
 
@@ -43,6 +44,7 @@ const RootNavigator: FC = () => {
       {!!user ? (
         <RootStack.Navigator>
           <RootStack.Screen name={'Home Screen'} component={HomeScreen} />
+          <RootStack.Screen name={'Image Picker'} component={ImagePicker} />
         </RootStack.Navigator>
       ) : (
         <RootStack.Navigator>

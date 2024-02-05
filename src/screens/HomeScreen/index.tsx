@@ -12,10 +12,16 @@ import {onValue, ref, set} from 'firebase/database';
 import styles from './styles';
 import {useAppSelector} from '../../hooks';
 import {db} from '../HomeScreen/FirebaseConfigurations';
+import {useNavigation} from '@react-navigation/native';
 
 const HomeScreen: FC = () => {
+  const {navigate} = useNavigation();
   const logout = () => {
     auth().signOut();
+  };
+
+  const openPicker = () => {
+    navigate('Image Picker');
   };
 
   const user = auth().currentUser;
@@ -120,9 +126,21 @@ const HomeScreen: FC = () => {
               }}>
               {"\nLet's start by getting some informaton."}
             </Text>
-            <Image
-              style={{height: 200, width: 200, marginLeft: 10}}
-              source={require('../../Images/profile-picture-vector.jpeg')}></Image>
+            <TouchableOpacity
+              onPress={openPicker}
+              style={{
+                backgroundColor: 'white',
+                minHeight: 50,
+                justifyContent: 'center',
+                borderRadius: 5,
+                marginHorizontal: 10,
+                marginTop: 10,
+                marginBottom: 0,
+              }}>
+              <Image
+                style={{height: 200, width: 200}}
+                source={require('../../Images/profile-picture-vector.jpeg')}></Image>
+            </TouchableOpacity>
             <Text style={{marginLeft: 10}}>{'\n\nfull name'}</Text>
             <TextInput
               value={fullName}
