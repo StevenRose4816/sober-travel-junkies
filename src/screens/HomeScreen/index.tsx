@@ -6,6 +6,7 @@ import {
   TextInput,
   Image,
   ScrollView,
+  Modal,
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import {onValue, ref, set} from 'firebase/database';
@@ -35,6 +36,11 @@ const HomeScreen: FC = () => {
   const user = auth().currentUser;
   const userId = auth().currentUser?.uid;
   const [caughtData, setCaughtData] = useState(undefined);
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const toggleModal = () => {
+    setModalVisible(!modalVisible);
+  };
 
   function create(userId: string | undefined) {
     set(ref(db, 'users/' + userId), {
@@ -93,6 +99,10 @@ const HomeScreen: FC = () => {
   const [address, setAddress] = useState('');
   const [userPhotoFromDB, setUserPhotoFromDB] = useState('');
 
+  const onEditPress = () => {
+    setModalVisible(true);
+  };
+
   const onSubmit = () => {
     create(userId);
     console.log('pressed');
@@ -130,6 +140,7 @@ const HomeScreen: FC = () => {
                 alignItems: 'flex-end',
               }}>
               <TouchableOpacity
+                onPress={onEditPress}
                 style={{
                   backgroundColor: 'blue',
                   borderRadius: 5,
@@ -280,6 +291,55 @@ const HomeScreen: FC = () => {
           {'Log Out'}
         </Text>
       </TouchableOpacity>
+      <Modal
+        visible={modalVisible}
+        animationType={'slide'}
+        transparent={true}
+        onRequestClose={toggleModal}>
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          }}>
+          <View
+            style={{
+              backgroundColor: 'darkorange',
+              minHeight: 300,
+              width: '80%',
+              justifyContent: 'center',
+              borderRadius: 5,
+              padding: 20,
+            }}>
+            <Text style={{textAlign: 'center', color: 'white'}}>
+              {'hi' + '\n'}
+            </Text>
+            <TouchableOpacity
+              onPress={toggleModal}
+              style={{
+                marginTop: 20,
+                backgroundColor: 'blue',
+                minHeight: 50,
+                justifyContent: 'center',
+                borderRadius: 5,
+                marginHorizontal: 10,
+              }}>
+              <Text
+                style={{
+                  textAlign: 'center',
+                  color: 'white',
+                  fontSize: 21,
+                  fontWeight: '600',
+                  backgroundColor: 'blue',
+                  borderRadius: 5,
+                }}>
+                {'Close'}
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
