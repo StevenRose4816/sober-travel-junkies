@@ -171,6 +171,7 @@ const HomeScreen: FC = () => {
                   backgroundColor: 'blue',
                   borderRadius: 5,
                   marginRight: 10,
+                  marginBottom: 10,
                   width: 100,
                 }}>
                 <Text
@@ -185,6 +186,28 @@ const HomeScreen: FC = () => {
                     textAlign: 'center',
                   }}>
                   {'Edit'}
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={onSubmit}
+                style={{
+                  backgroundColor: 'blue',
+                  borderRadius: 5,
+                  marginRight: 10,
+                  width: 100,
+                }}>
+                <Text
+                  style={{
+                    color: 'white',
+                    fontSize: 12,
+                    fontWeight: '600',
+                    marginBottom: 10,
+                    marginTop: 10,
+                    marginRight: 10,
+                    marginLeft: 10,
+                    textAlign: 'center',
+                  }}>
+                  {'Submit'}
                 </Text>
               </TouchableOpacity>
             </View>
