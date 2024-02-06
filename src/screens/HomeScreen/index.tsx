@@ -226,7 +226,7 @@ const HomeScreen: FC = () => {
                 marginTop: 10,
                 marginBottom: 0,
               }}>
-              {!userPhoto ? (
+              {!userPhoto && !userPhotoFromDB ? (
                 <Image
                   style={{height: 200, width: 200}}
                   source={require('../../Images/profile-picture-vector.jpeg')}></Image>
@@ -236,7 +236,7 @@ const HomeScreen: FC = () => {
                   source={{uri: userPhoto || userPhotoFromDB}}></Image>
               )}
             </TouchableOpacity>
-            <Text style={{marginLeft: 10}}>{'\n\nfull name'}</Text>
+            <Text style={{marginLeft: 10, marginTop: 30}}>{'full name'}</Text>
             <TextInput
               value={fullName}
               placeholder=" full name"
