@@ -59,21 +59,6 @@ const HomeScreen: FC = () => {
       });
   }
 
-  function update(userId: string | undefined) {
-    set(ref(db, 'users/' + userId), {
-      username: fullName,
-      email: email,
-      address: address,
-      phoneNumber: phoneNumber,
-    })
-      .then(() => {
-        console.log('db updated');
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  }
-
   function readData() {
     const countRef = ref(db, 'users/' + userId);
     onValue(countRef, snapshot => {
@@ -242,7 +227,7 @@ const HomeScreen: FC = () => {
               ) : (
                 <Image
                   style={{height: 200, width: 200, marginLeft: 10}}
-                  source={{uri: userPhotoFromDB || userPhoto}}></Image>
+                  source={{uri: userPhoto || userPhotoFromDB}}></Image>
               )}
             </TouchableOpacity>
             <Text style={{marginLeft: 10}}>{'\n\nfull name'}</Text>
