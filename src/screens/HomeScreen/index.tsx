@@ -72,6 +72,12 @@ const HomeScreen: FC = () => {
       console.log('caught data=', caughtData);
     });
   }
+  //new user inputs username and password and gets directed to this screen with only 'Hello..'
+  useEffect(() => {
+    if (!caughtData && !flag) {
+      setFlag(true);
+    }
+  }, [caughtData, flag]);
 
   useEffect(() => {
     readData();
@@ -226,7 +232,7 @@ const HomeScreen: FC = () => {
                   source={require('../../Images/profile-picture-vector.jpeg')}></Image>
               ) : (
                 <Image
-                  style={{height: 200, width: 200, marginLeft: 10}}
+                  style={{height: 200, width: 200}}
                   source={{uri: userPhoto || userPhotoFromDB}}></Image>
               )}
             </TouchableOpacity>
