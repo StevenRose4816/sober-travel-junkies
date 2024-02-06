@@ -201,27 +201,27 @@ const HomeScreen: FC = () => {
               }}>
               {"\nLet's get some informaton."}
             </Text>
-            {!userPhotoFromDB ? (
-              <TouchableOpacity
-                onPress={openPicker}
-                style={{
-                  backgroundColor: 'white',
-                  minHeight: 50,
-                  justifyContent: 'center',
-                  borderRadius: 5,
-                  marginHorizontal: 10,
-                  marginTop: 10,
-                  marginBottom: 0,
-                }}>
+            <TouchableOpacity
+              onPress={openPicker}
+              style={{
+                backgroundColor: 'white',
+                minHeight: 50,
+                justifyContent: 'center',
+                borderRadius: 5,
+                marginHorizontal: 10,
+                marginTop: 10,
+                marginBottom: 0,
+              }}>
+              {!userPhoto ? (
                 <Image
                   style={{height: 200, width: 200}}
                   source={require('../../Images/profile-picture-vector.jpeg')}></Image>
-              </TouchableOpacity>
-            ) : (
-              <Image
-                style={{height: 200, width: 200, marginLeft: 10}}
-                source={{uri: userPhotoFromDB}}></Image>
-            )}
+              ) : (
+                <Image
+                  style={{height: 200, width: 200, marginLeft: 10}}
+                  source={{uri: userPhotoFromDB || userPhoto}}></Image>
+              )}
+            </TouchableOpacity>
             <Text style={{marginLeft: 10}}>{'\n\nfull name'}</Text>
             <TextInput
               value={fullName}
