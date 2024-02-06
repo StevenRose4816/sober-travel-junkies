@@ -132,14 +132,26 @@ const HomeScreen: FC = () => {
         </Text>
         {caughtData && !flag && (
           <>
-            {userPhotoFromDB ? (
+            {userPhotoFromDB || userPhoto ? (
               <Image
                 style={{height: 200, width: 200, marginLeft: 10}}
-                source={{uri: userPhotoFromDB}}></Image>
+                source={{uri: userPhotoFromDB || userPhoto}}></Image>
             ) : (
-              <Image
-                style={{height: 200, width: 200, marginLeft: 10}}
-                source={{uri: userPhoto}}></Image>
+              <TouchableOpacity
+                onPress={openPicker}
+                style={{
+                  backgroundColor: 'white',
+                  minHeight: 50,
+                  justifyContent: 'center',
+                  borderRadius: 5,
+                  marginHorizontal: 10,
+                  marginTop: 10,
+                  marginBottom: 0,
+                }}>
+                <Image
+                  style={{height: 200, width: 200}}
+                  source={require('../../Images/profile-picture-vector.jpeg')}></Image>
+              </TouchableOpacity>
             )}
             <Text style={{marginLeft: 10, marginTop: 10}}>
               {'Address: ' + address}
