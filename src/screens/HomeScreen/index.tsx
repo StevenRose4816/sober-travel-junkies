@@ -37,6 +37,7 @@ const HomeScreen: FC = () => {
   const userId = auth().currentUser?.uid;
   const [caughtData, setCaughtData] = useState(undefined);
   const [modalVisible, setModalVisible] = useState(false);
+  const [flag, setFlag] = useState(true);
 
   const toggleModal = () => {
     setModalVisible(!modalVisible);
@@ -51,7 +52,7 @@ const HomeScreen: FC = () => {
       userPhoto: userPhoto,
     })
       .then(() => {
-        console.log('db updated yo');
+        console.log('db created');
       })
       .catch(error => {
         console.log(error);
@@ -66,7 +67,7 @@ const HomeScreen: FC = () => {
       phoneNumber: phoneNumber,
     })
       .then(() => {
-        console.log('data updated db');
+        console.log('db updated');
       })
       .catch(error => {
         console.log(error);
@@ -104,8 +105,15 @@ const HomeScreen: FC = () => {
   };
 
   const onSubmit = () => {
+    //create and call modal here that lets user know info has been successfully submitted.
+    setFlag(false);
     create(userId);
     console.log('pressed');
+  };
+
+  const onPressYes = () => {
+    setFlag(true);
+    setModalVisible(false);
   };
 
   return (
@@ -120,9 +128,9 @@ const HomeScreen: FC = () => {
             marginTop: 10,
             marginHorizontal: 10,
           }}>
-          {'Hello ' + email + '!\n'}
+          {'Hello ' + (fullName || email) + '!\n'}
         </Text>
-        {caughtData && (
+        {caughtData && !flag && (
           <>
             <Image
               style={{height: 200, width: 200, marginLeft: 10}}
@@ -164,7 +172,7 @@ const HomeScreen: FC = () => {
             </View>
           </>
         )}
-        {!caughtData && (
+        {flag && (
           <>
             <Text
               style={{
@@ -173,7 +181,7 @@ const HomeScreen: FC = () => {
                 marginBottom: 20,
                 fontWeight: '600',
               }}>
-              {"\nLet's start by getting some informaton."}
+              {"\nLet's get some informaton."}
             </Text>
             {!userPhoto ? (
               <TouchableOpacity
@@ -246,7 +254,7 @@ const HomeScreen: FC = () => {
               }}></TextInput>
           </>
         )}
-        {!caughtData && (
+        {flag && (
           <TouchableOpacity
             onPress={onSubmit}
             style={{
@@ -313,8 +321,30 @@ const HomeScreen: FC = () => {
               padding: 20,
             }}>
             <Text style={{textAlign: 'center', color: 'white'}}>
-              {'hi' + '\n'}
+              {'Do you want to edit your information?' + '\n'}
             </Text>
+            <TouchableOpacity
+              onPress={onPressYes}
+              style={{
+                marginTop: 20,
+                backgroundColor: 'blue',
+                minHeight: 50,
+                justifyContent: 'center',
+                borderRadius: 5,
+                marginHorizontal: 10,
+              }}>
+              <Text
+                style={{
+                  textAlign: 'center',
+                  color: 'white',
+                  fontSize: 21,
+                  fontWeight: '600',
+                  backgroundColor: 'blue',
+                  borderRadius: 5,
+                }}>
+                {'Yes'}
+              </Text>
+            </TouchableOpacity>
             <TouchableOpacity
               onPress={toggleModal}
               style={{
@@ -334,7 +364,7 @@ const HomeScreen: FC = () => {
                   backgroundColor: 'blue',
                   borderRadius: 5,
                 }}>
-                {'Close'}
+                {'No'}
               </Text>
             </TouchableOpacity>
           </View>
