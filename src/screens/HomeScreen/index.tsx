@@ -37,7 +37,7 @@ const HomeScreen: FC = () => {
   const userId = auth().currentUser?.uid;
   const [caughtData, setCaughtData] = useState(undefined);
   const [modalVisible, setModalVisible] = useState(false);
-  const [flag, setFlag] = useState(true);
+  const [flag, setFlag] = useState(false);
 
   const toggleModal = () => {
     setModalVisible(!modalVisible);
@@ -105,7 +105,7 @@ const HomeScreen: FC = () => {
   };
 
   const onSubmit = () => {
-    //create and call modal here that lets user know info has been successfully submitted.
+    //create and call modal here that lets user know info has been successfully
     setFlag(false);
     create(userId);
     console.log('pressed');
@@ -132,9 +132,15 @@ const HomeScreen: FC = () => {
         </Text>
         {caughtData && !flag && (
           <>
-            <Image
-              style={{height: 200, width: 200, marginLeft: 10}}
-              source={{uri: userPhotoFromDB}}></Image>
+            {userPhotoFromDB ? (
+              <Image
+                style={{height: 200, width: 200, marginLeft: 10}}
+                source={{uri: userPhotoFromDB}}></Image>
+            ) : (
+              <Image
+                style={{height: 200, width: 200, marginLeft: 10}}
+                source={{uri: userPhoto}}></Image>
+            )}
             <Text style={{marginLeft: 10, marginTop: 10}}>
               {'Address: ' + address}
             </Text>
@@ -183,7 +189,7 @@ const HomeScreen: FC = () => {
               }}>
               {"\nLet's get some informaton."}
             </Text>
-            {!userPhoto ? (
+            {!userPhotoFromDB ? (
               <TouchableOpacity
                 onPress={openPicker}
                 style={{
@@ -202,7 +208,7 @@ const HomeScreen: FC = () => {
             ) : (
               <Image
                 style={{height: 200, width: 200, marginLeft: 10}}
-                source={{uri: userPhoto}}></Image>
+                source={{uri: userPhotoFromDB}}></Image>
             )}
             <Text style={{marginLeft: 10}}>{'\n\nfull name'}</Text>
             <TextInput
