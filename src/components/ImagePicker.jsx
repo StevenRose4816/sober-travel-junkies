@@ -10,6 +10,12 @@ const ImagePicker = () => {
   const {navigate} = useNavigation();
   const dispatch = useDispatch();
 
+  const navigation = useNavigation();
+  const routes = navigation.getState()?.routes;
+  const prevRoute = routes[routes.length - 2];
+  console.log('routes=', routes);
+  console.log('previous route=', prevRoute);
+
   const navAway = () => {
     dispatch(setUserPhoto({userPhoto: selectedImage}));
     navigate('Home Screen');

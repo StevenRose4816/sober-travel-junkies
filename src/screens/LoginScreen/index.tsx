@@ -10,7 +10,7 @@ import {
   Image,
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import {useAppSelector} from '../../hooks';
 
 const LoginScreen: FC = () => {
@@ -35,6 +35,16 @@ const LoginScreen: FC = () => {
   };
 
   const {navigate} = useNavigation();
+  const navigation = useNavigation();
+  const route = useRoute();
+  const routes = navigation.getState()?.routes;
+  const prevRoute = routes[routes.length - 2];
+
+  useEffect(() => {
+    console.log('current route is ', route);
+    console.log('routes=', routes);
+    console.log('previous route=', prevRoute);
+  }, [routes, prevRoute]);
 
   const login = async () => {
     try {

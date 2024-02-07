@@ -19,10 +19,17 @@ import {setUserPhoto} from '../../store/user/slice';
 
 const HomeScreen: FC = () => {
   const {navigate} = useNavigation();
-  // const {route} = useRoute();
-  // const {userImage} = route.params;
-  // console.log('userImage=', userImage);
+  const navigation = useNavigation();
   const dispatch = useDispatch();
+  const route = useRoute();
+  const routes = navigation.getState()?.routes;
+  const prevRoute = routes[routes.length - 2];
+
+  useEffect(() => {
+    console.log('current route is ', route);
+    console.log('routes=', routes);
+    console.log('previous route=', prevRoute);
+  }, [routes, prevRoute, navigation]);
 
   const logout = () => {
     dispatch(setUserPhoto({userPhoto: null}));
@@ -73,15 +80,46 @@ const HomeScreen: FC = () => {
     });
   }
   //new user inputs username and password and gets directed to this screen with only 'Hello..'
-  useEffect(() => {
-    if (!caughtData && !flag) {
-      setFlag(true);
-    }
-  }, [caughtData, flag]);
+  // useEffect(() => {
+  //   if (!caughtData && !flag) {
+  //     setFlag(true);
+  //   }
+  // }, [caughtData, flag]);
 
   useEffect(() => {
     readData();
   }, [user]);
+
+  useEffect(() => {
+    console.log('flag: ', flag, ' and ', 'caughtData: ', caughtData);
+  }, [flag, caughtData]);
+
+  useEffect(() => {
+    if (!flag && !caughtData) {
+      if (
+        fullName === '' &&
+        phoneNumber === '' &&
+        address === '' &&
+        userPhotoFromDB === ''
+      ) {
+        console.log(
+          'flag is flase, all user variables are undefined, no caught data from DB, must be a new user!',
+        );
+        setFlag(true);
+      } else {
+        console.log(
+          'fullName: ',
+          typeof fullName,
+          'phoneNumber: ',
+          typeof phoneNumber,
+          'address: ',
+          typeof address,
+          'userPhotoFromDB: ',
+          typeof userPhotoFromDB,
+        );
+      }
+    }
+  }, []);
 
   const email = useAppSelector(state => state.auth.user?.email);
   const userPhoto = useAppSelector(state => state.user.userPhoto);
