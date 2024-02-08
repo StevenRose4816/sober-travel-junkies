@@ -10,7 +10,6 @@ import {
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import {onValue, ref, set} from 'firebase/database';
-import styles from './styles';
 import {useAppSelector} from '../../hooks';
 import {db} from '../HomeScreen/FirebaseConfigurations';
 import {useNavigation, useRoute} from '@react-navigation/native';
@@ -39,6 +38,7 @@ const HomeScreen: FC = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [flag, setFlag] = useState(false);
   const [dataFlag, setDataFlag] = useState(false);
+  const [showBackButton, setShowBackButton] = useState(false);
 
   const toggleModal = () => {
     setModalVisible(!modalVisible);
@@ -92,15 +92,32 @@ const HomeScreen: FC = () => {
   // };
 
   useEffect(() => {
+    navigation.setOptions({
+      headerLeft: () =>
+        showBackButton && (
+          <TouchableOpacity
+            onPress={onPressGoBack}
+            style={{
+              backgroundColor: 'blue',
+              borderRadius: 5,
+              marginRight: 10,
+              width: 75,
+            }}>
+            <Text style={{color: 'white', textAlign: 'center'}}>
+              {'Go back'}
+            </Text>
+          </TouchableOpacity>
+        ),
+    });
+  }, [navigation, showBackButton]);
+
+  useEffect(() => {
     readData();
   }, [user]);
 
   useEffect(() => {
-    console.log('dataFlag: ', dataFlag);
-  }, [dataFlag]);
-
-  useEffect(() => {
     if (dataFlag) {
+      console.log('dataFlag: ', dataFlag);
       console.log('We have data.');
     } else if (!dataFlag) {
       console.log('No data here.');
@@ -127,9 +144,15 @@ const HomeScreen: FC = () => {
     console.log('pressed');
   };
 
+  const onPressGoBack = () => {
+    setShowBackButton(false);
+    setDataFlag(true);
+  };
+
   const onPressYes = () => {
     setDataFlag(false);
     setModalVisible(false);
+    setShowBackButton(true);
   };
 
   return (
