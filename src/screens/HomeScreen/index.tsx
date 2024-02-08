@@ -90,17 +90,23 @@ const HomeScreen: FC = () => {
 
   useEffect(() => {
     if (
-      caughtData === undefined ||
-      (null && fullName === '' && phoneNumber === '' && address === '')
+      caughtData === undefined &&
+      fullName === '' &&
+      phoneNumber === '' &&
+      address === ''
+    ) {
+      console.log('new user');
+      setFlag(true);
+    } else if (
+      caughtData === null &&
+      fullName === '' &&
+      phoneNumber === '' &&
+      address === ''
     ) {
       console.log('new user');
       setFlag(true);
     } else {
-      console.log('not new user');
-      console.log(fullName === '');
-      console.log(phoneNumber === '');
-      console.log(address === '');
-      console.log(caughtData === (undefined || null));
+      console.log('NOT NEW USER');
     }
   }, []);
 
