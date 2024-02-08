@@ -25,12 +25,6 @@ const HomeScreen: FC = () => {
   const routes = navigation.getState()?.routes;
   const prevRoute = routes[routes.length - 2];
 
-  // useEffect(() => {
-  //   console.log('current route is ', route);
-  //   console.log('routes=', routes);
-  //   console.log('previous route=', prevRoute);
-  // }, [routes, prevRoute, navigation]);
-
   const logout = () => {
     dispatch(setUserPhoto({userPhoto: null}));
     auth().signOut();
@@ -42,9 +36,9 @@ const HomeScreen: FC = () => {
 
   const user = auth().currentUser;
   const userId = auth().currentUser?.uid;
-  const [caughtData, setCaughtData] = useState(undefined);
   const [modalVisible, setModalVisible] = useState(false);
   const [flag, setFlag] = useState(false);
+  const [dataFlag, setDataFlag] = useState(false);
 
   const toggleModal = () => {
     setModalVisible(!modalVisible);
@@ -70,45 +64,50 @@ const HomeScreen: FC = () => {
     const countRef = ref(db, 'users/' + userId);
     onValue(countRef, snapshot => {
       const data = snapshot.val();
-      setCaughtData(data);
+      if (!!data) {
+        setDataFlag(true);
+        console.log('data: ', data);
+      }
       setAddress(data.address);
       setFullName(data.username);
       setPhoneNumber(data.phoneNumber);
       setUserPhotoFromDB(data.userPhoto);
-      console.log('Here is the returned data: ', data);
-      console.log('caught data=', caughtData);
     });
   }
+
+  // const flipFlag = () => {
+  //   if (flag) {
+  //     setFlag(false);
+  //   } else if (!flag) {
+  //     setFlag(true);
+  //   }
+  // };
+
+  // const flipDataFlag = () => {
+  //   if (dataFlag) {
+  //     setDataFlag(false);
+  //   } else if (!flag) {
+  //     setDataFlag(true);
+  //   }
+  // };
 
   useEffect(() => {
     readData();
   }, [user]);
 
   useEffect(() => {
-    console.log('flag: ', flag, ' and ', 'caughtData: ', caughtData);
-  }, [flag, caughtData]);
+    console.log('dataFlag: ', dataFlag);
+  }, [dataFlag]);
 
   useEffect(() => {
-    if (
-      caughtData === undefined &&
-      fullName === '' &&
-      phoneNumber === '' &&
-      address === ''
-    ) {
-      console.log('new user');
-      setFlag(true);
-    } else if (
-      caughtData === null &&
-      fullName === '' &&
-      phoneNumber === '' &&
-      address === ''
-    ) {
-      console.log('new user');
-      setFlag(true);
+    if (dataFlag) {
+      console.log('We have data.');
+    } else if (!dataFlag) {
+      console.log('No data here.');
     } else {
-      console.log('NOT NEW USER');
+      console.log('How did we get here?');
     }
-  }, []);
+  }, [dataFlag]);
 
   const email = useAppSelector(state => state.auth.user?.email);
   const userPhoto = useAppSelector(state => state.user.userPhoto);
@@ -129,7 +128,7 @@ const HomeScreen: FC = () => {
   };
 
   const onPressYes = () => {
-    setFlag(true);
+    setDataFlag(false);
     setModalVisible(false);
   };
 
@@ -147,7 +146,7 @@ const HomeScreen: FC = () => {
           }}>
           {'Hello ' + (fullName || email) + '!\n'}
         </Text>
-        {caughtData && !flag && (
+        {dataFlag && (
           <>
             {userPhotoFromDB || userPhoto ? (
               <Image
@@ -230,7 +229,7 @@ const HomeScreen: FC = () => {
             </View>
           </>
         )}
-        {flag && (
+        {!dataFlag && (
           <>
             <Text
               style={{
@@ -312,7 +311,7 @@ const HomeScreen: FC = () => {
               }}></TextInput>
           </>
         )}
-        {flag && (
+        {!dataFlag && (
           <TouchableOpacity
             onPress={onSubmit}
             style={{
