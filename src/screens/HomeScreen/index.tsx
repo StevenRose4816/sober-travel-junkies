@@ -25,11 +25,11 @@ const HomeScreen: FC = () => {
   const routes = navigation.getState()?.routes;
   const prevRoute = routes[routes.length - 2];
 
-  useEffect(() => {
-    console.log('current route is ', route);
-    console.log('routes=', routes);
-    console.log('previous route=', prevRoute);
-  }, [routes, prevRoute, navigation]);
+  // useEffect(() => {
+  //   console.log('current route is ', route);
+  //   console.log('routes=', routes);
+  //   console.log('previous route=', prevRoute);
+  // }, [routes, prevRoute, navigation]);
 
   const logout = () => {
     dispatch(setUserPhoto({userPhoto: null}));
@@ -79,12 +79,6 @@ const HomeScreen: FC = () => {
       console.log('caught data=', caughtData);
     });
   }
-  //new user inputs username and password and gets directed to this screen with only 'Hello..'
-  // useEffect(() => {
-  //   if (!caughtData && !flag) {
-  //     setFlag(true);
-  //   }
-  // }, [caughtData, flag]);
 
   useEffect(() => {
     readData();
@@ -95,35 +89,25 @@ const HomeScreen: FC = () => {
   }, [flag, caughtData]);
 
   useEffect(() => {
-    if (!flag && !caughtData) {
-      if (
-        fullName === '' &&
-        phoneNumber === '' &&
-        address === '' &&
-        userPhotoFromDB === ''
-      ) {
-        console.log(
-          'flag is flase, all user variables are undefined, no caught data from DB, must be a new user!',
-        );
-        setFlag(true);
-      } else {
-        console.log(
-          'fullName: ',
-          typeof fullName,
-          'phoneNumber: ',
-          typeof phoneNumber,
-          'address: ',
-          typeof address,
-          'userPhotoFromDB: ',
-          typeof userPhotoFromDB,
-        );
-      }
+    if (
+      caughtData === (undefined || null) &&
+      fullName === '' &&
+      phoneNumber === '' &&
+      address === ''
+    ) {
+      console.log('new user');
+      setFlag(true);
+    } else {
+      console.log('not new user');
+      console.log(fullName === '');
+      console.log(phoneNumber === '');
+      console.log(address === '');
+      console.log(caughtData === (undefined || null));
     }
   }, []);
 
   const email = useAppSelector(state => state.auth.user?.email);
   const userPhoto = useAppSelector(state => state.user.userPhoto);
-  console.log('userPhoto=', userPhoto);
   const [fullName, setFullName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [address, setAddress] = useState('');
@@ -390,8 +374,9 @@ const HomeScreen: FC = () => {
               borderRadius: 5,
               padding: 20,
             }}>
-            <Text style={{textAlign: 'center', color: 'white'}}>
-              {'Do you want to edit your information?' + '\n'}
+            <Text
+              style={{textAlign: 'center', color: 'white', marginBottom: 20}}>
+              {'Do you want to edit your information?'}
             </Text>
             <TouchableOpacity
               onPress={onPressYes}
