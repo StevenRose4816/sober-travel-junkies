@@ -145,17 +145,7 @@ const HomeScreen: FC = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [address, setAddress] = useState('');
   const [userPhotoFromDB, setUserPhotoFromDB] = useState('');
-
-  const [successMessage, setSuccessMessage] = useState(false);
-
-  // setModalMessage(
-  //   'Does this look correct? Name: ' +
-  //     fullName +
-  //     ' Phone Number: ' +
-  //     phoneNumber +
-  //     ' Address: ' +
-  //     address,
-  // );
+  // const [successMessage, setSuccessMessage] = useState(false);
 
   const onEditPress = () => {
     setModalVisible(true);
@@ -163,8 +153,9 @@ const HomeScreen: FC = () => {
 
   const onSubmit = () => {
     //create and call modal here that lets user know info has been successfully
-    setModalVisible(true);
+    // setModalVisible(true);
     setFlag(false);
+    create(userId);
     console.log('pressed');
   };
 
@@ -174,21 +165,21 @@ const HomeScreen: FC = () => {
   };
 
   const onPressYes = () => {
-    setSuccessMessage(true);
+    // setSuccessMessage(true);
     setDataFlag(false);
     setModalVisible(false);
     setShowBackButton(true);
-    create(userId);
+    // create(userId);
   };
 
-  const onPressYesOther = () => {
-    setSuccessMessage(false);
-    setDataFlag(false);
-    setModalVisible(false);
-    setShowBackButton(false);
-    console.log('pressed');
-    create(userId);
-  };
+  // const onPressYesOther = () => {
+  //   setSuccessMessage(false);
+  //   setDataFlag(false);
+  //   setModalVisible(false);
+  //   setShowBackButton(false);
+  //   console.log('pressed');
+  //   create(userId);
+  // };
 
   return (
     <View style={{flex: 1, backgroundColor: 'white'}}>
@@ -353,7 +344,7 @@ const HomeScreen: FC = () => {
                 borderWidth: 1,
                 borderColor: 'black',
               }}></TextInput>
-            <Text style={{marginLeft: 10}}>{'\naddress'}</Text>
+            <Text style={{marginLeft: 10, marginTop: 10}}>{'address'}</Text>
             <TextInput
               value={address}
               placeholder=" address"
@@ -416,7 +407,11 @@ const HomeScreen: FC = () => {
               borderRadius: 5,
               padding: 20,
             }}>
-            {!successMessage ? (
+            <Text
+              style={{textAlign: 'center', color: 'white', marginBottom: 20}}>
+              {'Do you want to edit your information?'}
+            </Text>
+            {/* {!successMessage ? (
               <Text
                 style={{textAlign: 'center', color: 'white', marginBottom: 20}}>
                 {'Do you want to edit your information?'}
@@ -431,9 +426,10 @@ const HomeScreen: FC = () => {
                   ' Address: ' +
                   address}
               </Text>
-            )}
+            )} */}
             <TouchableOpacity
-              onPress={!successMessage ? onPressYes : onPressYesOther}
+              // onPress={!successMessage ? onPressYes : onPressYesOther}
+              onPress={onPressYes}
               style={{
                 marginTop: 20,
                 backgroundColor: 'blue',
