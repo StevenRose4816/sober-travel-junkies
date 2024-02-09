@@ -131,6 +131,8 @@ const HomeScreen: FC = () => {
     if (dataFlag) {
       console.log('dataFlag: ', dataFlag);
       console.log('We have data.');
+      console.log('userPhotoFromDB: ', userPhotoFromDB);
+      console.log('userPhoto: ', userPhoto);
     } else if (!dataFlag) {
       console.log('No data here.');
     } else {
@@ -150,13 +152,13 @@ const HomeScreen: FC = () => {
     setModalVisible(true);
   };
 
-  // const toggleDataFlag = () => {
-  //   if (dataFlag) {
-  //     setDataFlag(false);
-  //   } else if (!dataFlag) {
-  //     setDataFlag(true);
-  //   }
-  // };
+  const toggleDataFlag = () => {
+    if (dataFlag) {
+      setDataFlag(false);
+    } else if (!dataFlag) {
+      setDataFlag(true);
+    }
+  };
 
   const onSubmit = () => {
     if (!dataFlag) {
@@ -165,12 +167,14 @@ const HomeScreen: FC = () => {
     //create and call modal here that lets user know info has been successfully
     // setModalVisible(true);
     create(userId);
+    readData();
     console.log('pressed');
   };
 
   const onPressGoBack = () => {
     setShowBackButton(false);
-    setDataFlag(true);
+    // setDataFlag(true);
+    toggleDataFlag();
   };
 
   const onPressYes = () => {
