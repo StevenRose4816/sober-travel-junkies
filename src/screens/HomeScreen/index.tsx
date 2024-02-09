@@ -20,9 +20,6 @@ const HomeScreen: FC = () => {
   const {navigate} = useNavigation();
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  // const route = useRoute();
-  // const routes = navigation.getState()?.routes;
-  // const prevRoute = routes[routes.length - 2];
 
   const logout = () => {
     dispatch(setUserPhoto({userPhoto: null}));
@@ -84,8 +81,7 @@ const HomeScreen: FC = () => {
             style={{
               backgroundColor: 'blue',
               borderRadius: 5,
-              marginRight: 10,
-              width: 75,
+              width: 65,
             }}>
             <Text
               style={{
@@ -105,7 +101,6 @@ const HomeScreen: FC = () => {
           style={{
             backgroundColor: 'blue',
             borderRadius: 5,
-            marginRight: 10,
             width: 65,
           }}>
           <Text

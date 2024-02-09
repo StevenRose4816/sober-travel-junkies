@@ -85,7 +85,6 @@ const ImagePicker = () => {
               borderRadius: 5,
               marginHorizontal: 10,
               marginTop: 20,
-              marginBottom: 20,
             }}>
             <Text
               style={{
@@ -99,9 +98,49 @@ const ImagePicker = () => {
           </TouchableOpacity>
         </>
       )}
-      <View style={{marginTop: 20}}>
-        <Button title="Choose from Device" onPress={openImagePicker} />
-        <Button title="Open Camera" onPress={handleCameraLaunch} />
+      <View
+        style={{marginTop: 20, flexDirection: 'row', justifyContent: 'center'}}>
+        {/* <Button title="Choose from Device" onPress={openImagePicker} />
+        <Button title="Open Camera" onPress={handleCameraLaunch} /> */}
+        <TouchableOpacity
+          style={{
+            backgroundColor: 'blue',
+            borderRadius: 5,
+            width: 150,
+            marginRight: 10,
+            marginBottom: 10,
+          }}
+          onPress={openImagePicker}>
+          <Text
+            style={{
+              textAlign: 'center',
+              color: 'white',
+              marginTop: 5,
+              marginBottom: 5,
+              fontSize: 12,
+            }}>
+            {'Choose from Device'}
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{
+            backgroundColor: 'blue',
+            borderRadius: 5,
+            width: 150,
+            marginBottom: 10,
+          }}
+          onPress={handleCameraLaunch}>
+          <Text
+            style={{
+              textAlign: 'center',
+              color: 'white',
+              marginTop: 5,
+              marginBottom: 5,
+              fontSize: 12,
+            }}>
+            {'Open Camera'}
+          </Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
