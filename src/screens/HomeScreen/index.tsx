@@ -20,9 +20,9 @@ const HomeScreen: FC = () => {
   const {navigate} = useNavigation();
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const route = useRoute();
-  const routes = navigation.getState()?.routes;
-  const prevRoute = routes[routes.length - 2];
+  // const route = useRoute();
+  // const routes = navigation.getState()?.routes;
+  // const prevRoute = routes[routes.length - 2];
 
   const logout = () => {
     dispatch(setUserPhoto({userPhoto: null}));
@@ -94,6 +94,7 @@ const HomeScreen: FC = () => {
                 textAlign: 'center',
                 marginTop: 5,
                 marginBottom: 5,
+                fontSize: 12,
               }}>
               {'Go back'}
             </Text>
@@ -114,6 +115,7 @@ const HomeScreen: FC = () => {
               textAlign: 'center',
               marginTop: 5,
               marginBottom: 5,
+              fontSize: 12,
             }}>
             {'Log out'}
           </Text>

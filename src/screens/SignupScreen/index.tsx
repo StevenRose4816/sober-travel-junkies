@@ -15,6 +15,7 @@ const SignupScreen: FC = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [address, setAddress] = useState('');
   const userInfo = useAppSelector(state => state.globalStore);
+  const [emailPasswordError, setEmailPasswordError] = useState('');
 
   const toggleModal = () => {
     setModalVisible(!modalVisible);
@@ -50,6 +51,26 @@ const SignupScreen: FC = () => {
       toggleModal();
     }
   };
+
+  const checkEmail = (email: string) => {
+    if (email.length <= 12 && password.length <= 6) {
+      setEmailPasswordError(
+        'Your email address needs to be at least 12 characters and your password need to be at least 6 characters.',
+      );
+      toggleModal();
+    } else if (email.length >= 12 && password.length <= 6) {
+      setEmailPasswordError('Your password needs to be at least 6 characters.');
+      toggleModal();
+    } else if (password.length >= 6 && email.length <= 12) {
+      setEmailPasswordError(
+        'Your email address needs to be at least 12 characters.',
+      );
+      toggleModal();
+    } else {
+      signUp();
+    }
+  };
+
   return (
     <View style={{flex: 1}}>
       <View style={{flex: 1, backgroundColor: 'white'}}>
@@ -90,7 +111,8 @@ const SignupScreen: FC = () => {
             backgroundColor: 'white',
           }}>
           <TouchableOpacity
-            onPress={signUp}
+            // onPress={signUp}
+            onPress={() => checkEmail(email)}
             style={{
               backgroundColor: 'blue',
               minHeight: 50,
@@ -130,9 +152,15 @@ const SignupScreen: FC = () => {
                   borderRadius: 5,
                   padding: 20,
                 }}>
-                <Text style={{textAlign: 'center', color: 'white'}}>
-                  {errorMessage + '\n'}
-                </Text>
+                {errorMessage ? (
+                  <Text style={{textAlign: 'center', color: 'white'}}>
+                    {errorMessage + '\n'}
+                  </Text>
+                ) : (
+                  <Text style={{textAlign: 'center', color: 'white'}}>
+                    {emailPasswordError + '\n'}
+                  </Text>
+                )}
                 <TouchableOpacity
                   onPress={toggleModal}
                   style={{
