@@ -36,7 +36,6 @@ const HomeScreen: FC = () => {
   const user = auth().currentUser;
   const userId = auth().currentUser?.uid;
   const [modalVisible, setModalVisible] = useState(false);
-  const [flag, setFlag] = useState(false);
   const [dataFlag, setDataFlag] = useState(false);
   const [showBackButton, setShowBackButton] = useState(false);
   const [showSubmit, setShowSubmit] = useState(false);
@@ -151,10 +150,20 @@ const HomeScreen: FC = () => {
     setModalVisible(true);
   };
 
+  // const toggleDataFlag = () => {
+  //   if (dataFlag) {
+  //     setDataFlag(false);
+  //   } else if (!dataFlag) {
+  //     setDataFlag(true);
+  //   }
+  // };
+
   const onSubmit = () => {
+    if (!dataFlag) {
+      setDataFlag(true);
+    }
     //create and call modal here that lets user know info has been successfully
     // setModalVisible(true);
-    setFlag(false);
     create(userId);
     console.log('pressed');
   };
