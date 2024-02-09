@@ -224,11 +224,14 @@ const HomeScreen: FC = () => {
             <Text style={{marginLeft: 10}}>
               {'Phone number: ' + phoneNumber}
             </Text>
-            <Text style={{marginLeft: 10}}>{'Full name: ' + fullName}</Text>
+            <Text style={{marginLeft: 10, marginBottom: 210}}>
+              {'Full name: ' + fullName}
+            </Text>
             <View
               style={{
                 flex: 1,
                 alignItems: 'flex-end',
+                backgroundColor: 'white',
               }}>
               <TouchableOpacity
                 onPress={onEditPress}
