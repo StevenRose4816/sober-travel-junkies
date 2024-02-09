@@ -161,13 +161,13 @@ const HomeScreen: FC = () => {
   };
 
   const onSubmit = () => {
+    readData();
     if (!dataFlag) {
       setDataFlag(true);
     }
     //create and call modal here that lets user know info has been successfully
     // setModalVisible(true);
     create(userId);
-    readData();
     console.log('pressed');
   };
 
