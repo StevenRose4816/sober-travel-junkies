@@ -53,7 +53,7 @@ const HomeScreen: FC = () => {
       userPhoto: userPhoto,
     })
       .then(() => {
-        console.log('db created');
+        console.log('db created/updated');
       })
       .catch(error => {
         console.log(error);
@@ -130,9 +130,6 @@ const HomeScreen: FC = () => {
   useEffect(() => {
     if (dataFlag) {
       console.log('dataFlag: ', dataFlag);
-      console.log('We have data.');
-      console.log('userPhotoFromDB: ', userPhotoFromDB);
-      console.log('userPhoto: ', userPhoto);
     } else if (!dataFlag) {
       console.log('No data here.');
     } else {
@@ -146,7 +143,7 @@ const HomeScreen: FC = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [address, setAddress] = useState('');
   const [userPhotoFromDB, setUserPhotoFromDB] = useState('');
-  // const [successMessage, setSuccessMessage] = useState(false);
+  const [successMessage, setSuccessMessage] = useState(false);
 
   const onEditPress = () => {
     setModalVisible(true);
@@ -161,39 +158,33 @@ const HomeScreen: FC = () => {
   };
 
   const onSubmit = () => {
+    setModalVisible(true);
+    setSuccessMessage(true);
+  };
+
+  const onPressGoBack = () => {
+    setShowBackButton(false);
+    toggleDataFlag();
+  };
+
+  const onPressYes = () => {
+    readData();
+    setDataFlag(false);
+    setModalVisible(false);
+    setShowBackButton(true);
+  };
+
+  const onPressYesSubmit = () => {
     readData();
     setShowBackButton(false);
     if (!dataFlag) {
       setDataFlag(true);
     }
-    //create and call modal here that lets user know info has been successfully
-    // setModalVisible(true);
     create(userId);
-    console.log('pressed');
-  };
-
-  const onPressGoBack = () => {
-    setShowBackButton(false);
-    // setDataFlag(true);
-    toggleDataFlag();
-  };
-
-  const onPressYes = () => {
-    // setSuccessMessage(true);
-    setDataFlag(false);
+    setSuccessMessage(false);
     setModalVisible(false);
-    setShowBackButton(true);
-    // create(userId);
+    console.log('Submit pressed.');
   };
-
-  // const onPressYesOther = () => {
-  //   setSuccessMessage(false);
-  //   setDataFlag(false);
-  //   setModalVisible(false);
-  //   setShowBackButton(false);
-  //   console.log('pressed');
-  //   create(userId);
-  // };
 
   return (
     <View style={{flex: 1, backgroundColor: 'white'}}>
@@ -386,7 +377,7 @@ const HomeScreen: FC = () => {
               borderRadius: 5,
               marginHorizontal: 10,
               marginTop: 10,
-              marginBottom: 0,
+              marginBottom: 10,
             }}>
             <Text
               style={{
@@ -421,16 +412,7 @@ const HomeScreen: FC = () => {
               borderRadius: 5,
               padding: 20,
             }}>
-            <Text
-              style={{textAlign: 'center', color: 'white', marginBottom: 20}}>
-              {'Do you want to edit your information?'}
-            </Text>
-            {/* {!successMessage ? (
-              <Text
-                style={{textAlign: 'center', color: 'white', marginBottom: 20}}>
-                {'Do you want to edit your information?'}
-              </Text>
-            ) : (
+            {successMessage ? (
               <Text
                 style={{textAlign: 'center', color: 'white', marginBottom: 20}}>
                 {'Does this look correct? Name: ' +
@@ -440,10 +422,14 @@ const HomeScreen: FC = () => {
                   ' Address: ' +
                   address}
               </Text>
-            )} */}
+            ) : (
+              <Text
+                style={{textAlign: 'center', color: 'white', marginBottom: 20}}>
+                {'Do you want to edit your information?'}
+              </Text>
+            )}
             <TouchableOpacity
-              // onPress={!successMessage ? onPressYes : onPressYesOther}
-              onPress={onPressYes}
+              onPress={successMessage ? onPressYesSubmit : onPressYes}
               style={{
                 marginTop: 20,
                 backgroundColor: 'blue',
