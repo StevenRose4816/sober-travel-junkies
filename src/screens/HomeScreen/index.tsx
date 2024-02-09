@@ -146,14 +146,25 @@ const HomeScreen: FC = () => {
   const [address, setAddress] = useState('');
   const [userPhotoFromDB, setUserPhotoFromDB] = useState('');
 
+  const [successMessage, setSuccessMessage] = useState(false);
+
+  // setModalMessage(
+  //   'Does this look correct? Name: ' +
+  //     fullName +
+  //     ' Phone Number: ' +
+  //     phoneNumber +
+  //     ' Address: ' +
+  //     address,
+  // );
+
   const onEditPress = () => {
     setModalVisible(true);
   };
 
   const onSubmit = () => {
     //create and call modal here that lets user know info has been successfully
+    setModalVisible(true);
     setFlag(false);
-    create(userId);
     console.log('pressed');
   };
 
@@ -163,9 +174,20 @@ const HomeScreen: FC = () => {
   };
 
   const onPressYes = () => {
+    setSuccessMessage(true);
     setDataFlag(false);
     setModalVisible(false);
     setShowBackButton(true);
+    create(userId);
+  };
+
+  const onPressYesOther = () => {
+    setSuccessMessage(false);
+    setDataFlag(false);
+    setModalVisible(false);
+    setShowBackButton(false);
+    console.log('pressed');
+    create(userId);
   };
 
   return (
@@ -394,12 +416,24 @@ const HomeScreen: FC = () => {
               borderRadius: 5,
               padding: 20,
             }}>
-            <Text
-              style={{textAlign: 'center', color: 'white', marginBottom: 20}}>
-              {'Do you want to edit your information?'}
-            </Text>
+            {!successMessage ? (
+              <Text
+                style={{textAlign: 'center', color: 'white', marginBottom: 20}}>
+                {'Do you want to edit your information?'}
+              </Text>
+            ) : (
+              <Text
+                style={{textAlign: 'center', color: 'white', marginBottom: 20}}>
+                {'Does this look correct? Name: ' +
+                  fullName +
+                  ' Phone Number: ' +
+                  phoneNumber +
+                  ' Address: ' +
+                  address}
+              </Text>
+            )}
             <TouchableOpacity
-              onPress={onPressYes}
+              onPress={!successMessage ? onPressYes : onPressYesOther}
               style={{
                 marginTop: 20,
                 backgroundColor: 'blue',
