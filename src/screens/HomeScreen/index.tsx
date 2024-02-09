@@ -175,12 +175,12 @@ const HomeScreen: FC = () => {
   };
 
   const onPressYesSubmit = () => {
-    readData();
     setShowBackButton(false);
     if (!dataFlag) {
       setDataFlag(true);
     }
     create(userId);
+    readData();
     setSuccessMessage(false);
     setModalVisible(false);
     console.log('Submit pressed.');
