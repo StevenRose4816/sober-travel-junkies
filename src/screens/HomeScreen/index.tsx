@@ -288,8 +288,9 @@ const HomeScreen: FC = () => {
                 marginLeft: 10,
                 marginBottom: 20,
                 fontWeight: '600',
+                marginTop: 10,
               }}>
-              {"\nLet's get some informaton."}
+              {"Let's get some informaton."}
             </Text>
             <TouchableOpacity
               onPress={openPicker}
@@ -331,8 +332,8 @@ const HomeScreen: FC = () => {
                 borderColor: 'black',
                 width: 300,
               }}></TextInput>
-            <Text style={{marginLeft: 10, fontWeight: '600'}}>
-              {'\nPhone Number'}
+            <Text style={{marginLeft: 10, fontWeight: '600', marginTop: 10}}>
+              {'Phone Number'}
             </Text>
             <TextInput
               value={phoneNumber}
