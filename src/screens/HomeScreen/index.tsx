@@ -162,6 +162,7 @@ const HomeScreen: FC = () => {
 
   const onSubmit = () => {
     readData();
+    setShowBackButton(false);
     if (!dataFlag) {
       setDataFlag(true);
     }
