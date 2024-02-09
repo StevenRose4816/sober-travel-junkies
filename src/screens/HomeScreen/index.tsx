@@ -152,7 +152,7 @@ const HomeScreen: FC = () => {
     }
   };
 
-  const onSubmit = () => {
+  const onPressSubmit = () => {
     setModalVisible(true);
     setSuccessMessage(true);
   };
@@ -255,7 +255,7 @@ const HomeScreen: FC = () => {
               </TouchableOpacity>
               {showSubmit && (
                 <TouchableOpacity
-                  onPress={onSubmit}
+                  onPress={onPressSubmit}
                   style={{
                     backgroundColor: 'blue',
                     borderRadius: 5,
@@ -312,7 +312,9 @@ const HomeScreen: FC = () => {
                   source={{uri: userPhoto || userPhotoFromDB}}></Image>
               )}
             </TouchableOpacity>
-            <Text style={{marginLeft: 10, marginTop: 30}}>{'full name'}</Text>
+            <Text style={{marginLeft: 10, marginTop: 30, fontWeight: '600'}}>
+              {'Full Name'}
+            </Text>
             <TextInput
               value={fullName}
               placeholder=" full name"
@@ -327,8 +329,11 @@ const HomeScreen: FC = () => {
                 minHeight: 50,
                 borderWidth: 1,
                 borderColor: 'black',
+                width: 300,
               }}></TextInput>
-            <Text style={{marginLeft: 10}}>{'\nphone number'}</Text>
+            <Text style={{marginLeft: 10, fontWeight: '600'}}>
+              {'\nPhone Number'}
+            </Text>
             <TextInput
               value={phoneNumber}
               placeholder=" phone number"
@@ -343,8 +348,11 @@ const HomeScreen: FC = () => {
                 minHeight: 50,
                 borderWidth: 1,
                 borderColor: 'black',
+                width: 300,
               }}></TextInput>
-            <Text style={{marginLeft: 10, marginTop: 10}}>{'address'}</Text>
+            <Text style={{marginLeft: 10, marginTop: 10, fontWeight: '600'}}>
+              {'Address'}
+            </Text>
             <TextInput
               value={address}
               placeholder=" address"
@@ -359,12 +367,13 @@ const HomeScreen: FC = () => {
                 minHeight: 50,
                 borderWidth: 1,
                 borderColor: 'black',
+                width: 300,
               }}></TextInput>
           </>
         )}
         {!dataFlag && (
           <TouchableOpacity
-            onPress={onSubmit}
+            onPress={onPressSubmit}
             style={{
               backgroundColor: 'blue',
               minHeight: 50,

@@ -84,7 +84,7 @@ const ImagePicker = () => {
               justifyContent: 'center',
               borderRadius: 5,
               marginHorizontal: 10,
-              marginTop: 20,
+              marginTop: 10,
             }}>
             <Text
               style={{
@@ -98,10 +98,13 @@ const ImagePicker = () => {
           </TouchableOpacity>
         </>
       )}
+      {/* <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <Image
+          style={{height: 50, width: 50, marginLeft: 10}}
+          source={require('../Images/camera-icon.jpeg')}></Image>
+      </View> */}
       <View
         style={{marginTop: 20, flexDirection: 'row', justifyContent: 'center'}}>
-        {/* <Button title="Choose from Device" onPress={openImagePicker} />
-        <Button title="Open Camera" onPress={handleCameraLaunch} /> */}
         <TouchableOpacity
           style={{
             backgroundColor: 'blue',
