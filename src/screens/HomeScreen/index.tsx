@@ -39,6 +39,7 @@ const HomeScreen: FC = () => {
   const [flag, setFlag] = useState(false);
   const [dataFlag, setDataFlag] = useState(false);
   const [showBackButton, setShowBackButton] = useState(false);
+  const [showSubmit, setShowSubmit] = useState(false);
 
   const toggleModal = () => {
     setModalVisible(!modalVisible);
@@ -75,22 +76,6 @@ const HomeScreen: FC = () => {
     });
   }
 
-  // const flipFlag = () => {
-  //   if (flag) {
-  //     setFlag(false);
-  //   } else if (!flag) {
-  //     setFlag(true);
-  //   }
-  // };
-
-  // const flipDataFlag = () => {
-  //   if (dataFlag) {
-  //     setDataFlag(false);
-  //   } else if (!flag) {
-  //     setDataFlag(true);
-  //   }
-  // };
-
   useEffect(() => {
     navigation.setOptions({
       headerLeft: () =>
@@ -103,11 +88,37 @@ const HomeScreen: FC = () => {
               marginRight: 10,
               width: 75,
             }}>
-            <Text style={{color: 'white', textAlign: 'center'}}>
+            <Text
+              style={{
+                color: 'white',
+                textAlign: 'center',
+                marginTop: 5,
+                marginBottom: 5,
+              }}>
               {'Go back'}
             </Text>
           </TouchableOpacity>
         ),
+      headerRight: () => (
+        <TouchableOpacity
+          onPress={logout}
+          style={{
+            backgroundColor: 'blue',
+            borderRadius: 5,
+            marginRight: 10,
+            width: 65,
+          }}>
+          <Text
+            style={{
+              color: 'white',
+              textAlign: 'center',
+              marginTop: 5,
+              marginBottom: 5,
+            }}>
+            {'Log out'}
+          </Text>
+        </TouchableOpacity>
+      ),
     });
   }, [navigation, showBackButton]);
 
@@ -227,28 +238,30 @@ const HomeScreen: FC = () => {
                   {'Edit'}
                 </Text>
               </TouchableOpacity>
-              <TouchableOpacity
-                onPress={onSubmit}
-                style={{
-                  backgroundColor: 'blue',
-                  borderRadius: 5,
-                  marginRight: 10,
-                  width: 100,
-                }}>
-                <Text
+              {showSubmit && (
+                <TouchableOpacity
+                  onPress={onSubmit}
                   style={{
-                    color: 'white',
-                    fontSize: 12,
-                    fontWeight: '600',
-                    marginBottom: 10,
-                    marginTop: 10,
+                    backgroundColor: 'blue',
+                    borderRadius: 5,
                     marginRight: 10,
-                    marginLeft: 10,
-                    textAlign: 'center',
+                    width: 100,
                   }}>
-                  {'Submit'}
-                </Text>
-              </TouchableOpacity>
+                  <Text
+                    style={{
+                      color: 'white',
+                      fontSize: 12,
+                      fontWeight: '600',
+                      marginBottom: 10,
+                      marginTop: 10,
+                      marginRight: 10,
+                      marginLeft: 10,
+                      textAlign: 'center',
+                    }}>
+                    {'Submit'}
+                  </Text>
+                </TouchableOpacity>
+              )}
             </View>
           </>
         )}
@@ -358,27 +371,6 @@ const HomeScreen: FC = () => {
           </TouchableOpacity>
         )}
       </ScrollView>
-      <TouchableOpacity
-        onPress={logout}
-        style={{
-          backgroundColor: 'blue',
-          minHeight: 50,
-          justifyContent: 'center',
-          borderRadius: 5,
-          marginHorizontal: 10,
-          marginTop: 20,
-          marginBottom: 20,
-        }}>
-        <Text
-          style={{
-            color: 'white',
-            fontSize: 21,
-            fontWeight: '600',
-            textAlign: 'center',
-          }}>
-          {'Log Out'}
-        </Text>
-      </TouchableOpacity>
       <Modal
         visible={modalVisible}
         animationType={'slide'}
