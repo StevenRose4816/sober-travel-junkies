@@ -218,7 +218,7 @@ const HomeScreen: FC = () => {
                   source={require('../../Images/profile-picture-vector.jpeg')}></Image>
               </TouchableOpacity>
             )}
-            <Text style={{marginLeft: 10, marginTop: 10, fontWeight: '700'}}>
+            <Text style={{marginLeft: 10, marginTop: 30, fontWeight: '700'}}>
               {'Address: '}
               <Text style={{fontWeight: '300'}}>{address}</Text>
             </Text>
@@ -226,7 +226,13 @@ const HomeScreen: FC = () => {
               {'Phone number: '}
               <Text style={{fontWeight: '300'}}>{phoneNumber}</Text>
             </Text>
-            <Text style={{marginLeft: 10, marginTop: 10, fontWeight: '700'}}>
+            <Text
+              style={{
+                marginLeft: 10,
+                marginTop: 10,
+                marginBottom: 180,
+                fontWeight: '700',
+              }}>
               {'Full name: '}
               <Text style={{fontWeight: '300'}}>{fullName}</Text>
             </Text>
@@ -416,6 +422,8 @@ const HomeScreen: FC = () => {
           }}>
           <View
             style={{
+              borderWidth: 1,
+              borderColor: 'black',
               backgroundColor: 'darkorange',
               minHeight: 300,
               width: '80%',
@@ -423,66 +431,96 @@ const HomeScreen: FC = () => {
               borderRadius: 5,
               padding: 20,
             }}>
-            {successMessage ? (
-              <Text
-                style={{textAlign: 'center', color: 'white', marginBottom: 20}}>
-                {'Does this look correct? Name: ' +
-                  fullName +
-                  ' Phone Number: ' +
-                  phoneNumber +
-                  ' Address: ' +
-                  address}
-              </Text>
-            ) : (
-              <Text
-                style={{textAlign: 'center', color: 'white', marginBottom: 20}}>
-                {'Do you want to edit your information?'}
-              </Text>
-            )}
-            <TouchableOpacity
-              onPress={successMessage ? onPressYesSubmit : onPressYes}
+            <View
               style={{
-                marginTop: 20,
-                backgroundColor: 'blue',
-                minHeight: 50,
-                justifyContent: 'center',
+                flex: 1,
+                borderWidth: 1,
                 borderRadius: 5,
-                marginHorizontal: 10,
+                backgroundColor: 'grey',
+                justifyContent: 'center', //vertical
+                alignItems: 'center', //horizontal
               }}>
-              <Text
+              {successMessage ? (
+                <Text
+                  style={{
+                    textAlign: 'center',
+                    color: 'white',
+                    fontWeight: '500',
+                    fontSize: 16,
+                    borderRadius: 5,
+                    borderColor: 'black',
+                  }}>
+                  {'Does this look correct?\n\n Name: ' +
+                    fullName +
+                    '\n' +
+                    ' Phone Number: ' +
+                    phoneNumber +
+                    '\n' +
+                    ' Address: ' +
+                    address}
+                </Text>
+              ) : (
+                <Text
+                  style={{
+                    textAlign: 'center',
+                    color: 'white',
+                    fontWeight: '500',
+                    fontSize: 18,
+                    borderRadius: 5,
+                    borderColor: 'black',
+                  }}>
+                  {'Do you want to edit your information?'}
+                </Text>
+              )}
+            </View>
+            <View
+              style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+              <TouchableOpacity
+                onPress={successMessage ? onPressYesSubmit : onPressYes}
                 style={{
-                  textAlign: 'center',
-                  color: 'white',
-                  fontSize: 21,
-                  fontWeight: '600',
+                  marginTop: 20,
                   backgroundColor: 'blue',
+                  minHeight: 50,
+                  justifyContent: 'center',
                   borderRadius: 5,
+                  marginHorizontal: 10,
+                  width: 100,
                 }}>
-                {'Yes'}
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={toggleModal}
-              style={{
-                marginTop: 20,
-                backgroundColor: 'blue',
-                minHeight: 50,
-                justifyContent: 'center',
-                borderRadius: 5,
-                marginHorizontal: 10,
-              }}>
-              <Text
+                <Text
+                  style={{
+                    textAlign: 'center',
+                    color: 'white',
+                    fontSize: 21,
+                    fontWeight: '600',
+                    backgroundColor: 'blue',
+                  }}>
+                  {'Yes'}
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={toggleModal}
                 style={{
-                  textAlign: 'center',
-                  color: 'white',
-                  fontSize: 21,
-                  fontWeight: '600',
+                  marginTop: 20,
                   backgroundColor: 'blue',
+                  minHeight: 50,
+                  justifyContent: 'center',
                   borderRadius: 5,
+                  marginHorizontal: 10,
+                  width: 100,
                 }}>
-                {'No'}
-              </Text>
-            </TouchableOpacity>
+                <Text
+                  style={{
+                    textAlign: 'center',
+                    color: 'white',
+                    fontSize: 21,
+                    fontWeight: '600',
+                    backgroundColor: 'blue',
+                    borderRadius: 5,
+                  }}>
+                  {'No'}
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       </Modal>
