@@ -218,14 +218,17 @@ const HomeScreen: FC = () => {
                   source={require('../../Images/profile-picture-vector.jpeg')}></Image>
               </TouchableOpacity>
             )}
-            <Text style={{marginLeft: 10, marginTop: 10}}>
-              {'Address: ' + address}
+            <Text style={{marginLeft: 10, marginTop: 10, fontWeight: '700'}}>
+              {'Address: '}
+              <Text style={{fontWeight: '300'}}>{address}</Text>
             </Text>
-            <Text style={{marginLeft: 10}}>
-              {'Phone number: ' + phoneNumber}
+            <Text style={{marginLeft: 10, marginTop: 10, fontWeight: '700'}}>
+              {'Phone number: '}
+              <Text style={{fontWeight: '300'}}>{phoneNumber}</Text>
             </Text>
-            <Text style={{marginLeft: 10, marginBottom: 210}}>
-              {'Full name: ' + fullName}
+            <Text style={{marginLeft: 10, marginTop: 10, fontWeight: '700'}}>
+              {'Full name: '}
+              <Text style={{fontWeight: '300'}}>{fullName}</Text>
             </Text>
             <View
               style={{
