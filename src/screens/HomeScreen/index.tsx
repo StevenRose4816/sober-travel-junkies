@@ -199,7 +199,12 @@ const HomeScreen: FC = () => {
           <>
             {userPhotoFromDB || userPhoto ? (
               <Image
-                style={{height: 200, width: 200, marginLeft: 10}}
+                style={{
+                  height: 200,
+                  width: 200,
+                  marginLeft: 10,
+                  borderRadius: 5,
+                }}
                 source={{uri: userPhotoFromDB || userPhoto}}></Image>
             ) : (
               <TouchableOpacity
@@ -211,10 +216,9 @@ const HomeScreen: FC = () => {
                   borderRadius: 5,
                   marginHorizontal: 10,
                   marginTop: 10,
-                  marginBottom: 0,
                 }}>
                 <Image
-                  style={{height: 200, width: 200}}
+                  style={{height: 200, width: 200, borderRadius: 5}}
                   source={require('../../Images/profile-picture-vector.jpeg')}></Image>
               </TouchableOpacity>
             )}
@@ -313,15 +317,14 @@ const HomeScreen: FC = () => {
                 borderRadius: 5,
                 marginHorizontal: 10,
                 marginTop: 10,
-                marginBottom: 0,
               }}>
               {!userPhoto && !userPhotoFromDB ? (
                 <Image
-                  style={{height: 200, width: 200}}
+                  style={{height: 200, width: 200, borderRadius: 5}}
                   source={require('../../Images/profile-picture-vector.jpeg')}></Image>
               ) : (
                 <Image
-                  style={{height: 200, width: 200}}
+                  style={{height: 200, width: 200, borderRadius: 5}}
                   source={{uri: userPhoto || userPhotoFromDB}}></Image>
               )}
             </TouchableOpacity>
@@ -337,7 +340,7 @@ const HomeScreen: FC = () => {
                 backgroundColor: 'white',
                 marginHorizontal: 10,
                 marginBottom: 10,
-                marginTop: 10,
+                marginTop: 5,
                 borderRadius: 5,
                 minHeight: 50,
                 borderWidth: 1,
@@ -356,7 +359,7 @@ const HomeScreen: FC = () => {
                 backgroundColor: 'white',
                 marginHorizontal: 10,
                 marginBottom: 10,
-                marginTop: 10,
+                marginTop: 5,
                 borderRadius: 5,
                 minHeight: 50,
                 borderWidth: 1,
@@ -375,7 +378,7 @@ const HomeScreen: FC = () => {
                 backgroundColor: 'white',
                 marginHorizontal: 10,
                 marginBottom: 10,
-                marginTop: 10,
+                marginTop: 5,
                 borderRadius: 5,
                 minHeight: 50,
                 borderWidth: 1,

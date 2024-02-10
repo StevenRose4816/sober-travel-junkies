@@ -1,5 +1,12 @@
 import React, {useState} from 'react';
-import {Button, Image, View, TouchableOpacity, Text} from 'react-native';
+import {
+  Button,
+  Image,
+  View,
+  TouchableOpacity,
+  Text,
+  ScrollView,
+} from 'react-native';
 import {launchImageLibrary, launchCamera} from 'react-native-image-picker';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
@@ -84,9 +91,7 @@ const ImagePicker = () => {
                 minHeight: 50,
                 justifyContent: 'center',
                 borderRadius: 5,
-                marginHorizontal: 10,
-                marginTop: 10,
-                width: '80%',
+                width: '70%',
               }}>
               <Text
                 style={{
@@ -107,7 +112,11 @@ const ImagePicker = () => {
           source={require('../Images/camera-icon.jpeg')}></Image>
       </View> */}
       <View
-        style={{marginTop: 20, flexDirection: 'row', justifyContent: 'center'}}>
+        style={{
+          marginTop: 10,
+          flexDirection: 'row',
+          justifyContent: 'center',
+        }}>
         <TouchableOpacity
           style={{
             backgroundColor: 'blue',
@@ -124,6 +133,7 @@ const ImagePicker = () => {
               marginTop: 5,
               marginBottom: 5,
               fontSize: 12,
+              fontWeight: '600',
             }}>
             {'Choose from Device'}
           </Text>
@@ -143,6 +153,7 @@ const ImagePicker = () => {
               marginTop: 5,
               marginBottom: 5,
               fontSize: 12,
+              fontWeight: '600',
             }}>
             {'Open Camera'}
           </Text>
