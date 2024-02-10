@@ -124,9 +124,9 @@ const HomeScreen: FC = () => {
 
   useEffect(() => {
     if (dataFlag) {
-      console.log('dataFlag: ', dataFlag);
+      console.log('dataFlag is true.');
     } else if (!dataFlag) {
-      console.log('No data here.');
+      console.log('dataFlag is false.');
     } else {
       console.log('How did we get here?');
     }
@@ -422,7 +422,6 @@ const HomeScreen: FC = () => {
           }}>
           <View
             style={{
-              borderWidth: 1,
               borderColor: 'black',
               backgroundColor: 'darkorange',
               minHeight: 300,
@@ -434,7 +433,6 @@ const HomeScreen: FC = () => {
             <View
               style={{
                 flex: 1,
-                borderWidth: 1,
                 borderRadius: 5,
                 backgroundColor: 'grey',
                 justifyContent: 'center', //vertical
@@ -467,7 +465,6 @@ const HomeScreen: FC = () => {
                     fontWeight: '500',
                     fontSize: 18,
                     borderRadius: 5,
-                    borderColor: 'black',
                   }}>
                   {'Do you want to edit your information?'}
                 </Text>
@@ -484,7 +481,7 @@ const HomeScreen: FC = () => {
                   justifyContent: 'center',
                   borderRadius: 5,
                   marginHorizontal: 10,
-                  width: 100,
+                  width: 120,
                 }}>
                 <Text
                   style={{
@@ -506,7 +503,7 @@ const HomeScreen: FC = () => {
                   justifyContent: 'center',
                   borderRadius: 5,
                   marginHorizontal: 10,
-                  width: 100,
+                  width: 120,
                 }}>
                 <Text
                   style={{

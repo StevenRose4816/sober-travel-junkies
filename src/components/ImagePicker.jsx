@@ -76,26 +76,29 @@ const ImagePicker = () => {
             style={{flex: 1}}
             resizeMode="contain"
           />
-          <TouchableOpacity
-            onPress={navAway}
-            style={{
-              backgroundColor: 'blue',
-              minHeight: 50,
-              justifyContent: 'center',
-              borderRadius: 5,
-              marginHorizontal: 10,
-              marginTop: 10,
-            }}>
-            <Text
+          <View style={{alignItems: 'center', justifyContent: 'center'}}>
+            <TouchableOpacity
+              onPress={navAway}
               style={{
-                color: 'white',
-                fontSize: 21,
-                fontWeight: '600',
-                textAlign: 'center',
+                backgroundColor: 'blue',
+                minHeight: 50,
+                justifyContent: 'center',
+                borderRadius: 5,
+                marginHorizontal: 10,
+                marginTop: 10,
+                width: '80%',
               }}>
-              {'This looks good!'}
-            </Text>
-          </TouchableOpacity>
+              <Text
+                style={{
+                  color: 'white',
+                  fontSize: 21,
+                  fontWeight: '600',
+                  textAlign: 'center',
+                }}>
+                {'This looks good!'}
+              </Text>
+            </TouchableOpacity>
+          </View>
         </>
       )}
       {/* <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
