@@ -473,7 +473,7 @@ const HomeScreen: FC = () => {
                 justifyContent: 'center', //vertical
                 alignItems: 'center', //horizontal
               }}>
-              {successMessage ? (
+              {successMessage && !switchState ? (
                 <Text
                   style={{
                     textAlign: 'center',
@@ -493,42 +493,47 @@ const HomeScreen: FC = () => {
                     address}
                 </Text>
               ) : (
-                <Text
-                  style={{
-                    textAlign: 'center',
-                    color: 'white',
-                    fontWeight: '500',
-                    fontSize: 18,
-                    borderRadius: 5,
-                  }}>
-                  {'Do you want to edit your information?'}
-                </Text>
+                !switchState && (
+                  <Text
+                    style={{
+                      textAlign: 'center',
+                      color: 'white',
+                      fontWeight: '500',
+                      fontSize: 18,
+                      borderRadius: 5,
+                    }}>
+                    {'Do you want to edit your information?'}
+                  </Text>
+                )
               )}
+              {switchState && <DocPicker></DocPicker>}
             </View>
             <View
               style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-              <TouchableOpacity
-                onPress={successMessage ? onPressYesSubmit : onPressYes}
-                style={{
-                  marginTop: 20,
-                  backgroundColor: 'blue',
-                  minHeight: 50,
-                  justifyContent: 'center',
-                  borderRadius: 5,
-                  marginHorizontal: 10,
-                  width: 120,
-                }}>
-                <Text
+              {!switchState && (
+                <TouchableOpacity
+                  onPress={successMessage ? onPressYesSubmit : onPressYes}
                   style={{
-                    textAlign: 'center',
-                    color: 'white',
-                    fontSize: 21,
-                    fontWeight: '600',
+                    marginTop: 20,
                     backgroundColor: 'blue',
+                    minHeight: 50,
+                    justifyContent: 'center',
+                    borderRadius: 5,
+                    marginHorizontal: 10,
+                    width: 120,
                   }}>
-                  {'Yes'}
-                </Text>
-              </TouchableOpacity>
+                  <Text
+                    style={{
+                      textAlign: 'center',
+                      color: 'white',
+                      fontSize: 21,
+                      fontWeight: '600',
+                      backgroundColor: 'blue',
+                    }}>
+                    {'Yes'}
+                  </Text>
+                </TouchableOpacity>
+              )}
               <TouchableOpacity
                 onPress={onPressNo}
                 style={{
@@ -549,7 +554,7 @@ const HomeScreen: FC = () => {
                     backgroundColor: 'blue',
                     borderRadius: 5,
                   }}>
-                  {'No'}
+                  {!switchState ? 'No' : 'Cancel'}
                 </Text>
               </TouchableOpacity>
             </View>
