@@ -7,6 +7,8 @@ import {
   Image,
   ScrollView,
   Modal,
+  Dimensions,
+  StyleSheet,
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import {onValue, ref, set} from 'firebase/database';
@@ -21,6 +23,8 @@ const HomeScreen: FC = () => {
   const {navigate} = useNavigation();
   const navigation = useNavigation();
   const dispatch = useDispatch();
+  const screenWidth = Dimensions.get('window').width;
+  const screenHeight = Dimensions.get('window').height;
 
   const logout = () => {
     dispatch(setUserPhoto({userPhoto: null}));
@@ -141,6 +145,7 @@ const HomeScreen: FC = () => {
   const [userPhotoFromDB, setUserPhotoFromDB] = useState('');
   const [successMessage, setSuccessMessage] = useState(false);
   const [switchState, setSwitchState] = useState(false);
+  const [showIcon, setShowIcon] = useState(false);
 
   const onEditPress = () => {
     setModalVisible(true);
@@ -155,8 +160,8 @@ const HomeScreen: FC = () => {
   };
 
   const onPressNo = () => {
-    if (!dataFlag) {
-    }
+    // if (!dataFlag) {
+    // }
     if (switchState) {
       toggleSwitch();
     }
@@ -206,7 +211,7 @@ const HomeScreen: FC = () => {
       <ScrollView style={{flex: 1, backgroundColor: 'white'}}>
         <Text
           style={{
-            textAlign: 'center',
+            textAlign: 'left',
             fontSize: 30,
             color: 'black',
             fontWeight: '600',
@@ -220,15 +225,20 @@ const HomeScreen: FC = () => {
             {userPhotoFromDB || userPhoto ? (
               <Image
                 style={{
-                  height: 200,
-                  width: 200,
+                  height: 300,
+                  width: 300,
                   marginLeft: 10,
                   borderRadius: 5,
                 }}
                 source={{uri: userPhotoFromDB || userPhoto}}></Image>
             ) : (
               <Image
-                style={{height: 200, width: 200, borderRadius: 5}}
+                style={{
+                  height: 300,
+                  width: 300,
+                  borderRadius: 5,
+                  marginLeft: 10,
+                }}
                 source={require('../../Images/profile-picture-vector.jpeg')}></Image>
             )}
             <Text style={{marginLeft: 10, marginTop: 30, fontWeight: '700'}}>
@@ -243,7 +253,7 @@ const HomeScreen: FC = () => {
               style={{
                 marginLeft: 10,
                 marginTop: 10,
-                marginBottom: 180,
+                marginBottom: 130,
                 fontWeight: '700',
               }}>
               {'Full name: '}
@@ -310,27 +320,29 @@ const HomeScreen: FC = () => {
             <Text
               style={{
                 fontSize: 16,
-                textAlign: 'center',
+                marginLeft: 10,
+                textAlign: 'left',
                 marginBottom: 20,
                 fontWeight: '600',
               }}>
               {"Let's get some informaton."}
             </Text>
-            <View
-              style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+            <View style={{flex: 1, alignItems: 'left'}}>
               {!userPhoto && !userPhotoFromDB ? (
                 <Image
                   style={{
-                    height: 200,
-                    width: 200,
+                    height: 300,
+                    width: 300,
                     borderRadius: 5,
+                    marginLeft: 10,
                   }}
                   source={require('../../Images/profile-picture-vector.jpeg')}></Image>
               ) : (
                 <Image
                   style={{
-                    height: 200,
-                    width: 200,
+                    marginLeft: 10,
+                    height: 300,
+                    width: 300,
                     borderRadius: 5,
                   }}
                   source={{uri: userPhoto || userPhotoFromDB}}></Image>
@@ -373,7 +385,7 @@ const HomeScreen: FC = () => {
                     borderRadius: 5,
                     marginRight: 55,
                   }}
-                  source={require('../../Images/filejpeg.png')}></Image>
+                  source={require('../../Images/folder.jpeg')}></Image>
               </TouchableOpacity>
             </View>
             <Text style={{marginLeft: 10, marginTop: 10, fontWeight: '600'}}>
@@ -433,6 +445,53 @@ const HomeScreen: FC = () => {
                 borderColor: 'black',
                 width: 300,
               }}></TextInput>
+            <View
+              style={{
+                flex: 1,
+                flexDirection: 'row',
+                justifyContent: 'space-around',
+                alignItems: 'center',
+              }}>
+              <View
+                style={[
+                  !showIcon && styles.circleBefore,
+                  showIcon && styles.circleAfter,
+                ]}>
+                <Image
+                  style={{
+                    height: 50,
+                    width: 50,
+                    borderRadius: 5,
+                  }}
+                  source={require('../../Images/camera-icon.jpeg')}></Image>
+              </View>
+              <View
+                style={[
+                  !showIcon && styles.circleBefore,
+                  showIcon && styles.circleAfter,
+                ]}>
+                <Image
+                  style={{
+                    height: 50,
+                    width: 50,
+                    borderRadius: 5,
+                  }}
+                  source={require('../../Images/folder.jpeg')}></Image>
+              </View>
+              <View
+                style={[
+                  !showIcon && styles.circleBefore,
+                  showIcon && styles.circleAfter,
+                ]}>
+                <Image
+                  style={{
+                    height: 50,
+                    width: 50,
+                    borderRadius: 5,
+                  }}
+                  source={require('../../Images/filejpeg.png')}></Image>
+              </View>
+            </View>
           </>
         )}
         {!dataFlag && (
@@ -580,5 +639,22 @@ const HomeScreen: FC = () => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  circleBefore: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 100,
+    height: 100,
+    borderRadius: 100 / 2,
+    backgroundColor: 'red',
+  },
+  circleAfter: {
+    width: 100,
+    height: 100,
+    borderRadius: 100 / 2,
+    backgroundColor: 'green',
+  },
+});
 
 export default HomeScreen;
