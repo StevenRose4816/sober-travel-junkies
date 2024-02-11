@@ -7,7 +7,6 @@ import {
   Image,
   ScrollView,
   Modal,
-  Switch,
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import {onValue, ref, set} from 'firebase/database';
@@ -207,7 +206,7 @@ const HomeScreen: FC = () => {
       <ScrollView style={{flex: 1, backgroundColor: 'white'}}>
         <Text
           style={{
-            textAlign: 'left',
+            textAlign: 'center',
             fontSize: 30,
             color: 'black',
             fontWeight: '600',
@@ -228,20 +227,9 @@ const HomeScreen: FC = () => {
                 }}
                 source={{uri: userPhotoFromDB || userPhoto}}></Image>
             ) : (
-              <TouchableOpacity
-                onPress={openPicker}
-                style={{
-                  backgroundColor: 'white',
-                  minHeight: 50,
-                  justifyContent: 'center',
-                  borderRadius: 5,
-                  marginHorizontal: 10,
-                  marginTop: 10,
-                }}>
-                <Image
-                  style={{height: 200, width: 200, borderRadius: 5}}
-                  source={require('../../Images/profile-picture-vector.jpeg')}></Image>
-              </TouchableOpacity>
+              <Image
+                style={{height: 200, width: 200, borderRadius: 5}}
+                source={require('../../Images/profile-picture-vector.jpeg')}></Image>
             )}
             <Text style={{marginLeft: 10, marginTop: 30, fontWeight: '700'}}>
               {'Address: '}
@@ -261,7 +249,6 @@ const HomeScreen: FC = () => {
               {'Full name: '}
               <Text style={{fontWeight: '300'}}>{fullName}</Text>
             </Text>
-            {/* <DocPicker></DocPicker> */}
             <View
               style={{
                 flex: 1,
@@ -323,34 +310,73 @@ const HomeScreen: FC = () => {
             <Text
               style={{
                 fontSize: 16,
-                marginLeft: 10,
+                textAlign: 'center',
                 marginBottom: 20,
                 fontWeight: '600',
-                marginTop: 10,
               }}>
               {"Let's get some informaton."}
             </Text>
-            <TouchableOpacity
-              onPress={openPicker}
-              style={{
-                backgroundColor: 'white',
-                minHeight: 50,
-                justifyContent: 'center',
-                borderRadius: 5,
-                marginHorizontal: 10,
-                marginTop: 10,
-              }}>
+            <View
+              style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
               {!userPhoto && !userPhotoFromDB ? (
                 <Image
-                  style={{height: 200, width: 200, borderRadius: 5}}
+                  style={{
+                    height: 200,
+                    width: 200,
+                    borderRadius: 5,
+                  }}
                   source={require('../../Images/profile-picture-vector.jpeg')}></Image>
               ) : (
                 <Image
-                  style={{height: 200, width: 200, borderRadius: 5}}
+                  style={{
+                    height: 200,
+                    width: 200,
+                    borderRadius: 5,
+                  }}
                   source={{uri: userPhoto || userPhotoFromDB}}></Image>
               )}
-            </TouchableOpacity>
-            <Text style={{marginLeft: 10, marginTop: 30, fontWeight: '600'}}>
+            </View>
+            <View
+              style={{
+                flex: 1,
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+              }}>
+              <Text style={{marginLeft: 10, marginTop: 10, fontWeight: '600'}}>
+                {'Upload Photo ?'}
+              </Text>
+              <TouchableOpacity onPress={openPicker}>
+                <Image
+                  style={{
+                    height: 50,
+                    width: 50,
+                    borderRadius: 5,
+                    marginRight: 50,
+                  }}
+                  source={require('../../Images/camera-icon.jpeg')}></Image>
+              </TouchableOpacity>
+            </View>
+            <View
+              style={{
+                flex: 1,
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+              }}>
+              <Text style={{marginLeft: 10, marginTop: 10, fontWeight: '600'}}>
+                {'Upload Documentation ?'}
+              </Text>
+              <TouchableOpacity onPress={toggleSwitch}>
+                <Image
+                  style={{
+                    height: 40,
+                    width: 40,
+                    borderRadius: 5,
+                    marginRight: 55,
+                  }}
+                  source={require('../../Images/filejpeg.png')}></Image>
+              </TouchableOpacity>
+            </View>
+            <Text style={{marginLeft: 10, marginTop: 10, fontWeight: '600'}}>
               {'Full Name'}
             </Text>
             <TextInput
@@ -407,16 +433,6 @@ const HomeScreen: FC = () => {
                 borderColor: 'black',
                 width: 300,
               }}></TextInput>
-            <View style={{flexDirection: 'row'}}>
-              <Text style={{marginLeft: 10, marginTop: 10, fontWeight: '600'}}>
-                {'Upload Documentation ?'}
-              </Text>
-              <Switch
-                thumbColor={switchState ? 'blue' : '#f4f3f4'}
-                onValueChange={toggleSwitch}
-                value={switchState}
-                style={{marginLeft: 80}}></Switch>
-            </View>
           </>
         )}
         {!dataFlag && (
