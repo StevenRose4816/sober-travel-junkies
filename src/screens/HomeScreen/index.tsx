@@ -1,4 +1,4 @@
-import {FC, useEffect, useState} from 'react';
+import {FC, useCallback, useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -7,6 +7,7 @@ import {
   Image,
   ScrollView,
   Modal,
+  Switch,
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import {onValue, ref, set} from 'firebase/database';
@@ -15,6 +16,7 @@ import {db} from '../HomeScreen/FirebaseConfigurations';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import {setUserPhoto} from '../../store/user/slice';
+import {DocPicker} from '../../components/DocumentPicker';
 
 const HomeScreen: FC = () => {
   const {navigate} = useNavigation();
@@ -139,6 +141,7 @@ const HomeScreen: FC = () => {
   const [address, setAddress] = useState('');
   const [userPhotoFromDB, setUserPhotoFromDB] = useState('');
   const [successMessage, setSuccessMessage] = useState(false);
+  const [switchState, setSwitchState] = useState(false);
 
   const onEditPress = () => {
     setModalVisible(true);
@@ -152,6 +155,16 @@ const HomeScreen: FC = () => {
     }
   };
 
+  const onPressNo = () => {
+    if (!dataFlag) {
+    }
+    if (switchState) {
+      toggleSwitch();
+    }
+    toggleModal();
+    setSuccessMessage(false);
+  };
+
   const onPressSubmit = () => {
     setModalVisible(true);
     setSuccessMessage(true);
@@ -163,6 +176,9 @@ const HomeScreen: FC = () => {
   };
 
   const onPressYes = () => {
+    if (switchState) {
+      toggleSwitch();
+    }
     readData();
     setDataFlag(false);
     setModalVisible(false);
@@ -179,6 +195,11 @@ const HomeScreen: FC = () => {
     setSuccessMessage(false);
     setModalVisible(false);
     console.log('Submit pressed.');
+  };
+
+  const toggleSwitch = () => {
+    setSwitchState(previousState => !previousState);
+    toggleModal();
   };
 
   return (
@@ -240,6 +261,7 @@ const HomeScreen: FC = () => {
               {'Full name: '}
               <Text style={{fontWeight: '300'}}>{fullName}</Text>
             </Text>
+            {/* <DocPicker></DocPicker> */}
             <View
               style={{
                 flex: 1,
@@ -385,6 +407,16 @@ const HomeScreen: FC = () => {
                 borderColor: 'black',
                 width: 300,
               }}></TextInput>
+            <View style={{flexDirection: 'row'}}>
+              <Text style={{marginLeft: 10, marginTop: 10, fontWeight: '600'}}>
+                {'Upload Documentation ?'}
+              </Text>
+              <Switch
+                thumbColor={switchState ? 'blue' : '#f4f3f4'}
+                onValueChange={toggleSwitch}
+                value={switchState}
+                style={{marginLeft: 80}}></Switch>
+            </View>
           </>
         )}
         {!dataFlag && (
@@ -498,7 +530,7 @@ const HomeScreen: FC = () => {
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity
-                onPress={toggleModal}
+                onPress={onPressNo}
                 style={{
                   marginTop: 20,
                   backgroundColor: 'blue',
