@@ -208,6 +208,11 @@ const HomeScreen: FC = () => {
     toggleModal();
   };
 
+  useEffect(() => {
+    console.log('userPhoto: ', userPhoto);
+    console.log('userPhotoFromDB: ', userPhotoFromDB);
+  }, [userPhoto, userPhotoFromDB]);
+
   return (
     <View style={{flex: 1, backgroundColor: 'white'}}>
       <ScrollView style={{flex: 1, backgroundColor: 'white'}}>
@@ -224,7 +229,7 @@ const HomeScreen: FC = () => {
         </Text>
         {dataFlag && (
           <>
-            {userPhotoFromDB || userPhoto ? (
+            {userPhotoFromDB ? (
               <Image
                 style={{
                   height: 300,
@@ -232,7 +237,7 @@ const HomeScreen: FC = () => {
                   marginLeft: 10,
                   borderRadius: 5,
                 }}
-                source={{uri: userPhotoFromDB || userPhoto}}></Image>
+                source={{uri: userPhotoFromDB}}></Image>
             ) : (
               <Image
                 style={{
