@@ -253,7 +253,7 @@ const HomeScreen: FC = () => {
               style={{
                 marginLeft: 10,
                 marginTop: 10,
-                marginBottom: 130,
+                marginBottom: 75,
                 fontWeight: '700',
               }}>
               {'Full name: '}
@@ -354,7 +354,13 @@ const HomeScreen: FC = () => {
                 flexDirection: 'row',
                 justifyContent: 'space-between',
               }}>
-              <Text style={{marginLeft: 10, marginTop: 10, fontWeight: '600'}}>
+              <Text
+                style={{
+                  marginLeft: 10,
+                  marginTop: 10,
+                  fontWeight: '600',
+                  fontSize: 18,
+                }}>
                 {'Upload Photo ?'}
               </Text>
               <TouchableOpacity onPress={openPicker}>
@@ -374,7 +380,13 @@ const HomeScreen: FC = () => {
                 flexDirection: 'row',
                 justifyContent: 'space-between',
               }}>
-              <Text style={{marginLeft: 10, marginTop: 10, fontWeight: '600'}}>
+              <Text
+                style={{
+                  marginLeft: 10,
+                  marginTop: 10,
+                  fontWeight: '600',
+                  fontSize: 18,
+                }}>
                 {'Upload Documentation ?'}
               </Text>
               <TouchableOpacity onPress={toggleSwitch}>
@@ -388,63 +400,66 @@ const HomeScreen: FC = () => {
                   source={require('../../Images/folder.jpeg')}></Image>
               </TouchableOpacity>
             </View>
-            <Text style={{marginLeft: 10, marginTop: 10, fontWeight: '600'}}>
-              {'Full Name'}
-            </Text>
-            <TextInput
-              value={fullName}
-              placeholder=" full name"
-              onChangeText={fullName => setFullName(fullName)}
-              secureTextEntry={false}
-              style={{
-                backgroundColor: 'white',
-                marginHorizontal: 10,
-                marginBottom: 10,
-                marginTop: 5,
-                borderRadius: 5,
-                minHeight: 50,
-                borderWidth: 1,
-                borderColor: 'black',
-                width: 300,
-              }}></TextInput>
-            <Text style={{marginLeft: 10, fontWeight: '600', marginTop: 10}}>
-              {'Phone Number'}
-            </Text>
-            <TextInput
-              value={phoneNumber}
-              placeholder=" phone number"
-              onChangeText={phoneNumber => setPhoneNumber(phoneNumber)}
-              secureTextEntry={false}
-              style={{
-                backgroundColor: 'white',
-                marginHorizontal: 10,
-                marginBottom: 10,
-                marginTop: 5,
-                borderRadius: 5,
-                minHeight: 50,
-                borderWidth: 1,
-                borderColor: 'black',
-                width: 300,
-              }}></TextInput>
-            <Text style={{marginLeft: 10, marginTop: 10, fontWeight: '600'}}>
-              {'Address'}
-            </Text>
-            <TextInput
-              value={address}
-              placeholder=" address"
-              onChangeText={address => setAddress(address)}
-              secureTextEntry={false}
-              style={{
-                backgroundColor: 'white',
-                marginHorizontal: 10,
-                marginBottom: 10,
-                marginTop: 5,
-                borderRadius: 5,
-                minHeight: 50,
-                borderWidth: 1,
-                borderColor: 'black',
-                width: 300,
-              }}></TextInput>
+            <View
+              style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+              <Text style={{marginLeft: 10, marginTop: 10, fontWeight: '600'}}>
+                {'Full Name'}
+              </Text>
+              <TextInput
+                value={fullName}
+                placeholder=" full name"
+                onChangeText={fullName => setFullName(fullName)}
+                secureTextEntry={false}
+                style={{
+                  backgroundColor: 'white',
+                  marginHorizontal: 10,
+                  marginBottom: 10,
+                  marginTop: 5,
+                  borderRadius: 5,
+                  minHeight: 50,
+                  borderWidth: 1,
+                  borderColor: 'black',
+                  width: screenWidth * 0.9,
+                }}></TextInput>
+              <Text style={{marginLeft: 10, fontWeight: '600', marginTop: 10}}>
+                {'Phone Number'}
+              </Text>
+              <TextInput
+                value={phoneNumber}
+                placeholder=" phone number"
+                onChangeText={phoneNumber => setPhoneNumber(phoneNumber)}
+                secureTextEntry={false}
+                style={{
+                  backgroundColor: 'white',
+                  marginHorizontal: 10,
+                  marginBottom: 10,
+                  marginTop: 5,
+                  borderRadius: 5,
+                  minHeight: 50,
+                  borderWidth: 1,
+                  borderColor: 'black',
+                  width: screenWidth * 0.9,
+                }}></TextInput>
+              <Text style={{marginLeft: 10, marginTop: 10, fontWeight: '600'}}>
+                {'Address'}
+              </Text>
+              <TextInput
+                value={address}
+                placeholder=" address"
+                onChangeText={address => setAddress(address)}
+                secureTextEntry={false}
+                style={{
+                  backgroundColor: 'white',
+                  marginHorizontal: 10,
+                  marginBottom: 10,
+                  marginTop: 5,
+                  borderRadius: 5,
+                  minHeight: 50,
+                  borderWidth: 1,
+                  borderColor: 'black',
+                  width: screenWidth * 0.9,
+                }}></TextInput>
+            </View>
             <View
               style={{
                 flex: 1,
