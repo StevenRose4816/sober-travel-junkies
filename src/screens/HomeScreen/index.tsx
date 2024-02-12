@@ -1,4 +1,4 @@
-import {FC, useCallback, useEffect, useState} from 'react';
+import {FC, useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -145,7 +145,9 @@ const HomeScreen: FC = () => {
   const [userPhotoFromDB, setUserPhotoFromDB] = useState('');
   const [successMessage, setSuccessMessage] = useState(false);
   const [switchState, setSwitchState] = useState(false);
-  const [showIcon, setShowIcon] = useState(false);
+  const [showCameraIcon, setShowCameraIcon] = useState(false);
+  const [showFileIcon, setShowFileIcon] = useState(false);
+  const [showFolderIcon, setShowFolderIcon] = useState(false);
 
   const onEditPress = () => {
     setModalVisible(true);
@@ -216,7 +218,7 @@ const HomeScreen: FC = () => {
             color: 'black',
             fontWeight: '600',
             marginTop: 10,
-            marginHorizontal: 10,
+            marginLeft: screenWidth * 0.05,
           }}>
           {'Hello ' + (fullName || email) + '!\n'}
         </Text>
@@ -320,91 +322,98 @@ const HomeScreen: FC = () => {
             <Text
               style={{
                 fontSize: 16,
-                marginLeft: 10,
+                marginLeft: 25,
                 textAlign: 'left',
                 marginBottom: 20,
                 fontWeight: '600',
               }}>
               {"Let's get some informaton."}
             </Text>
-            <View style={{flex: 1, alignItems: 'left'}}>
+            <View style={{flex: 1, alignItems: 'center'}}>
               {!userPhoto && !userPhotoFromDB ? (
                 <Image
                   style={{
                     height: 300,
-                    width: 300,
+                    width: screenWidth * 0.9,
                     borderRadius: 5,
-                    marginLeft: 10,
                   }}
                   source={require('../../Images/profile-picture-vector.jpeg')}></Image>
               ) : (
                 <Image
                   style={{
-                    marginLeft: 10,
                     height: 300,
-                    width: 300,
+                    width: screenWidth * 0.9,
                     borderRadius: 5,
                   }}
                   source={{uri: userPhoto || userPhotoFromDB}}></Image>
               )}
             </View>
-            <View
-              style={{
-                flex: 1,
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-              }}>
-              <Text
+            <View style={{flex: 1}}>
+              <View
                 style={{
+                  flex: 1,
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
                   marginLeft: 10,
-                  marginTop: 10,
-                  fontWeight: '600',
-                  fontSize: 18,
                 }}>
-                {'Upload Photo ?'}
-              </Text>
-              <TouchableOpacity onPress={openPicker}>
-                <Image
+                <Text
                   style={{
-                    height: 50,
-                    width: 50,
-                    borderRadius: 5,
-                    marginRight: 50,
-                  }}
-                  source={require('../../Images/camera-icon.jpeg')}></Image>
-              </TouchableOpacity>
-            </View>
-            <View
-              style={{
-                flex: 1,
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-              }}>
-              <Text
+                    marginLeft: 10,
+                    marginTop: 10,
+                    fontWeight: '600',
+                    fontSize: 18,
+                  }}>
+                  {'Upload Photo ?'}
+                </Text>
+                <TouchableOpacity onPress={openPicker}>
+                  <Image
+                    style={{
+                      height: 50,
+                      width: 50,
+                      borderRadius: 5,
+                      marginRight: 20,
+                    }}
+                    source={require('../../Images/camera-icon.jpeg')}></Image>
+                </TouchableOpacity>
+              </View>
+              <View
                 style={{
+                  flex: 1,
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
                   marginLeft: 10,
-                  marginTop: 10,
-                  fontWeight: '600',
-                  fontSize: 18,
                 }}>
-                {'Upload Documentation ?'}
-              </Text>
-              <TouchableOpacity onPress={toggleSwitch}>
-                <Image
+                <Text
                   style={{
-                    height: 40,
-                    width: 40,
-                    borderRadius: 5,
-                    marginRight: 55,
-                  }}
-                  source={require('../../Images/folder.jpeg')}></Image>
-              </TouchableOpacity>
+                    marginLeft: 10,
+                    marginTop: 10,
+                    fontWeight: '600',
+                    fontSize: 18,
+                  }}>
+                  {'Upload Documentation ?'}
+                </Text>
+                <TouchableOpacity onPress={toggleSwitch}>
+                  <Image
+                    style={{
+                      height: 40,
+                      width: 40,
+                      borderRadius: 5,
+                      marginRight: 20,
+                    }}
+                    source={require('../../Images/folder.jpeg')}></Image>
+                </TouchableOpacity>
+              </View>
             </View>
+            <Text
+              style={{
+                textAlign: 'center',
+                marginTop: 10,
+                fontWeight: '600',
+              }}>
+              {'Full Name'}
+            </Text>
             <View
               style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-              <Text style={{marginLeft: 10, marginTop: 10, fontWeight: '600'}}>
-                {'Full Name'}
-              </Text>
               <TextInput
                 value={fullName}
                 placeholder=" full name"
@@ -421,7 +430,13 @@ const HomeScreen: FC = () => {
                   borderColor: 'black',
                   width: screenWidth * 0.9,
                 }}></TextInput>
-              <Text style={{marginLeft: 10, fontWeight: '600', marginTop: 10}}>
+              <Text
+                style={{
+                  textAlign: 'left',
+                  marginLeft: 10,
+                  fontWeight: '600',
+                  marginTop: 10,
+                }}>
                 {'Phone Number'}
               </Text>
               <TextInput
@@ -469,8 +484,8 @@ const HomeScreen: FC = () => {
               }}>
               <View
                 style={[
-                  !showIcon && styles.circleBefore,
-                  showIcon && styles.circleAfter,
+                  !showCameraIcon && styles.circleBefore,
+                  showCameraIcon && styles.circleAfter,
                 ]}>
                 <Image
                   style={{
@@ -482,8 +497,8 @@ const HomeScreen: FC = () => {
               </View>
               <View
                 style={[
-                  !showIcon && styles.circleBefore,
-                  showIcon && styles.circleAfter,
+                  !showFolderIcon && styles.circleBefore,
+                  showFolderIcon && styles.circleAfter,
                 ]}>
                 <Image
                   style={{
@@ -495,8 +510,8 @@ const HomeScreen: FC = () => {
               </View>
               <View
                 style={[
-                  !showIcon && styles.circleBefore,
-                  showIcon && styles.circleAfter,
+                  !showFileIcon && styles.circleBefore,
+                  showFileIcon && styles.circleAfter,
                 ]}>
                 <Image
                   style={{
@@ -657,6 +672,8 @@ const HomeScreen: FC = () => {
 
 const styles = StyleSheet.create({
   circleBefore: {
+    marginTop: 20,
+    marginBottom: 10,
     alignItems: 'center',
     justifyContent: 'center',
     width: 100,
@@ -665,6 +682,10 @@ const styles = StyleSheet.create({
     backgroundColor: 'red',
   },
   circleAfter: {
+    marginTop: 20,
+    marginBottom: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
     width: 100,
     height: 100,
     borderRadius: 100 / 2,
