@@ -498,7 +498,7 @@ const HomeScreen: FC = () => {
                     width: 50,
                     borderRadius: 5,
                   }}
-                  source={require('../../Images/camera-icon.jpeg')}></Image>
+                  source={require('../../Images/cameraIcon_Hollis.png')}></Image>
               </View>
               <View
                 style={[
