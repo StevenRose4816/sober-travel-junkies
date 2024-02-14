@@ -41,7 +41,6 @@ const HomeScreen: FC = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [dataFlag, setDataFlag] = useState(false);
   const [showBackButton, setShowBackButton] = useState(false);
-  const [showSubmit, setShowSubmit] = useState(false);
 
   const toggleModal = () => {
     setModalVisible(!modalVisible);
@@ -306,30 +305,6 @@ const HomeScreen: FC = () => {
                   {'Edit'}
                 </Text>
               </TouchableOpacity>
-              {showSubmit && (
-                <TouchableOpacity
-                  onPress={onPressSubmit}
-                  style={{
-                    backgroundColor: 'blue',
-                    borderRadius: 5,
-                    marginRight: 10,
-                    width: 100,
-                  }}>
-                  <Text
-                    style={{
-                      color: 'white',
-                      fontSize: 12,
-                      fontWeight: '600',
-                      marginBottom: 10,
-                      marginTop: 10,
-                      marginRight: 10,
-                      marginLeft: 10,
-                      textAlign: 'center',
-                    }}>
-                    {'Submit'}
-                  </Text>
-                </TouchableOpacity>
-              )}
             </View>
           </>
         )}
