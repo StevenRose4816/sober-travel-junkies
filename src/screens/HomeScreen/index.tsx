@@ -25,7 +25,6 @@ const HomeScreen: FC = () => {
   const dispatch = useDispatch();
   const screenWidth = Dimensions.get('window').width;
   const screenHeight = Dimensions.get('window').height;
-  const route = useRoute();
 
   const logout = () => {
     dispatch(setUserPhoto({userPhoto: null}));

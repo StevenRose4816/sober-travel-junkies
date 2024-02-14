@@ -106,11 +106,6 @@ const ImagePicker = () => {
           </View>
         </>
       )}
-      {/* <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        <Image
-          style={{height: 50, width: 50, marginLeft: 10}}
-          source={require('../Images/camera-icon.jpeg')}></Image>
-      </View> */}
       <View
         style={{
           marginTop: 10,
