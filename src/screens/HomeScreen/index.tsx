@@ -145,9 +145,9 @@ const HomeScreen: FC = () => {
   const [userPhotoFromDB, setUserPhotoFromDB] = useState('');
   const [successMessage, setSuccessMessage] = useState(false);
   const [switchState, setSwitchState] = useState(false);
-  const [showCameraIcon, setShowCameraIcon] = useState(false);
-  const [showFileIcon, setShowFileIcon] = useState(false);
-  const [showFolderIcon, setShowFolderIcon] = useState(false);
+  const [showCameraIcon, setShowCameraIcon] = useState(true);
+  const [showCheckListIcon, setShowCheckListIcon] = useState(true);
+  const [showFolderIcon, setShowFolderIcon] = useState(true);
 
   const onEditPress = () => {
     setModalVisible(true);
@@ -492,39 +492,75 @@ const HomeScreen: FC = () => {
                   !showCameraIcon && styles.circleBefore,
                   showCameraIcon && styles.circleAfter,
                 ]}>
-                <Image
-                  style={{
-                    height: 50,
-                    width: 50,
-                    borderRadius: 5,
-                  }}
-                  source={require('../../Images/cameraIcon_Hollis.png')}></Image>
+                {!showCameraIcon ? (
+                  <Image
+                    style={{
+                      height: 75,
+                      width: 75,
+                      borderRadius: 5,
+                    }}
+                    source={require('../../Images/cameraIcon_Hollis.png')}></Image>
+                ) : (
+                  showCameraIcon && (
+                    <Image
+                      style={{
+                        height: 75,
+                        width: 75,
+                        borderRadius: 5,
+                      }}
+                      source={require('../../Images/checkIcon_Hollis.png')}></Image>
+                  )
+                )}
+              </View>
+              <View
+                style={[
+                  !showCheckListIcon && styles.circleBefore,
+                  showCheckListIcon && styles.circleAfter,
+                ]}>
+                {!showCheckListIcon ? (
+                  <Image
+                    style={{
+                      height: 75,
+                      width: 75,
+                      borderRadius: 5,
+                    }}
+                    source={require('../../Images/checklistIcon_Hollis.png')}></Image>
+                ) : (
+                  showCheckListIcon && (
+                    <Image
+                      style={{
+                        height: 75,
+                        width: 75,
+                        borderRadius: 5,
+                      }}
+                      source={require('../../Images/checkIcon_Hollis.png')}></Image>
+                  )
+                )}
               </View>
               <View
                 style={[
                   !showFolderIcon && styles.circleBefore,
                   showFolderIcon && styles.circleAfter,
                 ]}>
-                <Image
-                  style={{
-                    height: 50,
-                    width: 50,
-                    borderRadius: 5,
-                  }}
-                  source={require('../../Images/folder.jpeg')}></Image>
-              </View>
-              <View
-                style={[
-                  !showFileIcon && styles.circleBefore,
-                  showFileIcon && styles.circleAfter,
-                ]}>
-                <Image
-                  style={{
-                    height: 50,
-                    width: 50,
-                    borderRadius: 5,
-                  }}
-                  source={require('../../Images/filejpeg.png')}></Image>
+                {!showFolderIcon ? (
+                  <Image
+                    style={{
+                      height: 75,
+                      width: 75,
+                      borderRadius: 5,
+                    }}
+                    source={require('../../Images/folderIcon_Hollis.png')}></Image>
+                ) : (
+                  showFolderIcon && (
+                    <Image
+                      style={{
+                        height: 75,
+                        width: 75,
+                        borderRadius: 5,
+                      }}
+                      source={require('../../Images/checkIcon_Hollis.png')}></Image>
+                  )
+                )}
               </View>
             </View>
           </>
@@ -678,21 +714,22 @@ const HomeScreen: FC = () => {
 const styles = StyleSheet.create({
   circleBefore: {
     marginTop: 20,
-    marginBottom: 10,
+    marginBottom: 20,
     alignItems: 'center',
     justifyContent: 'center',
-    width: 100,
-    height: 100,
+    width: 50,
+    height: 50,
     borderRadius: 100 / 2,
-    backgroundColor: 'red',
+    backgroundColor: 'white',
+    borderWidth: 1,
   },
   circleAfter: {
     marginTop: 20,
-    marginBottom: 10,
+    marginBottom: 20,
     alignItems: 'center',
     justifyContent: 'center',
-    width: 100,
-    height: 100,
+    width: 50,
+    height: 50,
     borderRadius: 100 / 2,
     backgroundColor: 'green',
   },
