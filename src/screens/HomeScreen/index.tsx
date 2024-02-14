@@ -18,6 +18,7 @@ import {useNavigation, useRoute} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import {setUserPhoto} from '../../store/user/slice';
 import {DocPicker} from '../../components/DocumentPicker';
+import {setSelected} from '../../store/photo/slice';
 
 const HomeScreen: FC = () => {
   const {navigate} = useNavigation();
@@ -148,6 +149,17 @@ const HomeScreen: FC = () => {
   const [showCameraIcon, setShowCameraIcon] = useState(true);
   const [showCheckListIcon, setShowCheckListIcon] = useState(true);
   const [showFolderIcon, setShowFolderIcon] = useState(true);
+  const selected = useAppSelector(state => state.photo.selected);
+
+  useEffect(() => {
+    if (selected) {
+      console.log('SELECTED ');
+      setShowCameraIcon(false);
+    } else if (!selected) {
+      console.log('NOT SELECTED');
+      setShowCameraIcon(true);
+    }
+  }, [selected]);
 
   const onEditPress = () => {
     setModalVisible(true);
@@ -162,8 +174,6 @@ const HomeScreen: FC = () => {
   };
 
   const onPressNo = () => {
-    // if (!dataFlag) {
-    // }
     if (switchState) {
       toggleSwitch();
     }
@@ -200,6 +210,7 @@ const HomeScreen: FC = () => {
     readData();
     setSuccessMessage(false);
     setModalVisible(false);
+    dispatch(setSelected({selected: false}));
     console.log('Submit pressed.');
   };
 
