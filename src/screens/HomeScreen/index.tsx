@@ -25,6 +25,7 @@ const HomeScreen: FC = () => {
   const dispatch = useDispatch();
   const screenWidth = Dimensions.get('window').width;
   const screenHeight = Dimensions.get('window').height;
+  const route = useRoute();
 
   const logout = () => {
     dispatch(setUserPhoto({userPhoto: null}));
@@ -211,7 +212,7 @@ const HomeScreen: FC = () => {
   useEffect(() => {
     console.log('userPhoto: ', userPhoto);
     console.log('userPhotoFromDB: ', userPhotoFromDB);
-  }, [userPhoto, userPhotoFromDB]);
+  }, [userPhoto]);
 
   return (
     <View style={{flex: 1, backgroundColor: 'white'}}>
@@ -489,10 +490,10 @@ const HomeScreen: FC = () => {
               }}>
               <View
                 style={[
-                  !showCameraIcon && styles.circleBefore,
-                  showCameraIcon && styles.circleAfter,
+                  showCameraIcon && styles.circleBefore,
+                  !showCameraIcon && styles.circleAfter,
                 ]}>
-                {!showCameraIcon ? (
+                {showCameraIcon ? (
                   <Image
                     style={{
                       height: 75,
@@ -501,7 +502,7 @@ const HomeScreen: FC = () => {
                     }}
                     source={require('../../Images/cameraIcon_Hollis.png')}></Image>
                 ) : (
-                  showCameraIcon && (
+                  !showCameraIcon && (
                     <Image
                       style={{
                         height: 75,
@@ -514,10 +515,10 @@ const HomeScreen: FC = () => {
               </View>
               <View
                 style={[
-                  !showCheckListIcon && styles.circleBefore,
-                  showCheckListIcon && styles.circleAfter,
+                  showCheckListIcon && styles.circleBefore,
+                  !showCheckListIcon && styles.circleAfter,
                 ]}>
-                {!showCheckListIcon ? (
+                {showCheckListIcon ? (
                   <Image
                     style={{
                       height: 75,
@@ -526,7 +527,7 @@ const HomeScreen: FC = () => {
                     }}
                     source={require('../../Images/checklistIcon_Hollis.png')}></Image>
                 ) : (
-                  showCheckListIcon && (
+                  !showCheckListIcon && (
                     <Image
                       style={{
                         height: 75,
@@ -539,10 +540,10 @@ const HomeScreen: FC = () => {
               </View>
               <View
                 style={[
-                  !showFolderIcon && styles.circleBefore,
-                  showFolderIcon && styles.circleAfter,
+                  showFolderIcon && styles.circleBefore,
+                  !showFolderIcon && styles.circleAfter,
                 ]}>
-                {!showFolderIcon ? (
+                {showFolderIcon ? (
                   <Image
                     style={{
                       height: 75,
@@ -551,7 +552,7 @@ const HomeScreen: FC = () => {
                     }}
                     source={require('../../Images/folderIcon_Hollis.png')}></Image>
                 ) : (
-                  showFolderIcon && (
+                  !showFolderIcon && (
                     <Image
                       style={{
                         height: 75,
