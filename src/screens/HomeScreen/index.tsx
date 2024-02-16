@@ -1,4 +1,4 @@
-import {FC, useEffect, useState} from 'react';
+import {FC, useEffect, useRef, useState} from 'react';
 import {
   View,
   Text,
@@ -25,7 +25,6 @@ const HomeScreen: FC = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const screenWidth = Dimensions.get('window').width;
-  const screenHeight = Dimensions.get('window').height;
 
   const logout = () => {
     dispatch(setUserPhoto({userPhoto: null}));
@@ -41,6 +40,7 @@ const HomeScreen: FC = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [dataFlag, setDataFlag] = useState(false);
   const [showBackButton, setShowBackButton] = useState(false);
+  const [initialName, setInitialName] = useState('');
 
   const toggleModal = () => {
     setModalVisible(!modalVisible);
@@ -74,6 +74,7 @@ const HomeScreen: FC = () => {
       setFullName(data.username);
       setPhoneNumber(data.phoneNumber);
       setUserPhotoFromDB(data.userPhoto);
+      setInitialName(data.username);
     });
   }
 
@@ -90,7 +91,7 @@ const HomeScreen: FC = () => {
             }}>
             <Text
               style={{
-                color: 'white',
+                color: '#eee7da',
                 textAlign: 'center',
                 marginTop: 5,
                 marginBottom: 5,
@@ -110,7 +111,7 @@ const HomeScreen: FC = () => {
           }}>
           <Text
             style={{
-              color: 'white',
+              color: '#eee7da',
               textAlign: 'center',
               marginTop: 5,
               marginBottom: 5,
@@ -150,6 +151,24 @@ const HomeScreen: FC = () => {
   const [showFolderIcon, setShowFolderIcon] = useState(true);
   const selected = useAppSelector(state => state.photo.selected);
 
+  const checkName = () => {
+    if (initialName !== fullName) {
+      console.log(
+        'Initial name does NOT equal fullName. initialName: ',
+        initialName,
+        'fullName: ',
+        fullName,
+      );
+    } else if (initialName === fullName) {
+      console.log(
+        'Initial name DOES equal fullName. initialName: ',
+        initialName,
+        'fullName: ',
+        fullName,
+      );
+    }
+  };
+
   useEffect(() => {
     if (selected) {
       console.log('SELECTED ');
@@ -181,6 +200,7 @@ const HomeScreen: FC = () => {
   };
 
   const onPressSubmit = () => {
+    checkName();
     setModalVisible(true);
     setSuccessMessage(true);
   };
@@ -224,13 +244,13 @@ const HomeScreen: FC = () => {
   }, [userPhoto]);
 
   return (
-    <View style={{flex: 1, backgroundColor: 'white'}}>
-      <ScrollView style={{flex: 1, backgroundColor: 'white'}}>
+    <View style={{flex: 1, backgroundColor: '#eee7da'}}>
+      <ScrollView style={{flex: 1, backgroundColor: '#eee7da'}}>
         <Text
           style={{
             textAlign: 'left',
             fontSize: 30,
-            color: 'black',
+            color: '#0c0b09',
             fontWeight: '600',
             marginTop: 10,
             marginLeft: screenWidth * 0.05,
@@ -280,7 +300,7 @@ const HomeScreen: FC = () => {
               style={{
                 flex: 1,
                 alignItems: 'flex-end',
-                backgroundColor: 'white',
+                backgroundColor: '#eee7da',
               }}>
               <TouchableOpacity
                 onPress={onEditPress}
@@ -293,7 +313,7 @@ const HomeScreen: FC = () => {
                 }}>
                 <Text
                   style={{
-                    color: 'white',
+                    color: '#eee7da',
                     fontSize: 12,
                     fontWeight: '600',
                     marginBottom: 10,
@@ -411,14 +431,14 @@ const HomeScreen: FC = () => {
                 onChangeText={fullName => setFullName(fullName)}
                 secureTextEntry={false}
                 style={{
-                  backgroundColor: 'white',
+                  backgroundColor: '#eee7da',
                   marginHorizontal: 10,
                   marginBottom: 10,
                   marginTop: 5,
                   borderRadius: 5,
                   minHeight: 50,
                   borderWidth: 1,
-                  borderColor: 'black',
+                  borderColor: '#0c0b09',
                   width: screenWidth * 0.9,
                 }}></TextInput>
               <Text
@@ -436,14 +456,14 @@ const HomeScreen: FC = () => {
                 onChangeText={phoneNumber => setPhoneNumber(phoneNumber)}
                 secureTextEntry={false}
                 style={{
-                  backgroundColor: 'white',
+                  backgroundColor: '#eee7da',
                   marginHorizontal: 10,
                   marginBottom: 10,
                   marginTop: 5,
                   borderRadius: 5,
                   minHeight: 50,
                   borderWidth: 1,
-                  borderColor: 'black',
+                  borderColor: '#0c0b09',
                   width: screenWidth * 0.9,
                 }}></TextInput>
               <Text style={{marginLeft: 10, marginTop: 10, fontWeight: '600'}}>
@@ -455,14 +475,14 @@ const HomeScreen: FC = () => {
                 onChangeText={address => setAddress(address)}
                 secureTextEntry={false}
                 style={{
-                  backgroundColor: 'white',
+                  backgroundColor: '#eee7da',
                   marginHorizontal: 10,
                   marginBottom: 10,
                   marginTop: 5,
                   borderRadius: 5,
                   minHeight: 50,
                   borderWidth: 1,
-                  borderColor: 'black',
+                  borderColor: '#0c0b09',
                   width: screenWidth * 0.9,
                 }}></TextInput>
             </View>
@@ -565,7 +585,7 @@ const HomeScreen: FC = () => {
             }}>
             <Text
               style={{
-                color: 'white',
+                color: '#eee7da',
                 fontSize: 21,
                 fontWeight: '600',
                 textAlign: 'center',
@@ -589,7 +609,7 @@ const HomeScreen: FC = () => {
           }}>
           <View
             style={{
-              borderColor: 'black',
+              borderColor: '#0c0b09',
               backgroundColor: 'darkorange',
               minHeight: 300,
               width: '80%',
@@ -609,11 +629,11 @@ const HomeScreen: FC = () => {
                 <Text
                   style={{
                     textAlign: 'center',
-                    color: 'white',
+                    color: '#eee7da',
                     fontWeight: '500',
                     fontSize: 16,
                     borderRadius: 5,
-                    borderColor: 'black',
+                    borderColor: '#0c0b09',
                   }}>
                   {'Does this look correct?\n\n Name: ' +
                     fullName +
@@ -629,7 +649,7 @@ const HomeScreen: FC = () => {
                   <Text
                     style={{
                       textAlign: 'center',
-                      color: 'white',
+                      color: '#eee7da',
                       fontWeight: '500',
                       fontSize: 18,
                       borderRadius: 5,
@@ -657,7 +677,7 @@ const HomeScreen: FC = () => {
                   <Text
                     style={{
                       textAlign: 'center',
-                      color: 'white',
+                      color: '#eee7da',
                       fontSize: 21,
                       fontWeight: '600',
                       backgroundColor: 'blue',
@@ -680,7 +700,7 @@ const HomeScreen: FC = () => {
                 <Text
                   style={{
                     textAlign: 'center',
-                    color: 'white',
+                    color: '#eee7da',
                     fontSize: 21,
                     fontWeight: '600',
                     backgroundColor: 'blue',
@@ -706,7 +726,7 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     borderRadius: 100 / 2,
-    backgroundColor: 'white',
+    backgroundColor: '#eee7da',
     borderWidth: 1,
   },
   circleAfter: {
