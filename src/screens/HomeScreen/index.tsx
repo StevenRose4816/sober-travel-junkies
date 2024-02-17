@@ -41,6 +41,8 @@ const HomeScreen: FC = () => {
   const [dataFlag, setDataFlag] = useState(false);
   const [showBackButton, setShowBackButton] = useState(false);
   const [initialName, setInitialName] = useState('');
+  const [initialAddress, setInitialAddress] = useState('');
+  const [initialPhoneNumber, setInitialPhoneNumber] = useState('');
 
   const toggleModal = () => {
     setModalVisible(!modalVisible);
@@ -64,18 +66,26 @@ const HomeScreen: FC = () => {
 
   function readData() {
     const countRef = ref(db, 'users/' + userId);
-    onValue(countRef, snapshot => {
-      const data = snapshot.val();
-      if (!!data) {
-        setDataFlag(true);
-        console.log('data: ', data);
-      }
-      setAddress(data.address);
-      setFullName(data.username);
-      setPhoneNumber(data.phoneNumber);
-      setUserPhotoFromDB(data.userPhoto);
-      setInitialName(data.username);
-    });
+    onValue(
+      countRef,
+      snapshot => {
+        const data = snapshot.val();
+        if (!!data) {
+          setDataFlag(true);
+          console.log('data: ', data);
+        }
+        setAddress(data.address);
+        setFullName(data.username);
+        setPhoneNumber(data.phoneNumber);
+        setUserPhotoFromDB(data.userPhoto);
+        setInitialName(data.username);
+        setInitialAddress(data.address);
+        setInitialPhoneNumber(data.phoneNumber);
+      },
+      error => {
+        console.error('Error reading data from the database:', error);
+      },
+    );
   }
 
   useEffect(() => {
@@ -152,20 +162,14 @@ const HomeScreen: FC = () => {
   const selected = useAppSelector(state => state.photo.selected);
 
   const checkName = () => {
-    if (initialName !== fullName) {
-      console.log(
-        'Initial name does NOT equal fullName. initialName: ',
-        initialName,
-        'fullName: ',
-        fullName,
-      );
-    } else if (initialName === fullName) {
-      console.log(
-        'Initial name DOES equal fullName. initialName: ',
-        initialName,
-        'fullName: ',
-        fullName,
-      );
+    if (
+      initialName !== fullName ||
+      initialAddress !== address ||
+      initialPhoneNumber !== phoneNumber
+    ) {
+      setShowCheckListIcon(false);
+    } else {
+      console.log('None of the TextInputs have changed.');
     }
   };
 
@@ -194,6 +198,9 @@ const HomeScreen: FC = () => {
   const onPressNo = () => {
     if (switchState) {
       toggleSwitch();
+    }
+    if (!showCheckListIcon) {
+      setShowCheckListIcon(true);
     }
     toggleModal();
     setSuccessMessage(false);
@@ -225,6 +232,7 @@ const HomeScreen: FC = () => {
     if (!dataFlag) {
       setDataFlag(true);
     }
+    checkName();
     create(userId);
     readData();
     setSuccessMessage(false);
