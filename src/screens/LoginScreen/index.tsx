@@ -8,6 +8,7 @@ import {
   Button,
   useWindowDimensions,
   Image,
+  ImageBackground,
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import {useNavigation, useRoute} from '@react-navigation/native';
@@ -102,29 +103,26 @@ const LoginScreen: FC = () => {
             flex: 1,
             alignItems: 'flex-end',
             backgroundColor: 'white',
-            marginEnd: 10,
-            marginStart: 10,
           }}>
           <TouchableOpacity
             // @ts-ignore
             onPress={() => navigate('Signup Screen')}
             style={{
-              backgroundColor: 'blue',
+              backgroundColor: 'white',
               borderRadius: 5,
               marginLeft: 10,
             }}>
             <Text
               style={{
-                color: 'white',
+                textAlign: 'center',
                 fontSize: 12,
                 fontWeight: '600',
-                marginBottom: 10,
-                marginTop: 10,
-                marginRight: 10,
-                marginLeft: 10,
               }}>
               {'Sign Up'}
             </Text>
+            <ImageBackground
+              source={require('../../Images/STJ_Logo2.jpeg')}
+              style={{height: 70, width: 70}}></ImageBackground>
           </TouchableOpacity>
         </View>
         <View
