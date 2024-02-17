@@ -122,7 +122,11 @@ const LoginScreen: FC = () => {
             </Text>
             <ImageBackground
               source={require('../../Images/STJ_Logo2.jpeg')}
-              style={{height: 70, width: 70}}></ImageBackground>
+              style={{
+                height: 70,
+                width: 70,
+                marginRight: 10,
+              }}></ImageBackground>
           </TouchableOpacity>
         </View>
         <View
