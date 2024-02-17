@@ -232,6 +232,9 @@ const HomeScreen: FC = () => {
     if (!dataFlag) {
       setDataFlag(true);
     }
+    if (showCheckListIcon) {
+      setShowCheckListIcon(false);
+    }
     checkName();
     create(userId);
     readData();
@@ -630,8 +633,8 @@ const HomeScreen: FC = () => {
                 flex: 1,
                 borderRadius: 5,
                 backgroundColor: 'grey',
-                justifyContent: 'center', //vertical
-                alignItems: 'center', //horizontal
+                justifyContent: 'center',
+                alignItems: 'center',
               }}>
               {successMessage && !switchState ? (
                 <Text

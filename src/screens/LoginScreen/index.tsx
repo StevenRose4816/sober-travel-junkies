@@ -64,11 +64,8 @@ const LoginScreen: FC = () => {
           justifyContent: 'center',
         }}>
         <Image
-          source={require('../../Images/STJ_Logo.jpg')}
-          style={{height: 200, width: 200}}></Image>
-        <Text style={{fontWeight: '300'}}>
-          {'"We used to drink, but now we travel."'}
-        </Text>
+          source={require('../../Images/STJ_Logo3.jpeg')}
+          style={{height: 300, width: 300, marginTop: 20}}></Image>
       </View>
       <View style={{flex: 2, backgroundColor: 'white'}}>
         <Text style={{marginLeft: 10}}>{'email'}</Text>
