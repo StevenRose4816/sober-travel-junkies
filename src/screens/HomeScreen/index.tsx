@@ -64,7 +64,7 @@ const HomeScreen: FC = () => {
       });
   }
 
-  function readData() {
+  async function readData() {
     const countRef = ref(db, 'users/' + userId);
     onValue(
       countRef,
