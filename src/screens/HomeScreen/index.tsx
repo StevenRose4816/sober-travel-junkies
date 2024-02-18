@@ -134,6 +134,7 @@ const HomeScreen: FC = () => {
 
   useEffect(() => {
     if (dataFlag) {
+      setShowCheckListIcon(true);
       console.log('dataFlag is true.');
     } else if (!dataFlag) {
       console.log('dataFlag is false.');
