@@ -61,10 +61,14 @@ const LoginScreen: FC = () => {
   return (
     <ImageBackground
       source={require('../../Images/STJLogin.jpeg')}
-      style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+      style={{
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}>
       <Image
         source={require('../../Images/STJ.png')}
-        style={{height: 275, width: 275}}></Image>
+        style={{height: 275, width: 275, marginTop: 50}}></Image>
       <TextInput
         style={{
           backgroundColor: '#0c0b09',
@@ -113,7 +117,7 @@ const LoginScreen: FC = () => {
           borderRadius: 10,
           marginHorizontal: 10,
           marginTop: 10,
-          marginBottom: 10,
+          marginBottom: 20,
         }}>
         <Text
           style={{
@@ -138,7 +142,7 @@ const LoginScreen: FC = () => {
         <Text
           style={{
             color: '#0c0b09',
-            fontSize: 14,
+            fontSize: 12,
             fontWeight: '500',
             textAlign: 'center',
           }}>
@@ -157,7 +161,8 @@ const LoginScreen: FC = () => {
           width: screenWidth * 0.4,
           justifyContent: 'center',
           borderRadius: 10,
-          marginBottom: 80,
+          marginBottom: 60,
+          marginTop: 10,
         }}>
         <Text
           style={{
