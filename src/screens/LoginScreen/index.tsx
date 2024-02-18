@@ -63,17 +63,16 @@ const LoginScreen: FC = () => {
       source={require('../../Images/STJLogin.jpeg')}
       style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
       <Image
-        source={require('../../Images/STJ_Logo3.jpeg')}
-        style={{height: 200, width: 200}}></Image>
+        source={require('../../Images/STJ.png')}
+        style={{height: 275, width: 275}}></Image>
       <TextInput
         style={{
           backgroundColor: '#0c0b09',
           color: '#eee7da',
-          width: 225,
+          width: 175,
           marginHorizontal: 10,
-          borderRadius: 5,
-          minHeight: 50,
-          marginTop: 20,
+          borderRadius: 10,
+          minHeight: 40,
           borderWidth: 1,
           borderColor: 'black',
           textAlign: 'center',
@@ -87,14 +86,14 @@ const LoginScreen: FC = () => {
       <TextInput
         style={{
           textAlign: 'center',
-          width: 225,
+          width: 175,
           backgroundColor: '#0c0b09',
           color: '#eee7da',
           marginHorizontal: 10,
           marginBottom: 10,
-          marginTop: 10,
-          borderRadius: 5,
-          minHeight: 50,
+          marginTop: 5,
+          borderRadius: 10,
+          minHeight: 40,
           borderWidth: 1,
           borderColor: 'black',
         }}
@@ -108,8 +107,8 @@ const LoginScreen: FC = () => {
         onPress={login}
         style={{
           backgroundColor: '#b6e7cc',
-          minHeight: 45,
-          width: screenWidth * 0.5,
+          minHeight: 35,
+          width: screenWidth * 0.3,
           justifyContent: 'center',
           borderRadius: 10,
           marginHorizontal: 10,
@@ -119,31 +118,55 @@ const LoginScreen: FC = () => {
         <Text
           style={{
             color: '#0c0b09',
-            fontSize: 18,
-            fontWeight: '600',
+            fontSize: 14,
+            fontWeight: '500',
             textAlign: 'center',
           }}>
           {'LOGIN'}
         </Text>
       </TouchableOpacity>
+      <View
+        style={{
+          flex: 1,
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}>
+        <Image
+          source={require('../../Images/arrowRight.png')}
+          style={{height: 125, width: 125, marginRight: 10}}></Image>
+        <Text
+          style={{
+            color: '#0c0b09',
+            fontSize: 14,
+            fontWeight: '500',
+            textAlign: 'center',
+          }}>
+          {'OR'}
+        </Text>
+        <Image
+          source={require('../../Images/arrowLeft.png')}
+          style={{height: 125, width: 125, marginLeft: 10}}></Image>
+      </View>
       <TouchableOpacity
         // @ts-ignore
         onPress={() => navigate('Signup Screen')}
         style={{
           backgroundColor: '#b6e7cc',
-          minHeight: 45,
-          width: screenWidth * 0.6,
+          minHeight: 35,
+          width: screenWidth * 0.4,
           justifyContent: 'center',
           borderRadius: 10,
-          marginHorizontal: 10,
-          marginTop: 10,
+          marginBottom: 80,
         }}>
         <Text
           style={{
             color: '#0c0b09',
-            fontSize: 18,
-            fontWeight: '600',
+            fontSize: 12,
+            fontWeight: '500',
             textAlign: 'center',
+            marginLeft: 5,
+            marginRight: 10,
           }}>
           {'CREATE ACCOUNT'}
         </Text>
