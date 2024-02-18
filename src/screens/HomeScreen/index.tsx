@@ -95,20 +95,14 @@ const HomeScreen: FC = () => {
           <TouchableOpacity
             onPress={onPressGoBack}
             style={{
-              backgroundColor: 'blue',
-              borderRadius: 5,
               width: 65,
             }}>
-            <Text
+            <Image
+              source={require('../../Images/caret_left.png')}
               style={{
-                color: '#eee7da',
-                textAlign: 'center',
-                marginTop: 5,
-                marginBottom: 5,
-                fontSize: 12,
-              }}>
-              {'Go back'}
-            </Text>
+                height: 30,
+                width: 30,
+              }}></Image>
           </TouchableOpacity>
         ),
       headerRight: () => (
