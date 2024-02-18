@@ -67,24 +67,29 @@ const LoginScreen: FC = () => {
         style={{height: 200, width: 200}}></Image>
       <TextInput
         style={{
-          backgroundColor: 'white',
-          width: 200,
+          backgroundColor: '#0c0b09',
+          color: '#eee7da',
+          width: 225,
           marginHorizontal: 10,
           borderRadius: 5,
           minHeight: 50,
           marginTop: 20,
           borderWidth: 1,
           borderColor: 'black',
+          textAlign: 'center',
         }}
         placeholder=" USERNAME"
+        placeholderTextColor={'#eee7da'}
         autoCapitalize={'none'}
         value={email}
         onChangeText={email => setEmail(email)}
       />
       <TextInput
         style={{
-          width: 200,
-          backgroundColor: 'white',
+          textAlign: 'center',
+          width: 225,
+          backgroundColor: '#0c0b09',
+          color: '#eee7da',
           marginHorizontal: 10,
           marginBottom: 10,
           marginTop: 10,
@@ -94,6 +99,7 @@ const LoginScreen: FC = () => {
           borderColor: 'black',
         }}
         placeholder=" PASSWORD"
+        placeholderTextColor={'#eee7da'}
         value={password}
         onChangeText={password => setPassword(password)}
         secureTextEntry={true}
