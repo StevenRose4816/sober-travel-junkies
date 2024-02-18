@@ -347,14 +347,18 @@ const HomeScreen: FC = () => {
               {"Let's get some informaton."}
             </Text>
             <View style={{flex: 1, alignItems: 'center'}}>
-              {!userPhoto && !userPhotoFromDB ? (
+              {!userPhotoFromDB ? (
                 <Image
                   style={{
                     height: 300,
                     width: screenWidth * 0.9,
                     borderRadius: 5,
                   }}
-                  source={require('../../Images/profile-picture-vector.jpeg')}></Image>
+                  source={
+                    userPhoto ||
+                    require('../../Images/profile-picture-vector.jpeg')
+                  }
+                />
               ) : (
                 <Image
                   style={{
@@ -362,7 +366,8 @@ const HomeScreen: FC = () => {
                     width: screenWidth * 0.9,
                     borderRadius: 5,
                   }}
-                  source={{uri: userPhoto || userPhotoFromDB}}></Image>
+                  source={{uri: userPhoto || userPhotoFromDB}}
+                />
               )}
             </View>
             <View style={{flex: 1}}>

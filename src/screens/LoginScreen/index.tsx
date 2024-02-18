@@ -117,7 +117,7 @@ const LoginScreen: FC = () => {
           borderRadius: 10,
           marginHorizontal: 10,
           marginTop: 10,
-          marginBottom: 20,
+          marginBottom: 10,
         }}>
         <Text
           style={{
@@ -148,6 +148,7 @@ const LoginScreen: FC = () => {
           style={{
             color: '#0c0b09',
             fontSize: 12,
+            fontFamily: 'HighTide',
             fontWeight: '500',
             textAlign: 'center',
           }}>
