@@ -138,7 +138,12 @@ const LoginScreen: FC = () => {
         }}>
         <Image
           source={require('../../Images/arrowRight.png')}
-          style={{height: 125, width: 125, marginRight: 10}}></Image>
+          style={{
+            height: 125,
+            width: 125,
+            marginRight: 10,
+            marginTop: 10,
+          }}></Image>
         <Text
           style={{
             color: '#0c0b09',
@@ -150,7 +155,12 @@ const LoginScreen: FC = () => {
         </Text>
         <Image
           source={require('../../Images/arrowLeft.png')}
-          style={{height: 125, width: 125, marginLeft: 10}}></Image>
+          style={{
+            height: 125,
+            width: 125,
+            marginLeft: 10,
+            marginTop: 10,
+          }}></Image>
       </View>
       <TouchableOpacity
         // @ts-ignore
