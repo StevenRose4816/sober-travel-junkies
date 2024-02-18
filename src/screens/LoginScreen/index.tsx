@@ -9,6 +9,7 @@ import {
   useWindowDimensions,
   Image,
   ImageBackground,
+  Dimensions,
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import {useNavigation, useRoute} from '@react-navigation/native';
@@ -23,6 +24,8 @@ const LoginScreen: FC = () => {
   const name = useAppSelector(state => state.globalStore.name);
   const phoneNumber = useAppSelector(state => state.globalStore.phoneNumber);
   const user = auth().currentUser;
+  const screenWidth = Dimensions.get('window').width;
+  const screenHeight = Dimensions.get('window').height;
 
   useEffect(() => {
     console.log('Updated address=', address);
@@ -56,158 +59,139 @@ const LoginScreen: FC = () => {
     }
   };
   return (
-    <View style={{flex: 1, backgroundColor: 'white'}}>
-      <View
+    <ImageBackground
+      source={require('../../Images/STJLogin.jpeg')}
+      style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+      <Image
+        source={require('../../Images/STJ_Logo3.jpeg')}
+        style={{height: 200, width: 200}}></Image>
+      <TextInput
         style={{
-          flex: 2,
           backgroundColor: 'white',
-          alignItems: 'center',
+          width: 200,
+          marginHorizontal: 10,
+          borderRadius: 5,
+          minHeight: 50,
+          marginTop: 20,
+          borderWidth: 1,
+          borderColor: 'black',
+        }}
+        placeholder=" USERNAME"
+        autoCapitalize={'none'}
+        value={email}
+        onChangeText={email => setEmail(email)}
+      />
+      <TextInput
+        style={{
+          width: 200,
+          backgroundColor: 'white',
+          marginHorizontal: 10,
+          marginBottom: 10,
+          marginTop: 10,
+          borderRadius: 5,
+          minHeight: 50,
+          borderWidth: 1,
+          borderColor: 'black',
+        }}
+        placeholder=" PASSWORD"
+        value={password}
+        onChangeText={password => setPassword(password)}
+        secureTextEntry={true}
+      />
+      <TouchableOpacity
+        onPress={login}
+        style={{
+          backgroundColor: '#b6e7cc',
+          minHeight: 45,
+          width: screenWidth * 0.5,
           justifyContent: 'center',
+          borderRadius: 10,
+          marginHorizontal: 10,
+          marginTop: 10,
+          marginBottom: 10,
         }}>
-        <Image
-          source={require('../../Images/STJ_Logo3.jpeg')}
-          style={{height: 300, width: 300, marginTop: 20}}></Image>
-      </View>
-      <View style={{flex: 2, backgroundColor: 'white'}}>
-        <Text style={{marginLeft: 10}}>{'email'}</Text>
-        <TextInput
+        <Text
           style={{
-            backgroundColor: 'white',
-            marginHorizontal: 10,
-            borderRadius: 5,
-            minHeight: 50,
-            borderWidth: 1,
-            borderColor: 'black',
-          }}
-          autoCapitalize={'none'}
-          value={email}
-          onChangeText={email => setEmail(email)}
-        />
-        <Text style={{marginLeft: 10, marginTop: 10}}>{'password'}</Text>
-        <TextInput
+            color: '#0c0b09',
+            fontSize: 18,
+            fontWeight: '600',
+            textAlign: 'center',
+          }}>
+          {'LOGIN'}
+        </Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        // @ts-ignore
+        onPress={() => navigate('Signup Screen')}
+        style={{
+          backgroundColor: '#b6e7cc',
+          minHeight: 45,
+          width: screenWidth * 0.6,
+          justifyContent: 'center',
+          borderRadius: 10,
+          marginHorizontal: 10,
+          marginTop: 10,
+        }}>
+        <Text
           style={{
-            backgroundColor: 'white',
-            marginHorizontal: 10,
-            marginBottom: 10,
-            borderRadius: 5,
-            minHeight: 50,
-            borderWidth: 1,
-            borderColor: 'black',
-          }}
-          value={password}
-          onChangeText={password => setPassword(password)}
-          secureTextEntry={true}
-        />
+            color: '#0c0b09',
+            fontSize: 18,
+            fontWeight: '600',
+            textAlign: 'center',
+          }}>
+          {'CREATE ACCOUNT'}
+        </Text>
+      </TouchableOpacity>
+      <Modal
+        visible={modalVisible}
+        animationType={'slide'}
+        transparent={true}
+        onRequestClose={toggleModal}>
         <View
           style={{
             flex: 1,
-            alignItems: 'flex-end',
-            backgroundColor: 'white',
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
           }}>
-          <TouchableOpacity
-            // @ts-ignore
-            onPress={() => navigate('Signup Screen')}
+          <View
             style={{
-              backgroundColor: 'white',
-              borderRadius: 5,
-              marginLeft: 10,
-            }}>
-            <Text
-              style={{
-                textAlign: 'center',
-                fontSize: 12,
-                fontWeight: '600',
-              }}>
-              {'Sign Up'}
-            </Text>
-            <ImageBackground
-              source={require('../../Images/STJ_Logo2.jpeg')}
-              style={{
-                height: 70,
-                width: 70,
-                marginRight: 10,
-              }}></ImageBackground>
-          </TouchableOpacity>
-        </View>
-        <View
-          style={{
-            flex: 1,
-            justifyContent: 'flex-end',
-            marginBottom: 10,
-            backgroundColor: 'white',
-          }}>
-          <TouchableOpacity
-            onPress={login}
-            style={{
-              backgroundColor: 'blue',
-              minHeight: 50,
+              backgroundColor: 'darkorange',
+              minHeight: 300,
+              width: '80%',
               justifyContent: 'center',
               borderRadius: 5,
-              marginHorizontal: 10,
-              marginTop: 20,
+              padding: 20,
             }}>
-            <Text
-              style={{
-                color: 'white',
-                fontSize: 21,
-                fontWeight: '600',
-                textAlign: 'center',
-              }}>
-              {'Login'}
+            <Text style={{textAlign: 'center', color: 'white'}}>
+              {errorMessage + '\n'}
             </Text>
-          </TouchableOpacity>
-          <Modal
-            visible={modalVisible}
-            animationType={'slide'}
-            transparent={true}
-            onRequestClose={toggleModal}>
-            <View
+            <TouchableOpacity
+              onPress={toggleModal}
               style={{
-                flex: 1,
+                marginTop: 20,
+                backgroundColor: 'blue',
+                minHeight: 50,
                 justifyContent: 'center',
-                alignItems: 'center',
-                backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                borderRadius: 5,
+                marginHorizontal: 10,
               }}>
-              <View
+              <Text
                 style={{
-                  backgroundColor: 'darkorange',
-                  minHeight: 300,
-                  width: '80%',
-                  justifyContent: 'center',
+                  textAlign: 'center',
+                  color: 'white',
+                  fontSize: 21,
+                  fontWeight: '600',
+                  backgroundColor: 'blue',
                   borderRadius: 5,
-                  padding: 20,
                 }}>
-                <Text style={{textAlign: 'center', color: 'white'}}>
-                  {errorMessage + '\n'}
-                </Text>
-                <TouchableOpacity
-                  onPress={toggleModal}
-                  style={{
-                    marginTop: 20,
-                    backgroundColor: 'blue',
-                    minHeight: 50,
-                    justifyContent: 'center',
-                    borderRadius: 5,
-                    marginHorizontal: 10,
-                  }}>
-                  <Text
-                    style={{
-                      textAlign: 'center',
-                      color: 'white',
-                      fontSize: 21,
-                      fontWeight: '600',
-                      backgroundColor: 'blue',
-                      borderRadius: 5,
-                    }}>
-                    {'Close'}
-                  </Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </Modal>
+                {'Close'}
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
-    </View>
+      </Modal>
+    </ImageBackground>
   );
 };
 
