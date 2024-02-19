@@ -125,6 +125,7 @@ const LoginScreen: FC = () => {
             fontSize: 14,
             fontWeight: '500',
             textAlign: 'center',
+            fontFamily: 'HighTide-Regular',
           }}>
           {'LOGIN'}
         </Text>

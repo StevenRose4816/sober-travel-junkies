@@ -95,13 +95,13 @@ const HomeScreen: FC = () => {
           <TouchableOpacity
             onPress={onPressGoBack}
             style={{
-              width: 65,
+              width: 50,
             }}>
             <Image
               source={require('../../Images/caret_left.png')}
               style={{
-                height: 30,
-                width: 30,
+                height: 40,
+                width: 40,
               }}></Image>
           </TouchableOpacity>
         ),
