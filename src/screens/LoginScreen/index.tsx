@@ -149,7 +149,7 @@ const LoginScreen: FC = () => {
           style={{
             color: '#0c0b09',
             fontSize: 12,
-            fontFamily: 'HighTide',
+            fontFamily: 'HighTide-Sans',
             fontWeight: '500',
             textAlign: 'center',
           }}>
