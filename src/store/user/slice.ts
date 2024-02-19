@@ -1,7 +1,7 @@
 import {PayloadAction, createSlice} from '@reduxjs/toolkit';
 
 export interface IUserPhoto {
-  selectedImage: string;
+  uri: string;
 }
 
 interface UserState {

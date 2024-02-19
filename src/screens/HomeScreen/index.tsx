@@ -366,7 +366,7 @@ const HomeScreen: FC = () => {
                     width: screenWidth * 0.9,
                     borderRadius: 5,
                   }}
-                  source={{uri: userPhoto || userPhotoFromDB}}
+                  source={{uri: userPhoto?.uri || userPhotoFromDB}}
                 />
               )}
             </View>
