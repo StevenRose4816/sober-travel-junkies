@@ -88,7 +88,6 @@ const ImagePicker = () => {
               onPress={navAway}
               style={{
                 backgroundColor: 'blue',
-                minHeight: 50,
                 justifyContent: 'center',
                 borderRadius: 5,
                 width: '70%',
@@ -96,7 +95,11 @@ const ImagePicker = () => {
               <Text
                 style={{
                   color: 'white',
-                  fontSize: 21,
+                  fontSize: 18,
+                  marginLeft: 5,
+                  marginRight: 5,
+                  marginTop: 5,
+                  marginBottom: 5,
                   fontWeight: '600',
                   textAlign: 'center',
                 }}>
@@ -116,15 +119,15 @@ const ImagePicker = () => {
           style={{
             backgroundColor: 'blue',
             borderRadius: 5,
-            width: 150,
             marginRight: 10,
-            marginBottom: 10,
           }}
           onPress={openImagePicker}>
           <Text
             style={{
               textAlign: 'center',
               color: 'white',
+              marginLeft: 5,
+              marginRight: 5,
               marginTop: 5,
               marginBottom: 5,
               fontSize: 12,
@@ -137,14 +140,14 @@ const ImagePicker = () => {
           style={{
             backgroundColor: 'blue',
             borderRadius: 5,
-            width: 150,
-            marginBottom: 10,
           }}
           onPress={handleCameraLaunch}>
           <Text
             style={{
               textAlign: 'center',
               color: 'white',
+              marginLeft: 5,
+              marginRight: 5,
               marginTop: 5,
               marginBottom: 5,
               fontSize: 12,

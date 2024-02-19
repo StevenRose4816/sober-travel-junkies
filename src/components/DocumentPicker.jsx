@@ -20,11 +20,7 @@ export const DocPicker = () => {
     <SafeAreaView>
       <StatusBar barStyle={'dark-content'} />
       {fileResponse.map((file, index) => (
-        <Text
-          key={index.toString()}
-          style={styles.uri}
-          numberOfLines={1}
-          ellipsizeMode={'middle'}>
+        <Text key={index.toString()} numberOfLines={1} ellipsizeMode={'middle'}>
           {file?.uri}
         </Text>
       ))}
