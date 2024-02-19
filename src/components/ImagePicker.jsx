@@ -34,8 +34,6 @@ const ImagePicker = () => {
     const options = {
       mediaType: 'photo',
       includeBase64: false,
-      maxHeight: 2000,
-      maxWidth: 2000,
     };
 
     launchImageLibrary(options, response => {
@@ -77,13 +75,13 @@ const ImagePicker = () => {
   };
 
   return (
-    <View style={{flex: 1, justifyContent: 'center'}}>
+    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
       {selectedImage && (
         <>
           <Image
+            resizeMode="center"
             source={{uri: selectedImage}}
-            style={{flex: 1}}
-            resizeMode="contain"
+            style={{flex: 1, marginBottom: 20, height: 300, width: 300}}
           />
           <View style={{alignItems: 'center', justifyContent: 'center'}}>
             <TouchableOpacity

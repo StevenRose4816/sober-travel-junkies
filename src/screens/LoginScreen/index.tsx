@@ -25,7 +25,6 @@ const LoginScreen: FC = () => {
   const phoneNumber = useAppSelector(state => state.globalStore.phoneNumber);
   const user = auth().currentUser;
   const screenWidth = Dimensions.get('window').width;
-  const screenHeight = Dimensions.get('window').height;
 
   useEffect(() => {
     console.log('Updated address=', address);
@@ -128,6 +127,7 @@ const LoginScreen: FC = () => {
             fontWeight: '500',
             textAlign: 'center',
             fontFamily: 'Vonique64',
+            marginTop: 5,
           }}>
           {'LOGIN'}
         </Text>
@@ -184,8 +184,9 @@ const LoginScreen: FC = () => {
             fontSize: 12,
             fontWeight: '500',
             textAlign: 'center',
-            marginLeft: 5,
+            marginLeft: 10,
             marginRight: 10,
+            marginTop: 5,
             fontFamily: 'Vonique64',
           }}>
           {'CREATE ACCOUNT'}

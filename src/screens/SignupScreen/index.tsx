@@ -35,12 +35,6 @@ const SignupScreen: FC = () => {
     }
   };
 
-  // useEffect(() => {
-  //   console.log('Updated phoneNumber=', phoneNumber);
-  //   console.log('Updated address=', address);
-  //   console.log('name=', name);
-  // }, [phoneNumber, address, name]);
-
   const signUp = async () => {
     try {
       await auth().createUserWithEmailAndPassword(email, password);
