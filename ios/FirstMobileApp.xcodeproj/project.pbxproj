@@ -13,10 +13,10 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		16C1CC0A2B48733C009F2C4E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 16C1CC092B48733C009F2C4E /* GoogleService-Info.plist */; };
+		30BE366F0384482D8F559ADA /* High Tide Sans 400.otf in Resources */ = {isa = PBXBuildFile; fileRef = 7F6C4F23B26A4671B7A16EB2 /* High Tide Sans 400.otf */; };
 		7699B88040F8A987B510C191 /* libPods-FirstMobileApp-FirstMobileAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-FirstMobileApp-FirstMobileAppTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		AD9FB8E7E55D442EBE4002A9 /* High Tide Regular 400.otf in Resources */ = {isa = PBXBuildFile; fileRef = 927728CF494C48E9AF0BDBE5 /* High Tide Regular 400.otf */; };
-		30BE366F0384482D8F559ADA /* High Tide Sans 400.otf in Resources */ = {isa = PBXBuildFile; fileRef = 7F6C4F23B26A4671B7A16EB2 /* High Tide Sans 400.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,11 +45,11 @@
 		5709B34CF0A7D63546082F79 /* Pods-FirstMobileApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FirstMobileApp.release.xcconfig"; path = "Target Support Files/Pods-FirstMobileApp/Pods-FirstMobileApp.release.xcconfig"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-FirstMobileApp-FirstMobileAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FirstMobileApp-FirstMobileAppTests.debug.xcconfig"; path = "Target Support Files/Pods-FirstMobileApp-FirstMobileAppTests/Pods-FirstMobileApp-FirstMobileAppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-FirstMobileApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FirstMobileApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7F6C4F23B26A4671B7A16EB2 /* High Tide Sans 400.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "High Tide Sans 400.otf"; path = "../assets/fonts/High Tide Sans 400.otf"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = FirstMobileApp/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-FirstMobileApp-FirstMobileAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FirstMobileApp-FirstMobileAppTests.release.xcconfig"; path = "Target Support Files/Pods-FirstMobileApp-FirstMobileAppTests/Pods-FirstMobileApp-FirstMobileAppTests.release.xcconfig"; sourceTree = "<group>"; };
 		927728CF494C48E9AF0BDBE5 /* High Tide Regular 400.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "High Tide Regular 400.otf"; path = "../assets/fonts/High Tide Regular 400.otf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		7F6C4F23B26A4671B7A16EB2 /* High Tide Sans 400.otf */ = {isa = PBXFileReference; name = "High Tide Sans 400.otf"; path = "../assets/fonts/High Tide Sans 400.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
