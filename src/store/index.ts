@@ -3,12 +3,14 @@ import {authReducer} from './auth/slice';
 import {globalStoreReducer} from './globalStore/slice';
 import {userPhotoReducer} from './user/slice';
 import {photoReducer} from './photo/slice';
+import {documentReducer} from './document/slice';
 
 const store = configureStore({
   reducer: {
     auth: authReducer,
     user: userPhotoReducer,
     photo: photoReducer,
+    document: documentReducer,
     globalStore: globalStoreReducer,
   },
 });
