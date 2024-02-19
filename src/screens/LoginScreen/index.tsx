@@ -80,7 +80,7 @@ const LoginScreen: FC = () => {
           borderWidth: 1,
           borderColor: 'black',
           textAlign: 'center',
-          fontFamily: 'HighTide-Sans',
+          fontFamily: 'Vonique64',
         }}
         placeholder=" USERNAME"
         placeholderTextColor={'#eee7da'}
@@ -101,7 +101,7 @@ const LoginScreen: FC = () => {
           minHeight: 40,
           borderWidth: 1,
           borderColor: 'black',
-          fontFamily: 'HighTide-Sans',
+          fontFamily: 'Vonique64',
         }}
         placeholder=" PASSWORD"
         placeholderTextColor={'#eee7da'}
@@ -127,7 +127,7 @@ const LoginScreen: FC = () => {
             fontSize: 14,
             fontWeight: '500',
             textAlign: 'center',
-            fontFamily: 'HighTide-Sans',
+            fontFamily: 'Vonique64',
           }}>
           {'LOGIN'}
         </Text>
@@ -151,7 +151,7 @@ const LoginScreen: FC = () => {
           style={{
             color: '#0c0b09',
             fontSize: 12,
-            fontFamily: 'HighTide-Sans',
+            fontFamily: 'Vonique64',
             fontWeight: '500',
             textAlign: 'center',
           }}>
@@ -186,7 +186,7 @@ const LoginScreen: FC = () => {
             textAlign: 'center',
             marginLeft: 5,
             marginRight: 10,
-            fontFamily: 'HighTide-Sans',
+            fontFamily: 'Vonique64',
           }}>
           {'CREATE ACCOUNT'}
         </Text>
