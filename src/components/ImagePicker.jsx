@@ -81,7 +81,7 @@ const ImagePicker = () => {
           <Image
             resizeMode="center"
             source={{uri: selectedImage}}
-            style={{flex: 1, marginBottom: 20, height: 300, width: 300}}
+            style={{marginBottom: 20, height: 300, width: 300}}
           />
           <View style={{alignItems: 'center', justifyContent: 'center'}}>
             <TouchableOpacity
