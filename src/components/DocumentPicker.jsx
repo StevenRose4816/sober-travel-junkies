@@ -27,7 +27,7 @@ export const DocPicker = () => {
         type: [DocumentPicker.types.allFiles],
       });
       setFileResponse([response]);
-      dispatch(setDocumentSelected({selected: true}));
+      // dispatch(setDocumentSelected({selected: true}));
       dispatch(setSelectedDocument({selectedDocument: [response]}));
       console.log(fileResponse);
     } catch (err) {

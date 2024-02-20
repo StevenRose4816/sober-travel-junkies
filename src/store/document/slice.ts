@@ -2,12 +2,12 @@ import {PayloadAction, createSlice} from '@reduxjs/toolkit';
 
 interface DocumentState {
   selected: boolean;
-  selectedDocument: string[];
+  selectedDocument: string | undefined;
 }
 
 const initialState: DocumentState = {
   selected: false,
-  selectedDocument: [''],
+  selectedDocument: undefined,
 };
 
 type SetDocumentSelected = PayloadAction<{selected: any}>;

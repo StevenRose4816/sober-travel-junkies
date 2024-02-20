@@ -19,6 +19,7 @@ import {useDispatch} from 'react-redux';
 import {setUserPhoto} from '../../store/user/slice';
 import {DocPicker} from '../../components/DocumentPicker';
 import {setSelected} from '../../store/photo/slice';
+import {setDocumentSelected} from '../../store/document/slice';
 
 const HomeScreen: FC = () => {
   const {navigate} = useNavigation();
@@ -155,6 +156,9 @@ const HomeScreen: FC = () => {
   const [showCheckListIcon, setShowCheckListIcon] = useState(true);
   const [showFolderIcon, setShowFolderIcon] = useState(true);
   const selected = useAppSelector(state => state.photo.selected);
+  const selectedDocument = useAppSelector(
+    state => state.document.selectedDocument,
+  );
   const documentSelected = useAppSelector(state => state.document.selected);
 
   const checkName = () => {
@@ -198,11 +202,18 @@ const HomeScreen: FC = () => {
     if (!showCheckListIcon) {
       setShowCheckListIcon(true);
     }
+    if (!showFolderIcon) {
+      setShowFolderIcon(true);
+    }
     toggleModal();
     setSuccessMessage(false);
   };
 
   const onPressSubmit = () => {
+    if (selectedDocument) {
+      console.log('Document has been selected.');
+      setShowFolderIcon(false);
+    }
     checkName();
     setModalVisible(true);
     setSuccessMessage(true);
@@ -230,9 +241,6 @@ const HomeScreen: FC = () => {
     }
     if (showCheckListIcon) {
       setShowCheckListIcon(false);
-    }
-    if (documentSelected) {
-      setShowFolderIcon(true);
     }
     checkName();
     create(userId);
