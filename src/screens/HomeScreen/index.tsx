@@ -157,7 +157,7 @@ const HomeScreen: FC = () => {
   const [address, setAddress] = useState('');
   const [userPhotoFromDB, setUserPhotoFromDB] = useState('');
   const [successMessage, setSuccessMessage] = useState(false);
-  const [docPickerState, setSwitchState] = useState(false);
+  const [docPickerState, setDocPickerState] = useState(false);
   const [showCameraIcon, setShowCameraIcon] = useState(true);
   const [showCheckListIcon, setShowCheckListIcon] = useState(true);
   const [showFolderIcon, setShowFolderIcon] = useState(true);
@@ -259,7 +259,7 @@ const HomeScreen: FC = () => {
   };
 
   const toggleDocPickerSwitch = () => {
-    setSwitchState(previousState => !previousState);
+    setDocPickerState(previousState => !previousState);
     toggleModal();
   };
 
@@ -689,7 +689,9 @@ const HomeScreen: FC = () => {
                 )
               )}
               {docPickerState && (
-                <DocPicker toggleModal={toggleModal}></DocPicker>
+                <DocPicker
+                  toggleModal={toggleModal}
+                  toggleDocPickerSwitch={toggleDocPickerSwitch}></DocPicker>
               )}
             </View>
             <View
