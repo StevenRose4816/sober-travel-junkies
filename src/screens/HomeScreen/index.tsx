@@ -157,7 +157,7 @@ const HomeScreen: FC = () => {
   const [address, setAddress] = useState('');
   const [userPhotoFromDB, setUserPhotoFromDB] = useState('');
   const [successMessage, setSuccessMessage] = useState(false);
-  const [switchState, setSwitchState] = useState(false);
+  const [docPickerState, setSwitchState] = useState(false);
   const [showCameraIcon, setShowCameraIcon] = useState(true);
   const [showCheckListIcon, setShowCheckListIcon] = useState(true);
   const [showFolderIcon, setShowFolderIcon] = useState(true);
@@ -203,7 +203,7 @@ const HomeScreen: FC = () => {
   // };
 
   const onPressNo = () => {
-    switchState && toggleSwitch();
+    docPickerState && toggleSwitch();
     !showCheckListIcon && setShowCheckListIcon(true);
     !showFolderIcon && setShowFolderIcon(true);
     !showCameraIcon && setShowCameraIcon(true);
@@ -235,7 +235,7 @@ const HomeScreen: FC = () => {
   };
 
   const onPressYes = () => {
-    if (switchState) {
+    if (docPickerState) {
       toggleSwitch();
     }
     readData();
@@ -654,7 +654,7 @@ const HomeScreen: FC = () => {
                 justifyContent: 'center',
                 alignItems: 'center',
               }}>
-              {successMessage && !switchState ? (
+              {successMessage && !docPickerState ? (
                 <Text
                   style={{
                     textAlign: 'center',
@@ -674,7 +674,7 @@ const HomeScreen: FC = () => {
                     address}
                 </Text>
               ) : (
-                !switchState && (
+                !docPickerState && (
                   <Text
                     style={{
                       textAlign: 'center',
@@ -687,11 +687,11 @@ const HomeScreen: FC = () => {
                   </Text>
                 )
               )}
-              {switchState && <DocPicker></DocPicker>}
+              {docPickerState && <DocPicker></DocPicker>}
             </View>
             <View
               style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-              {!switchState && (
+              {!docPickerState && (
                 <TouchableOpacity
                   onPress={successMessage ? onPressYesSubmit : onPressYes}
                   style={{
@@ -735,7 +735,7 @@ const HomeScreen: FC = () => {
                     backgroundColor: 'blue',
                     borderRadius: 5,
                   }}>
-                  {!switchState ? 'No' : 'Cancel'}
+                  {!docPickerState ? 'No' : 'Cancel'}
                 </Text>
               </TouchableOpacity>
             </View>
