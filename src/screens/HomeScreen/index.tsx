@@ -19,10 +19,10 @@ import {useDispatch} from 'react-redux';
 import {setUserPhoto} from '../../store/user/slice';
 import {DocPicker} from '../../components/DocumentPicker';
 import {setSelected} from '../../store/photo/slice';
-import {
-  setDocumentSelected,
-  setSelectedDocument,
-} from '../../store/document/slice';
+// import {
+//   setDocumentSelected,
+//   setSelectedDocument,
+// } from '../../store/document/slice';
 
 const HomeScreen: FC = () => {
   const {navigate} = useNavigation();
@@ -178,10 +178,10 @@ const HomeScreen: FC = () => {
 
   useEffect(() => {
     if (photoSelected) {
-      console.log('SELECTED ');
+      console.log('PHOTO SELECTED ');
       setShowCameraIcon(false);
     } else if (!photoSelected) {
-      console.log('NOT SELECTED');
+      console.log('PHOTO NOT SELECTED');
       setShowCameraIcon(true);
     }
   }, [photoSelected]);
@@ -214,6 +214,15 @@ const HomeScreen: FC = () => {
     }
     if (!showCameraIcon) {
       setShowCameraIcon(true);
+    }
+    if (fullName !== initialName) {
+      setFullName(initialName);
+    }
+    if (address !== initialAddress) {
+      setAddress(initialAddress);
+    }
+    if (phoneNumber !== initialPhoneNumber) {
+      setPhoneNumber(initialPhoneNumber);
     }
     toggleModal();
     setSuccessMessage(false);
