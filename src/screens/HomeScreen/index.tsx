@@ -19,6 +19,7 @@ import {useDispatch} from 'react-redux';
 import {setUserPhoto} from '../../store/user/slice';
 import {DocPicker} from '../../components/DocumentPicker';
 import {setSelected} from '../../store/photo/slice';
+import {setSelectedDocument} from '../../store/document/slice';
 // import {
 //   setDocumentSelected,
 //   setSelectedDocument,
@@ -29,9 +30,11 @@ const HomeScreen: FC = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const screenWidth = Dimensions.get('window').width;
+  const screenHeight = Dimensions.get('window').height;
 
   const logout = () => {
     dispatch(setUserPhoto({userPhoto: null}));
+    dispatch(setSelectedDocument({selectedDocument: undefined}));
     auth().signOut();
   };
 
@@ -191,11 +194,8 @@ const HomeScreen: FC = () => {
   };
 
   const toggleDataFlag = () => {
-    if (dataFlag) {
-      setDataFlag(false);
-    } else if (!dataFlag) {
-      setDataFlag(true);
-    }
+    dataFlag && setDataFlag(false);
+    !dataFlag && setDataFlag(true);
   };
 
   // const onPressCancel = () => {
@@ -203,27 +203,13 @@ const HomeScreen: FC = () => {
   // };
 
   const onPressNo = () => {
-    if (switchState) {
-      toggleSwitch();
-    }
-    if (!showCheckListIcon) {
-      setShowCheckListIcon(true);
-    }
-    if (!showFolderIcon) {
-      setShowFolderIcon(true);
-    }
-    if (!showCameraIcon) {
-      setShowCameraIcon(true);
-    }
-    if (fullName !== initialName) {
-      setFullName(initialName);
-    }
-    if (address !== initialAddress) {
-      setAddress(initialAddress);
-    }
-    if (phoneNumber !== initialPhoneNumber) {
-      setPhoneNumber(initialPhoneNumber);
-    }
+    switchState && toggleSwitch();
+    !showCheckListIcon && setShowCheckListIcon(true);
+    !showFolderIcon && setShowFolderIcon(true);
+    !showCameraIcon && setShowCameraIcon(true);
+    fullName !== initialName && setFullName(initialName);
+    address !== initialAddress && setAddress(initialAddress);
+    phoneNumber !== initialPhoneNumber && setPhoneNumber(initialPhoneNumber);
     toggleModal();
     setSuccessMessage(false);
     dispatch(setUserPhoto({userPhoto: null}));
@@ -231,7 +217,7 @@ const HomeScreen: FC = () => {
 
   const onPressSubmit = () => {
     if (selectedDocument) {
-      console.log('Document has been selected.');
+      console.log('Document has been selected: ', selectedDocument);
       setShowFolderIcon(false);
     }
     if (!!userPhoto) {
@@ -260,12 +246,8 @@ const HomeScreen: FC = () => {
 
   const onPressYesSubmit = () => {
     setShowBackButton(false);
-    if (!dataFlag) {
-      setDataFlag(true);
-    }
-    if (showCheckListIcon) {
-      setShowCheckListIcon(false);
-    }
+    !dataFlag && setDataFlag(true);
+    showCheckListIcon && setShowCheckListIcon(false);
     checkName();
     create(userId);
     readData();
@@ -332,7 +314,7 @@ const HomeScreen: FC = () => {
               style={{
                 marginLeft: 10,
                 marginTop: 10,
-                marginBottom: 75,
+                marginBottom: screenHeight * 0.2,
                 fontWeight: '700',
               }}>
               {'Full name: '}
