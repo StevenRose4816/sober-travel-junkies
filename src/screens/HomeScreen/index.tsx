@@ -19,7 +19,10 @@ import {useDispatch} from 'react-redux';
 import {setUserPhoto} from '../../store/user/slice';
 import {DocPicker} from '../../components/DocumentPicker';
 import {setSelected} from '../../store/photo/slice';
-import {setDocumentSelected} from '../../store/document/slice';
+import {
+  setDocumentSelected,
+  setSelectedDocument,
+} from '../../store/document/slice';
 
 const HomeScreen: FC = () => {
   const {navigate} = useNavigation();
@@ -155,11 +158,11 @@ const HomeScreen: FC = () => {
   const [showCameraIcon, setShowCameraIcon] = useState(true);
   const [showCheckListIcon, setShowCheckListIcon] = useState(true);
   const [showFolderIcon, setShowFolderIcon] = useState(true);
-  const selected = useAppSelector(state => state.photo.selected);
+  const photoSelected = useAppSelector(state => state.photo.selected);
   const selectedDocument = useAppSelector(
     state => state.document.selectedDocument,
   );
-  const documentSelected = useAppSelector(state => state.document.selected);
+  // const documentSelected = useAppSelector(state => state.document.selected);
 
   const checkName = () => {
     if (
@@ -174,14 +177,14 @@ const HomeScreen: FC = () => {
   };
 
   useEffect(() => {
-    if (selected) {
+    if (photoSelected) {
       console.log('SELECTED ');
       setShowCameraIcon(false);
-    } else if (!selected) {
+    } else if (!photoSelected) {
       console.log('NOT SELECTED');
       setShowCameraIcon(true);
     }
-  }, [selected]);
+  }, [photoSelected]);
 
   const onEditPress = () => {
     setModalVisible(true);
@@ -264,10 +267,10 @@ const HomeScreen: FC = () => {
     toggleModal();
   };
 
-  useEffect(() => {
-    console.log('userPhoto: ', userPhoto);
-    console.log('userPhotoFromDB: ', userPhotoFromDB);
-  }, [userPhoto, userPhotoFromDB]);
+  // useEffect(() => {
+  //   console.log('userPhoto: ', userPhoto);
+  //   console.log('userPhotoFromDB: ', userPhotoFromDB);
+  // }, [userPhoto, userPhotoFromDB]);
 
   return (
     <View style={{flex: 1, backgroundColor: '#eee7da'}}>
