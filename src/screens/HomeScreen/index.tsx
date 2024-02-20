@@ -198,6 +198,10 @@ const HomeScreen: FC = () => {
     }
   };
 
+  const onPressCancel = () => {
+    toggleModal();
+  };
+
   const onPressNo = () => {
     if (switchState) {
       toggleSwitch();
@@ -721,7 +725,7 @@ const HomeScreen: FC = () => {
                 </TouchableOpacity>
               )}
               <TouchableOpacity
-                onPress={onPressNo}
+                onPress={!switchState ? onPressNo : onPressCancel}
                 style={{
                   marginTop: 20,
                   backgroundColor: 'blue',
