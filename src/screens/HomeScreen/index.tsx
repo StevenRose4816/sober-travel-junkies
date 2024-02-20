@@ -203,7 +203,7 @@ const HomeScreen: FC = () => {
   // };
 
   const onPressNo = () => {
-    docPickerState && toggleSwitch();
+    docPickerState && toggleDocPickerSwitch();
     !showCheckListIcon && setShowCheckListIcon(true);
     !showFolderIcon && setShowFolderIcon(true);
     !showCameraIcon && setShowCameraIcon(true);
@@ -224,6 +224,9 @@ const HomeScreen: FC = () => {
       console.log('There is a userPhoto selected.');
       setShowCameraIcon(false);
     }
+    !showCheckListIcon && setShowCheckListIcon(true);
+    !showFolderIcon && setShowFolderIcon(true);
+    !showCameraIcon && setShowCameraIcon(true);
     checkName();
     setModalVisible(true);
     setSuccessMessage(true);
@@ -235,9 +238,7 @@ const HomeScreen: FC = () => {
   };
 
   const onPressYes = () => {
-    if (docPickerState) {
-      toggleSwitch();
-    }
+    docPickerState && toggleDocPickerSwitch();
     readData();
     setDataFlag(false);
     setModalVisible(false);
@@ -257,7 +258,7 @@ const HomeScreen: FC = () => {
     console.log('Submit pressed.');
   };
 
-  const toggleSwitch = () => {
+  const toggleDocPickerSwitch = () => {
     setSwitchState(previousState => !previousState);
     toggleModal();
   };
@@ -432,7 +433,7 @@ const HomeScreen: FC = () => {
                   }}>
                   {'Upload Documentation ?'}
                 </Text>
-                <TouchableOpacity onPress={toggleSwitch}>
+                <TouchableOpacity onPress={toggleDocPickerSwitch}>
                   <Image
                     style={{
                       height: 40,
