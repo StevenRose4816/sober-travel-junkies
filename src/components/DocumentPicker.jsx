@@ -1,10 +1,7 @@
 import {useState, useCallback, useEffect} from 'react';
 import {Text, SafeAreaView, StatusBar, TouchableOpacity} from 'react-native';
 import DocumentPicker from 'react-native-document-picker';
-import {
-  setDocumentSelected,
-  setSelectedDocument,
-} from '../store/document/slice';
+import {setSelectedDocument} from '../store/document/slice';
 import {useAppSelector} from '../hooks';
 import {useDispatch} from 'react-redux';
 
@@ -27,7 +24,6 @@ export const DocPicker = ({toggleModal, toggleDocPickerSwitch}) => {
         type: [DocumentPicker.types.allFiles],
       });
       setFileResponse([response]);
-      // dispatch(setDocumentSelected({selected: true}));
       dispatch(setSelectedDocument({selectedDocument: [response]}));
       toggleModal();
       toggleDocPickerSwitch();
