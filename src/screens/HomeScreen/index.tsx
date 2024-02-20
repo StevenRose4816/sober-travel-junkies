@@ -155,6 +155,7 @@ const HomeScreen: FC = () => {
   const [showCheckListIcon, setShowCheckListIcon] = useState(true);
   const [showFolderIcon, setShowFolderIcon] = useState(true);
   const selected = useAppSelector(state => state.photo.selected);
+  const documentSelected = useAppSelector(state => state.document.selected);
 
   const checkName = () => {
     if (
@@ -230,6 +231,9 @@ const HomeScreen: FC = () => {
     if (showCheckListIcon) {
       setShowCheckListIcon(false);
     }
+    if (documentSelected) {
+      setShowFolderIcon(true);
+    }
     checkName();
     create(userId);
     readData();
@@ -247,7 +251,7 @@ const HomeScreen: FC = () => {
   useEffect(() => {
     console.log('userPhoto: ', userPhoto);
     console.log('userPhotoFromDB: ', userPhotoFromDB);
-  }, [userPhoto]);
+  }, [userPhoto, userPhotoFromDB]);
 
   return (
     <View style={{flex: 1, backgroundColor: '#eee7da'}}>
@@ -355,7 +359,7 @@ const HomeScreen: FC = () => {
                     borderRadius: 5,
                   }}
                   source={
-                    userPhoto ||
+                    {uri: userPhoto} ||
                     require('../../Images/profile-picture-vector.jpeg')
                   }
                 />
@@ -366,7 +370,7 @@ const HomeScreen: FC = () => {
                     width: screenWidth * 0.9,
                     borderRadius: 5,
                   }}
-                  source={{uri: userPhoto?.uri || userPhotoFromDB}}
+                  source={{uri: userPhoto || userPhotoFromDB}}
                 />
               )}
             </View>

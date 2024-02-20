@@ -81,7 +81,7 @@ const LoginScreen: FC = () => {
           textAlign: 'center',
           fontFamily: 'Vonique64',
         }}
-        placeholder=" USERNAME"
+        placeholder=" username"
         placeholderTextColor={'#eee7da'}
         autoCapitalize={'none'}
         value={email}
@@ -102,7 +102,7 @@ const LoginScreen: FC = () => {
           borderColor: 'black',
           fontFamily: 'Vonique64',
         }}
-        placeholder=" PASSWORD"
+        placeholder=" password"
         placeholderTextColor={'#eee7da'}
         value={password}
         onChangeText={password => setPassword(password)}
