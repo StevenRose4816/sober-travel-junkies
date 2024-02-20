@@ -26,7 +26,7 @@ const ImagePicker = () => {
 
   const navAway = () => {
     dispatch(setUserPhoto({userPhoto: selectedImage}));
-    dispatch(setSelected({selected: true}));
+    // dispatch(setSelected({selected: true}));
     navigate('Home Screen');
   };
 

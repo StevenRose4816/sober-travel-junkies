@@ -205,14 +205,22 @@ const HomeScreen: FC = () => {
     if (!showFolderIcon) {
       setShowFolderIcon(true);
     }
+    if (!showCameraIcon) {
+      setShowCameraIcon(true);
+    }
     toggleModal();
     setSuccessMessage(false);
+    dispatch(setUserPhoto({userPhoto: null}));
   };
 
   const onPressSubmit = () => {
     if (selectedDocument) {
       console.log('Document has been selected.');
       setShowFolderIcon(false);
+    }
+    if (!!userPhoto) {
+      console.log('There is a userPhoto selected.');
+      setShowCameraIcon(false);
     }
     checkName();
     setModalVisible(true);
