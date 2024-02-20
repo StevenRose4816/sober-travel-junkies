@@ -61,7 +61,7 @@ const HomeScreen: FC = () => {
       email: email,
       address: address,
       phoneNumber: phoneNumber,
-      userPhoto: userPhoto,
+      userPhoto: userPhoto || userPhotoFromDB,
     })
       .then(() => {
         console.log('db created/updated');
