@@ -191,6 +191,9 @@ const HomeScreen: FC = () => {
 
   const onEditPress = () => {
     setModalVisible(true);
+    !showCameraIcon && setShowCameraIcon(true);
+    !showCheckListIcon && setShowCheckListIcon(true);
+    !showFolderIcon && setShowFolderIcon(true);
   };
 
   const toggleDataFlag = () => {
