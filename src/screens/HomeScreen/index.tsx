@@ -688,7 +688,9 @@ const HomeScreen: FC = () => {
                   </Text>
                 )
               )}
-              {docPickerState && <DocPicker></DocPicker>}
+              {docPickerState && (
+                <DocPicker toggleModal={toggleModal}></DocPicker>
+              )}
             </View>
             <View
               style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
