@@ -9,6 +9,7 @@ import {
   Modal,
   Dimensions,
   StyleSheet,
+  Animated,
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import {onValue, ref, set} from 'firebase/database';
@@ -20,10 +21,6 @@ import {setUserPhoto} from '../../store/user/slice';
 import {DocPicker} from '../../components/DocumentPicker';
 import {setSelected} from '../../store/photo/slice';
 import {setSelectedDocument} from '../../store/document/slice';
-// import {
-//   setDocumentSelected,
-//   setSelectedDocument,
-// } from '../../store/document/slice';
 
 const HomeScreen: FC = () => {
   const {navigate} = useNavigation();
@@ -50,6 +47,24 @@ const HomeScreen: FC = () => {
   const [initialName, setInitialName] = useState('');
   const [initialAddress, setInitialAddress] = useState('');
   const [initialPhoneNumber, setInitialPhoneNumber] = useState('');
+
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+
+  const fadeIn = () => {
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 2000,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  const fadeOut = () => {
+    Animated.timing(fadeAnim, {
+      toValue: 0,
+      duration: 500,
+      useNativeDriver: true,
+    }).start();
+  };
 
   const toggleModal = () => {
     setModalVisible(!modalVisible);
@@ -238,9 +253,11 @@ const HomeScreen: FC = () => {
   const onPressGoBack = () => {
     setShowBackButton(false);
     toggleDataFlag();
+    fadeAnim.setValue(0);
   };
 
   const onPressYes = () => {
+    fadeIn();
     docPickerState && toggleDocPickerSwitch();
     readData();
     setDataFlag(false);
@@ -370,11 +387,12 @@ const HomeScreen: FC = () => {
             </Text>
             <View style={{flex: 1, alignItems: 'center'}}>
               {!userPhotoFromDB ? (
-                <Image
+                <Animated.Image
                   style={{
                     height: 300,
                     width: screenWidth * 0.9,
                     borderRadius: 5,
+                    opacity: fadeAnim,
                   }}
                   source={
                     {uri: userPhoto} ||
@@ -382,11 +400,12 @@ const HomeScreen: FC = () => {
                   }
                 />
               ) : (
-                <Image
+                <Animated.Image
                   style={{
                     height: 300,
                     width: screenWidth * 0.9,
                     borderRadius: 5,
+                    opacity: fadeAnim,
                   }}
                   source={{uri: userPhoto || userPhotoFromDB}}
                 />

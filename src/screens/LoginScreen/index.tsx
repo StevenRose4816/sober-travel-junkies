@@ -175,7 +175,7 @@ const LoginScreen: FC = () => {
           width: screenWidth * 0.4,
           justifyContent: 'center',
           borderRadius: 10,
-          marginBottom: 60,
+          marginBottom: 80,
           marginTop: 10,
         }}>
         <Text
