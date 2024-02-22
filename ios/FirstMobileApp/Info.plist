@@ -37,9 +37,7 @@
 	<string>Allow access to the photo library for selecting images</string>
 	<key>UIAppFonts</key>
 	<array>
-		<string>High Tide Regular 400.otf</string>
 		<string>Vonique64.ttf</string>
-		<string>High Tide Sans 400.otf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
