@@ -38,7 +38,6 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>High Tide Regular 400.otf</string>
-		<string>High Tide Sans 400.otf</string>
 		<string>Vonique64.ttf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
