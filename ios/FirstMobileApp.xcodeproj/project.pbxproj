@@ -17,6 +17,7 @@
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		AD9FB8E7E55D442EBE4002A9 /* High Tide Regular 400.otf in Resources */ = {isa = PBXBuildFile; fileRef = 927728CF494C48E9AF0BDBE5 /* High Tide Regular 400.otf */; };
 		D197C50A05644B119E06E021 /* Vonique64.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1F6EE77E77E74D07B3A7A7BA /* Vonique64.ttf */; };
+		D628E3BB0A8D482E89F7E110 /* High Tide Sans 400.otf in Resources */ = {isa = PBXBuildFile; fileRef = C170F27A3EE54C5EAF90E318 /* High Tide Sans 400.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +51,7 @@
 		927728CF494C48E9AF0BDBE5 /* High Tide Regular 400.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "High Tide Regular 400.otf"; path = "../assets/fonts/High Tide Regular 400.otf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		1F6EE77E77E74D07B3A7A7BA /* Vonique64.ttf */ = {isa = PBXFileReference; name = "Vonique64.ttf"; path = "../assets/fonts/Vonique64.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		C170F27A3EE54C5EAF90E318 /* High Tide Sans 400.otf */ = {isa = PBXFileReference; name = "High Tide Sans 400.otf"; path = "../assets/fonts/High Tide Sans 400.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,6 +152,7 @@
 			children = (
 				927728CF494C48E9AF0BDBE5 /* High Tide Regular 400.otf */,
 				1F6EE77E77E74D07B3A7A7BA /* Vonique64.ttf */,
+				C170F27A3EE54C5EAF90E318 /* High Tide Sans 400.otf */,
 			);
 			name = Resources;
 			path = "";
@@ -266,6 +269,7 @@
 				16C1CC0A2B48733C009F2C4E /* GoogleService-Info.plist in Resources */,
 				AD9FB8E7E55D442EBE4002A9 /* High Tide Regular 400.otf in Resources */,
 				D197C50A05644B119E06E021 /* Vonique64.ttf in Resources */,
+				D628E3BB0A8D482E89F7E110 /* High Tide Sans 400.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
