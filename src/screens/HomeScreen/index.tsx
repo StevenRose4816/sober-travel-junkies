@@ -155,6 +155,7 @@ const HomeScreen: FC = () => {
   }, [user]);
 
   useEffect(() => {
+    fadeIn();
     if (dataFlag) {
       setShowCheckListIcon(true);
       console.log('dataFlag is true.');
@@ -257,6 +258,7 @@ const HomeScreen: FC = () => {
   };
 
   const onPressYes = () => {
+    fadeAnim.setValue(0);
     fadeIn();
     docPickerState && toggleDocPickerSwitch();
     readData();
@@ -306,23 +308,25 @@ const HomeScreen: FC = () => {
         {dataFlag && (
           <>
             {userPhotoFromDB ? (
-              <Image
+              <Animated.Image
                 style={{
                   height: 300,
                   width: 300,
                   marginLeft: 10,
                   borderRadius: 5,
+                  opacity: fadeAnim,
                 }}
-                source={{uri: userPhotoFromDB}}></Image>
+                source={{uri: userPhotoFromDB}}></Animated.Image>
             ) : (
-              <Image
+              <Animated.Image
                 style={{
                   height: 300,
                   width: 300,
                   borderRadius: 5,
                   marginLeft: 10,
+                  opacity: fadeAnim,
                 }}
-                source={require('../../Images/profile-picture-vector.jpeg')}></Image>
+                source={require('../../Images/profile-picture-vector.jpeg')}></Animated.Image>
             )}
             <Text
               style={{

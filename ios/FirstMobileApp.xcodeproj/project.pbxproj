@@ -15,8 +15,8 @@
 		16C1CC0A2B48733C009F2C4E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 16C1CC092B48733C009F2C4E /* GoogleService-Info.plist */; };
 		7699B88040F8A987B510C191 /* libPods-FirstMobileApp-FirstMobileAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-FirstMobileApp-FirstMobileAppTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		D197C50A05644B119E06E021 /* Vonique64.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1F6EE77E77E74D07B3A7A7BA /* Vonique64.ttf */; };
 		9C4139CD0CCB469890AAFAE6 /* High Tide Sans 400.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0C66737287644E08825941AA /* High Tide Sans 400.otf */; };
+		D197C50A05644B119E06E021 /* Vonique64.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1F6EE77E77E74D07B3A7A7BA /* Vonique64.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -33,6 +33,7 @@
 		00E356EE1AD99517003FC87E /* FirstMobileAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FirstMobileAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* FirstMobileAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FirstMobileAppTests.m; sourceTree = "<group>"; };
+		0C66737287644E08825941AA /* High Tide Sans 400.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "High Tide Sans 400.otf"; path = "../assets/fonts/High Tide Sans 400.otf"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* FirstMobileApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FirstMobileApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = FirstMobileApp/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = FirstMobileApp/AppDelegate.mm; sourceTree = "<group>"; };
@@ -41,7 +42,7 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = FirstMobileApp/main.m; sourceTree = "<group>"; };
 		16C1CC092B48733C009F2C4E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		19F6CBCC0A4E27FBF8BF4A61 /* libPods-FirstMobileApp-FirstMobileAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FirstMobileApp-FirstMobileAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		1F6EE77E77E74D07B3A7A7BA /* Vonique64.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Vonique64.ttf; path = ../assets/fonts/Vonique64.ttf; sourceTree = "<group>"; };
+		1F6EE77E77E74D07B3A7A7BA /* Vonique64.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Vonique64.ttf; path = ../assets/fonts/Vonique64.ttf; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-FirstMobileApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FirstMobileApp.debug.xcconfig"; path = "Target Support Files/Pods-FirstMobileApp/Pods-FirstMobileApp.debug.xcconfig"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-FirstMobileApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FirstMobileApp.release.xcconfig"; path = "Target Support Files/Pods-FirstMobileApp/Pods-FirstMobileApp.release.xcconfig"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-FirstMobileApp-FirstMobileAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FirstMobileApp-FirstMobileAppTests.debug.xcconfig"; path = "Target Support Files/Pods-FirstMobileApp-FirstMobileAppTests/Pods-FirstMobileApp-FirstMobileAppTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -49,7 +50,6 @@
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = FirstMobileApp/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-FirstMobileApp-FirstMobileAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FirstMobileApp-FirstMobileAppTests.release.xcconfig"; path = "Target Support Files/Pods-FirstMobileApp-FirstMobileAppTests/Pods-FirstMobileApp-FirstMobileAppTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		0C66737287644E08825941AA /* High Tide Sans 400.otf */ = {isa = PBXFileReference; name = "High Tide Sans 400.otf"; path = "../assets/fonts/High Tide Sans 400.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,7 +152,6 @@
 				0C66737287644E08825941AA /* High Tide Sans 400.otf */,
 			);
 			name = Resources;
-			path = "";
 			sourceTree = "<group>";
 		};
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
