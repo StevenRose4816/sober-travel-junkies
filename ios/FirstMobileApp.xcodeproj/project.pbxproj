@@ -16,7 +16,6 @@
 		7699B88040F8A987B510C191 /* libPods-FirstMobileApp-FirstMobileAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-FirstMobileApp-FirstMobileAppTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		D197C50A05644B119E06E021 /* Vonique64.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1F6EE77E77E74D07B3A7A7BA /* Vonique64.ttf */; };
-		846BFBFDEBCB4CB8B23268BE /* High Tide Sans 400.otf in Resources */ = {isa = PBXBuildFile; fileRef = E5DE34A2D6D549B5B71439A2 /* High Tide Sans 400.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,7 +48,6 @@
 		89C6BE57DB24E9ADA2F236DE /* Pods-FirstMobileApp-FirstMobileAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FirstMobileApp-FirstMobileAppTests.release.xcconfig"; path = "Target Support Files/Pods-FirstMobileApp-FirstMobileAppTests/Pods-FirstMobileApp-FirstMobileAppTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		1F6EE77E77E74D07B3A7A7BA /* Vonique64.ttf */ = {isa = PBXFileReference; name = "Vonique64.ttf"; path = "../assets/fonts/Vonique64.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		E5DE34A2D6D549B5B71439A2 /* High Tide Sans 400.otf */ = {isa = PBXFileReference; name = "High Tide Sans 400.otf"; path = "../assets/fonts/High Tide Sans 400.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,7 +147,6 @@
 			isa = PBXGroup;
 			children = (
 				1F6EE77E77E74D07B3A7A7BA /* Vonique64.ttf */,
-				E5DE34A2D6D549B5B71439A2 /* High Tide Sans 400.otf */,
 			);
 			name = Resources;
 			path = "";
@@ -265,7 +262,6 @@
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				16C1CC0A2B48733C009F2C4E /* GoogleService-Info.plist in Resources */,
 				D197C50A05644B119E06E021 /* Vonique64.ttf in Resources */,
-				846BFBFDEBCB4CB8B23268BE /* High Tide Sans 400.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

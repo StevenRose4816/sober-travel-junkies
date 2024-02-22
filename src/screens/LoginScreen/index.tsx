@@ -187,7 +187,7 @@ const LoginScreen: FC = () => {
             marginLeft: 10,
             marginRight: 10,
             marginTop: 5,
-            fontFamily: 'HighTide-Sans',
+            fontFamily: 'Vonique64',
           }}>
           {'CREATE ACCOUNT'}
         </Text>
