@@ -301,7 +301,7 @@ const HomeScreen: FC = () => {
             fontWeight: '600',
             marginTop: 10,
             marginLeft: screenWidth * 0.05,
-            fontFamily: 'Vonique64',
+            fontFamily: 'HighTide-Sans',
           }}>
           {'Hello ' + (fullName || email) + '!\n'}
         </Text>
@@ -333,20 +333,24 @@ const HomeScreen: FC = () => {
                 marginLeft: 10,
                 marginTop: 30,
                 fontWeight: '700',
-                fontFamily: 'Vonique64',
+                fontFamily: 'HighTide-Sans',
               }}>
               {'Address: '}
-              <Text style={{fontWeight: '300'}}>{address}</Text>
+              <Text style={{fontWeight: '300', fontFamily: 'Vonique64'}}>
+                {address}
+              </Text>
             </Text>
             <Text
               style={{
                 marginLeft: 10,
                 marginTop: 10,
                 fontWeight: '700',
-                fontFamily: 'Vonique64',
+                fontFamily: 'HighTide-Sans',
               }}>
               {'Phone number: '}
-              <Text style={{fontWeight: '300'}}>{phoneNumber}</Text>
+              <Text style={{fontWeight: '300', fontFamily: 'Vonique64'}}>
+                {phoneNumber}
+              </Text>
             </Text>
             <Text
               style={{
@@ -354,7 +358,7 @@ const HomeScreen: FC = () => {
                 marginTop: 10,
                 marginBottom: screenHeight * 0.2,
                 fontWeight: '700',
-                fontFamily: 'Vonique64',
+                fontFamily: 'HighTide-Sans',
               }}>
               {'Full name: '}
               <Text style={{fontWeight: '300', fontFamily: 'Vonique64'}}>
@@ -494,7 +498,7 @@ const HomeScreen: FC = () => {
             <Text
               style={{
                 textAlign: 'center',
-                marginTop: 10,
+                marginTop: 5,
                 fontWeight: '600',
                 fontFamily: 'Vonique64',
               }}>
@@ -508,6 +512,7 @@ const HomeScreen: FC = () => {
                 onChangeText={fullName => setFullName(fullName)}
                 secureTextEntry={false}
                 style={{
+                  fontFamily: 'Vonique64',
                   backgroundColor: '#eee7da',
                   marginHorizontal: 10,
                   marginBottom: 10,
@@ -534,6 +539,7 @@ const HomeScreen: FC = () => {
                 onChangeText={phoneNumber => setPhoneNumber(phoneNumber)}
                 secureTextEntry={false}
                 style={{
+                  fontFamily: 'Vonique64',
                   backgroundColor: '#eee7da',
                   marginHorizontal: 10,
                   marginBottom: 10,
@@ -559,6 +565,7 @@ const HomeScreen: FC = () => {
                 onChangeText={address => setAddress(address)}
                 secureTextEntry={false}
                 style={{
+                  fontFamily: 'Vonique64',
                   backgroundColor: '#eee7da',
                   marginHorizontal: 10,
                   marginBottom: 10,
