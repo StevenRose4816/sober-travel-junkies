@@ -95,7 +95,7 @@ const ImagePicker = () => {
               <Text
                 style={{
                   color: 'white',
-                  fontSize: 18,
+                  fontSize: 12,
                   marginLeft: 5,
                   marginRight: 5,
                   marginTop: 5,

@@ -53,15 +53,25 @@ const HomeScreen: FC = () => {
   const fadeIn = () => {
     Animated.timing(fadeAnim, {
       toValue: 1,
-      duration: 2000,
+      duration: 1500,
       useNativeDriver: true,
     }).start();
   };
 
-  const fadeOut = () => {
-    Animated.timing(fadeAnim, {
-      toValue: 0,
-      duration: 500,
+  // const fadeOut = () => {
+  //   Animated.timing(fadeAnim, {
+  //     toValue: 0,
+  //     duration: 500,
+  //     useNativeDriver: true,
+  //   }).start();
+  // };
+
+  const translateX = useRef(new Animated.Value(0)).current;
+
+  const moveImage = () => {
+    Animated.timing(translateX, {
+      toValue: screenWidth * 0.4,
+      duration: 1000,
       useNativeDriver: true,
     }).start();
   };
@@ -258,6 +268,7 @@ const HomeScreen: FC = () => {
   };
 
   const onPressYes = () => {
+    moveImage();
     fadeAnim.setValue(0);
     fadeIn();
     docPickerState && toggleDocPickerSwitch();
@@ -442,7 +453,7 @@ const HomeScreen: FC = () => {
                 style={{
                   flex: 1,
                   flexDirection: 'row',
-                  justifyContent: 'space-between',
+                  justifyContent: 'flex-start',
                   marginLeft: 10,
                 }}>
                 <Text
@@ -456,21 +467,22 @@ const HomeScreen: FC = () => {
                   {'Upload Photo ?'}
                 </Text>
                 <TouchableOpacity onPress={openPicker}>
-                  <Image
+                  <Animated.Image
                     style={{
                       height: 50,
                       width: 50,
                       borderRadius: 5,
                       marginRight: 20,
+                      transform: [{translateX}],
                     }}
-                    source={require('../../Images/camerapictureicon.png')}></Image>
+                    source={require('../../Images/camerapictureicon.png')}></Animated.Image>
                 </TouchableOpacity>
               </View>
               <View
                 style={{
                   flex: 1,
                   flexDirection: 'row',
-                  justifyContent: 'space-between',
+                  justifyContent: 'flex-start',
                   marginLeft: 10,
                 }}>
                 <Text
@@ -484,14 +496,15 @@ const HomeScreen: FC = () => {
                   {'Upload NDA?'}
                 </Text>
                 <TouchableOpacity onPress={toggleDocPickerSwitch}>
-                  <Image
+                  <Animated.Image
                     style={{
+                      marginLeft: 20,
                       height: 50,
                       width: 50,
                       borderRadius: 5,
-                      marginRight: 20,
+                      transform: [{translateX}],
                     }}
-                    source={require('../../Images/ndaicon.png')}></Image>
+                    source={require('../../Images/ndaicon.png')}></Animated.Image>
                 </TouchableOpacity>
               </View>
             </View>
