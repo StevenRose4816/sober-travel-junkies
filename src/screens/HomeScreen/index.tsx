@@ -299,6 +299,7 @@ const HomeScreen: FC = () => {
             fontWeight: '600',
             marginTop: 10,
             marginLeft: screenWidth * 0.05,
+            fontFamily: 'Vonique64',
           }}>
           {'Hello ' + (fullName || email) + '!\n'}
         </Text>
@@ -323,11 +324,23 @@ const HomeScreen: FC = () => {
                 }}
                 source={require('../../Images/profile-picture-vector.jpeg')}></Image>
             )}
-            <Text style={{marginLeft: 10, marginTop: 30, fontWeight: '700'}}>
+            <Text
+              style={{
+                marginLeft: 10,
+                marginTop: 30,
+                fontWeight: '700',
+                fontFamily: 'Vonique64',
+              }}>
               {'Address: '}
               <Text style={{fontWeight: '300'}}>{address}</Text>
             </Text>
-            <Text style={{marginLeft: 10, marginTop: 10, fontWeight: '700'}}>
+            <Text
+              style={{
+                marginLeft: 10,
+                marginTop: 10,
+                fontWeight: '700',
+                fontFamily: 'Vonique64',
+              }}>
               {'Phone number: '}
               <Text style={{fontWeight: '300'}}>{phoneNumber}</Text>
             </Text>
@@ -337,9 +350,12 @@ const HomeScreen: FC = () => {
                 marginTop: 10,
                 marginBottom: screenHeight * 0.2,
                 fontWeight: '700',
+                fontFamily: 'Vonique64',
               }}>
               {'Full name: '}
-              <Text style={{fontWeight: '300'}}>{fullName}</Text>
+              <Text style={{fontWeight: '300', fontFamily: 'Vonique64'}}>
+                {fullName}
+              </Text>
             </Text>
             <View
               style={{
@@ -366,6 +382,7 @@ const HomeScreen: FC = () => {
                     marginRight: 10,
                     marginLeft: 10,
                     textAlign: 'center',
+                    fontFamily: 'Vonique64',
                   }}>
                   {'Edit'}
                 </Text>
@@ -382,6 +399,7 @@ const HomeScreen: FC = () => {
                 textAlign: 'left',
                 marginBottom: 20,
                 fontWeight: '600',
+                fontFamily: 'Vonique64',
               }}>
               {"Let's get some informaton."}
             </Text>
@@ -425,6 +443,7 @@ const HomeScreen: FC = () => {
                     marginTop: 10,
                     fontWeight: '600',
                     fontSize: 18,
+                    fontFamily: 'Vonique64',
                   }}>
                   {'Upload Photo ?'}
                 </Text>
@@ -436,7 +455,7 @@ const HomeScreen: FC = () => {
                       borderRadius: 5,
                       marginRight: 20,
                     }}
-                    source={require('../../Images/camera-icon.jpeg')}></Image>
+                    source={require('../../Images/camerapictureicon.png')}></Image>
                 </TouchableOpacity>
               </View>
               <View
@@ -452,18 +471,19 @@ const HomeScreen: FC = () => {
                     marginTop: 10,
                     fontWeight: '600',
                     fontSize: 18,
+                    fontFamily: 'Vonique64',
                   }}>
-                  {'Upload Documentation ?'}
+                  {'Upload NDA?'}
                 </Text>
                 <TouchableOpacity onPress={toggleDocPickerSwitch}>
                   <Image
                     style={{
-                      height: 40,
-                      width: 40,
+                      height: 50,
+                      width: 50,
                       borderRadius: 5,
                       marginRight: 20,
                     }}
-                    source={require('../../Images/folder.jpeg')}></Image>
+                    source={require('../../Images/ndaicon.png')}></Image>
                 </TouchableOpacity>
               </View>
             </View>
@@ -472,6 +492,7 @@ const HomeScreen: FC = () => {
                 textAlign: 'center',
                 marginTop: 10,
                 fontWeight: '600',
+                fontFamily: 'Vonique64',
               }}>
               {'Full Name'}
             </Text>
@@ -499,6 +520,7 @@ const HomeScreen: FC = () => {
                   marginLeft: 10,
                   fontWeight: '600',
                   marginTop: 10,
+                  fontFamily: 'Vonique64',
                 }}>
                 {'Phone Number'}
               </Text>
@@ -518,7 +540,13 @@ const HomeScreen: FC = () => {
                   borderColor: '#0c0b09',
                   width: screenWidth * 0.9,
                 }}></TextInput>
-              <Text style={{marginLeft: 10, marginTop: 10, fontWeight: '600'}}>
+              <Text
+                style={{
+                  marginLeft: 10,
+                  marginTop: 10,
+                  fontWeight: '600',
+                  fontFamily: 'Vonique64',
+                }}>
                 {'Address'}
               </Text>
               <TextInput
@@ -641,6 +669,7 @@ const HomeScreen: FC = () => {
                 fontSize: 21,
                 fontWeight: '600',
                 textAlign: 'center',
+                fontFamily: 'Vonique64',
               }}>
               {'Submit'}
             </Text>
@@ -686,6 +715,7 @@ const HomeScreen: FC = () => {
                     fontSize: 16,
                     borderRadius: 5,
                     borderColor: '#0c0b09',
+                    fontFamily: 'Vonique64',
                   }}>
                   {'Does this look correct?\n\n Name: ' +
                     fullName +
@@ -705,6 +735,7 @@ const HomeScreen: FC = () => {
                       fontWeight: '500',
                       fontSize: 18,
                       borderRadius: 5,
+                      fontFamily: 'Vonique64',
                     }}>
                     {'Do you want to edit your information?'}
                   </Text>
@@ -737,6 +768,7 @@ const HomeScreen: FC = () => {
                       fontSize: 21,
                       fontWeight: '600',
                       backgroundColor: 'blue',
+                      fontFamily: 'Vonique64',
                     }}>
                     {'Yes'}
                   </Text>
@@ -761,6 +793,7 @@ const HomeScreen: FC = () => {
                     fontWeight: '600',
                     backgroundColor: 'blue',
                     borderRadius: 5,
+                    fontFamily: 'Vonique64',
                   }}>
                   {!docPickerState ? 'No' : 'Cancel'}
                 </Text>
