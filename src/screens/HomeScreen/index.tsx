@@ -49,6 +49,7 @@ const HomeScreen: FC = () => {
   const [initialPhoneNumber, setInitialPhoneNumber] = useState('');
 
   const fadeAnim = useRef(new Animated.Value(0)).current;
+  const translateX = useRef(new Animated.Value(0)).current;
 
   const fadeIn = () => {
     Animated.timing(fadeAnim, {
@@ -65,8 +66,6 @@ const HomeScreen: FC = () => {
   //     useNativeDriver: true,
   //   }).start();
   // };
-
-  const translateX = useRef(new Animated.Value(0)).current;
 
   const moveImage = () => {
     Animated.timing(translateX, {
@@ -268,6 +267,7 @@ const HomeScreen: FC = () => {
   };
 
   const onPressYes = () => {
+    translateX.setValue(0);
     moveImage();
     fadeAnim.setValue(0);
     fadeIn();
