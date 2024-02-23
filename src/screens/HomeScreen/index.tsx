@@ -395,50 +395,60 @@ const HomeScreen: FC = () => {
                   {'Trip Information'}
                 </Text>
               </TouchableOpacity>
-              <Text
+              <View
                 style={{
-                  marginLeft: 10,
+                  backgroundColor: '#eee7da',
                   marginTop: 10,
-                  fontWeight: '700',
-                  fontFamily: 'HighTide-Sans',
+                  marginLeft: 10,
+                  marginRight: 10,
+                  marginBottom: 5,
+                  borderRadius: 5,
                 }}>
-                {'Address: '}
-                <Text style={{fontWeight: '300', fontFamily: 'Vonique64'}}>
-                  {address}
+                <Text
+                  style={{
+                    marginLeft: 10,
+                    marginTop: 10,
+                    fontWeight: '700',
+                    fontFamily: 'HighTide-Sans',
+                  }}>
+                  {'Address: '}
+                  <Text style={{fontWeight: '300', fontFamily: 'Vonique64'}}>
+                    {address}
+                  </Text>
                 </Text>
-              </Text>
-              <Text
-                style={{
-                  marginLeft: 10,
-                  marginTop: 10,
-                  fontFamily: 'HighTide-Sans',
-                }}>
-                {'Phone number: '}
-                <Text style={{fontWeight: '300', fontFamily: 'Vonique64'}}>
-                  {phoneNumber}
+                <Text
+                  style={{
+                    marginLeft: 10,
+                    marginTop: 10,
+                    fontFamily: 'HighTide-Sans',
+                  }}>
+                  {'Phone number: '}
+                  <Text style={{fontWeight: '300', fontFamily: 'Vonique64'}}>
+                    {phoneNumber}
+                  </Text>
                 </Text>
-              </Text>
-              <Text
-                style={{
-                  marginLeft: 10,
-                  marginTop: 10,
-                  fontFamily: 'HighTide-Sans',
-                }}>
-                {'Full name: '}
-                <Text style={{fontFamily: 'Vonique64'}}>{fullName}</Text>
-              </Text>
-              <Text
-                style={{
-                  marginLeft: 10,
-                  marginTop: 10,
-                  marginBottom: 10,
-                  fontFamily: 'HighTide-Sans',
-                }}>
-                {'Emergency Contact Name: '}
-                <Text style={{fontFamily: 'Vonique64'}}>
-                  {emergencyContact}
+                <Text
+                  style={{
+                    marginLeft: 10,
+                    marginTop: 10,
+                    fontFamily: 'HighTide-Sans',
+                  }}>
+                  {'Full name: '}
+                  <Text style={{fontFamily: 'Vonique64'}}>{fullName}</Text>
                 </Text>
-              </Text>
+                <Text
+                  style={{
+                    marginLeft: 10,
+                    marginTop: 10,
+                    marginBottom: 10,
+                    fontFamily: 'HighTide-Sans',
+                  }}>
+                  {'Emergency Contact Name: '}
+                  <Text style={{fontFamily: 'Vonique64'}}>
+                    {emergencyContact}
+                  </Text>
+                </Text>
+              </View>
               <TouchableOpacity
                 onPress={onEditPress}
                 style={{
