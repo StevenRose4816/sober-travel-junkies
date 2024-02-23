@@ -297,6 +297,10 @@ const HomeScreen: FC = () => {
     setChangeBackground(previousstate => !previousstate);
   };
 
+  const onPressTripInfo = () => {
+    navigate('TripInfo Screen');
+  };
+
   const toggleDocPickerSwitch = () => {
     setDocPickerState(previousState => !previousState);
     toggleModal();
@@ -373,6 +377,26 @@ const HomeScreen: FC = () => {
                     fontFamily: 'HighTide-Sans',
                   }}>
                   {'Change background photo'}
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={onPressTripInfo}
+                style={{
+                  backgroundColor: '#eee7da',
+                  marginLeft: 10,
+                  marginTop: 10,
+                  marginRight: screenWidth * 0.4,
+                  borderRadius: 5,
+                }}>
+                <Text
+                  style={{
+                    borderRadius: 5,
+                    marginTop: 10,
+                    marginLeft: 10,
+                    marginBottom: 10,
+                    fontFamily: 'HighTide-Sans',
+                  }}>
+                  {'Trip Information'}
                 </Text>
               </TouchableOpacity>
               <Text

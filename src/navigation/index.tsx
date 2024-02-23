@@ -10,12 +10,14 @@ import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
 import {IUser, setUser} from '../store/auth/slice';
 import {useAppDispatch, useAppSelector} from '../hooks';
 import ImagePicker from '../components/ImagePicker.jsx';
+import TripInfoScreen from '../screens/HomeScreen/TripInfo/index.tsx';
 
 type RootStackParamList = {
   'Home Screen': undefined;
   'Image Picker': {undefined: any};
   'Login Screen': undefined;
   'Signup Screen': undefined;
+  'TripInfo Screen': undefined;
 };
 
 export type RootStackProps<T extends keyof RootStackParamList> = {
@@ -73,6 +75,15 @@ const RootNavigator: FC = () => {
           <RootStack.Screen
             name={'Image Picker'}
             component={ImagePicker}
+            options={{
+              headerTitleStyle: {
+                fontSize: 20,
+              },
+            }}
+          />
+          <RootStack.Screen
+            name={'TripInfo Screen'}
+            component={TripInfoScreen}
             options={{
               headerTitleStyle: {
                 fontSize: 20,
