@@ -401,7 +401,7 @@ const HomeScreen: FC = () => {
               </TouchableOpacity>
               <View
                 style={{
-                  backgroundColor: '#eee7da',
+                  backgroundColor: '#eee7da95',
                   marginTop: 10,
                   marginLeft: 10,
                   marginRight: 10,
@@ -416,9 +416,7 @@ const HomeScreen: FC = () => {
                     fontFamily: 'HighTide-Sans',
                   }}>
                   {'Address: '}
-                  <Text style={{fontWeight: '300', fontFamily: 'Vonique64'}}>
-                    {address}
-                  </Text>
+                  <Text style={{fontFamily: 'Vonique64'}}>{address}</Text>
                 </Text>
                 <Text
                   style={{
@@ -427,9 +425,7 @@ const HomeScreen: FC = () => {
                     fontFamily: 'HighTide-Sans',
                   }}>
                   {'Phone number: '}
-                  <Text style={{fontWeight: '300', fontFamily: 'Vonique64'}}>
-                    {phoneNumber}
-                  </Text>
+                  <Text style={{fontFamily: 'Vonique64'}}>{phoneNumber}</Text>
                 </Text>
                 <Text
                   style={{
@@ -487,7 +483,6 @@ const HomeScreen: FC = () => {
                   marginLeft: 10,
                   textAlign: 'left',
                   marginBottom: 20,
-                  fontWeight: '600',
                   fontFamily: 'Vonique64',
                 }}>
                 {"Let's get some informaton."}
