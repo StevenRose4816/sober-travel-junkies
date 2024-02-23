@@ -320,13 +320,17 @@ const HomeScreen: FC = () => {
           }>
           <View
             style={{
-              height: 150,
-              width: 150,
+              // height: 150,
+              // width: 150,
               borderRadius: 5,
-              marginLeft: 10,
+              marginLeft: screenWidth * 0.22,
+              marginRight: screenWidth * 0.22,
+              flex: 1,
+              alignItems: 'center',
+              justifyContent: 'center',
               marginBottom: 10,
               marginTop: 10,
-              backgroundColor: 'rgba(0,0,0,0.1)',
+              backgroundColor: '#eee7da95',
             }}>
             <Image
               style={{
@@ -412,7 +416,6 @@ const HomeScreen: FC = () => {
                   style={{
                     marginLeft: 10,
                     marginTop: 10,
-                    fontWeight: '700',
                     fontFamily: 'HighTide-Sans',
                   }}>
                   {'Address: '}
@@ -480,9 +483,8 @@ const HomeScreen: FC = () => {
               <Text
                 style={{
                   fontSize: 16,
-                  marginLeft: 10,
-                  textAlign: 'left',
-                  marginBottom: 20,
+                  textAlign: 'center',
+                  marginBottom: 10,
                   fontFamily: 'Vonique64',
                 }}>
                 {"Let's get some informaton."}
