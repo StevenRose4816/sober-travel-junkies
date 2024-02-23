@@ -316,7 +316,7 @@ const HomeScreen: FC = () => {
               color: '#0c0b09',
               fontWeight: '600',
               marginTop: 20,
-              marginLeft: screenWidth * 0.05,
+              marginLeft: 10,
               fontFamily: 'HighTide-Sans',
             }}>
             {'Hello ' + (fullName || email) + '!\n'}
@@ -412,7 +412,7 @@ const HomeScreen: FC = () => {
               <Text
                 style={{
                   fontSize: 16,
-                  marginLeft: 25,
+                  marginLeft: 10,
                   textAlign: 'left',
                   marginBottom: 20,
                   fontWeight: '600',
