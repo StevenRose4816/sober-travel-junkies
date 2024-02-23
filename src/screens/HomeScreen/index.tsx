@@ -48,6 +48,7 @@ const HomeScreen: FC = () => {
   const [initialName, setInitialName] = useState('');
   const [initialAddress, setInitialAddress] = useState('');
   const [initialPhoneNumber, setInitialPhoneNumber] = useState('');
+  const [initialEmergencyContact, setInitialEmergencyContact] = useState('');
 
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const translateX = useRef(new Animated.Value(0)).current;
@@ -115,6 +116,7 @@ const HomeScreen: FC = () => {
         setInitialName(data.username);
         setInitialAddress(data.address);
         setInitialPhoneNumber(data.phoneNumber);
+        setInitialEmergencyContact(data.emergencyContact);
       },
       error => {
         console.error('Error reading data from the database:', error);
@@ -200,7 +202,8 @@ const HomeScreen: FC = () => {
     if (
       initialName !== fullName ||
       initialAddress !== address ||
-      initialPhoneNumber !== phoneNumber
+      initialPhoneNumber !== phoneNumber ||
+      initialEmergencyContact !== emergencyContact
     ) {
       setShowCheckListIcon(false);
     } else {
