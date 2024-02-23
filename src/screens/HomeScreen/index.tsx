@@ -318,18 +318,19 @@ const HomeScreen: FC = () => {
               ? require('../../Images/backgroundPhoto1.jpeg')
               : require('../../Images/backgroundPhoto2.jpeg')
           }>
-          <Text
+          <View
             style={{
-              textAlign: 'left',
-              fontSize: 30,
-              color: '#0c0b09',
-              fontWeight: '600',
-              marginTop: 20,
-              marginLeft: 10,
-              fontFamily: 'HighTide-Sans',
+              flex: 1,
+              alignItems: 'center',
+              justifyContent: 'center',
             }}>
-            {'Hello ' + (fullName || email) + '!\n'}
-          </Text>
+            <Image
+              style={{
+                height: 150,
+                width: 150,
+              }}
+              source={require('../../Images/STJ.png')}></Image>
+          </View>
           {dataFlag && (
             <>
               {userPhotoFromDB ? (
@@ -402,7 +403,7 @@ const HomeScreen: FC = () => {
                 style={{
                   marginLeft: 10,
                   marginTop: 10,
-                  marginBottom: screenHeight * 0.2,
+                  marginBottom: screenHeight * 0.11,
                   fontWeight: '700',
                   fontFamily: 'HighTide-Sans',
                 }}>
@@ -443,6 +444,7 @@ const HomeScreen: FC = () => {
                 style={{
                   fontSize: 16,
                   marginLeft: 10,
+                  marginTop: 10,
                   textAlign: 'left',
                   marginBottom: 20,
                   fontWeight: '600',
