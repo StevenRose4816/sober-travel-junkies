@@ -327,8 +327,8 @@ const HomeScreen: FC = () => {
                 <Animated.Image
                   style={{
                     height: 300,
-                    width: 300,
-                    marginLeft: 20,
+                    width: screenWidth * 0.95,
+                    marginLeft: 10,
                     borderRadius: 5,
                     opacity: fadeAnim,
                   }}
@@ -337,7 +337,7 @@ const HomeScreen: FC = () => {
                 <Animated.Image
                   style={{
                     height: 300,
-                    width: 300,
+                    width: screenWidth * 0.95,
                     borderRadius: 5,
                     marginLeft: 10,
                     opacity: fadeAnim,
@@ -346,7 +346,7 @@ const HomeScreen: FC = () => {
               )}
               <Text
                 style={{
-                  marginLeft: 20,
+                  marginLeft: 10,
                   marginTop: 30,
                   fontWeight: '700',
                   fontFamily: 'HighTide-Sans',
@@ -358,7 +358,7 @@ const HomeScreen: FC = () => {
               </Text>
               <Text
                 style={{
-                  marginLeft: 20,
+                  marginLeft: 10,
                   marginTop: 10,
                   fontWeight: '700',
                   fontFamily: 'HighTide-Sans',
@@ -370,7 +370,7 @@ const HomeScreen: FC = () => {
               </Text>
               <Text
                 style={{
-                  marginLeft: 20,
+                  marginLeft: 10,
                   marginTop: 10,
                   marginBottom: screenHeight * 0.22,
                   fontWeight: '700',
