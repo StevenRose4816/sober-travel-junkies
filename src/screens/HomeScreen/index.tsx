@@ -87,6 +87,7 @@ const HomeScreen: FC = () => {
       address: address,
       phoneNumber: phoneNumber,
       userPhoto: userPhoto || userPhotoFromDB,
+      emergencyContact: emergencyContact,
     })
       .then(() => {
         console.log('db created/updated');
@@ -110,6 +111,7 @@ const HomeScreen: FC = () => {
         setFullName(data.username);
         setPhoneNumber(data.phoneNumber);
         setUserPhotoFromDB(data.userPhoto);
+        setEmergencyContact(data.emergencyContact);
         setInitialName(data.username);
         setInitialAddress(data.address);
         setInitialPhoneNumber(data.phoneNumber);
@@ -181,6 +183,7 @@ const HomeScreen: FC = () => {
   const [fullName, setFullName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [address, setAddress] = useState('');
+  const [emergencyContact, setEmergencyContact] = useState('');
   const [userPhotoFromDB, setUserPhotoFromDB] = useState('');
   const [successMessage, setSuccessMessage] = useState(false);
   const [docPickerState, setDocPickerState] = useState(false);
@@ -192,7 +195,6 @@ const HomeScreen: FC = () => {
   const selectedDocument = useAppSelector(
     state => state.document.selectedDocument,
   );
-  // const documentSelected = useAppSelector(state => state.document.selected);
 
   const checkName = () => {
     if (
@@ -227,10 +229,6 @@ const HomeScreen: FC = () => {
     dataFlag && setDataFlag(false);
     !dataFlag && setDataFlag(true);
   };
-
-  // const onPressCancel = () => {
-  //   toggleModal();
-  // };
 
   const onPressNo = () => {
     docPickerState && toggleDocPickerSwitch();
@@ -305,11 +303,6 @@ const HomeScreen: FC = () => {
     setDocPickerState(previousState => !previousState);
     toggleModal();
   };
-
-  // useEffect(() => {
-  //   console.log('userPhoto: ', userPhoto);
-  //   console.log('userPhotoFromDB: ', userPhotoFromDB);
-  // }, [userPhoto, userPhotoFromDB]);
 
   return (
     <View style={{flex: 1, backgroundColor: '#eee7da'}}>
@@ -415,7 +408,6 @@ const HomeScreen: FC = () => {
                 style={{
                   marginLeft: 10,
                   marginTop: 10,
-                  fontWeight: '700',
                   fontFamily: 'HighTide-Sans',
                 }}>
                 {'Phone number: '}
@@ -427,13 +419,21 @@ const HomeScreen: FC = () => {
                 style={{
                   marginLeft: 10,
                   marginTop: 10,
-                  marginBottom: screenHeight * 0.11,
-                  fontWeight: '700',
                   fontFamily: 'HighTide-Sans',
                 }}>
                 {'Full name: '}
-                <Text style={{fontWeight: '300', fontFamily: 'Vonique64'}}>
-                  {fullName}
+                <Text style={{fontFamily: 'Vonique64'}}>{fullName}</Text>
+              </Text>
+              <Text
+                style={{
+                  marginLeft: 10,
+                  marginTop: 10,
+                  marginBottom: 10,
+                  fontFamily: 'HighTide-Sans',
+                }}>
+                {'Emergency Contact Name: '}
+                <Text style={{fontFamily: 'Vonique64'}}>
+                  {emergencyContact}
                 </Text>
               </Text>
               <TouchableOpacity
@@ -648,6 +648,34 @@ const HomeScreen: FC = () => {
                   value={address}
                   placeholder=" address"
                   onChangeText={address => setAddress(address)}
+                  secureTextEntry={false}
+                  style={{
+                    fontFamily: 'Vonique64',
+                    backgroundColor: '#eee7da',
+                    marginHorizontal: 10,
+                    marginBottom: 10,
+                    marginTop: 5,
+                    borderRadius: 5,
+                    minHeight: 50,
+                    borderWidth: 1,
+                    borderBottomWidth: 3,
+                    borderColor: '#5A6472',
+                    width: screenWidth * 0.9,
+                  }}></TextInput>
+                <Text
+                  style={{
+                    marginLeft: 10,
+                    marginTop: 10,
+                    fontFamily: 'HighTide-Sans',
+                  }}>
+                  {'Emergency Contact Name'}
+                </Text>
+                <TextInput
+                  value={emergencyContact}
+                  placeholder=" emergency contact"
+                  onChangeText={emergencyContact =>
+                    setEmergencyContact(emergencyContact)
+                  }
                   secureTextEntry={false}
                   style={{
                     fontFamily: 'Vonique64',
