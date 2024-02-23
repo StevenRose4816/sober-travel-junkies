@@ -10,6 +10,7 @@ import {
   Dimensions,
   StyleSheet,
   Animated,
+  ImageBackground,
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import {onValue, ref, set} from 'firebase/database';
@@ -303,91 +304,89 @@ const HomeScreen: FC = () => {
 
   return (
     <View style={{flex: 1, backgroundColor: '#eee7da'}}>
-      <ScrollView style={{flex: 1, backgroundColor: '#eee7da'}}>
-        <Text
-          style={{
-            textAlign: 'left',
-            fontSize: 30,
-            color: '#0c0b09',
-            fontWeight: '600',
-            marginTop: 10,
-            marginLeft: screenWidth * 0.05,
-            fontFamily: 'HighTide-Sans',
-          }}>
-          {'Hello ' + (fullName || email) + '!\n'}
-        </Text>
-        {dataFlag && (
-          <>
-            {userPhotoFromDB ? (
-              <Animated.Image
+      <ScrollView style={{flex: 1, backgroundColor: 'transparent'}}>
+        <ImageBackground
+          style={{flex: 1}}
+          imageStyle={{opacity: 0.3}}
+          source={require('../../Images/backgroundPhoto1.jpeg')}>
+          <Text
+            style={{
+              textAlign: 'left',
+              fontSize: 30,
+              color: '#0c0b09',
+              fontWeight: '600',
+              marginTop: 20,
+              marginLeft: screenWidth * 0.05,
+              fontFamily: 'HighTide-Sans',
+            }}>
+            {'Hello ' + (fullName || email) + '!\n'}
+          </Text>
+          {dataFlag && (
+            <>
+              {userPhotoFromDB ? (
+                <Animated.Image
+                  style={{
+                    height: 300,
+                    width: 300,
+                    marginLeft: 10,
+                    borderRadius: 5,
+                    opacity: fadeAnim,
+                  }}
+                  source={{uri: userPhotoFromDB}}></Animated.Image>
+              ) : (
+                <Animated.Image
+                  style={{
+                    height: 300,
+                    width: 300,
+                    borderRadius: 5,
+                    marginLeft: 10,
+                    opacity: fadeAnim,
+                  }}
+                  source={require('../../Images/profile-picture-vector.jpeg')}></Animated.Image>
+              )}
+              <Text
                 style={{
-                  height: 300,
-                  width: 300,
                   marginLeft: 10,
-                  borderRadius: 5,
-                  opacity: fadeAnim,
-                }}
-                source={{uri: userPhotoFromDB}}></Animated.Image>
-            ) : (
-              <Animated.Image
+                  marginTop: 30,
+                  fontWeight: '700',
+                  fontFamily: 'HighTide-Sans',
+                }}>
+                {'Address: '}
+                <Text style={{fontWeight: '300', fontFamily: 'Vonique64'}}>
+                  {address}
+                </Text>
+              </Text>
+              <Text
                 style={{
-                  height: 300,
-                  width: 300,
-                  borderRadius: 5,
                   marginLeft: 10,
-                  opacity: fadeAnim,
-                }}
-                source={require('../../Images/profile-picture-vector.jpeg')}></Animated.Image>
-            )}
-            <Text
-              style={{
-                marginLeft: 10,
-                marginTop: 30,
-                fontWeight: '700',
-                fontFamily: 'HighTide-Sans',
-              }}>
-              {'Address: '}
-              <Text style={{fontWeight: '300', fontFamily: 'Vonique64'}}>
-                {address}
+                  marginTop: 10,
+                  fontWeight: '700',
+                  fontFamily: 'HighTide-Sans',
+                }}>
+                {'Phone number: '}
+                <Text style={{fontWeight: '300', fontFamily: 'Vonique64'}}>
+                  {phoneNumber}
+                </Text>
               </Text>
-            </Text>
-            <Text
-              style={{
-                marginLeft: 10,
-                marginTop: 10,
-                fontWeight: '700',
-                fontFamily: 'HighTide-Sans',
-              }}>
-              {'Phone number: '}
-              <Text style={{fontWeight: '300', fontFamily: 'Vonique64'}}>
-                {phoneNumber}
+              <Text
+                style={{
+                  marginLeft: 10,
+                  marginTop: 10,
+                  marginBottom: screenHeight * 0.22,
+                  fontWeight: '700',
+                  fontFamily: 'HighTide-Sans',
+                }}>
+                {'Full name: '}
+                <Text style={{fontWeight: '300', fontFamily: 'Vonique64'}}>
+                  {fullName}
+                </Text>
               </Text>
-            </Text>
-            <Text
-              style={{
-                marginLeft: 10,
-                marginTop: 10,
-                marginBottom: screenHeight * 0.2,
-                fontWeight: '700',
-                fontFamily: 'HighTide-Sans',
-              }}>
-              {'Full name: '}
-              <Text style={{fontWeight: '300', fontFamily: 'Vonique64'}}>
-                {fullName}
-              </Text>
-            </Text>
-            <View
-              style={{
-                flex: 1,
-                alignItems: 'flex-end',
-                backgroundColor: '#eee7da',
-              }}>
               <TouchableOpacity
                 onPress={onEditPress}
                 style={{
                   backgroundColor: 'blue',
                   borderRadius: 5,
-                  marginRight: 10,
+                  marginLeft: screenWidth * 0.7,
                   marginBottom: 10,
                   width: 100,
                 }}>
@@ -406,299 +405,303 @@ const HomeScreen: FC = () => {
                   {'Edit'}
                 </Text>
               </TouchableOpacity>
-            </View>
-          </>
-        )}
-        {!dataFlag && (
-          <>
-            <Text
-              style={{
-                fontSize: 16,
-                marginLeft: 25,
-                textAlign: 'left',
-                marginBottom: 20,
-                fontWeight: '600',
-                fontFamily: 'Vonique64',
-              }}>
-              {"Let's get some informaton."}
-            </Text>
-            <View style={{flex: 1, alignItems: 'center'}}>
-              {!userPhotoFromDB ? (
-                <Animated.Image
-                  style={{
-                    height: 300,
-                    width: screenWidth * 0.9,
-                    borderRadius: 5,
-                    opacity: fadeAnim,
-                  }}
-                  source={
-                    {uri: userPhoto} ||
-                    require('../../Images/profile-picture-vector.jpeg')
-                  }
-                />
-              ) : (
-                <Animated.Image
-                  style={{
-                    height: 300,
-                    width: screenWidth * 0.9,
-                    borderRadius: 5,
-                    opacity: fadeAnim,
-                  }}
-                  source={{uri: userPhoto || userPhotoFromDB}}
-                />
-              )}
-            </View>
-            <View style={{flex: 1}}>
-              <View
-                style={{
-                  flex: 1,
-                  flexDirection: 'row',
-                  justifyContent: 'flex-start',
-                  marginLeft: 10,
-                }}>
-                <Text
-                  style={{
-                    marginLeft: 10,
-                    marginTop: 10,
-                    fontWeight: '600',
-                    fontSize: 18,
-                    fontFamily: 'Vonique64',
-                  }}>
-                  {'Upload Photo ?'}
-                </Text>
-                <TouchableOpacity onPress={openPicker}>
-                  <Animated.Image
-                    style={{
-                      height: 50,
-                      width: 50,
-                      borderRadius: 5,
-                      marginRight: 20,
-                      transform: [{translateX}],
-                    }}
-                    source={require('../../Images/camerapictureicon.png')}></Animated.Image>
-                </TouchableOpacity>
-              </View>
-              <View
-                style={{
-                  flex: 1,
-                  flexDirection: 'row',
-                  justifyContent: 'flex-start',
-                  marginLeft: 10,
-                }}>
-                <Text
-                  style={{
-                    marginLeft: 10,
-                    marginTop: 10,
-                    fontWeight: '600',
-                    fontSize: 18,
-                    fontFamily: 'Vonique64',
-                  }}>
-                  {'Upload NDA?'}
-                </Text>
-                <TouchableOpacity onPress={toggleDocPickerSwitch}>
-                  <Animated.Image
-                    style={{
-                      marginLeft: 20,
-                      height: 50,
-                      width: 50,
-                      borderRadius: 5,
-                      transform: [{translateX}],
-                    }}
-                    source={require('../../Images/ndaicon.png')}></Animated.Image>
-                </TouchableOpacity>
-              </View>
-            </View>
-            <Text
-              style={{
-                textAlign: 'center',
-                marginTop: 5,
-                fontWeight: '600',
-                fontFamily: 'Vonique64',
-              }}>
-              {'Full Name'}
-            </Text>
-            <View
-              style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-              <TextInput
-                value={fullName}
-                placeholder=" full name"
-                onChangeText={fullName => setFullName(fullName)}
-                secureTextEntry={false}
-                style={{
-                  fontFamily: 'Vonique64',
-                  backgroundColor: '#eee7da',
-                  marginHorizontal: 10,
-                  marginBottom: 10,
-                  marginTop: 5,
-                  borderRadius: 5,
-                  minHeight: 50,
-                  borderWidth: 1,
-                  borderColor: '#0c0b09',
-                  width: screenWidth * 0.9,
-                }}></TextInput>
+            </>
+          )}
+          {!dataFlag && (
+            <>
               <Text
                 style={{
+                  fontSize: 16,
+                  marginLeft: 25,
                   textAlign: 'left',
-                  marginLeft: 10,
+                  marginBottom: 20,
                   fontWeight: '600',
-                  marginTop: 10,
                   fontFamily: 'Vonique64',
                 }}>
-                {'Phone Number'}
+                {"Let's get some informaton."}
               </Text>
-              <TextInput
-                value={phoneNumber}
-                placeholder=" phone number"
-                onChangeText={phoneNumber => setPhoneNumber(phoneNumber)}
-                secureTextEntry={false}
-                style={{
-                  fontFamily: 'Vonique64',
-                  backgroundColor: '#eee7da',
-                  marginHorizontal: 10,
-                  marginBottom: 10,
-                  marginTop: 5,
-                  borderRadius: 5,
-                  minHeight: 50,
-                  borderWidth: 1,
-                  borderColor: '#0c0b09',
-                  width: screenWidth * 0.9,
-                }}></TextInput>
+              <View style={{flex: 1, alignItems: 'center'}}>
+                {!userPhotoFromDB ? (
+                  <Animated.Image
+                    style={{
+                      height: 300,
+                      width: screenWidth * 0.9,
+                      borderRadius: 5,
+                      opacity: fadeAnim,
+                    }}
+                    source={
+                      {uri: userPhoto} ||
+                      require('../../Images/profile-picture-vector.jpeg')
+                    }
+                  />
+                ) : (
+                  <Animated.Image
+                    style={{
+                      height: 300,
+                      width: screenWidth * 0.9,
+                      borderRadius: 5,
+                      opacity: fadeAnim,
+                    }}
+                    source={{uri: userPhoto || userPhotoFromDB}}
+                  />
+                )}
+              </View>
+              <View style={{flex: 1}}>
+                <View
+                  style={{
+                    flex: 1,
+                    flexDirection: 'row',
+                    justifyContent: 'flex-start',
+                    marginLeft: 10,
+                  }}>
+                  <Text
+                    style={{
+                      marginLeft: 10,
+                      marginTop: 10,
+                      fontWeight: '600',
+                      fontSize: 18,
+                      fontFamily: 'Vonique64',
+                    }}>
+                    {'Upload Photo ?'}
+                  </Text>
+                  <TouchableOpacity onPress={openPicker}>
+                    <Animated.Image
+                      style={{
+                        height: 50,
+                        width: 50,
+                        borderRadius: 5,
+                        marginRight: 20,
+                        transform: [{translateX}],
+                      }}
+                      source={require('../../Images/camerapictureicon.png')}></Animated.Image>
+                  </TouchableOpacity>
+                </View>
+                <View
+                  style={{
+                    flex: 1,
+                    flexDirection: 'row',
+                    justifyContent: 'flex-start',
+                    marginLeft: 10,
+                  }}>
+                  <Text
+                    style={{
+                      marginLeft: 10,
+                      marginTop: 10,
+                      fontWeight: '600',
+                      fontSize: 18,
+                      fontFamily: 'Vonique64',
+                    }}>
+                    {'Upload NDA?'}
+                  </Text>
+                  <TouchableOpacity onPress={toggleDocPickerSwitch}>
+                    <Animated.Image
+                      style={{
+                        marginLeft: 20,
+                        height: 50,
+                        width: 50,
+                        borderRadius: 5,
+                        transform: [{translateX}],
+                      }}
+                      source={require('../../Images/ndaicon.png')}></Animated.Image>
+                  </TouchableOpacity>
+                </View>
+              </View>
               <Text
                 style={{
-                  marginLeft: 10,
-                  marginTop: 10,
+                  textAlign: 'center',
+                  marginTop: 5,
                   fontWeight: '600',
                   fontFamily: 'Vonique64',
                 }}>
-                {'Address'}
+                {'Full Name'}
               </Text>
-              <TextInput
-                value={address}
-                placeholder=" address"
-                onChangeText={address => setAddress(address)}
-                secureTextEntry={false}
+              <View
                 style={{
+                  flex: 1,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}>
+                <TextInput
+                  value={fullName}
+                  placeholder=" full name"
+                  onChangeText={fullName => setFullName(fullName)}
+                  secureTextEntry={false}
+                  style={{
+                    fontFamily: 'Vonique64',
+                    backgroundColor: '#eee7da',
+                    marginHorizontal: 10,
+                    marginBottom: 10,
+                    marginTop: 5,
+                    borderRadius: 5,
+                    minHeight: 50,
+                    borderWidth: 1,
+                    borderColor: '#0c0b09',
+                    width: screenWidth * 0.9,
+                  }}></TextInput>
+                <Text
+                  style={{
+                    textAlign: 'left',
+                    marginLeft: 10,
+                    fontWeight: '600',
+                    marginTop: 10,
+                    fontFamily: 'Vonique64',
+                  }}>
+                  {'Phone Number'}
+                </Text>
+                <TextInput
+                  value={phoneNumber}
+                  placeholder=" phone number"
+                  onChangeText={phoneNumber => setPhoneNumber(phoneNumber)}
+                  secureTextEntry={false}
+                  style={{
+                    fontFamily: 'Vonique64',
+                    backgroundColor: '#eee7da',
+                    marginHorizontal: 10,
+                    marginBottom: 10,
+                    marginTop: 5,
+                    borderRadius: 5,
+                    minHeight: 50,
+                    borderWidth: 1,
+                    borderColor: '#0c0b09',
+                    width: screenWidth * 0.9,
+                  }}></TextInput>
+                <Text
+                  style={{
+                    marginLeft: 10,
+                    marginTop: 10,
+                    fontWeight: '600',
+                    fontFamily: 'Vonique64',
+                  }}>
+                  {'Address'}
+                </Text>
+                <TextInput
+                  value={address}
+                  placeholder=" address"
+                  onChangeText={address => setAddress(address)}
+                  secureTextEntry={false}
+                  style={{
+                    fontFamily: 'Vonique64',
+                    backgroundColor: '#eee7da',
+                    marginHorizontal: 10,
+                    marginBottom: 10,
+                    marginTop: 5,
+                    borderRadius: 5,
+                    minHeight: 50,
+                    borderWidth: 1,
+                    borderColor: '#0c0b09',
+                    width: screenWidth * 0.9,
+                  }}></TextInput>
+              </View>
+              <View
+                style={{
+                  flex: 1,
+                  flexDirection: 'row',
+                  justifyContent: 'space-around',
+                  alignItems: 'center',
+                }}>
+                <View
+                  style={[
+                    showCameraIcon && styles.circleBefore,
+                    !showCameraIcon && styles.circleAfter,
+                  ]}>
+                  {showCameraIcon ? (
+                    <Image
+                      style={{
+                        height: 75,
+                        width: 75,
+                        borderRadius: 5,
+                      }}
+                      source={require('../../Images/cameraIcon_Hollis.png')}></Image>
+                  ) : (
+                    !showCameraIcon && (
+                      <Image
+                        style={{
+                          height: 75,
+                          width: 75,
+                          borderRadius: 5,
+                        }}
+                        source={require('../../Images/checkIcon_Hollis.png')}></Image>
+                    )
+                  )}
+                </View>
+                <View
+                  style={[
+                    showCheckListIcon && styles.circleBefore,
+                    !showCheckListIcon && styles.circleAfter,
+                  ]}>
+                  {showCheckListIcon ? (
+                    <Image
+                      style={{
+                        height: 75,
+                        width: 75,
+                        borderRadius: 5,
+                      }}
+                      source={require('../../Images/checklistIcon_Hollis.png')}></Image>
+                  ) : (
+                    !showCheckListIcon && (
+                      <Image
+                        style={{
+                          height: 75,
+                          width: 75,
+                          borderRadius: 5,
+                        }}
+                        source={require('../../Images/checkIcon_Hollis.png')}></Image>
+                    )
+                  )}
+                </View>
+                <View
+                  style={[
+                    showFolderIcon && styles.circleBefore,
+                    !showFolderIcon && styles.circleAfter,
+                  ]}>
+                  {showFolderIcon ? (
+                    <Image
+                      style={{
+                        height: 75,
+                        width: 75,
+                        borderRadius: 5,
+                      }}
+                      source={require('../../Images/folderIcon_Hollis.png')}></Image>
+                  ) : (
+                    !showFolderIcon && (
+                      <Image
+                        style={{
+                          height: 75,
+                          width: 75,
+                          borderRadius: 5,
+                        }}
+                        source={require('../../Images/checkIcon_Hollis.png')}></Image>
+                    )
+                  )}
+                </View>
+              </View>
+            </>
+          )}
+          {!dataFlag && (
+            <TouchableOpacity
+              onPress={onPressSubmit}
+              style={{
+                backgroundColor: 'blue',
+                minHeight: 50,
+                justifyContent: 'center',
+                borderRadius: 5,
+                marginHorizontal: 10,
+                marginTop: 10,
+                marginBottom: 10,
+              }}>
+              <Text
+                style={{
+                  color: '#eee7da',
+                  fontSize: 21,
+                  fontWeight: '600',
+                  textAlign: 'center',
                   fontFamily: 'Vonique64',
-                  backgroundColor: '#eee7da',
-                  marginHorizontal: 10,
-                  marginBottom: 10,
-                  marginTop: 5,
-                  borderRadius: 5,
-                  minHeight: 50,
-                  borderWidth: 1,
-                  borderColor: '#0c0b09',
-                  width: screenWidth * 0.9,
-                }}></TextInput>
-            </View>
-            <View
-              style={{
-                flex: 1,
-                flexDirection: 'row',
-                justifyContent: 'space-around',
-                alignItems: 'center',
-              }}>
-              <View
-                style={[
-                  showCameraIcon && styles.circleBefore,
-                  !showCameraIcon && styles.circleAfter,
-                ]}>
-                {showCameraIcon ? (
-                  <Image
-                    style={{
-                      height: 75,
-                      width: 75,
-                      borderRadius: 5,
-                    }}
-                    source={require('../../Images/cameraIcon_Hollis.png')}></Image>
-                ) : (
-                  !showCameraIcon && (
-                    <Image
-                      style={{
-                        height: 75,
-                        width: 75,
-                        borderRadius: 5,
-                      }}
-                      source={require('../../Images/checkIcon_Hollis.png')}></Image>
-                  )
-                )}
-              </View>
-              <View
-                style={[
-                  showCheckListIcon && styles.circleBefore,
-                  !showCheckListIcon && styles.circleAfter,
-                ]}>
-                {showCheckListIcon ? (
-                  <Image
-                    style={{
-                      height: 75,
-                      width: 75,
-                      borderRadius: 5,
-                    }}
-                    source={require('../../Images/checklistIcon_Hollis.png')}></Image>
-                ) : (
-                  !showCheckListIcon && (
-                    <Image
-                      style={{
-                        height: 75,
-                        width: 75,
-                        borderRadius: 5,
-                      }}
-                      source={require('../../Images/checkIcon_Hollis.png')}></Image>
-                  )
-                )}
-              </View>
-              <View
-                style={[
-                  showFolderIcon && styles.circleBefore,
-                  !showFolderIcon && styles.circleAfter,
-                ]}>
-                {showFolderIcon ? (
-                  <Image
-                    style={{
-                      height: 75,
-                      width: 75,
-                      borderRadius: 5,
-                    }}
-                    source={require('../../Images/folderIcon_Hollis.png')}></Image>
-                ) : (
-                  !showFolderIcon && (
-                    <Image
-                      style={{
-                        height: 75,
-                        width: 75,
-                        borderRadius: 5,
-                      }}
-                      source={require('../../Images/checkIcon_Hollis.png')}></Image>
-                  )
-                )}
-              </View>
-            </View>
-          </>
-        )}
-        {!dataFlag && (
-          <TouchableOpacity
-            onPress={onPressSubmit}
-            style={{
-              backgroundColor: 'blue',
-              minHeight: 50,
-              justifyContent: 'center',
-              borderRadius: 5,
-              marginHorizontal: 10,
-              marginTop: 10,
-              marginBottom: 10,
-            }}>
-            <Text
-              style={{
-                color: '#eee7da',
-                fontSize: 21,
-                fontWeight: '600',
-                textAlign: 'center',
-                fontFamily: 'Vonique64',
-              }}>
-              {'Submit'}
-            </Text>
-          </TouchableOpacity>
-        )}
+                }}>
+                {'Submit'}
+              </Text>
+            </TouchableOpacity>
+          )}
+        </ImageBackground>
       </ScrollView>
       <Modal
         visible={modalVisible}
