@@ -320,9 +320,13 @@ const HomeScreen: FC = () => {
           }>
           <View
             style={{
-              flex: 1,
-              alignItems: 'flex-start',
-              justifyContent: 'center',
+              height: 150,
+              width: 150,
+              borderRadius: 5,
+              marginLeft: 10,
+              marginBottom: 10,
+              marginTop: 10,
+              backgroundColor: 'rgba(0,0,0,0.1)',
             }}>
             <Image
               style={{
@@ -401,7 +405,7 @@ const HomeScreen: FC = () => {
                   marginTop: 10,
                   marginLeft: 10,
                   marginRight: 10,
-                  marginBottom: 5,
+                  marginBottom: 10,
                   borderRadius: 5,
                 }}>
                 <Text
