@@ -337,12 +337,13 @@ const HomeScreen: FC = () => {
               backgroundColor: '#eee7da95',
               // backgroundColor: '#b6e7cc95',
             }}>
-            <Image
+            <Animated.Image
               style={{
                 height: 150,
                 width: 150,
+                opacity: fadeAnim,
               }}
-              source={require('../../Images/STJ.png')}></Image>
+              source={require('../../Images/STJ.png')}></Animated.Image>
           </View>
           {dataFlag && (
             <>
