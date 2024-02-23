@@ -326,7 +326,7 @@ const HomeScreen: FC = () => {
           }>
           <View
             style={{
-              borderRadius: 5,
+              borderRadius: 10,
               marginLeft: screenWidth * 0.2,
               marginRight: screenWidth * 0.2,
               flex: 1,
@@ -335,6 +335,7 @@ const HomeScreen: FC = () => {
               marginBottom: 10,
               marginTop: 10,
               backgroundColor: '#eee7da95',
+              // backgroundColor: '#b6e7cc95',
             }}>
             <Image
               style={{
@@ -371,7 +372,8 @@ const HomeScreen: FC = () => {
               <TouchableOpacity
                 onPress={onPressChangeBackground}
                 style={{
-                  backgroundColor: '#eee7da',
+                  // backgroundColor: '#eee7da',
+                  backgroundColor: '#b6e7cc',
                   marginLeft: 10,
                   marginRight: screenWidth * 0.4,
                   borderRadius: 5,
@@ -390,7 +392,8 @@ const HomeScreen: FC = () => {
               <TouchableOpacity
                 onPress={onPressTripInfo}
                 style={{
-                  backgroundColor: '#eee7da',
+                  // backgroundColor: '#eee7da',
+                  backgroundColor: '#b6e7cc',
                   marginLeft: 10,
                   marginTop: 10,
                   marginRight: screenWidth * 0.4,
@@ -409,7 +412,7 @@ const HomeScreen: FC = () => {
               </TouchableOpacity>
               <View
                 style={{
-                  backgroundColor: '#eee7da95',
+                  backgroundColor: '#eee7da',
                   marginTop: 10,
                   marginLeft: 10,
                   marginRight: 10,

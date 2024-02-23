@@ -124,7 +124,6 @@ const LoginScreen: FC = () => {
           style={{
             color: '#0c0b09',
             fontSize: 14,
-            fontWeight: '500',
             textAlign: 'center',
             fontFamily: 'Vonique64',
             marginTop: 5,
@@ -152,7 +151,6 @@ const LoginScreen: FC = () => {
             color: '#0c0b09',
             fontSize: 12,
             fontFamily: 'Vonique64',
-            fontWeight: '500',
             textAlign: 'center',
           }}>
           {'OR'}
@@ -182,7 +180,6 @@ const LoginScreen: FC = () => {
           style={{
             color: '#0c0b09',
             fontSize: 12,
-            fontWeight: '500',
             textAlign: 'center',
             marginLeft: 10,
             marginRight: 10,
