@@ -320,11 +320,9 @@ const HomeScreen: FC = () => {
           }>
           <View
             style={{
-              // height: 150,
-              // width: 150,
               borderRadius: 5,
-              marginLeft: screenWidth * 0.22,
-              marginRight: screenWidth * 0.22,
+              marginLeft: screenWidth * 0.2,
+              marginRight: screenWidth * 0.2,
               flex: 1,
               alignItems: 'center',
               justifyContent: 'center',
@@ -586,7 +584,7 @@ const HomeScreen: FC = () => {
               <View
                 style={{
                   flex: 1,
-                  marginTop: 10,
+                  marginTop: 20,
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}>
