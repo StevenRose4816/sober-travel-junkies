@@ -49,6 +49,8 @@ const HomeScreen: FC = () => {
   const [initialAddress, setInitialAddress] = useState('');
   const [initialPhoneNumber, setInitialPhoneNumber] = useState('');
   const [initialEmergencyContact, setInitialEmergencyContact] = useState('');
+  const [initialEmergencyContactPhone, setInitialEmergencyContactPhone] =
+    useState('');
 
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const translateX = useRef(new Animated.Value(0)).current;
@@ -89,6 +91,7 @@ const HomeScreen: FC = () => {
       phoneNumber: phoneNumber,
       userPhoto: userPhoto || userPhotoFromDB,
       emergencyContact: emergencyContact,
+      emergencyContactPhone: emergencyContactPhone,
     })
       .then(() => {
         console.log('db created/updated');
@@ -113,10 +116,12 @@ const HomeScreen: FC = () => {
         setPhoneNumber(data.phoneNumber);
         setUserPhotoFromDB(data.userPhoto);
         setEmergencyContact(data.emergencyContact);
+        setEmergencyContactPhone(data.emergencyContactPhone);
         setInitialName(data.username);
         setInitialAddress(data.address);
         setInitialPhoneNumber(data.phoneNumber);
         setInitialEmergencyContact(data.emergencyContact);
+        setInitialEmergencyContactPhone(data.emergencyContactPhone);
       },
       error => {
         console.error('Error reading data from the database:', error);
@@ -186,6 +191,7 @@ const HomeScreen: FC = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [address, setAddress] = useState('');
   const [emergencyContact, setEmergencyContact] = useState('');
+  const [emergencyContactPhone, setEmergencyContactPhone] = useState('');
   const [userPhotoFromDB, setUserPhotoFromDB] = useState('');
   const [successMessage, setSuccessMessage] = useState(false);
   const [docPickerState, setDocPickerState] = useState(false);
@@ -449,6 +455,17 @@ const HomeScreen: FC = () => {
                     {emergencyContact}
                   </Text>
                 </Text>
+                <Text
+                  style={{
+                    marginLeft: 10,
+                    marginBottom: 10,
+                    fontFamily: 'HighTide-Sans',
+                  }}>
+                  {'Emergency Contact Phone: '}
+                  <Text style={{fontFamily: 'Vonique64'}}>
+                    {emergencyContactPhone}
+                  </Text>
+                </Text>
               </View>
               <TouchableOpacity
                 onPress={onEditPress}
@@ -687,6 +704,34 @@ const HomeScreen: FC = () => {
                   placeholder=" emergency contact"
                   onChangeText={emergencyContact =>
                     setEmergencyContact(emergencyContact)
+                  }
+                  secureTextEntry={false}
+                  style={{
+                    fontFamily: 'Vonique64',
+                    backgroundColor: '#eee7da',
+                    marginHorizontal: 10,
+                    marginBottom: 10,
+                    marginTop: 5,
+                    borderRadius: 5,
+                    minHeight: 50,
+                    borderWidth: 1,
+                    borderBottomWidth: 3,
+                    borderColor: '#5A6472',
+                    width: screenWidth * 0.9,
+                  }}></TextInput>
+                <Text
+                  style={{
+                    marginLeft: 10,
+                    marginTop: 10,
+                    fontFamily: 'HighTide-Sans',
+                  }}>
+                  {'Emergency Contact Phone'}
+                </Text>
+                <TextInput
+                  value={emergencyContactPhone}
+                  placeholder=" emergency contact phone"
+                  onChangeText={emergencyContactPhone =>
+                    setEmergencyContactPhone(emergencyContactPhone)
                   }
                   secureTextEntry={false}
                   style={{
