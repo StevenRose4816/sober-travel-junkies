@@ -70,7 +70,7 @@ const HomeScreen: FC = () => {
 
   const moveImage = () => {
     Animated.timing(translateX, {
-      toValue: screenWidth * 0.4,
+      toValue: screenWidth * 0.37,
       duration: 1000,
       useNativeDriver: true,
     }).start();
@@ -328,7 +328,7 @@ const HomeScreen: FC = () => {
                   style={{
                     height: 300,
                     width: 300,
-                    marginLeft: 10,
+                    marginLeft: 20,
                     borderRadius: 5,
                     opacity: fadeAnim,
                   }}
@@ -346,7 +346,7 @@ const HomeScreen: FC = () => {
               )}
               <Text
                 style={{
-                  marginLeft: 10,
+                  marginLeft: 20,
                   marginTop: 30,
                   fontWeight: '700',
                   fontFamily: 'HighTide-Sans',
@@ -358,7 +358,7 @@ const HomeScreen: FC = () => {
               </Text>
               <Text
                 style={{
-                  marginLeft: 10,
+                  marginLeft: 20,
                   marginTop: 10,
                   fontWeight: '700',
                   fontFamily: 'HighTide-Sans',
@@ -370,7 +370,7 @@ const HomeScreen: FC = () => {
               </Text>
               <Text
                 style={{
-                  marginLeft: 10,
+                  marginLeft: 20,
                   marginTop: 10,
                   marginBottom: screenHeight * 0.22,
                   fontWeight: '700',
@@ -425,7 +425,7 @@ const HomeScreen: FC = () => {
                   <Animated.Image
                     style={{
                       height: 300,
-                      width: screenWidth * 0.9,
+                      width: screenWidth * 0.95,
                       borderRadius: 5,
                       opacity: fadeAnim,
                     }}
@@ -438,7 +438,7 @@ const HomeScreen: FC = () => {
                   <Animated.Image
                     style={{
                       height: 300,
-                      width: screenWidth * 0.9,
+                      width: screenWidth * 0.95,
                       borderRadius: 5,
                       opacity: fadeAnim,
                     }}
@@ -452,14 +452,18 @@ const HomeScreen: FC = () => {
                     flex: 1,
                     flexDirection: 'row',
                     justifyContent: 'flex-start',
+                    alignItems: 'center',
                     marginLeft: 10,
+                    marginRight: 10,
+                    marginTop: 20,
+                    backgroundColor: '#eee7da',
+                    borderRadius: 5,
                   }}>
                   <Text
                     style={{
                       marginLeft: 10,
-                      marginTop: 10,
-                      fontWeight: '600',
-                      fontSize: 18,
+                      marginTop: 5,
+                      fontSize: 20,
                       fontFamily: 'Vonique64',
                     }}>
                     {'Upload Photo ?'}
@@ -481,14 +485,18 @@ const HomeScreen: FC = () => {
                     flex: 1,
                     flexDirection: 'row',
                     justifyContent: 'flex-start',
+                    alignItems: 'center',
                     marginLeft: 10,
+                    marginRight: 10,
+                    marginTop: 10,
+                    backgroundColor: '#eee7da',
+                    borderRadius: 5,
                   }}>
                   <Text
                     style={{
                       marginLeft: 10,
-                      marginTop: 10,
-                      fontWeight: '600',
-                      fontSize: 18,
+                      marginTop: 5,
+                      fontSize: 20,
                       fontFamily: 'Vonique64',
                     }}>
                     {'Upload NDA?'}
@@ -496,7 +504,7 @@ const HomeScreen: FC = () => {
                   <TouchableOpacity onPress={toggleDocPickerSwitch}>
                     <Animated.Image
                       style={{
-                        marginLeft: 20,
+                        marginLeft: 23,
                         height: 50,
                         width: 50,
                         borderRadius: 5,
@@ -506,15 +514,20 @@ const HomeScreen: FC = () => {
                   </TouchableOpacity>
                 </View>
               </View>
-              <Text
+              <View
                 style={{
-                  textAlign: 'center',
-                  marginTop: 5,
-                  fontWeight: '600',
-                  fontFamily: 'Vonique64',
+                  flex: 1,
+                  marginTop: 10,
+                  justifyContent: 'center',
+                  alignItems: 'center',
                 }}>
-                {'Full Name'}
-              </Text>
+                <Text
+                  style={{
+                    fontFamily: 'HighTide-Sans',
+                  }}>
+                  {'Full Name'}
+                </Text>
+              </View>
               <View
                 style={{
                   flex: 1,
@@ -535,7 +548,8 @@ const HomeScreen: FC = () => {
                     borderRadius: 5,
                     minHeight: 50,
                     borderWidth: 1,
-                    borderColor: '#0c0b09',
+                    borderColor: '#5A6472',
+                    borderBottomWidth: 3,
                     width: screenWidth * 0.9,
                   }}></TextInput>
                 <Text
@@ -544,7 +558,7 @@ const HomeScreen: FC = () => {
                     marginLeft: 10,
                     fontWeight: '600',
                     marginTop: 10,
-                    fontFamily: 'Vonique64',
+                    fontFamily: 'HighTide-Sans',
                   }}>
                   {'Phone Number'}
                 </Text>
@@ -562,7 +576,8 @@ const HomeScreen: FC = () => {
                     borderRadius: 5,
                     minHeight: 50,
                     borderWidth: 1,
-                    borderColor: '#0c0b09',
+                    borderColor: '#5A6472',
+                    borderBottomWidth: 3,
                     width: screenWidth * 0.9,
                   }}></TextInput>
                 <Text
@@ -570,7 +585,7 @@ const HomeScreen: FC = () => {
                     marginLeft: 10,
                     marginTop: 10,
                     fontWeight: '600',
-                    fontFamily: 'Vonique64',
+                    fontFamily: 'HighTide-Sans',
                   }}>
                   {'Address'}
                 </Text>
@@ -588,7 +603,8 @@ const HomeScreen: FC = () => {
                     borderRadius: 5,
                     minHeight: 50,
                     borderWidth: 1,
-                    borderColor: '#0c0b09',
+                    borderBottomWidth: 3,
+                    borderColor: '#5A6472',
                     width: screenWidth * 0.9,
                   }}></TextInput>
               </View>
