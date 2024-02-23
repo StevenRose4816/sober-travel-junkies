@@ -187,6 +187,7 @@ const HomeScreen: FC = () => {
   const [showCameraIcon, setShowCameraIcon] = useState(true);
   const [showCheckListIcon, setShowCheckListIcon] = useState(true);
   const [showFolderIcon, setShowFolderIcon] = useState(true);
+  const [changeBackground, setChangeBackground] = useState(false);
   const photoSelected = useAppSelector(state => state.photo.selected);
   const selectedDocument = useAppSelector(
     state => state.document.selectedDocument,
@@ -292,6 +293,10 @@ const HomeScreen: FC = () => {
     console.log('Submit pressed.');
   };
 
+  const onPressChangeBackground = () => {
+    setChangeBackground(previousstate => !previousstate);
+  };
+
   const toggleDocPickerSwitch = () => {
     setDocPickerState(previousState => !previousState);
     toggleModal();
@@ -308,7 +313,11 @@ const HomeScreen: FC = () => {
         <ImageBackground
           style={{flex: 1}}
           imageStyle={{opacity: 0.3}}
-          source={require('../../Images/backgroundPhoto1.jpeg')}>
+          source={
+            !changeBackground
+              ? require('../../Images/backgroundPhoto1.jpeg')
+              : require('../../Images/backgroundPhoto2.jpeg')
+          }>
           <Text
             style={{
               textAlign: 'left',
@@ -329,6 +338,7 @@ const HomeScreen: FC = () => {
                     height: 300,
                     width: screenWidth * 0.95,
                     marginLeft: 10,
+                    marginBottom: 10,
                     borderRadius: 5,
                     opacity: fadeAnim,
                   }}
@@ -340,14 +350,34 @@ const HomeScreen: FC = () => {
                     width: screenWidth * 0.95,
                     borderRadius: 5,
                     marginLeft: 10,
+                    marginBottom: 10,
                     opacity: fadeAnim,
                   }}
                   source={require('../../Images/profile-picture-vector.jpeg')}></Animated.Image>
               )}
+              <TouchableOpacity
+                onPress={onPressChangeBackground}
+                style={{
+                  backgroundColor: '#eee7da',
+                  marginLeft: 10,
+                  marginRight: screenWidth * 0.4,
+                  borderRadius: 5,
+                }}>
+                <Text
+                  style={{
+                    borderRadius: 5,
+                    marginTop: 10,
+                    marginLeft: 10,
+                    marginBottom: 10,
+                    fontFamily: 'HighTide-Sans',
+                  }}>
+                  {'Change background photo'}
+                </Text>
+              </TouchableOpacity>
               <Text
                 style={{
                   marginLeft: 10,
-                  marginTop: 30,
+                  marginTop: 10,
                   fontWeight: '700',
                   fontFamily: 'HighTide-Sans',
                 }}>
@@ -372,7 +402,7 @@ const HomeScreen: FC = () => {
                 style={{
                   marginLeft: 10,
                   marginTop: 10,
-                  marginBottom: screenHeight * 0.22,
+                  marginBottom: screenHeight * 0.2,
                   fontWeight: '700',
                   fontFamily: 'HighTide-Sans',
                 }}>
@@ -386,7 +416,7 @@ const HomeScreen: FC = () => {
                 style={{
                   backgroundColor: 'blue',
                   borderRadius: 5,
-                  marginLeft: screenWidth * 0.7,
+                  marginLeft: screenWidth * 0.72,
                   marginBottom: 10,
                   width: 100,
                 }}>
