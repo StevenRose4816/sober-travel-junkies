@@ -127,7 +127,7 @@ const HomeScreen: FC = () => {
           <TouchableOpacity
             onPress={onPressGoBack}
             style={{
-              width: 50,
+              width: 40,
             }}>
             <Image
               source={require('../../Images/caret_left.png')}
@@ -321,7 +321,7 @@ const HomeScreen: FC = () => {
           <View
             style={{
               flex: 1,
-              alignItems: 'center',
+              alignItems: 'flex-start',
               justifyContent: 'center',
             }}>
             <Image
@@ -444,7 +444,6 @@ const HomeScreen: FC = () => {
                 style={{
                   fontSize: 16,
                   marginLeft: 10,
-                  marginTop: 10,
                   textAlign: 'left',
                   marginBottom: 20,
                   fontWeight: '600',
