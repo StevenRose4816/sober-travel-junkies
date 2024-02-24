@@ -4,6 +4,7 @@ import {globalStoreReducer} from './globalStore/slice';
 import {userPhotoReducer} from './user/slice';
 import {photoReducer} from './photo/slice';
 import {documentReducer} from './document/slice';
+import {backgroundPhotoReducer} from './backgroundPhoto/slice';
 
 const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ const store = configureStore({
     photo: photoReducer,
     document: documentReducer,
     globalStore: globalStoreReducer,
+    backgroundPhoto: backgroundPhotoReducer,
   },
 });
 

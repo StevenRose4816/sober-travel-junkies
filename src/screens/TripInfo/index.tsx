@@ -1,9 +1,10 @@
-import React, {FC} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import {Dimensions, Image, Text, TouchableOpacity, View} from 'react-native';
 
 const TripInfoScreen: FC = () => {
   const screenWidth = Dimensions.get('window').width;
   const screenHeight = Dimensions.get('window').height;
+
   return (
     <View
       style={{
@@ -79,6 +80,38 @@ const TripInfoScreen: FC = () => {
         </Text>
       </TouchableOpacity>
     </View>
+    // const [data, setData] = useState(null);
+    // const [fact, setFact] = useState(null);
+    // const [loading, setLoading] = useState(true);
+
+    // useEffect(() => {
+    //   const fetchData = async () => {
+    //     try {
+    //       const response = await fetch('https://catfact.ninja/fact');
+    //       const result = await response.json();
+
+    //       setData(result);
+    //       setFact(result.fact);
+    //       setLoading(false);
+    //     } catch (error) {
+    //       console.error('Error fetching data:', error);
+    //       setLoading(false);
+    //     }
+    //   };
+
+    //   fetchData();
+    // }, []);
+
+    // return (
+    //   <View>
+    //     {loading ? (
+    //       <Text>Loading...</Text>
+    //     ) : (
+    //       <View>
+    //         <Text>{JSON.stringify(fact)}</Text>
+    //       </View>
+    //     )}
+    //   </View>
   );
 };
 
