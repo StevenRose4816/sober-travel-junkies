@@ -198,7 +198,6 @@ const HomeScreen: FC = () => {
   const [showCameraIcon, setShowCameraIcon] = useState(true);
   const [showCheckListIcon, setShowCheckListIcon] = useState(true);
   const [showFolderIcon, setShowFolderIcon] = useState(true);
-  const [changeBackground, setChangeBackground] = useState(false);
   const photoSelected = useAppSelector(state => state.photo.selected);
   const selectedDocument = useAppSelector(
     state => state.document.selectedDocument,
@@ -301,7 +300,8 @@ const HomeScreen: FC = () => {
   };
 
   const onPressChangeBackground = () => {
-    setChangeBackground(previousstate => !previousstate);
+    // setChangeBackground(previousstate => !previousstate);
+    navigate('ChangeBackground Screen');
   };
 
   const onPressTripInfo = () => {
@@ -319,11 +319,7 @@ const HomeScreen: FC = () => {
         <ImageBackground
           style={{flex: 1}}
           imageStyle={{opacity: 0.3}}
-          source={
-            !changeBackground
-              ? require('../../Images/backgroundPhoto1.jpeg')
-              : require('../../Images/backgroundPhoto2.jpeg')
-          }>
+          source={require('../../Images/backgroundPhoto1.jpeg')}>
           <View
             style={{
               borderRadius: 10,
