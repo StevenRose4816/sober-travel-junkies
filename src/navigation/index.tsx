@@ -18,8 +18,8 @@ type RootStackParamList = {
   'Image Picker': {undefined: any};
   'Login Screen': undefined;
   'Signup Screen': undefined;
-  'TripInfo Screen': undefined;
-  'ChangeBackground Screen': undefined;
+  'Trip Info Screen': undefined;
+  'Change Background Screen': undefined;
 };
 
 export type RootStackProps<T extends keyof RootStackParamList> = {
@@ -84,7 +84,7 @@ const RootNavigator: FC = () => {
             }}
           />
           <RootStack.Screen
-            name={'TripInfo Screen'}
+            name={'Trip Info Screen'}
             component={TripInfoScreen}
             options={{
               headerTitleStyle: {
@@ -93,7 +93,7 @@ const RootNavigator: FC = () => {
             }}
           />
           <RootStack.Screen
-            name={'ChangeBackground Screen'}
+            name={'Change Background Screen'}
             component={ChangeBackgroundScreen}
             options={{
               headerTitleStyle: {

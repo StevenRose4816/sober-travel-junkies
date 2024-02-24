@@ -301,11 +301,11 @@ const HomeScreen: FC = () => {
 
   const onPressChangeBackground = () => {
     // setChangeBackground(previousstate => !previousstate);
-    navigate('ChangeBackground Screen');
+    navigate('Change Background Screen');
   };
 
   const onPressTripInfo = () => {
-    navigate('TripInfo Screen');
+    navigate('Trip Info Screen');
   };
 
   const toggleDocPickerSwitch = () => {
