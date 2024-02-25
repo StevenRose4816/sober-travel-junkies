@@ -1,7 +1,24 @@
-import {FC} from 'react';
+import {FC, useEffect, useState} from 'react';
 import {View, Text, Image, ScrollView, TouchableOpacity} from 'react-native';
+import {useDispatch} from 'react-redux';
+import {setBackgroundPhoto} from '../../store/backgroundPhoto/slice';
+import {useAppSelector} from '../../hooks';
 
 const ChangeBackgroundScreen: FC = () => {
+  const dispatch = useDispatch();
+  const [bgPhoto, setBgPhoto] = useState('');
+  const backgroundPhotoUri = useAppSelector(state => state.backgroundPhoto.uri);
+
+  useEffect(() => {
+    console.log('backgroundPhotoUri: ', backgroundPhotoUri);
+    console.log('bgPhoto: ', bgPhoto);
+  }, [backgroundPhotoUri, bgPhoto]);
+
+  const onPress = (photoSource: string) => {
+    setBgPhoto(photoSource);
+    dispatch(setBackgroundPhoto({uri: photoSource}));
+  };
+
   return (
     <View
       style={{
@@ -11,7 +28,7 @@ const ChangeBackgroundScreen: FC = () => {
         flexWrap: 'wrap',
         backgroundColor: '#b6e7cc95',
       }}>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => onPress('1')}>
         <Image
           style={{
             marginTop: 20,
@@ -22,12 +39,12 @@ const ChangeBackgroundScreen: FC = () => {
           }}
           source={require('../../Images/backgroundPhoto1.jpeg')}></Image>
       </TouchableOpacity>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => onPress('2')}>
         <Image
           style={{height: 100, width: 100, borderRadius: 10, marginTop: 20}}
           source={require('../../Images/backgroundPhoto2.jpeg')}></Image>
       </TouchableOpacity>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => onPress('3')}>
         <Image
           style={{
             height: 100,
@@ -38,7 +55,7 @@ const ChangeBackgroundScreen: FC = () => {
           }}
           source={require('../../Images/backgroundPhoto3.jpeg')}></Image>
       </TouchableOpacity>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => onPress('4')}>
         <Image
           style={{
             height: 100,

@@ -187,6 +187,7 @@ const HomeScreen: FC = () => {
 
   const email = useAppSelector(state => state.auth.user?.email);
   const userPhoto = useAppSelector(state => state.user.userPhoto);
+  const backgroundPhoto = useAppSelector(state => state.backgroundPhoto.uri);
   const [fullName, setFullName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [address, setAddress] = useState('');
@@ -208,13 +209,18 @@ const HomeScreen: FC = () => {
       initialName !== fullName ||
       initialAddress !== address ||
       initialPhoneNumber !== phoneNumber ||
-      initialEmergencyContact !== emergencyContact
+      initialEmergencyContact !== emergencyContact ||
+      initialEmergencyContactPhone !== emergencyContactPhone
     ) {
       setShowCheckListIcon(false);
     } else {
       console.log('None of the TextInputs have changed.');
     }
   };
+
+  useEffect(() => {
+    console.log('backgroundPhoto: ', backgroundPhoto);
+  }, [backgroundPhoto]);
 
   useEffect(() => {
     if (photoSelected) {
@@ -313,13 +319,27 @@ const HomeScreen: FC = () => {
     toggleModal();
   };
 
+  const source = () => {
+    if (backgroundPhoto === '1') {
+      return require('../../Images/backgroundPhoto1.jpeg');
+    } else if (backgroundPhoto === '2') {
+      return require('../../Images/backgroundPhoto2.jpeg');
+    } else if (backgroundPhoto === '3') {
+      return require('../../Images/backgroundPhoto3.jpeg');
+    } else if (backgroundPhoto === '4') {
+      return require('../../Images/backgroundPhoto4.jpeg');
+    } else {
+      return require('../../Images/backgroundPhoto1.jpeg');
+    }
+  };
+
   return (
     <View style={{flex: 1, backgroundColor: '#eee7da'}}>
       <ScrollView style={{flex: 1, backgroundColor: 'transparent'}}>
         <ImageBackground
           style={{flex: 1}}
           imageStyle={{opacity: 0.3}}
-          source={require('../../Images/backgroundPhoto1.jpeg')}>
+          source={source()}>
           <View
             style={{
               borderRadius: 10,
