@@ -307,10 +307,6 @@ const HomeScreen: FC = () => {
   };
 
   const onPressChangeBackground = () => {
-    // firstPhotoPressed && setFirstPhotoPressed(false);
-    // secondPhotoPressed && setSecondPhotoPressed(false);
-    // thirdPhotoPressed && setThirdPhotoPressed(false);
-    // fourthPhotoPressed && setFourthPhotoPressed(false);
     toggleModal2();
   };
 

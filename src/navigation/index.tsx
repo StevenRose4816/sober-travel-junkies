@@ -11,7 +11,6 @@ import {IUser, setUser} from '../store/auth/slice';
 import {useAppDispatch, useAppSelector} from '../hooks';
 import ImagePicker from '../components/ImagePicker.jsx';
 import TripInfoScreen from '../screens/TripInfo/index.tsx';
-import ChangeBackgroundScreen from '../screens/ChangeBackgroundScreen/index.tsx';
 
 type RootStackParamList = {
   'Home Screen': undefined;
@@ -19,7 +18,6 @@ type RootStackParamList = {
   'Login Screen': undefined;
   'Signup Screen': undefined;
   'Trip Info Screen': undefined;
-  'Change Background Screen': undefined;
 };
 
 export type RootStackProps<T extends keyof RootStackParamList> = {
@@ -86,15 +84,6 @@ const RootNavigator: FC = () => {
           <RootStack.Screen
             name={'Trip Info Screen'}
             component={TripInfoScreen}
-            options={{
-              headerTitleStyle: {
-                fontSize: 20,
-              },
-            }}
-          />
-          <RootStack.Screen
-            name={'Change Background Screen'}
-            component={ChangeBackgroundScreen}
             options={{
               headerTitleStyle: {
                 fontSize: 20,
