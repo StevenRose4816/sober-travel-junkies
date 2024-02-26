@@ -43,6 +43,7 @@ const HomeScreen: FC = () => {
   const user = auth().currentUser;
   const userId = auth().currentUser?.uid;
   const [modalVisible, setModalVisible] = useState(false);
+  const [modalVisible2, setModalVisible2] = useState(false);
   const [dataFlag, setDataFlag] = useState(false);
   const [showBackButton, setShowBackButton] = useState(false);
   const [initialName, setInitialName] = useState('');
@@ -81,6 +82,10 @@ const HomeScreen: FC = () => {
 
   const toggleModal = () => {
     setModalVisible(!modalVisible);
+  };
+
+  const toggleModal2 = () => {
+    setModalVisible2(!modalVisible);
   };
 
   function create(userId: string | undefined) {
@@ -203,6 +208,10 @@ const HomeScreen: FC = () => {
   const selectedDocument = useAppSelector(
     state => state.document.selectedDocument,
   );
+  const [firstPhotoPressed, setFirstPhotoPressed] = useState(false);
+  const [secondPhotoPressed, setSecondPhotoPressed] = useState(false);
+  const [thirdPhotoPressed, setThirdPhotoPressed] = useState(false);
+  const [fourthPhotoPressed, setFourthPhotoPressed] = useState(false);
 
   const checkName = () => {
     if (
@@ -306,8 +315,24 @@ const HomeScreen: FC = () => {
   };
 
   const onPressChangeBackground = () => {
-    // setChangeBackground(previousstate => !previousstate);
-    navigate('Change Background Screen');
+    // navigate('Change Background Screen');
+    toggleModal2();
+  };
+
+  const onPressFirstBackgroundPhoto = () => {
+    setFirstPhotoPressed(true);
+  };
+
+  const onPressSecondBackgroundPhoto = () => {
+    setSecondPhotoPressed(true);
+  };
+
+  const onPressThirdBackgroundPhoto = () => {
+    setThirdPhotoPressed(true);
+  };
+
+  const onPressFourthBackgroundPhoto = () => {
+    setFourthPhotoPressed(true);
   };
 
   const onPressTripInfo = () => {
@@ -1005,6 +1030,63 @@ const HomeScreen: FC = () => {
           </View>
         </View>
       </Modal>
+      <Modal
+        visible={modalVisible2}
+        animationType={'slide'}
+        transparent={true}
+        onRequestClose={toggleModal2}>
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              flexWrap: 'wrap',
+              justifyContent: 'space-evenly',
+              backgroundColor: '#eee7da',
+              height: 300,
+              width: '80%',
+              borderRadius: 5,
+            }}>
+            <TouchableOpacity onPress={onPressFirstBackgroundPhoto}>
+              <Image
+                style={[
+                  !firstPhotoPressed && styles.backgroundBefore,
+                  firstPhotoPressed && styles.backgroundAfter,
+                ]}
+                source={require('../../Images/backgroundPhoto1.jpeg')}></Image>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={onPressSecondBackgroundPhoto}>
+              <Image
+                style={[
+                  !secondPhotoPressed && styles.backgroundBefore,
+                  secondPhotoPressed && styles.backgroundAfter,
+                ]}
+                source={require('../../Images/backgroundPhoto2.jpeg')}></Image>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={onPressThirdBackgroundPhoto}>
+              <Image
+                style={[
+                  !thirdPhotoPressed && styles.backgroundBefore,
+                  thirdPhotoPressed && styles.backgroundAfter,
+                ]}
+                source={require('../../Images/backgroundPhoto3.jpeg')}></Image>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={onPressFourthBackgroundPhoto}>
+              <Image
+                style={[
+                  !fourthPhotoPressed && styles.backgroundBefore,
+                  fourthPhotoPressed && styles.backgroundAfter,
+                ]}
+                source={require('../../Images/backgroundPhoto4.jpeg')}></Image>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -1030,6 +1112,20 @@ const styles = StyleSheet.create({
     height: 50,
     borderRadius: 100 / 2,
     backgroundColor: 'green',
+  },
+  backgroundBefore: {
+    height: 125,
+    width: 125,
+    marginTop: 20,
+    borderRadius: 5,
+  },
+  backgroundAfter: {
+    height: 125,
+    width: 125,
+    marginTop: 20,
+    borderRadius: 5,
+    borderWidth: 3,
+    borderColor: 'red',
   },
 });
 

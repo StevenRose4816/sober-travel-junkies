@@ -70,4 +70,14 @@ const ChangeBackgroundScreen: FC = () => {
   );
 };
 
+// style={{
+//     height: 100,
+//     width: 100,
+//     borderRadius: 10,
+//     marginTop: 20,
+//     marginLeft: 20,
+//     borderWidth: 3,
+//     borderColor: 'red',
+//   }}
+
 export default ChangeBackgroundScreen;
