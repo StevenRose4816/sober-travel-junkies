@@ -395,7 +395,6 @@ const HomeScreen: FC = () => {
               marginBottom: 10,
               marginTop: 10,
               backgroundColor: '#eee7da95',
-              // backgroundColor: '#b6e7cc95',
             }}>
             <Animated.Image
               style={{
@@ -433,7 +432,6 @@ const HomeScreen: FC = () => {
               <TouchableOpacity
                 onPress={onPressChangeBackground}
                 style={{
-                  // backgroundColor: '#eee7da',
                   backgroundColor: '#b6e7cc',
                   marginLeft: 10,
                   marginRight: screenWidth * 0.4,
@@ -453,7 +451,6 @@ const HomeScreen: FC = () => {
               <TouchableOpacity
                 onPress={onPressTripInfo}
                 style={{
-                  // backgroundColor: '#eee7da',
                   backgroundColor: '#b6e7cc',
                   marginLeft: 10,
                   marginTop: 10,
@@ -1066,7 +1063,7 @@ const HomeScreen: FC = () => {
               flexDirection: 'row',
               flexWrap: 'wrap',
               justifyContent: 'space-evenly',
-              backgroundColor: '#eee7da',
+              backgroundColor: '#b6e7cc',
               height: 300,
               width: '80%',
               borderRadius: 5,
@@ -1135,13 +1132,13 @@ const styles = StyleSheet.create({
   backgroundBefore: {
     height: 125,
     width: 125,
-    marginTop: 20,
+    marginTop: 15,
     borderRadius: 5,
   },
   backgroundAfter: {
     height: 125,
     width: 125,
-    marginTop: 20,
+    marginTop: 15,
     borderRadius: 5,
     borderWidth: 5,
     borderColor: '#f86ca7',
