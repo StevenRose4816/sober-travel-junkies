@@ -85,7 +85,7 @@ const HomeScreen: FC = () => {
   };
 
   const toggleModal2 = () => {
-    setModalVisible2(!modalVisible);
+    setModalVisible2(!modalVisible2);
   };
 
   function create(userId: string | undefined) {
@@ -321,18 +321,34 @@ const HomeScreen: FC = () => {
 
   const onPressFirstBackgroundPhoto = () => {
     setFirstPhotoPressed(true);
+    setTimeout(() => {
+      toggleModal2();
+    }, 500);
+    source();
   };
 
   const onPressSecondBackgroundPhoto = () => {
     setSecondPhotoPressed(true);
+    setTimeout(() => {
+      toggleModal2();
+    }, 500);
+    source();
   };
 
   const onPressThirdBackgroundPhoto = () => {
     setThirdPhotoPressed(true);
+    setTimeout(() => {
+      toggleModal2();
+    }, 500);
+    source();
   };
 
   const onPressFourthBackgroundPhoto = () => {
     setFourthPhotoPressed(true);
+    setTimeout(() => {
+      toggleModal2();
+    }, 500);
+    source();
   };
 
   const onPressTripInfo = () => {
@@ -345,16 +361,16 @@ const HomeScreen: FC = () => {
   };
 
   const source = () => {
-    if (backgroundPhoto === '1') {
+    if (firstPhotoPressed) {
       return require('../../Images/backgroundPhoto1.jpeg');
-    } else if (backgroundPhoto === '2') {
+    } else if (secondPhotoPressed) {
       return require('../../Images/backgroundPhoto2.jpeg');
-    } else if (backgroundPhoto === '3') {
+    } else if (thirdPhotoPressed) {
       return require('../../Images/backgroundPhoto3.jpeg');
-    } else if (backgroundPhoto === '4') {
+    } else if (fourthPhotoPressed) {
       return require('../../Images/backgroundPhoto4.jpeg');
     } else {
-      return require('../../Images/backgroundPhoto1.jpeg');
+      return require('../../Images/backgroundPhoto2.jpeg');
     }
   };
 
