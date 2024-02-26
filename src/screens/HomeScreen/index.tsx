@@ -316,6 +316,10 @@ const HomeScreen: FC = () => {
 
   const onPressChangeBackground = () => {
     // navigate('Change Background Screen');
+    firstPhotoPressed && setFirstPhotoPressed(false);
+    secondPhotoPressed && setSecondPhotoPressed(false);
+    thirdPhotoPressed && setThirdPhotoPressed(false);
+    fourthPhotoPressed && setFourthPhotoPressed(false);
     toggleModal2();
   };
 
@@ -370,7 +374,7 @@ const HomeScreen: FC = () => {
     } else if (fourthPhotoPressed) {
       return require('../../Images/backgroundPhoto4.jpeg');
     } else {
-      return require('../../Images/backgroundPhoto2.jpeg');
+      return require('../../Images/backgroundPhoto1.jpeg');
     }
   };
 
