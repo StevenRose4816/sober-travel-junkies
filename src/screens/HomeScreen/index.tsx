@@ -76,7 +76,7 @@ const HomeScreen: FC = () => {
     setModalVisible(!modalVisible);
   };
 
-  const toggleModal2 = () => {
+  const toggleBackgroundPhotoModal = () => {
     setModalVisible2(!modalVisible2);
   };
 
@@ -307,7 +307,7 @@ const HomeScreen: FC = () => {
   };
 
   const onPressChangeBackground = () => {
-    toggleModal2();
+    toggleBackgroundPhotoModal();
   };
 
   const onPressFirstBackgroundPhoto = () => {
@@ -316,7 +316,7 @@ const HomeScreen: FC = () => {
     fourthPhotoPressed && setFourthPhotoPressed(false);
     setFirstPhotoPressed(true);
     setTimeout(() => {
-      toggleModal2();
+      toggleBackgroundPhotoModal();
     }, 500);
     source();
   };
@@ -327,7 +327,7 @@ const HomeScreen: FC = () => {
     fourthPhotoPressed && setFourthPhotoPressed(false);
     setSecondPhotoPressed(true);
     setTimeout(() => {
-      toggleModal2();
+      toggleBackgroundPhotoModal();
     }, 500);
     source();
   };
@@ -338,7 +338,7 @@ const HomeScreen: FC = () => {
     fourthPhotoPressed && setFourthPhotoPressed(false);
     setThirdPhotoPressed(true);
     setTimeout(() => {
-      toggleModal2();
+      toggleBackgroundPhotoModal();
     }, 500);
     source();
   };
@@ -349,7 +349,7 @@ const HomeScreen: FC = () => {
     thirdPhotoPressed && setThirdPhotoPressed(false);
     setFourthPhotoPressed(true);
     setTimeout(() => {
-      toggleModal2();
+      toggleBackgroundPhotoModal();
     }, 500);
     source();
   };
@@ -1050,7 +1050,7 @@ const HomeScreen: FC = () => {
         visible={modalVisible2}
         animationType={'slide'}
         transparent={true}
-        onRequestClose={toggleModal2}>
+        onRequestClose={toggleBackgroundPhotoModal}>
         <View
           style={{
             flex: 1,
