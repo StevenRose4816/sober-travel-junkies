@@ -64,14 +64,6 @@ const HomeScreen: FC = () => {
     }).start();
   };
 
-  // const fadeOut = () => {
-  //   Animated.timing(fadeAnim, {
-  //     toValue: 0,
-  //     duration: 500,
-  //     useNativeDriver: true,
-  //   }).start();
-  // };
-
   const moveImage = () => {
     Animated.timing(translateX, {
       toValue: screenWidth * 0.37,
@@ -315,15 +307,17 @@ const HomeScreen: FC = () => {
   };
 
   const onPressChangeBackground = () => {
-    // navigate('Change Background Screen');
-    firstPhotoPressed && setFirstPhotoPressed(false);
-    secondPhotoPressed && setSecondPhotoPressed(false);
-    thirdPhotoPressed && setThirdPhotoPressed(false);
-    fourthPhotoPressed && setFourthPhotoPressed(false);
+    // firstPhotoPressed && setFirstPhotoPressed(false);
+    // secondPhotoPressed && setSecondPhotoPressed(false);
+    // thirdPhotoPressed && setThirdPhotoPressed(false);
+    // fourthPhotoPressed && setFourthPhotoPressed(false);
     toggleModal2();
   };
 
   const onPressFirstBackgroundPhoto = () => {
+    secondPhotoPressed && setSecondPhotoPressed(false);
+    thirdPhotoPressed && setThirdPhotoPressed(false);
+    fourthPhotoPressed && setFourthPhotoPressed(false);
     setFirstPhotoPressed(true);
     setTimeout(() => {
       toggleModal2();
@@ -332,6 +326,9 @@ const HomeScreen: FC = () => {
   };
 
   const onPressSecondBackgroundPhoto = () => {
+    firstPhotoPressed && setFirstPhotoPressed(false);
+    thirdPhotoPressed && setThirdPhotoPressed(false);
+    fourthPhotoPressed && setFourthPhotoPressed(false);
     setSecondPhotoPressed(true);
     setTimeout(() => {
       toggleModal2();
@@ -340,6 +337,9 @@ const HomeScreen: FC = () => {
   };
 
   const onPressThirdBackgroundPhoto = () => {
+    firstPhotoPressed && setFirstPhotoPressed(false);
+    secondPhotoPressed && setSecondPhotoPressed(false);
+    fourthPhotoPressed && setFourthPhotoPressed(false);
     setThirdPhotoPressed(true);
     setTimeout(() => {
       toggleModal2();
@@ -348,6 +348,9 @@ const HomeScreen: FC = () => {
   };
 
   const onPressFourthBackgroundPhoto = () => {
+    firstPhotoPressed && setFirstPhotoPressed(false);
+    secondPhotoPressed && setSecondPhotoPressed(false);
+    thirdPhotoPressed && setThirdPhotoPressed(false);
     setFourthPhotoPressed(true);
     setTimeout(() => {
       toggleModal2();
@@ -1144,8 +1147,8 @@ const styles = StyleSheet.create({
     width: 125,
     marginTop: 20,
     borderRadius: 5,
-    borderWidth: 3,
-    borderColor: 'red',
+    borderWidth: 5,
+    borderColor: '#f86ca7',
   },
 });
 
