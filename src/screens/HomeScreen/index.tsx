@@ -30,10 +30,6 @@ const HomeScreen: FC = () => {
   const screenWidth = Dimensions.get('window').width;
   const screenHeight = Dimensions.get('window').height;
 
-  useEffect(() => {
-    fadeIn();
-  }, []);
-
   const logout = () => {
     dispatch(setUserPhoto({userPhoto: null}));
     dispatch(setSelectedDocument({selectedDocument: undefined}));
@@ -385,6 +381,11 @@ const HomeScreen: FC = () => {
     }
   };
 
+  useEffect(() => {
+    console.log('userPhoto: ', userPhoto);
+    console.log('userPhotoFromDB: ', userPhotoFromDB);
+  }, [userPhoto, userPhotoFromDB]);
+
   return (
     <View style={{flex: 1, backgroundColor: '#eee7da'}}>
       <ScrollView style={{flex: 1, backgroundColor: 'transparent'}}>
@@ -575,8 +576,9 @@ const HomeScreen: FC = () => {
                       opacity: fadeAnim,
                     }}
                     source={
-                      {uri: userPhoto} ||
-                      require('../../Images/profile-picture-vector.jpeg')
+                      !userPhoto
+                        ? require('../../Images/profile-picture-vector.jpeg')
+                        : {uri: userPhoto}
                     }
                   />
                 ) : (
