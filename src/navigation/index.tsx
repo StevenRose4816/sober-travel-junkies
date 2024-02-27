@@ -13,9 +13,9 @@ import ImagePicker from '../components/ImagePicker.jsx';
 import TripInfoScreen from '../screens/TripInfo/index.tsx';
 import BooneScreen from '../screens/BooneScreen/index.tsx';
 
-type RootStackParamList = {
+export type RootStackParamList = {
   'Home Screen': undefined;
-  'Image Picker': {undefined: any};
+  'Image Picker': undefined;
   'Login Screen': undefined;
   'Signup Screen': undefined;
   'Trip Info Screen': undefined;

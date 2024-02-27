@@ -16,7 +16,12 @@ import auth from '@react-native-firebase/auth';
 import {get, onValue, ref, set} from 'firebase/database';
 import {useAppSelector} from '../../hooks';
 import {db} from '../HomeScreen/FirebaseConfigurations';
-import {useNavigation, useRoute} from '@react-navigation/native';
+import {
+  NavigationProp,
+  Route,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import {setUserPhoto} from '../../store/user/slice';
 import {DocPicker} from '../../components/DocumentPicker';
@@ -24,7 +29,6 @@ import {setSelected} from '../../store/photo/slice';
 import {setSelectedDocument} from '../../store/document/slice';
 
 const HomeScreen: FC = () => {
-  const {navigate} = useNavigation();
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const screenWidth = Dimensions.get('window').width;
@@ -37,7 +41,7 @@ const HomeScreen: FC = () => {
   };
 
   const openPicker = () => {
-    navigate('Image Picker');
+    navigation.navigate('Image Picker');
   };
 
   const user = auth().currentUser;
@@ -358,7 +362,7 @@ const HomeScreen: FC = () => {
   };
 
   const onPressTripInfo = () => {
-    navigate('Trip Info Screen');
+    navigation.navigate('Trip Info Screen');
   };
 
   const toggleDocPickerSwitch = () => {
@@ -445,7 +449,7 @@ const HomeScreen: FC = () => {
                   marginRight: screenWidth * 0.4,
                   borderRadius: 5,
                 }}>
-                <Text style={styles.text2}>{'Trip Registration'}</Text>
+                <Text style={styles.text2}>{'Register For A Trip'}</Text>
               </TouchableOpacity>
               <View style={styles.nestedView2}>
                 <View style={{flex: 1, flexDirection: 'row'}}>
@@ -735,7 +739,7 @@ const HomeScreen: FC = () => {
                 </Text>
                 <TextInput
                   value={emergencyContact}
-                  placeholder=" emergency contact"
+                  placeholder=" emergency contact name"
                   onChangeText={emergencyContact =>
                     setEmergencyContact(emergencyContact)
                   }
