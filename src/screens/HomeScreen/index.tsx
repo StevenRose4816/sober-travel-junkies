@@ -80,7 +80,7 @@ const HomeScreen: FC = () => {
     setModalVisible2(!modalVisible2);
   };
 
-  function create(userId: string | undefined) {
+  const create = async (userId: string | undefined) => {
     set(ref(db, 'users/' + userId), {
       username: fullName,
       email: email,
@@ -96,9 +96,9 @@ const HomeScreen: FC = () => {
       .catch(error => {
         console.log(error);
       });
-  }
+  };
 
-  async function readData() {
+  const readData = async () => {
     const countRef = ref(db, 'users/' + userId);
     onValue(
       countRef,
@@ -124,7 +124,7 @@ const HomeScreen: FC = () => {
         console.error('Error reading data from the database:', error);
       },
     );
-  }
+  };
 
   useEffect(() => {
     navigation.setOptions({
