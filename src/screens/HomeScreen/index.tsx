@@ -30,6 +30,10 @@ const HomeScreen: FC = () => {
   const screenWidth = Dimensions.get('window').width;
   const screenHeight = Dimensions.get('window').height;
 
+  useEffect(() => {
+    fadeIn();
+  }, []);
+
   const logout = () => {
     dispatch(setUserPhoto({userPhoto: null}));
     dispatch(setSelectedDocument({selectedDocument: undefined}));
@@ -44,7 +48,7 @@ const HomeScreen: FC = () => {
   const userId = auth().currentUser?.uid;
   const [modalVisible, setModalVisible] = useState(false);
   const [modalVisible2, setModalVisible2] = useState(false);
-  const [dataFlag, setDataFlag] = useState(false);
+  const [dataFlag, setDataFlag] = useState(true);
   const [showBackButton, setShowBackButton] = useState(false);
   const [initialName, setInitialName] = useState('');
   const [initialAddress, setInitialAddress] = useState('');
@@ -220,8 +224,12 @@ const HomeScreen: FC = () => {
   };
 
   useEffect(() => {
+    if (!dataFlag) {
+      console.log('data flag is false');
+      fadeIn();
+    }
     console.log('backgroundPhoto: ', backgroundPhoto);
-  }, [backgroundPhoto]);
+  }, [backgroundPhoto, dataFlag]);
 
   useEffect(() => {
     if (photoSelected) {
@@ -437,7 +445,7 @@ const HomeScreen: FC = () => {
                   marginRight: screenWidth * 0.4,
                   borderRadius: 5,
                 }}>
-                <Text style={styles.text2}>{'Trip Information'}</Text>
+                <Text style={styles.text2}>{'Trip Registration'}</Text>
               </TouchableOpacity>
               <View style={styles.nestedView2}>
                 <View style={{flex: 1, flexDirection: 'row'}}>
