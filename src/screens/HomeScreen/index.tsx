@@ -13,7 +13,7 @@ import {
   ImageBackground,
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
-import {onValue, ref, set} from 'firebase/database';
+import {get, onValue, ref, set} from 'firebase/database';
 import {useAppSelector} from '../../hooks';
 import {db} from '../HomeScreen/FirebaseConfigurations';
 import {useNavigation, useRoute} from '@react-navigation/native';
@@ -98,32 +98,60 @@ const HomeScreen: FC = () => {
       });
   };
 
+  // const readData = async () => {
+  //   const countRef = ref(db, 'users/' + userId);
+  //   onValue(
+  //     countRef,
+  //     snapshot => {
+  //       const data = snapshot.val();
+  //       if (!!data) {
+  //         setDataFlag(true);
+  //         console.log('data: ', data);
+  //       }
+  //       setAddress(data.address);
+  //       setFullName(data.username);
+  //       setPhoneNumber(data.phoneNumber);
+  //       setUserPhotoFromDB(data.userPhoto);
+  //       setEmergencyContact(data.emergencyContact);
+  //       setEmergencyContactPhone(data.emergencyContactPhone);
+  //       setInitialName(data.username);
+  //       setInitialAddress(data.address);
+  //       setInitialPhoneNumber(data.phoneNumber);
+  //       setInitialEmergencyContact(data.emergencyContact);
+  //       setInitialEmergencyContactPhone(data.emergencyContactPhone);
+  //     },
+  //     error => {
+  //       console.error('Error reading data from the database:', error);
+  //     },
+  //   );
+  // };
+
   const readData = async () => {
     const countRef = ref(db, 'users/' + userId);
-    onValue(
-      countRef,
-      snapshot => {
+    try {
+      const snapshot = await get(countRef);
+      if (snapshot.exists()) {
         const data = snapshot.val();
-        if (!!data) {
-          setDataFlag(true);
-          console.log('data: ', data);
-        }
-        setAddress(data.address);
-        setFullName(data.username);
-        setPhoneNumber(data.phoneNumber);
-        setUserPhotoFromDB(data.userPhoto);
-        setEmergencyContact(data.emergencyContact);
-        setEmergencyContactPhone(data.emergencyContactPhone);
-        setInitialName(data.username);
-        setInitialAddress(data.address);
-        setInitialPhoneNumber(data.phoneNumber);
-        setInitialEmergencyContact(data.emergencyContact);
-        setInitialEmergencyContactPhone(data.emergencyContactPhone);
-      },
-      error => {
-        console.error('Error reading data from the database:', error);
-      },
-    );
+        setDataFlag(true);
+        console.log('data: ', data);
+        setAddress(data.address || '');
+        setFullName(data.username || '');
+        setPhoneNumber(data.phoneNumber || '');
+        setUserPhotoFromDB(data.userPhoto || '');
+        setEmergencyContact(data.emergencyContact || '');
+        setEmergencyContactPhone(data.emergencyContactPhone || '');
+        setInitialName(data.username || '');
+        setInitialAddress(data.address || '');
+        setInitialPhoneNumber(data.phoneNumber || '');
+        setInitialEmergencyContact(data.emergencyContact || '');
+        setInitialEmergencyContactPhone(data.emergencyContactPhone || '');
+      } else {
+        console.log('No data available');
+        setDataFlag(false);
+      }
+    } catch (error) {
+      console.error('Error reading data from the database:', error);
+    }
   };
 
   useEffect(() => {
