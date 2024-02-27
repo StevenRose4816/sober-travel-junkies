@@ -98,34 +98,6 @@ const HomeScreen: FC = () => {
       });
   };
 
-  // const readData = async () => {
-  //   const countRef = ref(db, 'users/' + userId);
-  //   onValue(
-  //     countRef,
-  //     snapshot => {
-  //       const data = snapshot.val();
-  //       if (!!data) {
-  //         setDataFlag(true);
-  //         console.log('data: ', data);
-  //       }
-  //       setAddress(data.address);
-  //       setFullName(data.username);
-  //       setPhoneNumber(data.phoneNumber);
-  //       setUserPhotoFromDB(data.userPhoto);
-  //       setEmergencyContact(data.emergencyContact);
-  //       setEmergencyContactPhone(data.emergencyContactPhone);
-  //       setInitialName(data.username);
-  //       setInitialAddress(data.address);
-  //       setInitialPhoneNumber(data.phoneNumber);
-  //       setInitialEmergencyContact(data.emergencyContact);
-  //       setInitialEmergencyContactPhone(data.emergencyContactPhone);
-  //     },
-  //     error => {
-  //       console.error('Error reading data from the database:', error);
-  //     },
-  //   );
-  // };
-
   const readData = async () => {
     const countRef = ref(db, 'users/' + userId);
     try {
@@ -196,7 +168,7 @@ const HomeScreen: FC = () => {
 
   useEffect(() => {
     readData();
-  }, [user]);
+  }, []);
 
   useEffect(() => {
     fadeIn();
