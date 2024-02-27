@@ -204,14 +204,14 @@ const LoginScreen: FC = () => {
           }}>
           <View
             style={{
-              backgroundColor: 'darkorange',
+              backgroundColor: '#b6e7cc',
               minHeight: 300,
               width: '80%',
               justifyContent: 'center',
               borderRadius: 5,
               padding: 20,
             }}>
-            <Text style={{textAlign: 'center', color: 'white'}}>
+            <Text style={{textAlign: 'center', color: '#0c0b09'}}>
               {errorMessage + '\n'}
             </Text>
             <TouchableOpacity

@@ -221,7 +221,6 @@ const HomeScreen: FC = () => {
 
   useEffect(() => {
     if (!dataFlag) {
-      console.log('data flag is false');
       fadeIn();
     }
     console.log('backgroundPhoto: ', backgroundPhoto);
@@ -1132,7 +1131,7 @@ const styles = StyleSheet.create({
   },
   modalView2: {
     borderColor: '#0c0b09',
-    backgroundColor: 'darkorange',
+    backgroundColor: '#b6e7cc',
     minHeight: 300,
     width: '80%',
     justifyContent: 'center',
