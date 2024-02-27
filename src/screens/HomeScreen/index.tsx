@@ -426,16 +426,7 @@ const HomeScreen: FC = () => {
                   marginRight: screenWidth * 0.4,
                   borderRadius: 5,
                 }}>
-                <Text
-                  style={{
-                    borderRadius: 5,
-                    marginTop: 10,
-                    marginLeft: 10,
-                    marginBottom: 10,
-                    fontFamily: 'HighTide-Sans',
-                  }}>
-                  {'Change background photo'}
-                </Text>
+                <Text style={styles.text1}>{'Change background photo'}</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={onPressTripInfo}
@@ -446,45 +437,65 @@ const HomeScreen: FC = () => {
                   marginRight: screenWidth * 0.4,
                   borderRadius: 5,
                 }}>
-                <Text
-                  style={{
-                    borderRadius: 5,
-                    marginTop: 10,
-                    marginLeft: 10,
-                    marginBottom: 10,
-                    fontFamily: 'HighTide-Sans',
-                  }}>
-                  {'Trip Information'}
-                </Text>
+                <Text style={styles.text2}>{'Trip Information'}</Text>
               </TouchableOpacity>
               <View style={styles.nestedView2}>
-                <Text
-                  style={{
-                    marginLeft: 10,
-                    marginTop: 10,
-                    fontFamily: 'HighTide-Sans',
-                  }}>
-                  {'Address: '}
-                  <Text style={{fontFamily: 'Vonique64'}}>{address}</Text>
-                </Text>
-                <Text
-                  style={{
-                    marginLeft: 10,
-                    marginTop: 10,
-                    fontFamily: 'HighTide-Sans',
-                  }}>
-                  {'Phone number: '}
-                  <Text style={{fontFamily: 'Vonique64'}}>{phoneNumber}</Text>
-                </Text>
-                <Text
-                  style={{
-                    marginLeft: 10,
-                    marginTop: 10,
-                    fontFamily: 'HighTide-Sans',
-                  }}>
-                  {'Full name: '}
-                  <Text style={{fontFamily: 'Vonique64'}}>{fullName}</Text>
-                </Text>
+                <View style={{flex: 1, flexDirection: 'row'}}>
+                  <Image
+                    style={{width: 40, height: 40, marginLeft: 10}}
+                    source={require('../../Images/homeaddressicon.png')}></Image>
+                  <Text
+                    style={{
+                      marginLeft: 10,
+                      marginTop: 10,
+                      fontFamily: 'HighTide-Sans',
+                    }}>
+                    {'Address: '}
+                    <Text style={{fontFamily: 'Vonique64'}}>{address}</Text>
+                  </Text>
+                </View>
+                <View style={{flex: 1, flexDirection: 'row'}}>
+                  <Image
+                    style={{width: 40, height: 40, marginLeft: 10}}
+                    source={require('../../Images/emailaddressicon.png')}></Image>
+                  <Text
+                    style={{
+                      marginLeft: 10,
+                      marginTop: 10,
+                      fontFamily: 'HighTide-Sans',
+                    }}>
+                    {'Email Address: '}
+                    <Text style={{fontFamily: 'Vonique64'}}>{email}</Text>
+                  </Text>
+                </View>
+                <View style={{flex: 1, flexDirection: 'row'}}>
+                  <Image
+                    style={{width: 40, height: 40, marginLeft: 10}}
+                    source={require('../../Images/phonenumbericon.png')}></Image>
+                  <Text
+                    style={{
+                      marginLeft: 10,
+                      marginTop: 10,
+                      fontFamily: 'HighTide-Sans',
+                    }}>
+                    {'Phone number: '}
+                    <Text style={{fontFamily: 'Vonique64'}}>{phoneNumber}</Text>
+                  </Text>
+                </View>
+                <View style={{flex: 1, flexDirection: 'row'}}>
+                  <Image
+                    style={{width: 40, height: 40, marginLeft: 10}}
+                    source={require('../../Images/appicon.png')}></Image>
+                  <Text
+                    style={{
+                      marginLeft: 10,
+                      marginTop: 10,
+                      fontFamily: 'HighTide-Sans',
+                    }}>
+                    {'Full name: '}
+                    <Text style={{fontFamily: 'Vonique64'}}>{fullName}</Text>
+                  </Text>
+                </View>
                 <Text
                   style={{
                     marginLeft: 10,
@@ -1145,6 +1156,20 @@ const styles = StyleSheet.create({
     height: 300,
     width: '80%',
     borderRadius: 5,
+  },
+  text1: {
+    borderRadius: 5,
+    marginTop: 10,
+    marginLeft: 10,
+    marginBottom: 10,
+    fontFamily: 'HighTide-Sans',
+  },
+  text2: {
+    borderRadius: 5,
+    marginTop: 10,
+    marginLeft: 10,
+    marginBottom: 10,
+    fontFamily: 'HighTide-Sans',
   },
 });
 
