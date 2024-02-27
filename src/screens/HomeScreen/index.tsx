@@ -384,17 +384,7 @@ const HomeScreen: FC = () => {
           style={{flex: 1}}
           imageStyle={{opacity: 0.3}}
           source={source()}>
-          <View
-            style={{
-              borderRadius: 10,
-              flex: 1,
-              alignItems: 'center',
-              justifyContent: 'center',
-              width: '100%',
-              marginTop: 20,
-              marginBottom: 30,
-              backgroundColor: '#eee7da95',
-            }}>
+          <View style={styles.nestedView1}>
             <Animated.Image
               style={{
                 height: 150,
@@ -467,15 +457,7 @@ const HomeScreen: FC = () => {
                   {'Trip Information'}
                 </Text>
               </TouchableOpacity>
-              <View
-                style={{
-                  backgroundColor: '#eee7da',
-                  marginTop: 10,
-                  marginLeft: 10,
-                  marginRight: 10,
-                  marginBottom: 10,
-                  borderRadius: 5,
-                }}>
+              <View style={styles.nestedView2}>
                 <Text
                   style={{
                     marginLeft: 10,
@@ -591,18 +573,7 @@ const HomeScreen: FC = () => {
                 )}
               </View>
               <View style={{flex: 1}}>
-                <View
-                  style={{
-                    flex: 1,
-                    flexDirection: 'row',
-                    justifyContent: 'flex-start',
-                    alignItems: 'center',
-                    marginLeft: 10,
-                    marginRight: 10,
-                    marginTop: 20,
-                    backgroundColor: '#eee7da',
-                    borderRadius: 5,
-                  }}>
+                <View style={styles.nestedView3}>
                   <Text
                     style={{
                       marginLeft: 10,
@@ -624,18 +595,7 @@ const HomeScreen: FC = () => {
                       source={require('../../Images/camerapictureicon.png')}></Animated.Image>
                   </TouchableOpacity>
                 </View>
-                <View
-                  style={{
-                    flex: 1,
-                    flexDirection: 'row',
-                    justifyContent: 'flex-start',
-                    alignItems: 'center',
-                    marginLeft: 10,
-                    marginRight: 10,
-                    marginTop: 10,
-                    backgroundColor: '#eee7da',
-                    borderRadius: 5,
-                  }}>
+                <View style={styles.nestedView4}>
                   <Text
                     style={{
                       marginLeft: 10,
@@ -658,13 +618,7 @@ const HomeScreen: FC = () => {
                   </TouchableOpacity>
                 </View>
               </View>
-              <View
-                style={{
-                  flex: 1,
-                  marginTop: 20,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}>
+              <View style={styles.nestedView5}>
                 <Text
                   style={{
                     fontFamily: 'HighTide-Sans',
@@ -808,13 +762,7 @@ const HomeScreen: FC = () => {
                     width: screenWidth * 0.9,
                   }}></TextInput>
               </View>
-              <View
-                style={{
-                  flex: 1,
-                  flexDirection: 'row',
-                  justifyContent: 'space-around',
-                  alignItems: 'center',
-                }}>
+              <View style={styles.nestedView6}>
                 <View
                   style={[
                     showCameraIcon && styles.circleBefore,
@@ -924,31 +872,9 @@ const HomeScreen: FC = () => {
         animationType={'slide'}
         transparent={true}
         onRequestClose={toggleModal}>
-        <View
-          style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: 'rgba(0, 0, 0, 0.5)',
-          }}>
-          <View
-            style={{
-              borderColor: '#0c0b09',
-              backgroundColor: 'darkorange',
-              minHeight: 300,
-              width: '80%',
-              justifyContent: 'center',
-              borderRadius: 5,
-              padding: 20,
-            }}>
-            <View
-              style={{
-                flex: 1,
-                borderRadius: 5,
-                backgroundColor: 'grey',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
+        <View style={styles.modalView1}>
+          <View style={styles.modalView2}>
+            <View style={styles.modalView3}>
               {successMessage && !docPickerState ? (
                 <Text
                   style={{
@@ -990,8 +916,7 @@ const HomeScreen: FC = () => {
                   toggleDocPickerSwitch={toggleDocPickerSwitch}></DocPicker>
               )}
             </View>
-            <View
-              style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+            <View style={styles.modalView4}>
               {!docPickerState && (
                 <TouchableOpacity
                   onPress={successMessage ? onPressYesSubmit : onPressYes}
@@ -1050,23 +975,8 @@ const HomeScreen: FC = () => {
         animationType={'slide'}
         transparent={true}
         onRequestClose={toggleBackgroundPhotoModal}>
-        <View
-          style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: 'rgba(0, 0, 0, 0.5)',
-          }}>
-          <View
-            style={{
-              flexDirection: 'row',
-              flexWrap: 'wrap',
-              justifyContent: 'space-evenly',
-              backgroundColor: '#b6e7cc',
-              height: 300,
-              width: '80%',
-              borderRadius: 5,
-            }}>
+        <View style={styles.modalView5}>
+          <View style={styles.modalView6}>
             <TouchableOpacity onPress={onPressFirstBackgroundPhoto}>
               <Image
                 style={[
@@ -1141,6 +1051,100 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderWidth: 5,
     borderColor: '#f86ca7',
+  },
+  nestedView1: {
+    borderRadius: 10,
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+    marginTop: 20,
+    marginBottom: 30,
+    backgroundColor: '#eee7da95',
+  },
+  nestedView2: {
+    backgroundColor: '#eee7da',
+    marginTop: 10,
+    marginLeft: 10,
+    marginRight: 10,
+    marginBottom: 10,
+    borderRadius: 5,
+  },
+  nestedView3: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    marginLeft: 10,
+    marginRight: 10,
+    marginTop: 20,
+    backgroundColor: '#eee7da',
+    borderRadius: 5,
+  },
+  nestedView4: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    marginLeft: 10,
+    marginRight: 10,
+    marginTop: 10,
+    backgroundColor: '#eee7da',
+    borderRadius: 5,
+  },
+  nestedView5: {
+    flex: 1,
+    marginTop: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  nestedView6: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+  },
+  modalView1: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalView2: {
+    borderColor: '#0c0b09',
+    backgroundColor: 'darkorange',
+    minHeight: 300,
+    width: '80%',
+    justifyContent: 'center',
+    borderRadius: 5,
+    padding: 20,
+  },
+  modalView3: {
+    flex: 1,
+    borderRadius: 5,
+    backgroundColor: 'grey',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalView4: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalView5: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalView6: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-evenly',
+    backgroundColor: '#b6e7cc',
+    height: 300,
+    width: '80%',
+    borderRadius: 5,
   },
 });
 
