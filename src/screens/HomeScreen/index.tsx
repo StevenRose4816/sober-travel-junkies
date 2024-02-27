@@ -424,7 +424,7 @@ const HomeScreen: FC = () => {
                     marginBottom: 10,
                     opacity: fadeAnim,
                   }}
-                  source={require('../../Images/profile-picture-vector.jpeg')}></Animated.Image>
+                  source={require('../../Images/profilepictureicon.png')}></Animated.Image>
               )}
               <TouchableOpacity
                 onPress={onPressChangeBackground}
@@ -576,7 +576,7 @@ const HomeScreen: FC = () => {
                     }}
                     source={
                       !userPhoto
-                        ? require('../../Images/profile-picture-vector.jpeg')
+                        ? require('../../Images/profilepictureicon.png')
                         : {uri: userPhoto}
                     }
                   />
