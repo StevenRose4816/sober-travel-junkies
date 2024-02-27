@@ -44,7 +44,7 @@ const HomeScreen: FC = () => {
   const userId = auth().currentUser?.uid;
   const [modalVisible, setModalVisible] = useState(false);
   const [modalVisible2, setModalVisible2] = useState(false);
-  const [dataFlag, setDataFlag] = useState(true);
+  const [dataFlag, setDataFlag] = useState(false);
   const [showBackButton, setShowBackButton] = useState(false);
   const [initialName, setInitialName] = useState('');
   const [initialAddress, setInitialAddress] = useState('');
@@ -319,7 +319,6 @@ const HomeScreen: FC = () => {
     fadeAnim.setValue(0);
     fadeIn();
     docPickerState && toggleDocPickerSwitch();
-    readData();
     setDataFlag(false);
     setModalVisible(false);
     setShowBackButton(true);
