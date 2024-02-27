@@ -105,7 +105,6 @@ const SignupScreen: FC = () => {
             backgroundColor: 'white',
           }}>
           <TouchableOpacity
-            // onPress={signUp}
             onPress={() => checkEmail(email)}
             style={{
               backgroundColor: 'blue',
@@ -147,12 +146,22 @@ const SignupScreen: FC = () => {
                   padding: 20,
                 }}>
                 {errorMessage ? (
-                  <Text style={{textAlign: 'center', color: '#0c0b09'}}>
-                    {errorMessage + '\n'}
+                  <Text
+                    style={{
+                      textAlign: 'center',
+                      color: '#0c0b09',
+                      marginBottom: 10,
+                    }}>
+                    {errorMessage}
                   </Text>
                 ) : (
-                  <Text style={{textAlign: 'center', color: '#0c0b09'}}>
-                    {emailPasswordError + '\n'}
+                  <Text
+                    style={{
+                      textAlign: 'center',
+                      color: '#0c0b09',
+                      marginBottom: 10,
+                    }}>
+                    {emailPasswordError}
                   </Text>
                 )}
                 <TouchableOpacity

@@ -168,6 +168,7 @@ const HomeScreen: FC = () => {
 
   useEffect(() => {
     readData();
+    moveImage();
   }, []);
 
   useEffect(() => {
