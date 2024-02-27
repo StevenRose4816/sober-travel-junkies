@@ -387,13 +387,12 @@ const HomeScreen: FC = () => {
           <View
             style={{
               borderRadius: 10,
-              marginLeft: screenWidth * 0.2,
-              marginRight: screenWidth * 0.2,
               flex: 1,
               alignItems: 'center',
               justifyContent: 'center',
-              marginBottom: 10,
-              marginTop: 10,
+              width: '100%',
+              marginTop: 20,
+              marginBottom: 30,
               backgroundColor: '#eee7da95',
             }}>
             <Animated.Image
