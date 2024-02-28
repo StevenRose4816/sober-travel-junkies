@@ -93,6 +93,7 @@ const HomeScreen: FC = () => {
       userPhoto: userPhoto || userPhotoFromDB,
       emergencyContact: emergencyContact,
       emergencyContactPhone: emergencyContactPhone,
+      bio: bio,
     })
       .then(() => {
         console.log('db created/updated');
@@ -116,6 +117,8 @@ const HomeScreen: FC = () => {
         setUserPhotoFromDB(data.userPhoto || '');
         setEmergencyContact(data.emergencyContact || '');
         setEmergencyContactPhone(data.emergencyContactPhone || '');
+        setBio(data.bio || '');
+        setInitialBio(data.bio || '');
         setInitialName(data.username || '');
         setInitialAddress(data.address || '');
         setInitialPhoneNumber(data.phoneNumber || '');
@@ -211,6 +214,8 @@ const HomeScreen: FC = () => {
   const [fourthPhotoPressed, setFourthPhotoPressed] = useState(false);
 
   const [showTripModal, setShowTripModal] = useState(false);
+  const [bio, setBio] = useState('');
+  const [initialBio, setInitialBio] = useState('');
 
   const checkName = () => {
     if (
@@ -218,7 +223,8 @@ const HomeScreen: FC = () => {
       initialAddress !== address ||
       initialPhoneNumber !== phoneNumber ||
       initialEmergencyContact !== emergencyContact ||
-      initialEmergencyContactPhone !== emergencyContactPhone
+      initialEmergencyContactPhone !== emergencyContactPhone ||
+      initialBio !== bio
     ) {
       setShowCheckListIcon(false);
     } else {
@@ -389,6 +395,7 @@ const HomeScreen: FC = () => {
   };
 
   const onPressTripDest = () => {
+    navigation.navigate('Boone Screen');
     setShowTripModal(false);
     toggleBackgroundPhotoModal();
   };
@@ -542,13 +549,33 @@ const HomeScreen: FC = () => {
                   </Text>
                 </Text>
               </View>
+              <View
+                style={{
+                  backgroundColor: '#eee7da',
+                  marginTop: 10,
+                  marginLeft: 10,
+                  marginRight: 10,
+                  marginBottom: 10,
+                  borderRadius: 5,
+                }}>
+                <Text
+                  style={{
+                    marginLeft: 10,
+                    marginBottom: 10,
+                    marginTop: 10,
+                    fontFamily: 'HighTide-Sans',
+                  }}>
+                  {'Bio: '}
+                  <Text style={{fontFamily: 'Vonique64'}}>{bio}</Text>
+                </Text>
+              </View>
               <TouchableOpacity
                 onPress={onEditPress}
                 style={{
                   backgroundColor: 'blue',
                   borderRadius: 5,
                   marginLeft: screenWidth * 0.72,
-                  marginBottom: 10,
+                  marginBottom: 20,
                   width: 100,
                 }}>
                 <Text
@@ -795,6 +822,32 @@ const HomeScreen: FC = () => {
                     borderColor: '#5A6472',
                     width: screenWidth * 0.9,
                   }}></TextInput>
+                <Text
+                  style={{
+                    marginLeft: 10,
+                    marginTop: 10,
+                    fontFamily: 'HighTide-Sans',
+                  }}>
+                  {'Bio'}
+                </Text>
+                <TextInput
+                  value={bio}
+                  placeholder=" bio"
+                  onChangeText={bio => setBio(bio)}
+                  secureTextEntry={false}
+                  style={{
+                    fontFamily: 'Vonique64',
+                    backgroundColor: '#eee7da',
+                    marginHorizontal: 10,
+                    marginBottom: 10,
+                    marginTop: 5,
+                    borderRadius: 5,
+                    minHeight: 50,
+                    borderWidth: 1,
+                    borderBottomWidth: 3,
+                    borderColor: '#5A6472',
+                    width: screenWidth * 0.9,
+                  }}></TextInput>
               </View>
               <View style={styles.nestedView6}>
                 <View
@@ -920,14 +973,7 @@ const HomeScreen: FC = () => {
                     borderColor: '#0c0b09',
                     fontFamily: 'Vonique64',
                   }}>
-                  {'Does this look correct?\n\n Name: ' +
-                    fullName +
-                    '\n' +
-                    ' Phone Number: ' +
-                    phoneNumber +
-                    '\n' +
-                    ' Address: ' +
-                    address}
+                  {'Are you sure you want to make this change? '}
                 </Text>
               ) : (
                 !docPickerState && (
