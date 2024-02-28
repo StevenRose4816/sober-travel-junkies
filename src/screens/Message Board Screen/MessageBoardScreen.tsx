@@ -30,20 +30,20 @@ const MessageBoardScreen: FC = () => {
     console.log('Messages in db: ', messages);
   }, []);
 
-  const create = async (userId: string | undefined, messages: any) => {
-    await set(ref(db, 'messages/' + userId), {messages});
+  const create = async (messages: any) => {
+    await set(ref(db, 'messages/'), {messages});
     console.log('db created/updated');
   };
 
   const readData = async () => {
-    const countRef = ref(db, 'messages/' + userId);
+    const countRef = ref(db, 'messages/');
     try {
       const snapshot = await get(countRef);
       if (snapshot.exists()) {
         const data = snapshot.val();
         console.log('Data: ', data);
         setMessages(data.messages);
-        console.log('Messages: ', messages);
+        console.log('First Message: ', data.messages[0].text);
       } else {
         console.log('No data available');
       }
@@ -59,7 +59,7 @@ const MessageBoardScreen: FC = () => {
         {text: newMessage, id: Math.random().toString()},
       ];
       setMessages(updatedMessages);
-      await create(userId, updatedMessages);
+      await create(updatedMessages);
     }
   };
 
