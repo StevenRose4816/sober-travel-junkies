@@ -10,6 +10,9 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import auth from '@react-native-firebase/auth';
+import {get, onValue, ref, set} from 'firebase/database';
+import {db} from '../HomeScreen/FirebaseConfigurations';
 
 interface Message {
   text: string;
@@ -17,16 +20,46 @@ interface Message {
 }
 
 const MessageBoardScreen: FC = () => {
+  const userId = auth().currentUser?.uid;
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState<string>('');
+  //   const [] = useState('');
 
-  const addMessage = () => {
+  useEffect(() => {
+    readData();
+    console.log('Messages in db: ', messages);
+  }, []);
+
+  const create = async (userId: string | undefined, messages: any) => {
+    await set(ref(db, 'messages/' + userId), {messages});
+    console.log('db created/updated');
+  };
+
+  const readData = async () => {
+    const countRef = ref(db, 'messages/' + userId);
+    try {
+      const snapshot = await get(countRef);
+      if (snapshot.exists()) {
+        const data = snapshot.val();
+        console.log('Data: ', data);
+        setMessages(data.messages);
+        console.log('Messages: ', messages);
+      } else {
+        console.log('No data available');
+      }
+    } catch (error) {
+      console.error('Error reading data from the database:', error);
+    }
+  };
+
+  const addMessage = async () => {
     if (newMessage.trim() !== '') {
-      setMessages([
+      const updatedMessages = [
         ...messages,
         {text: newMessage, id: Math.random().toString()},
-      ]);
-      setNewMessage('');
+      ];
+      setMessages(updatedMessages);
+      await create(userId, updatedMessages);
     }
   };
 
