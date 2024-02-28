@@ -18,6 +18,7 @@ import {db} from '../HomeScreen/FirebaseConfigurations';
 interface Message {
   text: string;
   id: string;
+  title?: string;
 }
 
 const MessageBoardScreen: FC = () => {
@@ -28,14 +29,15 @@ const MessageBoardScreen: FC = () => {
   const [titlefromDB, setTitlefromDB] = useState<string>('');
   const [postedTitle, setPostedTitle] = useState<string>('');
   const [modalVisible, setModalVisible] = useState(false);
+  const [data, setData] = useState(undefined);
 
   useEffect(() => {
     readData();
     console.log('Messages in db: ', messages);
   }, []);
 
-  const create = async (messages: any, title: any) => {
-    await set(ref(db, 'messages/'), {messages, title});
+  const create = async (messages: any) => {
+    await set(ref(db, 'messages/'), {messages});
     console.log('db created/updated');
   };
 
@@ -48,6 +50,7 @@ const MessageBoardScreen: FC = () => {
         console.log('Data: ', data);
         setTitlefromDB(data.title);
         setMessages(data.messages);
+        setData(data);
         console.log('First Message: ', data.messages[0].text);
       } else {
         console.log('No data available');
@@ -61,10 +64,10 @@ const MessageBoardScreen: FC = () => {
     if (newMessage.trim() !== '') {
       const updatedMessages = [
         ...messages,
-        {text: newMessage, id: Math.random().toString()},
+        {text: newMessage, id: Math.random().toString(), title: newTitle},
       ];
       setMessages(updatedMessages);
-      await create(updatedMessages, newTitle);
+      await create(updatedMessages);
       setNewMessage('');
       onSetTitle(newTitle);
       toggleModal();
@@ -101,10 +104,11 @@ const MessageBoardScreen: FC = () => {
         </View>
       )}
       <FlatList
-        data={messages}
+        data={data}
         keyExtractor={item => item.id}
         renderItem={({item}) => (
           <View style={styles.messageContainer}>
+            <Text style={styles.messageText}>{item.title}</Text>
             <Text style={styles.messageText}>{item.text}</Text>
           </View>
         )}
