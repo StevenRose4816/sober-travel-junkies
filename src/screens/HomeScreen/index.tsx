@@ -1218,7 +1218,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
-    marginTop: 20,
     marginBottom: 30,
     backgroundColor: '#eee7da95',
   },

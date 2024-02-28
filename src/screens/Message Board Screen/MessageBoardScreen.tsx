@@ -23,6 +23,8 @@ const MessageBoardScreen: FC = () => {
   const userId = auth().currentUser?.uid;
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState<string>('');
+  const [newTitle, setNewTitle] = useState<string>('');
+  const [postedTitle, setPostedTitle] = useState<string>('');
 
   useEffect(() => {
     readData();
@@ -59,11 +61,26 @@ const MessageBoardScreen: FC = () => {
       ];
       setMessages(updatedMessages);
       await create(updatedMessages);
+      setNewMessage('');
+    }
+  };
+
+  const onSetTitle = (title: string) => {
+    if (newTitle.trim() !== '') {
+      setPostedTitle(title);
+      setNewTitle('');
+      console.log('New Title: ', newTitle);
+      console.log('Posted Title: ', postedTitle);
     }
   };
 
   return (
     <View style={styles.container}>
+      {postedTitle && (
+        <View>
+          <Text>{'Test'}</Text>
+        </View>
+      )}
       <FlatList
         data={messages}
         keyExtractor={item => item.id}
@@ -82,6 +99,13 @@ const MessageBoardScreen: FC = () => {
           onChangeText={newMessage => setNewMessage(newMessage)}
         />
         <Button title="Send" onPress={addMessage} />
+        <TextInput
+          style={styles.input}
+          placeholder="Type your message..."
+          value={newTitle}
+          onChangeText={title => setNewTitle(title)}
+        />
+        <Button title="Set Title" onPress={() => onSetTitle(newTitle)} />
       </View>
     </View>
   );
@@ -102,8 +126,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   inputContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    height: 200,
+    justifyContent: 'flex-start',
   },
   input: {
     flex: 1,
