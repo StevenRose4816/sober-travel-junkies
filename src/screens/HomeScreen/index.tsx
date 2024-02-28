@@ -835,6 +835,8 @@ const HomeScreen: FC = () => {
                   placeholder=" bio"
                   onChangeText={bio => setBio(bio)}
                   secureTextEntry={false}
+                  multiline={true}
+                  maxLength={2000}
                   style={{
                     fontFamily: 'Vonique64',
                     backgroundColor: '#eee7da',
