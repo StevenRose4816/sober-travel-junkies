@@ -210,6 +210,8 @@ const HomeScreen: FC = () => {
   const [thirdPhotoPressed, setThirdPhotoPressed] = useState(false);
   const [fourthPhotoPressed, setFourthPhotoPressed] = useState(false);
 
+  const [showTripModal, setShowTripModal] = useState(false);
+
   const checkName = () => {
     if (
       initialName !== fullName ||
@@ -362,7 +364,9 @@ const HomeScreen: FC = () => {
   };
 
   const onPressTripInfo = () => {
-    navigation.navigate('Trip Info Screen');
+    // navigation.navigate('Trip Info Screen');
+    setShowTripModal(true);
+    toggleBackgroundPhotoModal();
   };
 
   const toggleDocPickerSwitch = () => {
@@ -384,6 +388,11 @@ const HomeScreen: FC = () => {
     }
   };
 
+  const onPressTripDest = () => {
+    setShowTripModal(false);
+    toggleBackgroundPhotoModal();
+  };
+
   useEffect(() => {
     console.log('userPhoto: ', userPhoto);
     console.log('userPhotoFromDB: ', userPhotoFromDB);
@@ -401,6 +410,7 @@ const HomeScreen: FC = () => {
               style={{
                 height: 150,
                 width: 150,
+                marginTop: 10,
                 opacity: fadeAnim,
               }}
               source={require('../../Images/STJ.png')}></Animated.Image>
@@ -1001,38 +1011,92 @@ const HomeScreen: FC = () => {
         onRequestClose={toggleBackgroundPhotoModal}>
         <View style={styles.modalView5}>
           <View style={styles.modalView6}>
-            <TouchableOpacity onPress={onPressFirstBackgroundPhoto}>
-              <Image
-                style={[
-                  !firstPhotoPressed && styles.backgroundBefore,
-                  firstPhotoPressed && styles.backgroundAfter,
-                ]}
-                source={require('../../Images/backgroundPhoto1.jpeg')}></Image>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={onPressSecondBackgroundPhoto}>
-              <Image
-                style={[
-                  !secondPhotoPressed && styles.backgroundBefore,
-                  secondPhotoPressed && styles.backgroundAfter,
-                ]}
-                source={require('../../Images/backgroundPhoto2.jpeg')}></Image>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={onPressThirdBackgroundPhoto}>
-              <Image
-                style={[
-                  !thirdPhotoPressed && styles.backgroundBefore,
-                  thirdPhotoPressed && styles.backgroundAfter,
-                ]}
-                source={require('../../Images/backgroundPhoto3.jpeg')}></Image>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={onPressFourthBackgroundPhoto}>
-              <Image
-                style={[
-                  !fourthPhotoPressed && styles.backgroundBefore,
-                  fourthPhotoPressed && styles.backgroundAfter,
-                ]}
-                source={require('../../Images/backgroundPhoto4.jpeg')}></Image>
-            </TouchableOpacity>
+            {!showTripModal && (
+              <>
+                <TouchableOpacity onPress={onPressFirstBackgroundPhoto}>
+                  <Image
+                    style={[
+                      !firstPhotoPressed && styles.backgroundBefore,
+                      firstPhotoPressed && styles.backgroundAfter,
+                    ]}
+                    source={require('../../Images/backgroundPhoto1.jpeg')}></Image>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={onPressSecondBackgroundPhoto}>
+                  <Image
+                    style={[
+                      !secondPhotoPressed && styles.backgroundBefore,
+                      secondPhotoPressed && styles.backgroundAfter,
+                    ]}
+                    source={require('../../Images/backgroundPhoto2.jpeg')}></Image>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={onPressThirdBackgroundPhoto}>
+                  <Image
+                    style={[
+                      !thirdPhotoPressed && styles.backgroundBefore,
+                      thirdPhotoPressed && styles.backgroundAfter,
+                    ]}
+                    source={require('../../Images/backgroundPhoto3.jpeg')}></Image>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={onPressFourthBackgroundPhoto}>
+                  <Image
+                    style={[
+                      !fourthPhotoPressed && styles.backgroundBefore,
+                      fourthPhotoPressed && styles.backgroundAfter,
+                    ]}
+                    source={require('../../Images/backgroundPhoto4.jpeg')}></Image>
+                </TouchableOpacity>
+              </>
+            )}
+            {showTripModal && (
+              <>
+                <TouchableOpacity
+                  style={{
+                    height: 100,
+                    width: screenWidth * 0.4,
+                    marginRight: 10,
+                    marginTop: 40,
+                    marginLeft: 10,
+                    backgroundColor: '#eee7da',
+                    borderRadius: 5,
+                  }}
+                  onPress={() => onPressTripDest()}>
+                  <Text
+                    style={{
+                      borderRadius: 5,
+                      textAlign: 'center',
+                      marginTop: 40,
+                      marginBottom: 10,
+                      fontFamily: 'HighTide-Sans',
+                      fontSize: 18,
+                    }}>
+                    {"Boone 24'"}
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={{
+                    height: 100,
+                    width: screenWidth * 0.4,
+                    marginRight: 10,
+                    marginTop: 20,
+                    marginLeft: 10,
+                    backgroundColor: '#eee7da',
+                    borderRadius: 5,
+                  }}
+                  onPress={() => onPressTripDest()}>
+                  <Text
+                    style={{
+                      borderRadius: 5,
+                      textAlign: 'center',
+                      marginTop: 40,
+                      marginBottom: 10,
+                      fontFamily: 'HighTide-Sans',
+                      fontSize: 18,
+                    }}>
+                    {"Cozumel 25'"}
+                  </Text>
+                </TouchableOpacity>
+              </>
+            )}
           </View>
         </View>
       </Modal>
