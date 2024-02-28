@@ -12,6 +12,7 @@ import {useAppDispatch, useAppSelector} from '../hooks';
 import ImagePicker from '../components/ImagePicker.jsx';
 import TripInfoScreen from '../screens/TripInfo/index.tsx';
 import BooneScreen from '../screens/BooneScreen/index.tsx';
+import MessageBoardScreen from '../screens/Message Board Screen/MessageBoardScreen.tsx';
 
 export type RootStackParamList = {
   'Home Screen': undefined;
@@ -20,6 +21,7 @@ export type RootStackParamList = {
   'Signup Screen': undefined;
   'Trip Info Screen': undefined;
   'Boone Screen': undefined;
+  'Message Board Screen': undefined;
 };
 
 export type RootStackProps<T extends keyof RootStackParamList> = {
@@ -95,6 +97,15 @@ const RootNavigator: FC = () => {
           <RootStack.Screen
             name={'Boone Screen'}
             component={BooneScreen}
+            options={{
+              headerTitleStyle: {
+                fontSize: 20,
+              },
+            }}
+          />
+          <RootStack.Screen
+            name={'Message Board Screen'}
+            component={MessageBoardScreen}
             options={{
               headerTitleStyle: {
                 fontSize: 20,

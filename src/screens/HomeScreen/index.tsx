@@ -400,6 +400,10 @@ const HomeScreen: FC = () => {
     toggleBackgroundPhotoModal();
   };
 
+  const onPressMessageBoard = () => {
+    navigation.navigate('Message Board Screen');
+  };
+
   useEffect(() => {
     console.log('userPhoto: ', userPhoto);
     console.log('userPhotoFromDB: ', userPhotoFromDB);
@@ -467,6 +471,17 @@ const HomeScreen: FC = () => {
                   borderRadius: 5,
                 }}>
                 <Text style={styles.text2}>{'Register For A Trip'}</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={onPressMessageBoard}
+                style={{
+                  backgroundColor: '#b6e7cc',
+                  marginLeft: 10,
+                  marginTop: 10,
+                  marginRight: screenWidth * 0.4,
+                  borderRadius: 5,
+                }}>
+                <Text style={styles.text2}>{'Message Board'}</Text>
               </TouchableOpacity>
               <View style={styles.nestedView2}>
                 <View style={{flex: 1, flexDirection: 'row'}}>

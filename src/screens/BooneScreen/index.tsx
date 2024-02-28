@@ -1,7 +1,7 @@
 import React, {FC, useEffect, useState} from 'react';
 import {Dimensions, Image, Text, TouchableOpacity, View} from 'react-native';
 
-const TripInfoScreen: FC = () => {
+const BooneScreen: FC = () => {
   const screenWidth = Dimensions.get('window').width;
   const screenHeight = Dimensions.get('window').height;
 
@@ -25,4 +25,4 @@ const TripInfoScreen: FC = () => {
   );
 };
 
-export default TripInfoScreen;
+export default BooneScreen;
