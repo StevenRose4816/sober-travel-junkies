@@ -23,7 +23,6 @@ const MessageBoardScreen: FC = () => {
   const userId = auth().currentUser?.uid;
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState<string>('');
-  //   const [] = useState('');
 
   useEffect(() => {
     readData();
@@ -80,7 +79,7 @@ const MessageBoardScreen: FC = () => {
           style={styles.input}
           placeholder="Type your message..."
           value={newMessage}
-          onChangeText={text => setNewMessage(text)}
+          onChangeText={newMessage => setNewMessage(newMessage)}
         />
         <Button title="Send" onPress={addMessage} />
       </View>

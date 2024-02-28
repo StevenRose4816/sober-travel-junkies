@@ -154,17 +154,18 @@ const HomeScreen: FC = () => {
         <TouchableOpacity
           onPress={logout}
           style={{
-            backgroundColor: 'blue',
+            backgroundColor: '#b6e7cc',
             borderRadius: 5,
             width: 65,
           }}>
           <Text
             style={{
-              color: '#eee7da',
+              color: '#0c0b09',
               textAlign: 'center',
               marginTop: 5,
               marginBottom: 5,
               fontSize: 12,
+              fontFamily: 'HighTide-Sans',
             }}>
             {'Log out'}
           </Text>
@@ -458,6 +459,8 @@ const HomeScreen: FC = () => {
                   marginLeft: 10,
                   marginRight: screenWidth * 0.4,
                   borderRadius: 5,
+                  borderWidth: 1,
+                  borderColor: '#eee7da',
                 }}>
                 <Text style={styles.text1}>{'Change background photo'}</Text>
               </TouchableOpacity>
@@ -469,6 +472,8 @@ const HomeScreen: FC = () => {
                   marginTop: 10,
                   marginRight: screenWidth * 0.4,
                   borderRadius: 5,
+                  borderWidth: 1,
+                  borderColor: '#eee7da',
                 }}>
                 <Text style={styles.text2}>{'Register For A Trip'}</Text>
               </TouchableOpacity>
@@ -480,6 +485,8 @@ const HomeScreen: FC = () => {
                   marginTop: 10,
                   marginRight: screenWidth * 0.4,
                   borderRadius: 5,
+                  borderWidth: 1,
+                  borderColor: '#eee7da',
                 }}>
                 <Text style={styles.text2}>{'Message Board'}</Text>
               </TouchableOpacity>
@@ -587,15 +594,17 @@ const HomeScreen: FC = () => {
               <TouchableOpacity
                 onPress={onEditPress}
                 style={{
-                  backgroundColor: 'blue',
+                  backgroundColor: '#b6e7cc',
                   borderRadius: 5,
                   marginLeft: screenWidth * 0.72,
                   marginBottom: 20,
                   width: 100,
+                  borderWidth: 1,
+                  borderColor: '#eee7da',
                 }}>
                 <Text
                   style={{
-                    color: '#eee7da',
+                    color: '#0c0b09',
                     fontSize: 12,
                     fontWeight: '600',
                     marginBottom: 10,
@@ -603,7 +612,7 @@ const HomeScreen: FC = () => {
                     marginRight: 10,
                     marginLeft: 10,
                     textAlign: 'center',
-                    fontFamily: 'Vonique64',
+                    fontFamily: 'HighTide-Sans',
                   }}>
                   {'Edit'}
                 </Text>
