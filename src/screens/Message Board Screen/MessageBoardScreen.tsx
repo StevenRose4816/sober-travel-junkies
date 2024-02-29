@@ -71,6 +71,7 @@ const MessageBoardScreen: FC = () => {
       setNewMessage('');
       onSetTitle(newTitle);
       toggleModal();
+      readData();
     }
   };
 
@@ -98,21 +99,18 @@ const MessageBoardScreen: FC = () => {
           {'Messages'}
         </Text>
       </View>
-      {postedTitle && (
-        <View>
-          <Text>{postedTitle}</Text>
-        </View>
+      {data && (
+        <FlatList
+          data={data.messages}
+          keyExtractor={item => item.id}
+          renderItem={({item}) => (
+            <View style={styles.messageContainer}>
+              <Text style={styles.messageText}>{item.title}</Text>
+              <Text style={styles.messageText}>{item.text}</Text>
+            </View>
+          )}
+        />
       )}
-      <FlatList
-        data={data}
-        keyExtractor={item => item.id}
-        renderItem={({item}) => (
-          <View style={styles.messageContainer}>
-            <Text style={styles.messageText}>{item.title}</Text>
-            <Text style={styles.messageText}>{item.text}</Text>
-          </View>
-        )}
-      />
 
       <View style={styles.inputContainer}>
         <TextInput
