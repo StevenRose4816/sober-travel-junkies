@@ -109,6 +109,7 @@ const MessageBoardScreen: FC = () => {
           style={{
             textAlign: 'center',
             marginBottom: 10,
+            fontFamily: 'HighTide-Sans',
           }}>
           {'Messages'}
         </Text>
@@ -232,6 +233,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
+    borderColor: '#b6e7cc',
+    borderWidth: 3,
+    borderRadius: 5,
   },
   messageContainer: {
     backgroundColor: '#e0e0e0',
