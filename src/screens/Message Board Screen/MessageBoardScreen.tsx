@@ -14,26 +14,31 @@ import {
 import auth from '@react-native-firebase/auth';
 import {get, onValue, ref, set} from 'firebase/database';
 import {db} from '../HomeScreen/FirebaseConfigurations';
+import {useRoute} from '@react-navigation/native';
 
 interface Message {
   text: string;
   id: string;
   title?: string;
+  name?: string;
 }
 
 const MessageBoardScreen: FC = () => {
   const userId = auth().currentUser?.uid;
+  const user = auth().currentUser;
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState<string>('');
   const [newTitle, setNewTitle] = useState<string>('');
-  const [titlefromDB, setTitlefromDB] = useState<string>('');
   const [postedTitle, setPostedTitle] = useState<string>('');
   const [modalVisible, setModalVisible] = useState(false);
   const [data, setData] = useState(false);
+  const route = useRoute();
+  const fullName = route.params?.fullName;
 
   useEffect(() => {
     readData();
     console.log('Messages in db: ', messages);
+    console.log('FullName: ', fullName);
   }, []);
 
   const create = async (messages: any) => {
@@ -48,7 +53,6 @@ const MessageBoardScreen: FC = () => {
       if (snapshot.exists()) {
         const data = snapshot.val();
         console.log('Data: ', data);
-        setTitlefromDB(data.title);
         setMessages(data.messages);
         setData(true);
         console.log('First Message: ', data.messages[0].text);
@@ -64,7 +68,12 @@ const MessageBoardScreen: FC = () => {
     if (newMessage.trim() !== '') {
       const updatedMessages = [
         ...messages,
-        {text: newMessage, id: Math.random().toString(), title: newTitle},
+        {
+          text: newMessage,
+          id: Math.random().toString(),
+          title: newTitle,
+          name: fullName,
+        },
       ];
       setMessages(updatedMessages);
       await create(updatedMessages);
@@ -105,8 +114,13 @@ const MessageBoardScreen: FC = () => {
           keyExtractor={item => item.id}
           renderItem={({item}) => (
             <View style={styles.messageContainer}>
-              <Text style={styles.messageText}>{item.title}</Text>
-              <Text style={styles.messageText}>{item.text}</Text>
+              <Text style={{fontSize: 16, fontWeight: '600'}}>
+                {'User: ' + item.name}
+              </Text>
+              <Text style={{fontSize: 16, fontWeight: '600'}}>
+                {'Title: ' + item.title}
+              </Text>
+              <Text style={styles.messageText}>{'Message: ' + item.text}</Text>
             </View>
           )}
         />
