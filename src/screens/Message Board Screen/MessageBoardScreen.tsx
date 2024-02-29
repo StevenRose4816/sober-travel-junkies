@@ -29,7 +29,7 @@ const MessageBoardScreen: FC = () => {
   const [titlefromDB, setTitlefromDB] = useState<string>('');
   const [postedTitle, setPostedTitle] = useState<string>('');
   const [modalVisible, setModalVisible] = useState(false);
-  const [data, setData] = useState(undefined);
+  const [data, setData] = useState(false);
 
   useEffect(() => {
     readData();
@@ -50,7 +50,7 @@ const MessageBoardScreen: FC = () => {
         console.log('Data: ', data);
         setTitlefromDB(data.title);
         setMessages(data.messages);
-        setData(data);
+        setData(true);
         console.log('First Message: ', data.messages[0].text);
       } else {
         console.log('No data available');
@@ -101,7 +101,7 @@ const MessageBoardScreen: FC = () => {
       </View>
       {data && (
         <FlatList
-          data={data.messages}
+          data={messages}
           keyExtractor={item => item.id}
           renderItem={({item}) => (
             <View style={styles.messageContainer}>
