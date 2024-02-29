@@ -187,31 +187,31 @@ const MessageBoardScreen: FC = () => {
           value={newMessage}
           onChangeText={newMessage => setNewMessage(newMessage)}
         />
-        <TouchableOpacity
-          style={{
-            backgroundColor: '#b6e7cc',
-            borderRadius: 5,
-            width: 100,
-            borderWidth: 1,
-            borderColor: '#eee7da',
-          }}
-          onPress={onSend}>
-          <Text
-            style={{
-              color: '#0c0b09',
-              fontSize: 12,
-              fontWeight: '600',
-              marginBottom: 10,
-              marginTop: 10,
-              marginRight: 10,
-              marginLeft: 10,
-              textAlign: 'center',
-              fontFamily: 'HighTide-Sans',
-            }}>
-            {'Send'}
-          </Text>
-        </TouchableOpacity>
       </View>
+      <TouchableOpacity
+        style={{
+          backgroundColor: '#b6e7cc',
+          borderRadius: 5,
+          width: 100,
+          borderWidth: 1,
+          marginTop: 10,
+          borderColor: '#eee7da',
+        }}
+        onPress={onSend}>
+        <Text
+          style={{
+            color: '#0c0b09',
+            fontSize: 12,
+            marginBottom: 10,
+            marginTop: 10,
+            marginRight: 10,
+            marginLeft: 10,
+            textAlign: 'center',
+            fontFamily: 'HighTide-Sans',
+          }}>
+          {'Send'}
+        </Text>
+      </TouchableOpacity>
       <Modal
         visible={modalVisible}
         animationType={'slide'}
@@ -239,7 +239,7 @@ const styles = StyleSheet.create({
   },
   messageContainer: {
     backgroundColor: '#e0e0e0',
-    padding: 8,
+    padding: 5,
     marginVertical: 8,
     borderRadius: 8,
   },
