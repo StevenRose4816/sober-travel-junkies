@@ -402,7 +402,10 @@ const HomeScreen: FC = () => {
   };
 
   const onPressMessageBoard = () => {
-    navigation.navigate('Message Board Screen', {fullName: fullName});
+    navigation.navigate('Message Board Screen', {
+      fullName: fullName,
+      userPhotoFromDB: userPhotoFromDB,
+    });
   };
 
   useEffect(() => {

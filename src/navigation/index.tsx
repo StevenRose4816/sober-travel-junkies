@@ -21,7 +21,7 @@ export type RootStackParamList = {
   'Signup Screen': undefined;
   'Trip Info Screen': undefined;
   'Boone Screen': undefined;
-  'Message Board Screen': undefined;
+  'Message Board Screen': {fullName: string};
 };
 
 export type RootStackProps<T extends keyof RootStackParamList> = {

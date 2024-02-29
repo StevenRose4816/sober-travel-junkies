@@ -18,6 +18,7 @@ import {useRoute} from '@react-navigation/native';
 
 interface RouteParams {
   fullName?: string;
+  userPhotoFromDB?: string;
 }
 
 interface Message {
@@ -25,6 +26,7 @@ interface Message {
   id: string;
   title?: string;
   name?: string;
+  photo?: string;
 }
 
 const MessageBoardScreen: FC = () => {
@@ -36,6 +38,7 @@ const MessageBoardScreen: FC = () => {
   const [data, setData] = useState(false);
   const route = useRoute();
   const {fullName}: RouteParams = route.params || {};
+  const {userPhotoFromDB}: RouteParams = route.params || {};
 
   useEffect(() => {
     readData();
@@ -75,6 +78,7 @@ const MessageBoardScreen: FC = () => {
           id: Math.random().toString(),
           title: newTitle,
           name: fullName,
+          photo: userPhotoFromDB,
         },
       ];
       setMessages(updatedMessages);
@@ -115,6 +119,14 @@ const MessageBoardScreen: FC = () => {
           keyExtractor={item => item.id}
           renderItem={({item}) => (
             <View style={styles.messageContainer}>
+              {item.photo && (
+                <Image
+                  style={{height: 40, width: 40, borderRadius: 50}}
+                  source={
+                    {uri: item.photo} ||
+                    require('../../Images/profilepictureicon.png')
+                  }></Image>
+              )}
               <Text style={{fontSize: 16, fontWeight: '600'}}>
                 {'User: '}
                 <Text style={{fontSize: 16, fontWeight: '300'}}>
@@ -122,13 +134,13 @@ const MessageBoardScreen: FC = () => {
                 </Text>
               </Text>
               <Text style={{fontSize: 16, fontWeight: '600'}}>
-                {'Title: '}{' '}
+                {'Title: '}
                 <Text style={{fontSize: 16, fontWeight: '300'}}>
                   {item.title}
                 </Text>
               </Text>
               <Text style={{fontSize: 16, fontWeight: '600'}}>
-                {'Message: '}{' '}
+                {'Message: '}
                 <Text style={{fontSize: 16, fontWeight: '300'}}>
                   {item.text}
                 </Text>
