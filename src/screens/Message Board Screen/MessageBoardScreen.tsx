@@ -125,7 +125,7 @@ const MessageBoardScreen: FC = () => {
                   flexDirection: 'row',
                   backgroundColor: '#b6e7cc',
                   borderRadius: 8,
-                  width: '50%',
+                  width: '70%',
                 }}>
                 <Image
                   style={{
@@ -142,22 +142,29 @@ const MessageBoardScreen: FC = () => {
                 <Text
                   style={{
                     fontSize: 18,
-                    fontWeight: '600',
                     marginLeft: 5,
+                    marginRight: 5,
                     marginTop: 15,
+                    fontFamily: 'Vonique64',
                   }}>
                   {item.name}
                 </Text>
               </View>
-              <Text style={{fontSize: 16, fontWeight: '600', marginTop: 5}}>
+              <Text
+                style={{
+                  fontSize: 16,
+                  fontWeight: '600',
+                  marginTop: 5,
+                  fontFamily: 'HighTide-Sans',
+                }}>
                 {'Title: '}
-                <Text style={{fontSize: 16, fontWeight: '300'}}>
+                <Text style={{fontSize: 16, fontFamily: 'Vonique64'}}>
                   {item.title}
                 </Text>
               </Text>
-              <Text style={{fontSize: 16, fontWeight: '600'}}>
+              <Text style={{fontSize: 16, fontFamily: 'HighTide-Sans'}}>
                 {'Message: '}
-                <Text style={{fontSize: 16, fontWeight: '300'}}>
+                <Text style={{fontSize: 16, fontFamily: 'Vonique64'}}>
                   {item.text}
                 </Text>
               </Text>
