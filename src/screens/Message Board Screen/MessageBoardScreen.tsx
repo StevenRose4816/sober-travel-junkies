@@ -119,21 +119,37 @@ const MessageBoardScreen: FC = () => {
           keyExtractor={item => item.id}
           renderItem={({item}) => (
             <View style={styles.messageContainer}>
-              <Image
-                style={{height: 40, width: 40, borderRadius: 50}}
-                source={
-                  item.photo
-                    ? {uri: item.photo}
-                    : require('../../Images/profilepictureicon.png')
-                }></Image>
-
-              <Text style={{fontSize: 16, fontWeight: '600'}}>
-                {'User: '}
-                <Text style={{fontSize: 16, fontWeight: '300'}}>
+              <View
+                style={{
+                  flex: 1,
+                  flexDirection: 'row',
+                  backgroundColor: '#b6e7cc',
+                  borderRadius: 8,
+                  width: '50%',
+                }}>
+                <Image
+                  style={{
+                    height: 40,
+                    width: 40,
+                    borderRadius: 50,
+                    margin: 5,
+                  }}
+                  source={
+                    item.photo
+                      ? {uri: item.photo}
+                      : require('../../Images/profilepictureicon.png')
+                  }></Image>
+                <Text
+                  style={{
+                    fontSize: 18,
+                    fontWeight: '600',
+                    marginLeft: 5,
+                    marginTop: 15,
+                  }}>
                   {item.name}
                 </Text>
-              </Text>
-              <Text style={{fontSize: 16, fontWeight: '600'}}>
+              </View>
+              <Text style={{fontSize: 16, fontWeight: '600', marginTop: 5}}>
                 {'Title: '}
                 <Text style={{fontSize: 16, fontWeight: '300'}}>
                   {item.title}

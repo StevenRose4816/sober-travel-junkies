@@ -456,18 +456,6 @@ const HomeScreen: FC = () => {
                   source={require('../../Images/profilepictureicon.png')}></Animated.Image>
               )}
               <TouchableOpacity
-                onPress={onPressChangeBackground}
-                style={{
-                  backgroundColor: '#b6e7cc',
-                  marginLeft: 10,
-                  marginRight: screenWidth * 0.4,
-                  borderRadius: 5,
-                  borderWidth: 1,
-                  borderColor: '#eee7da',
-                }}>
-                <Text style={styles.text1}>{'Change background photo'}</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
                 onPress={onPressTripInfo}
                 style={{
                   backgroundColor: '#b6e7cc',
@@ -486,6 +474,7 @@ const HomeScreen: FC = () => {
                   backgroundColor: '#b6e7cc',
                   marginLeft: 10,
                   marginTop: 10,
+                  marginBottom: 10,
                   marginRight: screenWidth * 0.4,
                   borderRadius: 5,
                   borderWidth: 1,
@@ -493,6 +482,44 @@ const HomeScreen: FC = () => {
                 }}>
                 <Text style={styles.text2}>{'Message Board'}</Text>
               </TouchableOpacity>
+              <TouchableOpacity
+                onPress={onPressChangeBackground}
+                style={{
+                  backgroundColor: '#b6e7cc',
+                  marginLeft: 10,
+                  marginRight: screenWidth * 0.4,
+                  borderRadius: 5,
+                  borderWidth: 1,
+                  borderColor: '#eee7da',
+                }}>
+                <Text style={styles.text1}>{'Change background photo'}</Text>
+              </TouchableOpacity>
+              {/* <TouchableOpacity
+                onPress={onPressTripInfo}
+                style={{
+                  backgroundColor: '#b6e7cc',
+                  marginLeft: 10,
+                  marginTop: 10,
+                  marginRight: screenWidth * 0.4,
+                  borderRadius: 5,
+                  borderWidth: 1,
+                  borderColor: '#eee7da',
+                }}>
+                <Text style={styles.text2}>{'Register For A Trip'}</Text>
+              </TouchableOpacity> */}
+              {/* <TouchableOpacity
+                onPress={onPressMessageBoard}
+                style={{
+                  backgroundColor: '#b6e7cc',
+                  marginLeft: 10,
+                  marginTop: 10,
+                  marginRight: screenWidth * 0.4,
+                  borderRadius: 5,
+                  borderWidth: 1,
+                  borderColor: '#eee7da',
+                }}>
+                <Text style={styles.text2}>{'Message Board'}</Text>
+              </TouchableOpacity> */}
               <View style={styles.nestedView2}>
                 <View style={{flex: 1, flexDirection: 'row'}}>
                   <Image
