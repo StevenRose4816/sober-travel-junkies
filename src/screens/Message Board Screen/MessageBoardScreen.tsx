@@ -115,12 +115,23 @@ const MessageBoardScreen: FC = () => {
           renderItem={({item}) => (
             <View style={styles.messageContainer}>
               <Text style={{fontSize: 16, fontWeight: '600'}}>
-                {'User: ' + item.name}
+                {'User: '}
+                <Text style={{fontSize: 16, fontWeight: '300'}}>
+                  {item.name}
+                </Text>
               </Text>
               <Text style={{fontSize: 16, fontWeight: '600'}}>
-                {'Title: ' + item.title}
+                {'Title: '}{' '}
+                <Text style={{fontSize: 16, fontWeight: '300'}}>
+                  {item.title}
+                </Text>
               </Text>
-              <Text style={styles.messageText}>{'Message: ' + item.text}</Text>
+              <Text style={{fontSize: 16, fontWeight: '600'}}>
+                {'Message: '}{' '}
+                <Text style={{fontSize: 16, fontWeight: '300'}}>
+                  {item.text}
+                </Text>
+              </Text>
             </View>
           )}
         />
