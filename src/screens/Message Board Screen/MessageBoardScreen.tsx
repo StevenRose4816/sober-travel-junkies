@@ -16,6 +16,10 @@ import {get, onValue, ref, set} from 'firebase/database';
 import {db} from '../HomeScreen/FirebaseConfigurations';
 import {useRoute} from '@react-navigation/native';
 
+interface RouteParams {
+  fullName?: string;
+}
+
 interface Message {
   text: string;
   id: string;
@@ -24,8 +28,6 @@ interface Message {
 }
 
 const MessageBoardScreen: FC = () => {
-  const userId = auth().currentUser?.uid;
-  const user = auth().currentUser;
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState<string>('');
   const [newTitle, setNewTitle] = useState<string>('');
@@ -33,7 +35,7 @@ const MessageBoardScreen: FC = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [data, setData] = useState(false);
   const route = useRoute();
-  const fullName = route.params?.fullName;
+  const {fullName}: RouteParams = route.params || {};
 
   useEffect(() => {
     readData();
@@ -79,7 +81,6 @@ const MessageBoardScreen: FC = () => {
       await create(updatedMessages);
       setNewMessage('');
       onSetTitle(newTitle);
-      toggleModal();
       readData();
     }
   };
@@ -210,11 +211,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#eee7da',
     height: 150,
     justifyContent: 'flex-start',
-    borderRadius: 5,
+    borderRadius: 8,
   },
   input: {
     flex: 1,
-    marginRight: 8,
+    // marginRight: 8,
     padding: 8,
     borderWidth: 1,
     borderColor: '#ccc',
