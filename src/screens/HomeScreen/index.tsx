@@ -218,6 +218,9 @@ const HomeScreen: FC = () => {
   const [bio, setBio] = useState('');
   const [initialBio, setInitialBio] = useState('');
 
+  const date = new Date();
+  const formattedDate = date.toDateString();
+
   const checkName = () => {
     if (
       initialName !== fullName ||
@@ -237,6 +240,7 @@ const HomeScreen: FC = () => {
     if (!dataFlag) {
       fadeIn();
     }
+    console.log('Formatted Date: ', formattedDate);
     console.log('backgroundPhoto: ', backgroundPhoto);
   }, [backgroundPhoto, dataFlag]);
 
@@ -405,6 +409,7 @@ const HomeScreen: FC = () => {
     navigation.navigate('Message Board Screen', {
       fullName: fullName,
       userPhotoFromDB: userPhotoFromDB,
+      formattedDate: formattedDate,
     });
   };
 

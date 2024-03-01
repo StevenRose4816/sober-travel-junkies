@@ -19,6 +19,7 @@ import {useRoute} from '@react-navigation/native';
 interface RouteParams {
   fullName?: string;
   userPhotoFromDB?: string;
+  formattedDate?: Date;
 }
 
 interface Message {
@@ -39,6 +40,7 @@ const MessageBoardScreen: FC = () => {
   const route = useRoute();
   const {fullName}: RouteParams = route.params || {};
   const {userPhotoFromDB}: RouteParams = route.params || {};
+  const {formattedDate}: RouteParams = route.params || {};
   const screenWidth = Dimensions.get('window').width;
 
   const flatListRef = useRef<FlatList>(null!);
@@ -82,6 +84,7 @@ const MessageBoardScreen: FC = () => {
           title: newTitle,
           name: fullName,
           photo: userPhotoFromDB,
+          formattedDate: formattedDate,
         },
       ];
       setMessages(updatedMessages);
@@ -139,26 +142,30 @@ const MessageBoardScreen: FC = () => {
                 marginVertical: 8,
                 borderRadius: 8,
               }}>
-              <View style={{}}>
-                <Text
-                  style={{
-                    fontSize: 16,
-                    fontWeight: '600',
-                    marginTop: 5,
-                    fontFamily: 'HighTide-Sans',
-                  }}>
-                  {'Title: '}
-                  <Text style={{fontSize: 16, fontFamily: 'Vonique64'}}>
-                    {item.title}
-                  </Text>
+              <Text
+                style={{
+                  fontSize: 16,
+                  fontWeight: '600',
+                  marginTop: 5,
+                  fontFamily: 'HighTide-Sans',
+                }}>
+                {'Title: '}
+                <Text style={{fontSize: 16, fontFamily: 'Vonique64'}}>
+                  {item.title}
                 </Text>
-                <Text style={{fontSize: 16, fontFamily: 'HighTide-Sans'}}>
-                  {'Message: '}
-                  <Text style={{fontSize: 16, fontFamily: 'Vonique64'}}>
-                    {item.text}
-                  </Text>
+              </Text>
+              <Text style={{fontSize: 16, fontFamily: 'HighTide-Sans'}}>
+                {'Message: '}
+                <Text style={{fontSize: 16, fontFamily: 'Vonique64'}}>
+                  {item.text}
                 </Text>
-              </View>
+              </Text>
+              <Text style={{fontSize: 16, fontFamily: 'HighTide-Sans'}}>
+                {'Date: '}
+                <Text style={{fontSize: 16, fontFamily: 'Vonique64'}}>
+                  {item.formattedDate}
+                </Text>
+              </Text>
               <View
                 style={{
                   flex: 1,
