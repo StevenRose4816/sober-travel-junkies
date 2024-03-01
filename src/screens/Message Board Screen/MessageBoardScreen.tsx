@@ -111,74 +111,84 @@ const MessageBoardScreen: FC = () => {
   const renderItem = ({item}: {item: Message}) => (
     <View
       style={{
-        alignItems: 'flex-start',
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
         backgroundColor: '#e0e0e0',
         padding: 8,
         marginVertical: 8,
         borderRadius: 8,
       }}>
-      <Text style={{fontSize: 16, fontFamily: 'HighTide-Sans'}}>
-        {'Date: '}
-        <Text style={{fontSize: 16, fontFamily: 'Vonique64'}}>{item.date}</Text>
-      </Text>
-      <Text
-        style={{
-          fontSize: 16,
-          fontWeight: '600',
-          fontFamily: 'HighTide-Sans',
-        }}>
-        {'Title: '}
-        <Text style={{fontSize: 16, fontFamily: 'Vonique64'}}>
-          {item.title}
-        </Text>
-      </Text>
-      <Text style={{fontSize: 16, fontFamily: 'HighTide-Sans'}}>
-        {'Message: '}
+      <View style={{alignItems: 'flex-start', flex: 1, marginRight: 10}}>
         <Text
           style={{
             fontSize: 16,
-            fontFamily: 'Vonique64',
-            marginBottom: 10,
+            fontWeight: '600',
+            fontFamily: 'HighTide-Sans',
           }}>
-          {item.text}
+          {'Title: '}
+          <Text style={{fontSize: 16, fontFamily: 'Vonique64'}}>
+            {item.title}
+          </Text>
         </Text>
-      </Text>
-      <View
-        style={{
-          flex: 1,
-          flexDirection: 'row',
-          alignItems: 'flex-end',
-          marginLeft: screenWidth * 0.48,
-          backgroundColor: '#b6e7cc',
-          borderRadius: 8,
-        }}>
-        <Image
-          style={{
-            height: 30,
-            width: 30,
-            borderRadius: 50,
-            margin: 5,
-          }}
-          source={
-            item.photo
-              ? {uri: item.photo}
-              : require('../../Images/profilepictureicon.png')
-          }></Image>
+        <Text style={{fontSize: 16, fontFamily: 'HighTide-Sans'}}>
+          {'Message: '}
+          <Text
+            style={{
+              fontSize: 16,
+              fontFamily: 'Vonique64',
+              marginBottom: 10,
+            }}>
+            {item.text}
+          </Text>
+        </Text>
+      </View>
+
+      <View style={{alignItems: 'flex-end', flex: 1, marginLeft: 10}}>
         <Text
           style={{
             fontSize: 12,
-            marginLeft: 5,
-            marginRight: 5,
-            marginTop: 15,
-            marginBottom: 5,
             fontFamily: 'HighTide-Sans',
           }}>
-          {'. . . ' + item.name}
+          {'Date: '}
+          <Text style={{fontSize: 12, fontFamily: 'Vonique64'}}>
+            {item.date}
+          </Text>
         </Text>
+        <View
+          style={{
+            flex: 1,
+            flexDirection: 'row',
+            alignItems: 'baseline',
+            backgroundColor: '#b6e7cc',
+            borderRadius: 8,
+          }}>
+          <Image
+            style={{
+              height: 30,
+              width: 30,
+              borderRadius: 50,
+              margin: 5,
+            }}
+            source={
+              item.photo
+                ? {uri: item.photo}
+                : require('../../Images/profilepictureicon.png')
+            }></Image>
+          <Text
+            style={{
+              fontSize: 12,
+              marginLeft: 5,
+              marginRight: 5,
+              marginBottom: 5,
+              fontFamily: 'HighTide-Sans',
+            }}>
+            {'. . . ' + item.name}
+          </Text>
+        </View>
       </View>
     </View>
   );
-
   return (
     <View
       style={{
