@@ -193,7 +193,8 @@ const MessageBoardScreen: FC = () => {
                     marginLeft: 5,
                     marginRight: 5,
                     marginTop: 15,
-                    fontFamily: 'Vonique64',
+                    marginBottom: 5,
+                    fontFamily: 'HighTide-Sans',
                   }}>
                   {'. . . ' + item.name}
                 </Text>
