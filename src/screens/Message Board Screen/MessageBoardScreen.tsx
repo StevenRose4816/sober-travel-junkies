@@ -91,18 +91,8 @@ const MessageBoardScreen: FC = () => {
       setMessages(updatedMessages);
       await create(updatedMessages);
       setNewMessage('');
-      onSetTitle(newTitle);
       readData();
       flatListRef.current.scrollToEnd();
-    }
-  };
-
-  const onSetTitle = (title: string) => {
-    if (newTitle.trim() !== '') {
-      setPostedTitle(title);
-      setNewTitle('');
-      console.log('New Title: ', newTitle);
-      console.log('Posted Title: ', postedTitle);
     }
   };
 
