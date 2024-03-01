@@ -242,9 +242,7 @@ const HomeScreen: FC = () => {
       fadeIn();
     }
     scrollViewRef.current?.scrollTo({x: 0, y: 0, animated: true});
-    console.log('Formatted Date: ', formattedDate);
-    console.log('backgroundPhoto: ', backgroundPhoto);
-  }, [backgroundPhoto, dataFlag]);
+  }, [dataFlag]);
 
   useEffect(() => {
     if (photoSelected) {
