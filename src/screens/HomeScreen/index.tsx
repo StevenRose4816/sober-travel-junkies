@@ -48,6 +48,7 @@ const HomeScreen: FC = () => {
   const user = auth().currentUser;
   const userId = auth().currentUser?.uid;
   const [modalVisible, setModalVisible] = useState(false);
+  const [data, setData] = useState(undefined);
   const [modalVisible2, setModalVisible2] = useState(false);
   const [dataFlag, setDataFlag] = useState(false);
   const [showBackButton, setShowBackButton] = useState(false);
@@ -110,6 +111,7 @@ const HomeScreen: FC = () => {
       const snapshot = await get(countRef);
       if (snapshot.exists()) {
         const data = snapshot.val();
+        setData(data);
         setDataFlag(true);
         console.log('data: ', data);
         setAddress(data.address || '');
@@ -420,578 +422,585 @@ const HomeScreen: FC = () => {
 
   return (
     <View style={{flex: 1, backgroundColor: '#eee7da'}}>
-      <ScrollView
-        ref={scrollViewRef}
-        style={{flex: 1, backgroundColor: 'transparent'}}>
-        <ImageBackground
-          style={{flex: 1}}
-          imageStyle={{opacity: 0.3}}
-          source={source()}>
-          <View style={styles.nestedView1}>
-            <Animated.Image
-              style={{
-                height: 150,
-                width: 150,
-                marginTop: 10,
-                opacity: fadeAnim,
-              }}
-              source={require('../../Images/STJ.png')}></Animated.Image>
-          </View>
-          {dataFlag && (
-            <>
-              {userPhotoFromDB ? (
-                <Animated.Image
-                  style={{
-                    height: 300,
-                    width: screenWidth * 0.95,
-                    marginLeft: 10,
-                    marginBottom: 10,
-                    borderRadius: 5,
-                    opacity: fadeAnim,
-                  }}
-                  source={{uri: userPhotoFromDB}}></Animated.Image>
-              ) : (
-                <Animated.Image
-                  style={{
-                    height: 300,
-                    width: screenWidth * 0.95,
-                    borderRadius: 5,
-                    marginLeft: 10,
-                    marginBottom: 10,
-                    opacity: fadeAnim,
-                  }}
-                  source={require('../../Images/profilepictureicon.png')}></Animated.Image>
-              )}
-              <TouchableOpacity
-                onPress={onPressTripInfo}
+      {data && (
+        <ScrollView
+          ref={scrollViewRef}
+          style={{flex: 1, backgroundColor: 'transparent'}}>
+          <ImageBackground
+            style={{flex: 1}}
+            imageStyle={{opacity: 0.3}}
+            source={source()}>
+            <View style={styles.nestedView1}>
+              <Animated.Image
                 style={{
-                  backgroundColor: '#b6e7cc',
-                  marginLeft: 10,
+                  height: 150,
+                  width: 150,
                   marginTop: 10,
-                  marginRight: screenWidth * 0.4,
-                  borderRadius: 5,
-                  borderWidth: 1,
-                  borderColor: '#eee7da',
-                }}>
-                <Text style={styles.text2}>{'Register For A Trip'}</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={onPressMessageBoard}
-                style={{
-                  backgroundColor: '#b6e7cc',
-                  marginLeft: 10,
-                  marginTop: 10,
-                  marginBottom: 10,
-                  marginRight: screenWidth * 0.4,
-                  borderRadius: 5,
-                  borderWidth: 1,
-                  borderColor: '#eee7da',
-                }}>
-                <Text style={styles.text2}>{'Message Board'}</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={onPressChangeBackground}
-                style={{
-                  backgroundColor: '#b6e7cc',
-                  marginLeft: 10,
-                  marginRight: screenWidth * 0.4,
-                  borderRadius: 5,
-                  borderWidth: 1,
-                  borderColor: '#eee7da',
-                }}>
-                <Text style={styles.text1}>{'Change background photo'}</Text>
-              </TouchableOpacity>
-
-              <View style={styles.nestedView2}>
-                <View style={{flex: 1, flexDirection: 'row'}}>
-                  <Image
-                    style={{width: 40, height: 40, marginLeft: 10}}
-                    source={require('../../Images/homeaddressicon.png')}></Image>
-                  <Text
-                    style={{
-                      marginLeft: 10,
-                      marginTop: 10,
-                      fontFamily: 'HighTide-Sans',
-                    }}>
-                    {'Address: '}
-                    <Text style={{fontFamily: 'Vonique64'}}>{address}</Text>
-                  </Text>
-                </View>
-                <View style={{flex: 1, flexDirection: 'row'}}>
-                  <Image
-                    style={{width: 40, height: 40, marginLeft: 10}}
-                    source={require('../../Images/emailaddressicon.png')}></Image>
-                  <Text
-                    style={{
-                      marginLeft: 10,
-                      marginTop: 10,
-                      fontFamily: 'HighTide-Sans',
-                    }}>
-                    {'Email Address: '}
-                    <Text style={{fontFamily: 'Vonique64'}}>{email}</Text>
-                  </Text>
-                </View>
-                <View style={{flex: 1, flexDirection: 'row'}}>
-                  <Image
-                    style={{width: 40, height: 40, marginLeft: 10}}
-                    source={require('../../Images/phonenumbericon.png')}></Image>
-                  <Text
-                    style={{
-                      marginLeft: 10,
-                      marginTop: 10,
-                      fontFamily: 'HighTide-Sans',
-                    }}>
-                    {'Phone number: '}
-                    <Text style={{fontFamily: 'Vonique64'}}>{phoneNumber}</Text>
-                  </Text>
-                </View>
-                <View style={{flex: 1, flexDirection: 'row'}}>
-                  <Image
-                    style={{width: 40, height: 40, marginLeft: 10}}
-                    source={require('../../Images/appicon.png')}></Image>
-                  <Text
-                    style={{
-                      marginLeft: 10,
-                      marginTop: 10,
-                      fontFamily: 'HighTide-Sans',
-                    }}>
-                    {'Full name: '}
-                    <Text style={{fontFamily: 'Vonique64'}}>{fullName}</Text>
-                  </Text>
-                </View>
-                <Text
-                  style={{
-                    marginLeft: 10,
-                    marginTop: 10,
-                    marginBottom: 10,
-                    fontFamily: 'HighTide-Sans',
-                  }}>
-                  {'Emergency Contact Name: '}
-                  <Text style={{fontFamily: 'Vonique64'}}>
-                    {emergencyContact}
-                  </Text>
-                </Text>
-                <Text
-                  style={{
-                    marginLeft: 10,
-                    marginBottom: 10,
-                    fontFamily: 'HighTide-Sans',
-                  }}>
-                  {'Emergency Contact Phone: '}
-                  <Text style={{fontFamily: 'Vonique64'}}>
-                    {emergencyContactPhone}
-                  </Text>
-                </Text>
-              </View>
-              <View
-                style={{
-                  backgroundColor: '#eee7da',
-                  marginTop: 10,
-                  marginLeft: 10,
-                  marginRight: 10,
-                  marginBottom: 10,
-                  borderRadius: 5,
-                }}>
-                <Text
-                  style={{
-                    marginLeft: 10,
-                    marginBottom: 10,
-                    marginTop: 10,
-                    fontFamily: 'HighTide-Sans',
-                  }}>
-                  {'Bio: '}
-                  <Text style={{fontFamily: 'Vonique64'}}>{bio}</Text>
-                </Text>
-              </View>
-              <TouchableOpacity
-                onPress={onEditPress}
-                style={{
-                  backgroundColor: '#b6e7cc',
-                  borderRadius: 5,
-                  marginLeft: screenWidth * 0.72,
-                  marginBottom: 20,
-                  width: 100,
-                  borderWidth: 1,
-                  borderColor: '#eee7da',
-                }}>
-                <Text
-                  style={{
-                    color: '#0c0b09',
-                    fontSize: 12,
-                    fontWeight: '600',
-                    marginBottom: 10,
-                    marginTop: 10,
-                    marginRight: 10,
-                    marginLeft: 10,
-                    textAlign: 'center',
-                    fontFamily: 'HighTide-Sans',
-                  }}>
-                  {'Edit'}
-                </Text>
-              </TouchableOpacity>
-            </>
-          )}
-          {!dataFlag && (
-            <>
-              <Text
-                style={{
-                  fontSize: 16,
-                  textAlign: 'center',
-                  marginBottom: 10,
-                  fontFamily: 'Vonique64',
-                }}>
-                {"Let's get some informaton."}
-              </Text>
-              <View style={{flex: 1, alignItems: 'center'}}>
-                {!userPhotoFromDB ? (
+                  opacity: fadeAnim,
+                }}
+                source={require('../../Images/STJ.png')}></Animated.Image>
+            </View>
+            {dataFlag && (
+              <>
+                {userPhotoFromDB ? (
                   <Animated.Image
                     style={{
                       height: 300,
                       width: screenWidth * 0.95,
+                      marginLeft: 10,
+                      marginBottom: 10,
                       borderRadius: 5,
                       opacity: fadeAnim,
                     }}
-                    source={
-                      !userPhoto
-                        ? require('../../Images/profilepictureicon.png')
-                        : {uri: userPhoto}
-                    }
-                  />
+                    source={{uri: userPhotoFromDB}}></Animated.Image>
                 ) : (
                   <Animated.Image
                     style={{
                       height: 300,
                       width: screenWidth * 0.95,
                       borderRadius: 5,
+                      marginLeft: 10,
+                      marginBottom: 10,
                       opacity: fadeAnim,
                     }}
-                    source={{uri: userPhoto || userPhotoFromDB}}
-                  />
+                    source={
+                      {uri: userPhoto} ||
+                      require('../../Images/profilepictureicon.png')
+                    }></Animated.Image>
                 )}
-              </View>
-              <View style={{flex: 1}}>
-                <View style={styles.nestedView3}>
+                <TouchableOpacity
+                  onPress={onPressTripInfo}
+                  style={{
+                    backgroundColor: '#b6e7cc',
+                    marginLeft: 10,
+                    marginTop: 10,
+                    marginRight: screenWidth * 0.4,
+                    borderRadius: 5,
+                    borderWidth: 1,
+                    borderColor: '#eee7da',
+                  }}>
+                  <Text style={styles.text2}>{'Register For A Trip'}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={onPressMessageBoard}
+                  style={{
+                    backgroundColor: '#b6e7cc',
+                    marginLeft: 10,
+                    marginTop: 10,
+                    marginBottom: 10,
+                    marginRight: screenWidth * 0.4,
+                    borderRadius: 5,
+                    borderWidth: 1,
+                    borderColor: '#eee7da',
+                  }}>
+                  <Text style={styles.text2}>{'Message Board'}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={onPressChangeBackground}
+                  style={{
+                    backgroundColor: '#b6e7cc',
+                    marginLeft: 10,
+                    marginRight: screenWidth * 0.4,
+                    borderRadius: 5,
+                    borderWidth: 1,
+                    borderColor: '#eee7da',
+                  }}>
+                  <Text style={styles.text1}>{'Change background photo'}</Text>
+                </TouchableOpacity>
+
+                <View style={styles.nestedView2}>
+                  <View style={{flex: 1, flexDirection: 'row'}}>
+                    <Image
+                      style={{width: 40, height: 40, marginLeft: 10}}
+                      source={require('../../Images/homeaddressicon.png')}></Image>
+                    <Text
+                      style={{
+                        marginLeft: 10,
+                        marginTop: 10,
+                        fontFamily: 'HighTide-Sans',
+                      }}>
+                      {'Address: '}
+                      <Text style={{fontFamily: 'Vonique64'}}>{address}</Text>
+                    </Text>
+                  </View>
+                  <View style={{flex: 1, flexDirection: 'row'}}>
+                    <Image
+                      style={{width: 40, height: 40, marginLeft: 10}}
+                      source={require('../../Images/emailaddressicon.png')}></Image>
+                    <Text
+                      style={{
+                        marginLeft: 10,
+                        marginTop: 10,
+                        fontFamily: 'HighTide-Sans',
+                      }}>
+                      {'Email Address: '}
+                      <Text style={{fontFamily: 'Vonique64'}}>{email}</Text>
+                    </Text>
+                  </View>
+                  <View style={{flex: 1, flexDirection: 'row'}}>
+                    <Image
+                      style={{width: 40, height: 40, marginLeft: 10}}
+                      source={require('../../Images/phonenumbericon.png')}></Image>
+                    <Text
+                      style={{
+                        marginLeft: 10,
+                        marginTop: 10,
+                        fontFamily: 'HighTide-Sans',
+                      }}>
+                      {'Phone number: '}
+                      <Text style={{fontFamily: 'Vonique64'}}>
+                        {phoneNumber}
+                      </Text>
+                    </Text>
+                  </View>
+                  <View style={{flex: 1, flexDirection: 'row'}}>
+                    <Image
+                      style={{width: 40, height: 40, marginLeft: 10}}
+                      source={require('../../Images/appicon.png')}></Image>
+                    <Text
+                      style={{
+                        marginLeft: 10,
+                        marginTop: 10,
+                        fontFamily: 'HighTide-Sans',
+                      }}>
+                      {'Full name: '}
+                      <Text style={{fontFamily: 'Vonique64'}}>{fullName}</Text>
+                    </Text>
+                  </View>
                   <Text
                     style={{
                       marginLeft: 10,
-                      marginTop: 5,
-                      fontSize: 20,
-                      fontFamily: 'Vonique64',
+                      marginTop: 10,
+                      marginBottom: 10,
+                      fontFamily: 'HighTide-Sans',
                     }}>
-                    {'Upload Photo ?'}
+                    {'Emergency Contact Name: '}
+                    <Text style={{fontFamily: 'Vonique64'}}>
+                      {emergencyContact}
+                    </Text>
                   </Text>
-                  <TouchableOpacity onPress={openPicker}>
-                    <Animated.Image
-                      style={{
-                        height: 50,
-                        width: 50,
-                        borderRadius: 5,
-                        marginRight: 20,
-                        transform: [{translateX}],
-                      }}
-                      source={require('../../Images/camerapictureicon.png')}></Animated.Image>
-                  </TouchableOpacity>
-                </View>
-                <View style={styles.nestedView4}>
                   <Text
                     style={{
                       marginLeft: 10,
-                      marginTop: 5,
-                      fontSize: 20,
-                      fontFamily: 'Vonique64',
+                      marginBottom: 10,
+                      fontFamily: 'HighTide-Sans',
                     }}>
-                    {'Upload NDA?'}
+                    {'Emergency Contact Phone: '}
+                    <Text style={{fontFamily: 'Vonique64'}}>
+                      {emergencyContactPhone}
+                    </Text>
                   </Text>
-                  <TouchableOpacity onPress={toggleDocPickerSwitch}>
-                    <Animated.Image
-                      style={{
-                        marginLeft: 23,
-                        height: 50,
-                        width: 50,
-                        borderRadius: 5,
-                        transform: [{translateX}],
-                      }}
-                      source={require('../../Images/ndaicon.png')}></Animated.Image>
-                  </TouchableOpacity>
                 </View>
-              </View>
-              <View style={styles.nestedView5}>
+                <View
+                  style={{
+                    backgroundColor: '#eee7da',
+                    marginTop: 10,
+                    marginLeft: 10,
+                    marginRight: 10,
+                    marginBottom: 10,
+                    borderRadius: 5,
+                  }}>
+                  <Text
+                    style={{
+                      marginLeft: 10,
+                      marginBottom: 10,
+                      marginTop: 10,
+                      fontFamily: 'HighTide-Sans',
+                    }}>
+                    {'Bio: '}
+                    <Text style={{fontFamily: 'Vonique64'}}>{bio}</Text>
+                  </Text>
+                </View>
+                <TouchableOpacity
+                  onPress={onEditPress}
+                  style={{
+                    backgroundColor: '#b6e7cc',
+                    borderRadius: 5,
+                    marginLeft: screenWidth * 0.72,
+                    marginBottom: 20,
+                    width: 100,
+                    borderWidth: 1,
+                    borderColor: '#eee7da',
+                  }}>
+                  <Text
+                    style={{
+                      color: '#0c0b09',
+                      fontSize: 12,
+                      fontWeight: '600',
+                      marginBottom: 10,
+                      marginTop: 10,
+                      marginRight: 10,
+                      marginLeft: 10,
+                      textAlign: 'center',
+                      fontFamily: 'HighTide-Sans',
+                    }}>
+                    {'Edit'}
+                  </Text>
+                </TouchableOpacity>
+              </>
+            )}
+            {!dataFlag && (
+              <>
                 <Text
                   style={{
-                    fontFamily: 'HighTide-Sans',
+                    fontSize: 16,
+                    textAlign: 'center',
+                    marginBottom: 10,
+                    fontFamily: 'Vonique64',
                   }}>
-                  {'Full Name'}
+                  {"Let's get some informaton."}
                 </Text>
-              </View>
-              <View
+                <View style={{flex: 1, alignItems: 'center'}}>
+                  {!userPhotoFromDB ? (
+                    <Animated.Image
+                      style={{
+                        height: 300,
+                        width: screenWidth * 0.95,
+                        borderRadius: 5,
+                        opacity: fadeAnim,
+                      }}
+                      source={
+                        !userPhoto
+                          ? require('../../Images/profilepictureicon.png')
+                          : {uri: userPhoto}
+                      }
+                    />
+                  ) : (
+                    <Animated.Image
+                      style={{
+                        height: 300,
+                        width: screenWidth * 0.95,
+                        borderRadius: 5,
+                        opacity: fadeAnim,
+                      }}
+                      source={{uri: userPhoto || userPhotoFromDB}}
+                    />
+                  )}
+                </View>
+                <View style={{flex: 1}}>
+                  <View style={styles.nestedView3}>
+                    <Text
+                      style={{
+                        marginLeft: 10,
+                        marginTop: 5,
+                        fontSize: 20,
+                        fontFamily: 'Vonique64',
+                      }}>
+                      {'Upload Photo ?'}
+                    </Text>
+                    <TouchableOpacity onPress={openPicker}>
+                      <Animated.Image
+                        style={{
+                          height: 50,
+                          width: 50,
+                          borderRadius: 5,
+                          marginRight: 20,
+                          transform: [{translateX}],
+                        }}
+                        source={require('../../Images/camerapictureicon.png')}></Animated.Image>
+                    </TouchableOpacity>
+                  </View>
+                  <View style={styles.nestedView4}>
+                    <Text
+                      style={{
+                        marginLeft: 10,
+                        marginTop: 5,
+                        fontSize: 20,
+                        fontFamily: 'Vonique64',
+                      }}>
+                      {'Upload NDA?'}
+                    </Text>
+                    <TouchableOpacity onPress={toggleDocPickerSwitch}>
+                      <Animated.Image
+                        style={{
+                          marginLeft: 23,
+                          height: 50,
+                          width: 50,
+                          borderRadius: 5,
+                          transform: [{translateX}],
+                        }}
+                        source={require('../../Images/ndaicon.png')}></Animated.Image>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+                <View style={styles.nestedView5}>
+                  <Text
+                    style={{
+                      fontFamily: 'HighTide-Sans',
+                    }}>
+                    {'Full Name'}
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    flex: 1,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
+                  <TextInput
+                    value={fullName}
+                    placeholder=" full name"
+                    onChangeText={fullName => setFullName(fullName)}
+                    secureTextEntry={false}
+                    style={{
+                      fontFamily: 'Vonique64',
+                      backgroundColor: '#eee7da',
+                      marginHorizontal: 10,
+                      marginBottom: 10,
+                      marginTop: 5,
+                      borderRadius: 5,
+                      minHeight: 50,
+                      borderWidth: 1,
+                      borderColor: '#5A6472',
+                      borderBottomWidth: 3,
+                      width: screenWidth * 0.9,
+                    }}></TextInput>
+                  <Text
+                    style={{
+                      textAlign: 'left',
+                      marginLeft: 10,
+                      fontWeight: '600',
+                      marginTop: 10,
+                      fontFamily: 'HighTide-Sans',
+                    }}>
+                    {'Phone Number'}
+                  </Text>
+                  <TextInput
+                    value={phoneNumber}
+                    placeholder=" phone number"
+                    onChangeText={phoneNumber => setPhoneNumber(phoneNumber)}
+                    secureTextEntry={false}
+                    style={{
+                      fontFamily: 'Vonique64',
+                      backgroundColor: '#eee7da',
+                      marginHorizontal: 10,
+                      marginBottom: 10,
+                      marginTop: 5,
+                      borderRadius: 5,
+                      minHeight: 50,
+                      borderWidth: 1,
+                      borderColor: '#5A6472',
+                      borderBottomWidth: 3,
+                      width: screenWidth * 0.9,
+                    }}></TextInput>
+                  <Text
+                    style={{
+                      marginLeft: 10,
+                      marginTop: 10,
+                      fontWeight: '600',
+                      fontFamily: 'HighTide-Sans',
+                    }}>
+                    {'Address'}
+                  </Text>
+                  <TextInput
+                    value={address}
+                    placeholder=" address"
+                    onChangeText={address => setAddress(address)}
+                    secureTextEntry={false}
+                    style={{
+                      fontFamily: 'Vonique64',
+                      backgroundColor: '#eee7da',
+                      marginHorizontal: 10,
+                      marginBottom: 10,
+                      marginTop: 5,
+                      borderRadius: 5,
+                      minHeight: 50,
+                      borderWidth: 1,
+                      borderBottomWidth: 3,
+                      borderColor: '#5A6472',
+                      width: screenWidth * 0.9,
+                    }}></TextInput>
+                  <Text
+                    style={{
+                      marginLeft: 10,
+                      marginTop: 10,
+                      fontFamily: 'HighTide-Sans',
+                    }}>
+                    {'Emergency Contact Name'}
+                  </Text>
+                  <TextInput
+                    value={emergencyContact}
+                    placeholder=" emergency contact name"
+                    onChangeText={emergencyContact =>
+                      setEmergencyContact(emergencyContact)
+                    }
+                    secureTextEntry={false}
+                    style={{
+                      fontFamily: 'Vonique64',
+                      backgroundColor: '#eee7da',
+                      marginHorizontal: 10,
+                      marginBottom: 10,
+                      marginTop: 5,
+                      borderRadius: 5,
+                      minHeight: 50,
+                      borderWidth: 1,
+                      borderBottomWidth: 3,
+                      borderColor: '#5A6472',
+                      width: screenWidth * 0.9,
+                    }}></TextInput>
+                  <Text
+                    style={{
+                      marginLeft: 10,
+                      marginTop: 10,
+                      fontFamily: 'HighTide-Sans',
+                    }}>
+                    {'Emergency Contact Phone'}
+                  </Text>
+                  <TextInput
+                    value={emergencyContactPhone}
+                    placeholder=" emergency contact phone"
+                    onChangeText={emergencyContactPhone =>
+                      setEmergencyContactPhone(emergencyContactPhone)
+                    }
+                    secureTextEntry={false}
+                    style={{
+                      fontFamily: 'Vonique64',
+                      backgroundColor: '#eee7da',
+                      marginHorizontal: 10,
+                      marginBottom: 10,
+                      marginTop: 5,
+                      borderRadius: 5,
+                      minHeight: 50,
+                      borderWidth: 1,
+                      borderBottomWidth: 3,
+                      borderColor: '#5A6472',
+                      width: screenWidth * 0.9,
+                    }}></TextInput>
+                  <Text
+                    style={{
+                      marginLeft: 10,
+                      marginTop: 10,
+                      fontFamily: 'HighTide-Sans',
+                    }}>
+                    {'Bio'}
+                  </Text>
+                  <TextInput
+                    value={bio}
+                    placeholder=" bio"
+                    onChangeText={bio => setBio(bio)}
+                    secureTextEntry={false}
+                    multiline={true}
+                    maxLength={2000}
+                    style={{
+                      fontFamily: 'Vonique64',
+                      backgroundColor: '#eee7da',
+                      marginHorizontal: 10,
+                      marginBottom: 10,
+                      marginTop: 5,
+                      borderRadius: 5,
+                      minHeight: 50,
+                      borderWidth: 1,
+                      borderBottomWidth: 3,
+                      borderColor: '#5A6472',
+                      width: screenWidth * 0.9,
+                    }}></TextInput>
+                </View>
+                <View style={styles.nestedView6}>
+                  <View
+                    style={[
+                      showCameraIcon && styles.circleBefore,
+                      !showCameraIcon && styles.circleAfter,
+                    ]}>
+                    {showCameraIcon ? (
+                      <Image
+                        style={{
+                          height: 75,
+                          width: 75,
+                          borderRadius: 5,
+                        }}
+                        source={require('../../Images/cameraIcon_Hollis.png')}></Image>
+                    ) : (
+                      !showCameraIcon && (
+                        <Image
+                          style={{
+                            height: 75,
+                            width: 75,
+                            borderRadius: 5,
+                          }}
+                          source={require('../../Images/checkIcon_Hollis.png')}></Image>
+                      )
+                    )}
+                  </View>
+                  <View
+                    style={[
+                      showCheckListIcon && styles.circleBefore,
+                      !showCheckListIcon && styles.circleAfter,
+                    ]}>
+                    {showCheckListIcon ? (
+                      <Image
+                        style={{
+                          height: 75,
+                          width: 75,
+                          borderRadius: 5,
+                        }}
+                        source={require('../../Images/checklistIcon_Hollis.png')}></Image>
+                    ) : (
+                      !showCheckListIcon && (
+                        <Image
+                          style={{
+                            height: 75,
+                            width: 75,
+                            borderRadius: 5,
+                          }}
+                          source={require('../../Images/checkIcon_Hollis.png')}></Image>
+                      )
+                    )}
+                  </View>
+                  <View
+                    style={[
+                      showFolderIcon && styles.circleBefore,
+                      !showFolderIcon && styles.circleAfter,
+                    ]}>
+                    {showFolderIcon ? (
+                      <Image
+                        style={{
+                          height: 75,
+                          width: 75,
+                          borderRadius: 5,
+                        }}
+                        source={require('../../Images/folderIcon_Hollis.png')}></Image>
+                    ) : (
+                      !showFolderIcon && (
+                        <Image
+                          style={{
+                            height: 75,
+                            width: 75,
+                            borderRadius: 5,
+                          }}
+                          source={require('../../Images/checkIcon_Hollis.png')}></Image>
+                      )
+                    )}
+                  </View>
+                </View>
+              </>
+            )}
+            {!dataFlag && (
+              <TouchableOpacity
+                onPress={onPressSubmit}
                 style={{
-                  flex: 1,
-                  alignItems: 'center',
+                  backgroundColor: 'blue',
+                  minHeight: 50,
                   justifyContent: 'center',
+                  borderRadius: 5,
+                  marginHorizontal: 10,
+                  marginTop: 10,
+                  marginBottom: 10,
                 }}>
-                <TextInput
-                  value={fullName}
-                  placeholder=" full name"
-                  onChangeText={fullName => setFullName(fullName)}
-                  secureTextEntry={false}
-                  style={{
-                    fontFamily: 'Vonique64',
-                    backgroundColor: '#eee7da',
-                    marginHorizontal: 10,
-                    marginBottom: 10,
-                    marginTop: 5,
-                    borderRadius: 5,
-                    minHeight: 50,
-                    borderWidth: 1,
-                    borderColor: '#5A6472',
-                    borderBottomWidth: 3,
-                    width: screenWidth * 0.9,
-                  }}></TextInput>
                 <Text
                   style={{
-                    textAlign: 'left',
-                    marginLeft: 10,
+                    color: '#eee7da',
+                    fontSize: 21,
                     fontWeight: '600',
-                    marginTop: 10,
-                    fontFamily: 'HighTide-Sans',
-                  }}>
-                  {'Phone Number'}
-                </Text>
-                <TextInput
-                  value={phoneNumber}
-                  placeholder=" phone number"
-                  onChangeText={phoneNumber => setPhoneNumber(phoneNumber)}
-                  secureTextEntry={false}
-                  style={{
+                    textAlign: 'center',
                     fontFamily: 'Vonique64',
-                    backgroundColor: '#eee7da',
-                    marginHorizontal: 10,
-                    marginBottom: 10,
-                    marginTop: 5,
-                    borderRadius: 5,
-                    minHeight: 50,
-                    borderWidth: 1,
-                    borderColor: '#5A6472',
-                    borderBottomWidth: 3,
-                    width: screenWidth * 0.9,
-                  }}></TextInput>
-                <Text
-                  style={{
-                    marginLeft: 10,
-                    marginTop: 10,
-                    fontWeight: '600',
-                    fontFamily: 'HighTide-Sans',
                   }}>
-                  {'Address'}
+                  {'Submit'}
                 </Text>
-                <TextInput
-                  value={address}
-                  placeholder=" address"
-                  onChangeText={address => setAddress(address)}
-                  secureTextEntry={false}
-                  style={{
-                    fontFamily: 'Vonique64',
-                    backgroundColor: '#eee7da',
-                    marginHorizontal: 10,
-                    marginBottom: 10,
-                    marginTop: 5,
-                    borderRadius: 5,
-                    minHeight: 50,
-                    borderWidth: 1,
-                    borderBottomWidth: 3,
-                    borderColor: '#5A6472',
-                    width: screenWidth * 0.9,
-                  }}></TextInput>
-                <Text
-                  style={{
-                    marginLeft: 10,
-                    marginTop: 10,
-                    fontFamily: 'HighTide-Sans',
-                  }}>
-                  {'Emergency Contact Name'}
-                </Text>
-                <TextInput
-                  value={emergencyContact}
-                  placeholder=" emergency contact name"
-                  onChangeText={emergencyContact =>
-                    setEmergencyContact(emergencyContact)
-                  }
-                  secureTextEntry={false}
-                  style={{
-                    fontFamily: 'Vonique64',
-                    backgroundColor: '#eee7da',
-                    marginHorizontal: 10,
-                    marginBottom: 10,
-                    marginTop: 5,
-                    borderRadius: 5,
-                    minHeight: 50,
-                    borderWidth: 1,
-                    borderBottomWidth: 3,
-                    borderColor: '#5A6472',
-                    width: screenWidth * 0.9,
-                  }}></TextInput>
-                <Text
-                  style={{
-                    marginLeft: 10,
-                    marginTop: 10,
-                    fontFamily: 'HighTide-Sans',
-                  }}>
-                  {'Emergency Contact Phone'}
-                </Text>
-                <TextInput
-                  value={emergencyContactPhone}
-                  placeholder=" emergency contact phone"
-                  onChangeText={emergencyContactPhone =>
-                    setEmergencyContactPhone(emergencyContactPhone)
-                  }
-                  secureTextEntry={false}
-                  style={{
-                    fontFamily: 'Vonique64',
-                    backgroundColor: '#eee7da',
-                    marginHorizontal: 10,
-                    marginBottom: 10,
-                    marginTop: 5,
-                    borderRadius: 5,
-                    minHeight: 50,
-                    borderWidth: 1,
-                    borderBottomWidth: 3,
-                    borderColor: '#5A6472',
-                    width: screenWidth * 0.9,
-                  }}></TextInput>
-                <Text
-                  style={{
-                    marginLeft: 10,
-                    marginTop: 10,
-                    fontFamily: 'HighTide-Sans',
-                  }}>
-                  {'Bio'}
-                </Text>
-                <TextInput
-                  value={bio}
-                  placeholder=" bio"
-                  onChangeText={bio => setBio(bio)}
-                  secureTextEntry={false}
-                  multiline={true}
-                  maxLength={2000}
-                  style={{
-                    fontFamily: 'Vonique64',
-                    backgroundColor: '#eee7da',
-                    marginHorizontal: 10,
-                    marginBottom: 10,
-                    marginTop: 5,
-                    borderRadius: 5,
-                    minHeight: 50,
-                    borderWidth: 1,
-                    borderBottomWidth: 3,
-                    borderColor: '#5A6472',
-                    width: screenWidth * 0.9,
-                  }}></TextInput>
-              </View>
-              <View style={styles.nestedView6}>
-                <View
-                  style={[
-                    showCameraIcon && styles.circleBefore,
-                    !showCameraIcon && styles.circleAfter,
-                  ]}>
-                  {showCameraIcon ? (
-                    <Image
-                      style={{
-                        height: 75,
-                        width: 75,
-                        borderRadius: 5,
-                      }}
-                      source={require('../../Images/cameraIcon_Hollis.png')}></Image>
-                  ) : (
-                    !showCameraIcon && (
-                      <Image
-                        style={{
-                          height: 75,
-                          width: 75,
-                          borderRadius: 5,
-                        }}
-                        source={require('../../Images/checkIcon_Hollis.png')}></Image>
-                    )
-                  )}
-                </View>
-                <View
-                  style={[
-                    showCheckListIcon && styles.circleBefore,
-                    !showCheckListIcon && styles.circleAfter,
-                  ]}>
-                  {showCheckListIcon ? (
-                    <Image
-                      style={{
-                        height: 75,
-                        width: 75,
-                        borderRadius: 5,
-                      }}
-                      source={require('../../Images/checklistIcon_Hollis.png')}></Image>
-                  ) : (
-                    !showCheckListIcon && (
-                      <Image
-                        style={{
-                          height: 75,
-                          width: 75,
-                          borderRadius: 5,
-                        }}
-                        source={require('../../Images/checkIcon_Hollis.png')}></Image>
-                    )
-                  )}
-                </View>
-                <View
-                  style={[
-                    showFolderIcon && styles.circleBefore,
-                    !showFolderIcon && styles.circleAfter,
-                  ]}>
-                  {showFolderIcon ? (
-                    <Image
-                      style={{
-                        height: 75,
-                        width: 75,
-                        borderRadius: 5,
-                      }}
-                      source={require('../../Images/folderIcon_Hollis.png')}></Image>
-                  ) : (
-                    !showFolderIcon && (
-                      <Image
-                        style={{
-                          height: 75,
-                          width: 75,
-                          borderRadius: 5,
-                        }}
-                        source={require('../../Images/checkIcon_Hollis.png')}></Image>
-                    )
-                  )}
-                </View>
-              </View>
-            </>
-          )}
-          {!dataFlag && (
-            <TouchableOpacity
-              onPress={onPressSubmit}
-              style={{
-                backgroundColor: 'blue',
-                minHeight: 50,
-                justifyContent: 'center',
-                borderRadius: 5,
-                marginHorizontal: 10,
-                marginTop: 10,
-                marginBottom: 10,
-              }}>
-              <Text
-                style={{
-                  color: '#eee7da',
-                  fontSize: 21,
-                  fontWeight: '600',
-                  textAlign: 'center',
-                  fontFamily: 'Vonique64',
-                }}>
-                {'Submit'}
-              </Text>
-            </TouchableOpacity>
-          )}
-        </ImageBackground>
-      </ScrollView>
+              </TouchableOpacity>
+            )}
+          </ImageBackground>
+        </ScrollView>
+      )}
       <Modal
         visible={modalVisible}
         animationType={'slide'}
