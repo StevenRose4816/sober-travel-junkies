@@ -19,7 +19,7 @@ import {useRoute} from '@react-navigation/native';
 interface RouteParams {
   fullName?: string;
   userPhotoFromDB?: string;
-  formattedDate?: Date;
+  formattedDate?: string;
 }
 
 interface Message {
@@ -28,6 +28,7 @@ interface Message {
   title?: string;
   name?: string;
   photo?: string;
+  date?: string;
 }
 
 const MessageBoardScreen: FC = () => {
@@ -84,7 +85,7 @@ const MessageBoardScreen: FC = () => {
           title: newTitle,
           name: fullName,
           photo: userPhotoFromDB,
-          formattedDate: formattedDate,
+          date: formattedDate,
         },
       ];
       setMessages(updatedMessages);
@@ -145,7 +146,7 @@ const MessageBoardScreen: FC = () => {
               <Text style={{fontSize: 16, fontFamily: 'HighTide-Sans'}}>
                 {'Date: '}
                 <Text style={{fontSize: 16, fontFamily: 'Vonique64'}}>
-                  {item.formattedDate}
+                  {item.date}
                 </Text>
               </Text>
               <Text
