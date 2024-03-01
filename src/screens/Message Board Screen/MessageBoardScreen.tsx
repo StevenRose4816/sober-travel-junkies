@@ -139,7 +139,7 @@ const MessageBoardScreen: FC = () => {
               style={{
                 alignItems: 'flex-start',
                 backgroundColor: '#e0e0e0',
-                padding: 5,
+                padding: 8,
                 marginVertical: 8,
                 borderRadius: 8,
               }}>
@@ -162,7 +162,12 @@ const MessageBoardScreen: FC = () => {
               </Text>
               <Text style={{fontSize: 16, fontFamily: 'HighTide-Sans'}}>
                 {'Message: '}
-                <Text style={{fontSize: 16, fontFamily: 'Vonique64'}}>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    fontFamily: 'Vonique64',
+                    marginBottom: 10,
+                  }}>
                   {item.text}
                 </Text>
               </Text>
@@ -171,7 +176,7 @@ const MessageBoardScreen: FC = () => {
                   flex: 1,
                   flexDirection: 'row',
                   alignItems: 'flex-end',
-                  marginLeft: screenWidth * 0.5,
+                  marginLeft: screenWidth * 0.48,
                   backgroundColor: '#b6e7cc',
                   borderRadius: 8,
                 }}>
@@ -289,6 +294,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#ccc',
     borderRadius: 8,
+    fontFamily: 'HighTide-Sans',
   },
   modalView5: {
     flex: 1,

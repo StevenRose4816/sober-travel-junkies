@@ -57,9 +57,9 @@ const HomeScreen: FC = () => {
   const [initialEmergencyContact, setInitialEmergencyContact] = useState('');
   const [initialEmergencyContactPhone, setInitialEmergencyContactPhone] =
     useState('');
-
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const translateX = useRef(new Animated.Value(0)).current;
+  const scrollViewRef = useRef<ScrollView>(null);
 
   const fadeIn = () => {
     Animated.timing(fadeAnim, {
@@ -241,6 +241,7 @@ const HomeScreen: FC = () => {
     if (!dataFlag) {
       fadeIn();
     }
+    scrollViewRef.current?.scrollTo({x: 0, y: 0, animated: true});
     console.log('Formatted Date: ', formattedDate);
     console.log('backgroundPhoto: ', backgroundPhoto);
   }, [backgroundPhoto, dataFlag]);
@@ -421,7 +422,9 @@ const HomeScreen: FC = () => {
 
   return (
     <View style={{flex: 1, backgroundColor: '#eee7da'}}>
-      <ScrollView style={{flex: 1, backgroundColor: 'transparent'}}>
+      <ScrollView
+        ref={scrollViewRef}
+        style={{flex: 1, backgroundColor: 'transparent'}}>
         <ImageBackground
           style={{flex: 1}}
           imageStyle={{opacity: 0.3}}
