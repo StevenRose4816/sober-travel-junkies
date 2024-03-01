@@ -27,6 +27,7 @@ import {setUserPhoto} from '../../store/user/slice';
 import {DocPicker} from '../../components/DocumentPicker';
 import {setSelected} from '../../store/photo/slice';
 import {setSelectedDocument} from '../../store/document/slice';
+import {RootStackParamList} from '../../navigation';
 
 const HomeScreen: FC = () => {
   const navigation = useNavigation();
@@ -41,7 +42,7 @@ const HomeScreen: FC = () => {
   };
 
   const openPicker = () => {
-    navigation.navigate('Image Picker');
+    navigation.navigate('ImagePicker');
   };
 
   const user = auth().currentUser;
@@ -400,13 +401,13 @@ const HomeScreen: FC = () => {
   };
 
   const onPressTripDest = () => {
-    navigation.navigate('Boone Screen');
+    navigation.navigate('BooneScreen');
     setShowTripModal(false);
     toggleBackgroundPhotoModal();
   };
 
   const onPressMessageBoard = () => {
-    navigation.navigate('Message Board Screen', {
+    navigation.navigate('MessageBoardScreen', {
       fullName: fullName,
       userPhotoFromDB: userPhotoFromDB,
       formattedDate: formattedDate,
@@ -499,32 +500,7 @@ const HomeScreen: FC = () => {
                 }}>
                 <Text style={styles.text1}>{'Change background photo'}</Text>
               </TouchableOpacity>
-              {/* <TouchableOpacity
-                onPress={onPressTripInfo}
-                style={{
-                  backgroundColor: '#b6e7cc',
-                  marginLeft: 10,
-                  marginTop: 10,
-                  marginRight: screenWidth * 0.4,
-                  borderRadius: 5,
-                  borderWidth: 1,
-                  borderColor: '#eee7da',
-                }}>
-                <Text style={styles.text2}>{'Register For A Trip'}</Text>
-              </TouchableOpacity> */}
-              {/* <TouchableOpacity
-                onPress={onPressMessageBoard}
-                style={{
-                  backgroundColor: '#b6e7cc',
-                  marginLeft: 10,
-                  marginTop: 10,
-                  marginRight: screenWidth * 0.4,
-                  borderRadius: 5,
-                  borderWidth: 1,
-                  borderColor: '#eee7da',
-                }}>
-                <Text style={styles.text2}>{'Message Board'}</Text>
-              </TouchableOpacity> */}
+
               <View style={styles.nestedView2}>
                 <View style={{flex: 1, flexDirection: 'row'}}>
                   <Image

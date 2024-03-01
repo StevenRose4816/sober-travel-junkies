@@ -142,11 +142,16 @@ const MessageBoardScreen: FC = () => {
                 marginVertical: 8,
                 borderRadius: 8,
               }}>
+              <Text style={{fontSize: 16, fontFamily: 'HighTide-Sans'}}>
+                {'Date: '}
+                <Text style={{fontSize: 16, fontFamily: 'Vonique64'}}>
+                  {item.formattedDate}
+                </Text>
+              </Text>
               <Text
                 style={{
                   fontSize: 16,
                   fontWeight: '600',
-                  marginTop: 5,
                   fontFamily: 'HighTide-Sans',
                 }}>
                 {'Title: '}
@@ -158,12 +163,6 @@ const MessageBoardScreen: FC = () => {
                 {'Message: '}
                 <Text style={{fontSize: 16, fontFamily: 'Vonique64'}}>
                   {item.text}
-                </Text>
-              </Text>
-              <Text style={{fontSize: 16, fontFamily: 'HighTide-Sans'}}>
-                {'Date: '}
-                <Text style={{fontSize: 16, fontFamily: 'Vonique64'}}>
-                  {item.formattedDate}
                 </Text>
               </Text>
               <View

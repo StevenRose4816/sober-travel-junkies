@@ -15,19 +15,23 @@ import BooneScreen from '../screens/BooneScreen/index.tsx';
 import MessageBoardScreen from '../screens/Message Board Screen/MessageBoardScreen.tsx';
 
 export type RootStackParamList = {
-  'Home Screen': undefined;
-  'Image Picker': undefined;
-  'Login Screen': undefined;
-  'Signup Screen': undefined;
-  'Trip Info Screen': undefined;
-  'Boone Screen': undefined;
-  'Message Board Screen': {fullName: string};
+  HomeScreen: undefined;
+  ImagePicker: undefined;
+  LoginScreen: undefined;
+  SignupScreen: undefined;
+  TripInfoScreen: undefined;
+  BooneScreen: undefined;
+  MessageBoardScreen: {
+    fullName: string;
+    userPhotoFromDB: string;
+    formattedDate: string;
+  };
 };
 
-export type RootStackProps<T extends keyof RootStackParamList> = {
-  navigation: NativeStackNavigationProp<RootStackParamList, T>;
-  route: NativeStackScreenProps<RootStackParamList, T>['route'];
-};
+// export type RootStackProps<T extends keyof RootStackParamList> = {
+//   navigation: NativeStackNavigationProp<RootStackParamList, T>;
+//   route: NativeStackScreenProps<RootStackParamList, T>['route'];
+// };
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
 
@@ -68,7 +72,7 @@ const RootNavigator: FC = () => {
       {!!user ? (
         <RootStack.Navigator screenOptions={{headerBackTitleVisible: false}}>
           <RootStack.Screen
-            name={'Home Screen'}
+            name={'HomeScreen'}
             component={HomeScreen}
             options={{
               headerTitleStyle: {
@@ -77,7 +81,7 @@ const RootNavigator: FC = () => {
             }}
           />
           <RootStack.Screen
-            name={'Image Picker'}
+            name={'ImagePicker'}
             component={ImagePicker}
             options={{
               headerTitleStyle: {
@@ -86,7 +90,7 @@ const RootNavigator: FC = () => {
             }}
           />
           <RootStack.Screen
-            name={'Trip Info Screen'}
+            name={'TripInfoScreen'}
             component={TripInfoScreen}
             options={{
               headerTitleStyle: {
@@ -95,7 +99,7 @@ const RootNavigator: FC = () => {
             }}
           />
           <RootStack.Screen
-            name={'Boone Screen'}
+            name={'BooneScreen'}
             component={BooneScreen}
             options={{
               headerTitleStyle: {
@@ -104,7 +108,7 @@ const RootNavigator: FC = () => {
             }}
           />
           <RootStack.Screen
-            name={'Message Board Screen'}
+            name={'MessageBoardScreen'}
             component={MessageBoardScreen}
             options={{
               headerTitleStyle: {
@@ -116,7 +120,7 @@ const RootNavigator: FC = () => {
       ) : (
         <RootStack.Navigator screenOptions={{headerBackTitleVisible: false}}>
           <RootStack.Screen
-            name={'Login Screen'}
+            name={'LoginScreen'}
             component={LoginScreen}
             options={{
               headerTitleStyle: {
@@ -125,7 +129,7 @@ const RootNavigator: FC = () => {
             }}
           />
           <RootStack.Screen
-            name={'Signup Screen'}
+            name={'SignupScreen'}
             component={SignupScreen}
             options={{
               headerTitleStyle: {
