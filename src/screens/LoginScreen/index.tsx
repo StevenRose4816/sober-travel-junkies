@@ -167,7 +167,7 @@ const LoginScreen: FC = () => {
       </View>
       <TouchableOpacity
         // @ts-ignore
-        onPress={() => navigate('Signup Screen')}
+        onPress={() => navigate('SignupScreen')}
         style={{
           backgroundColor: '#b6e7cc',
           minHeight: 35,
