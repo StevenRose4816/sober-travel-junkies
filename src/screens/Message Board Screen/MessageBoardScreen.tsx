@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, useEffect, useRef, useState} from 'react';
 import {
   Button,
   Dimensions,
@@ -39,6 +39,9 @@ const MessageBoardScreen: FC = () => {
   const route = useRoute();
   const {fullName}: RouteParams = route.params || {};
   const {userPhotoFromDB}: RouteParams = route.params || {};
+  const screenWidth = Dimensions.get('window').width;
+
+  const flatListRef = useRef<FlatList>(null!);
 
   useEffect(() => {
     readData();
@@ -86,6 +89,7 @@ const MessageBoardScreen: FC = () => {
       setNewMessage('');
       onSetTitle(newTitle);
       readData();
+      flatListRef.current.scrollToEnd();
     }
   };
 
@@ -103,35 +107,71 @@ const MessageBoardScreen: FC = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={{}}>
-        <Text
-          style={{
-            textAlign: 'center',
-            marginBottom: 10,
-            fontFamily: 'HighTide-Sans',
-          }}>
-          {'Messages'}
-        </Text>
-      </View>
+    <View
+      style={{
+        flex: 1,
+        justifyContent: 'flex-start',
+        padding: 16,
+        borderColor: '#b6e7cc',
+        borderWidth: 3,
+        borderRadius: 5,
+      }}>
+      <Text
+        style={{
+          fontSize: 18,
+          textAlign: 'center',
+          marginBottom: 10,
+          fontFamily: 'HighTide-Sans',
+        }}>
+        {'Message Board'}
+      </Text>
       {data && (
         <FlatList
+          ref={flatListRef}
           data={messages}
           keyExtractor={item => item.id}
           renderItem={({item}) => (
-            <View style={styles.messageContainer}>
+            <View
+              style={{
+                alignItems: 'flex-start',
+                backgroundColor: '#e0e0e0',
+                padding: 5,
+                marginVertical: 8,
+                borderRadius: 8,
+              }}>
+              <View style={{}}>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    fontWeight: '600',
+                    marginTop: 5,
+                    fontFamily: 'HighTide-Sans',
+                  }}>
+                  {'Title: '}
+                  <Text style={{fontSize: 16, fontFamily: 'Vonique64'}}>
+                    {item.title}
+                  </Text>
+                </Text>
+                <Text style={{fontSize: 16, fontFamily: 'HighTide-Sans'}}>
+                  {'Message: '}
+                  <Text style={{fontSize: 16, fontFamily: 'Vonique64'}}>
+                    {item.text}
+                  </Text>
+                </Text>
+              </View>
               <View
                 style={{
                   flex: 1,
                   flexDirection: 'row',
+                  alignItems: 'flex-end',
+                  marginLeft: screenWidth * 0.5,
                   backgroundColor: '#b6e7cc',
                   borderRadius: 8,
-                  width: '70%',
                 }}>
                 <Image
                   style={{
-                    height: 40,
-                    width: 40,
+                    height: 30,
+                    width: 30,
                     borderRadius: 50,
                     margin: 5,
                   }}
@@ -142,33 +182,15 @@ const MessageBoardScreen: FC = () => {
                   }></Image>
                 <Text
                   style={{
-                    fontSize: 18,
+                    fontSize: 12,
                     marginLeft: 5,
                     marginRight: 5,
                     marginTop: 15,
                     fontFamily: 'Vonique64',
                   }}>
-                  {item.name}
+                  {'. . . ' + item.name}
                 </Text>
               </View>
-              <Text
-                style={{
-                  fontSize: 16,
-                  fontWeight: '600',
-                  marginTop: 5,
-                  fontFamily: 'HighTide-Sans',
-                }}>
-                {'Title: '}
-                <Text style={{fontSize: 16, fontFamily: 'Vonique64'}}>
-                  {item.title}
-                </Text>
-              </Text>
-              <Text style={{fontSize: 16, fontFamily: 'HighTide-Sans'}}>
-                {'Message: '}
-                <Text style={{fontSize: 16, fontFamily: 'Vonique64'}}>
-                  {item.text}
-                </Text>
-              </Text>
             </View>
           )}
         />
@@ -238,6 +260,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   messageContainer: {
+    alignItems: 'flex-end',
     backgroundColor: '#e0e0e0',
     padding: 5,
     marginVertical: 8,
@@ -248,13 +271,12 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     backgroundColor: '#eee7da',
-    height: 150,
+    height: 100,
     justifyContent: 'flex-start',
     borderRadius: 8,
   },
   input: {
-    flex: 1,
-    // marginRight: 8,
+    height: 50,
     padding: 8,
     borderWidth: 1,
     borderColor: '#ccc',
