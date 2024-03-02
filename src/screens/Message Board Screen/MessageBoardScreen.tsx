@@ -109,72 +109,69 @@ const MessageBoardScreen: FC = () => {
     setModalVisible(!modalVisible);
   };
 
+  const onPressScroll = () => {
+    flatListRef.current.scrollToEnd();
+  };
+
   const renderItem = ({item}: {item: Message}) => (
     <View
       style={{
         flex: 1,
         flexDirection: 'column',
-        justifyContent: 'space-between',
         backgroundColor: '#e0e0e0',
         padding: 8,
         marginVertical: 8,
         borderRadius: 8,
       }}>
-      <View
+      <Text style={{fontSize: 16, fontFamily: 'HighTide-Sans'}}>
+        {item.title}
+      </Text>
+      <Text
         style={{
-          alignItems: 'flex-start',
-          flex: 1,
-          marginRight: 10,
-          flexWrap: 'wrap',
+          fontSize: 16,
+          fontFamily: 'Vonique64',
+          marginBottom: 10,
         }}>
-        <Text style={{fontSize: 16, fontFamily: 'HighTide-Sans'}}>
-          {item.title}
-        </Text>
-        <Text
-          style={{
-            fontSize: 16,
-            fontFamily: 'Vonique64',
-            marginBottom: 10,
-          }}>
-          {item.text}
-        </Text>
-      </View>
-
-      <View style={{alignItems: 'flex-end', flex: 1}}>
-        <Text style={{fontSize: 12, fontFamily: 'HighTide-Sans'}}>
+        {item.text}
+      </Text>
+      <View style={{alignItems: 'flex-end', flexDirection: 'row'}}>
+        <Text style={{fontSize: 12, fontFamily: 'HighTide-Sans', opacity: 0.5}}>
           {item.date}
         </Text>
-        <View
-          style={{
-            flex: 1,
-            flexDirection: 'row',
-            alignItems: 'baseline',
-            backgroundColor: '#b6e7cc',
-            borderRadius: 8,
-            maxHeight: 40,
-          }}>
-          <Image
+
+        <View style={{alignItems: 'flex-end', flex: 1}}>
+          <View
             style={{
-              height: 30,
-              width: 30,
-              borderRadius: 50,
-              margin: 5,
-            }}
-            source={
-              item.photo
-                ? {uri: item.photo}
-                : require('../../Images/profilepictureicon.png')
-            }></Image>
-          <Text
-            style={{
-              fontSize: 12,
-              marginLeft: 5,
-              marginRight: 5,
-              marginBottom: 5,
-              fontFamily: 'HighTide-Sans',
+              flex: 1,
+              flexDirection: 'row',
+              alignItems: 'baseline',
+              backgroundColor: '#b6e7cc',
+              borderRadius: 8,
+              maxHeight: 40,
             }}>
-            {'. . . ' + item.name}
-          </Text>
+            <Image
+              style={{
+                height: 30,
+                width: 30,
+                borderRadius: 50,
+                margin: 5,
+              }}
+              source={
+                item.photo
+                  ? {uri: item.photo}
+                  : require('../../Images/profilepictureicon.png')
+              }></Image>
+            <Text
+              style={{
+                fontSize: 12,
+                marginLeft: 5,
+                marginRight: 5,
+                marginBottom: 5,
+                fontFamily: 'HighTide-Sans',
+              }}>
+              {'. . . ' + item.name}
+            </Text>
+          </View>
         </View>
       </View>
     </View>
@@ -220,30 +217,61 @@ const MessageBoardScreen: FC = () => {
           onChangeText={newMessage => setNewMessage(newMessage)}
         />
       </View>
-      <TouchableOpacity
+      <View
         style={{
-          backgroundColor: '#b6e7cc',
-          borderRadius: 5,
-          width: 100,
-          borderWidth: 1,
-          marginTop: 10,
-          borderColor: '#eee7da',
-        }}
-        onPress={onSend}>
-        <Text
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}>
+        <TouchableOpacity
           style={{
-            color: '#0c0b09',
-            fontSize: 12,
-            marginBottom: 10,
+            backgroundColor: '#b6e7cc',
+            borderRadius: 5,
+            width: 100,
+            borderWidth: 1,
             marginTop: 10,
-            marginRight: 10,
-            marginLeft: 10,
-            textAlign: 'center',
-            fontFamily: 'HighTide-Sans',
-          }}>
-          {'Send'}
-        </Text>
-      </TouchableOpacity>
+            borderColor: '#eee7da',
+          }}
+          onPress={onSend}>
+          <Text
+            style={{
+              color: '#0c0b09',
+              fontSize: 12,
+              textAlign: 'center',
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginTop: 15,
+              marginBottom: 15,
+              fontFamily: 'HighTide-Sans',
+            }}>
+            {'Send'}
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{
+            backgroundColor: '#b6e7cc',
+            borderRadius: 5,
+            width: 100,
+            borderWidth: 1,
+            marginTop: 10,
+            borderColor: '#eee7da',
+          }}
+          onPress={onPressScroll}>
+          <Text
+            style={{
+              color: '#0c0b09',
+              fontSize: 12,
+              marginBottom: 10,
+              marginTop: 10,
+              marginRight: 10,
+              marginLeft: 10,
+              textAlign: 'center',
+              fontFamily: 'HighTide-Sans',
+            }}>
+            {'Scroll to bottom'}
+          </Text>
+        </TouchableOpacity>
+      </View>
       <Modal
         visible={modalVisible}
         animationType={'slide'}
