@@ -41,8 +41,9 @@ const MessageBoardScreen: FC = () => {
   const route = useRoute();
   const {fullName}: RouteParams = route.params || {};
   const {userPhotoFromDB}: RouteParams = route.params || {};
-  const {formattedDate}: RouteParams = route.params || {};
   const screenWidth = Dimensions.get('window').width;
+  const date = new Date();
+  const formattedDate = date.toDateString();
 
   const flatListRef = useRef<FlatList>(null!);
 
@@ -112,48 +113,36 @@ const MessageBoardScreen: FC = () => {
     <View
       style={{
         flex: 1,
-        flexDirection: 'row',
+        flexDirection: 'column',
         justifyContent: 'space-between',
         backgroundColor: '#e0e0e0',
         padding: 8,
         marginVertical: 8,
         borderRadius: 8,
       }}>
-      <View style={{alignItems: 'flex-start', flex: 1, marginRight: 10}}>
+      <View
+        style={{
+          alignItems: 'flex-start',
+          flex: 1,
+          marginRight: 10,
+          flexWrap: 'wrap',
+        }}>
+        <Text style={{fontSize: 16, fontFamily: 'HighTide-Sans'}}>
+          {item.title}
+        </Text>
         <Text
           style={{
             fontSize: 16,
-            fontWeight: '600',
-            fontFamily: 'HighTide-Sans',
+            fontFamily: 'Vonique64',
+            marginBottom: 10,
           }}>
-          {'Title: '}
-          <Text style={{fontSize: 16, fontFamily: 'Vonique64'}}>
-            {item.title}
-          </Text>
-        </Text>
-        <Text style={{fontSize: 16, fontFamily: 'HighTide-Sans'}}>
-          {'Message: '}
-          <Text
-            style={{
-              fontSize: 16,
-              fontFamily: 'Vonique64',
-              marginBottom: 10,
-            }}>
-            {item.text}
-          </Text>
+          {item.text}
         </Text>
       </View>
 
-      <View style={{alignItems: 'flex-end', flex: 1, marginLeft: 10}}>
-        <Text
-          style={{
-            fontSize: 12,
-            fontFamily: 'HighTide-Sans',
-          }}>
-          {'Date: '}
-          <Text style={{fontSize: 12, fontFamily: 'Vonique64'}}>
-            {item.date}
-          </Text>
+      <View style={{alignItems: 'flex-end', flex: 1}}>
+        <Text style={{fontSize: 12, fontFamily: 'HighTide-Sans'}}>
+          {item.date}
         </Text>
         <View
           style={{
@@ -162,6 +151,7 @@ const MessageBoardScreen: FC = () => {
             alignItems: 'baseline',
             backgroundColor: '#b6e7cc',
             borderRadius: 8,
+            maxHeight: 40,
           }}>
           <Image
             style={{

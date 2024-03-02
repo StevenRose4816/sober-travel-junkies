@@ -215,8 +215,8 @@ const HomeScreen: FC = () => {
   const [bio, setBio] = useState('');
   const [initialBio, setInitialBio] = useState('');
 
-  const date = new Date();
-  const formattedDate = date.toDateString();
+  // const date = new Date();
+  // const formattedDate = date.toDateString();
 
   const checkName = () => {
     if (
@@ -404,7 +404,6 @@ const HomeScreen: FC = () => {
     navigation.navigate('MessageBoardScreen', {
       fullName: fullName,
       userPhotoFromDB: userPhotoFromDB,
-      formattedDate: formattedDate,
     });
   };
 
@@ -444,6 +443,8 @@ const HomeScreen: FC = () => {
                       marginBottom: 10,
                       borderRadius: 5,
                       opacity: fadeAnim,
+                      borderColor: '#eee7da',
+                      borderWidth: 2,
                     }}
                     source={{uri: userPhotoFromDB}}></Animated.Image>
                 ) : (
@@ -455,6 +456,8 @@ const HomeScreen: FC = () => {
                       marginLeft: 10,
                       marginBottom: 10,
                       opacity: fadeAnim,
+                      borderColor: '#eee7da',
+                      borderWidth: 2,
                     }}
                     source={
                       {uri: userPhoto} ||
@@ -587,10 +590,7 @@ const HomeScreen: FC = () => {
                 <View
                   style={{
                     backgroundColor: '#eee7da',
-                    marginTop: 10,
-                    marginLeft: 10,
-                    marginRight: 10,
-                    marginBottom: 10,
+                    margin: 10,
                     borderRadius: 5,
                   }}>
                   <Text
@@ -620,10 +620,7 @@ const HomeScreen: FC = () => {
                       color: '#0c0b09',
                       fontSize: 12,
                       fontWeight: '600',
-                      marginBottom: 10,
-                      marginTop: 10,
-                      marginRight: 10,
-                      marginLeft: 10,
+                      margin: 10,
                       textAlign: 'center',
                       fontFamily: 'HighTide-Sans',
                     }}>
@@ -651,6 +648,8 @@ const HomeScreen: FC = () => {
                         width: screenWidth * 0.95,
                         borderRadius: 5,
                         opacity: fadeAnim,
+                        borderColor: '#eee7da',
+                        borderWidth: 2,
                       }}
                       source={
                         !userPhoto
@@ -665,6 +664,8 @@ const HomeScreen: FC = () => {
                         width: screenWidth * 0.95,
                         borderRadius: 5,
                         opacity: fadeAnim,
+                        borderColor: '#eee7da',
+                        borderWidth: 2,
                       }}
                       source={{uri: userPhoto || userPhotoFromDB}}
                     />
@@ -1298,6 +1299,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'grey',
     justifyContent: 'center',
     alignItems: 'center',
+    borderColor: '#eee7da',
+    borderWidth: 2,
   },
   modalView4: {
     flex: 1,
