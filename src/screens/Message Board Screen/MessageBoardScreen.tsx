@@ -49,10 +49,6 @@ const MessageBoardScreen: FC = () => {
   const formattedTime = date.toLocaleTimeString();
   const [replyingTo, setReplyingTo] = useState<Message | null>(null);
   const [isReply, setIsReply] = useState(false);
-  const [showReply, setShowReply] = useState(false);
-  const [messagesToShowReplies, setMessagesToShowReplies] = useState<Message[]>(
-    [],
-  );
 
   const flatListRef = useRef<FlatList>(null!);
 
@@ -88,7 +84,7 @@ const MessageBoardScreen: FC = () => {
         ...messages,
         {
           text: newMessage,
-          id: userId,
+          id: Math.random().toString(),
           title: newTitle,
           name: fullName,
           photo: userPhotoFromDB,
@@ -110,7 +106,7 @@ const MessageBoardScreen: FC = () => {
     if (newMessage.trim() !== '' && replyingTo) {
       const reply: Message = {
         text: newMessage,
-        id: userId,
+        id: Math.random().toString(),
         name: fullName,
         photo: userPhotoFromDB,
         date: formattedDate,
@@ -126,7 +122,7 @@ const MessageBoardScreen: FC = () => {
       setNewMessage('');
       setReplyingTo(null);
       readData();
-      setIsReply(false);
+      // setIsReply(false);
       flatListRef.current.scrollToEnd();
     }
     console.log('Reply sent.');
@@ -148,8 +144,8 @@ const MessageBoardScreen: FC = () => {
   };
 
   const onPressMessage = (item: Message) => {
+    toggleModal();
     setReplyingTo(item);
-    setShowReply(prevState => !prevState);
   };
 
   const onPressYesSubmit = () => {
@@ -160,9 +156,7 @@ const MessageBoardScreen: FC = () => {
   const renderItem = ({item}: {item: Message}) => (
     <>
       <View>
-        <TouchableOpacity
-          onPress={() => onPressMessage(item)}
-          disabled={!item.replies}>
+        <TouchableOpacity onPress={() => onPressMessage(item)}>
           <View
             style={{
               flex: 1,
@@ -241,7 +235,7 @@ const MessageBoardScreen: FC = () => {
           </View>
         </TouchableOpacity>
       </View>
-      {item.replies && showReply && replyingTo?.id === item.id && (
+      {item.replies && item.replies.length > 0 && (
         <View>
           {item.replies.map(reply => (
             <TouchableOpacity onPress={() => onPressMessage(item)}>
@@ -353,7 +347,7 @@ const MessageBoardScreen: FC = () => {
         <FlatList
           ref={flatListRef}
           data={messages}
-          keyExtractor={item => `${item.id}-${Math.random().toString()}`}
+          keyExtractor={() => Math.random().toString()}
           renderItem={renderItem}
         />
       )}
