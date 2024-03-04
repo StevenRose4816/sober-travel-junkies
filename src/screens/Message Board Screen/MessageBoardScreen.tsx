@@ -33,6 +33,7 @@ interface Message {
 }
 
 const MessageBoardScreen: FC = () => {
+  const userId = auth().currentUser?.uid as string;
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState<string>('');
   const [newTitle, setNewTitle] = useState<string>('');
@@ -69,7 +70,6 @@ const MessageBoardScreen: FC = () => {
         console.log('Data: ', data);
         setMessages(data.messages);
         setData(true);
-        console.log('First Message: ', data.messages[0].text);
       } else {
         console.log('No data available');
       }
@@ -98,7 +98,7 @@ const MessageBoardScreen: FC = () => {
       setNewMessage('');
       onSetTitle(newTitle);
       readData();
-      flatListRef.current.scrollToEnd();
+      flatListRef.current && flatListRef.current.scrollToEnd();
     }
   };
 
@@ -154,102 +154,173 @@ const MessageBoardScreen: FC = () => {
   };
 
   const renderItem = ({item}: {item: Message}) => (
-    <TouchableOpacity onPress={() => onPressMessage(item)}>
-      <View
-        style={{
-          flex: 1,
-          flexDirection: 'column',
-          backgroundColor: '#e0e0e0',
-          padding: 8,
-          marginVertical: 8,
-          borderRadius: 8,
-        }}>
-        <Text style={{fontSize: 16, fontFamily: 'HighTide-Sans'}}>
-          {item.title}
-        </Text>
-        <Text
-          style={{
-            fontSize: 16,
-            fontFamily: 'Vonique64',
-            marginBottom: 10,
-          }}>
-          {item.text}
-        </Text>
-        {item.replies && item.replies.length > 0 && (
+    <>
+      <View>
+        <TouchableOpacity onPress={() => onPressMessage(item)}>
           <View
             style={{
-              marginLeft: 20,
-              backgroundColor: '#d9d9d9',
-              borderRadius: 8,
+              flex: 1,
+              flexDirection: 'column',
+              backgroundColor: '#e0e0e0',
               padding: 8,
+              marginVertical: 8,
+              borderRadius: 8,
             }}>
-            {item.replies.map(reply => (
-              <View key={reply.id}>
+            <Text style={{fontSize: 16, fontFamily: 'HighTide-Sans'}}>
+              {item.title}
+            </Text>
+            <Text
+              style={{
+                fontSize: 16,
+                fontFamily: 'Vonique64',
+                marginBottom: 10,
+              }}>
+              {item.text}
+            </Text>
+            <View style={{alignItems: 'flex-end', flexDirection: 'row'}}>
+              <View style={{flexDirection: 'column'}}>
                 <Text
                   style={{
-                    fontSize: 14,
+                    fontSize: 12,
                     fontFamily: 'HighTide-Sans',
+                    opacity: 0.4,
                     marginBottom: 5,
                   }}>
-                  {reply.name}: {reply.text}
+                  {item.time}
+                </Text>
+                <Text
+                  style={{
+                    fontSize: 12,
+                    fontFamily: 'HighTide-Sans',
+                    opacity: 0.6,
+                  }}>
+                  {item.date}
                 </Text>
               </View>
-            ))}
-          </View>
-        )}
-        <View style={{alignItems: 'flex-end', flexDirection: 'row'}}>
-          <View style={{flexDirection: 'column'}}>
-            <Text
-              style={{
-                fontSize: 12,
-                fontFamily: 'HighTide-Sans',
-                opacity: 0.4,
-                marginBottom: 5,
-              }}>
-              {item.time}
-            </Text>
-            <Text
-              style={{fontSize: 12, fontFamily: 'HighTide-Sans', opacity: 0.6}}>
-              {item.date}
-            </Text>
-          </View>
-          <View style={{alignItems: 'flex-end', flex: 1}}>
-            <View
-              style={{
-                flex: 1,
-                flexDirection: 'row',
-                alignItems: 'baseline',
-                backgroundColor: '#b6e7cc',
-                borderRadius: 8,
-                maxHeight: 40,
-              }}>
-              <Image
-                style={{
-                  height: 30,
-                  width: 30,
-                  borderRadius: 50,
-                  margin: 5,
-                }}
-                source={
-                  item.photo
-                    ? {uri: item.photo}
-                    : require('../../Images/profilepictureicon.png')
-                }></Image>
-              <Text
-                style={{
-                  fontSize: 12,
-                  marginLeft: 5,
-                  marginRight: 5,
-                  marginBottom: 5,
-                  fontFamily: 'HighTide-Sans',
-                }}>
-                {'. . . ' + item.name}
-              </Text>
+              <View style={{alignItems: 'flex-end', flex: 1}}>
+                <View
+                  style={{
+                    flex: 1,
+                    flexDirection: 'row',
+                    alignItems: 'baseline',
+                    backgroundColor: '#b6e7cc',
+                    borderRadius: 8,
+                    maxHeight: 40,
+                  }}>
+                  <Image
+                    style={{
+                      height: 30,
+                      width: 30,
+                      borderRadius: 50,
+                      margin: 5,
+                    }}
+                    source={
+                      item.photo
+                        ? {uri: item.photo}
+                        : require('../../Images/profilepictureicon.png')
+                    }></Image>
+                  <Text
+                    style={{
+                      fontSize: 12,
+                      marginLeft: 5,
+                      marginRight: 5,
+                      marginBottom: 5,
+                      fontFamily: 'HighTide-Sans',
+                    }}>
+                    {'. . . ' + item.name}
+                  </Text>
+                </View>
+              </View>
             </View>
           </View>
-        </View>
+        </TouchableOpacity>
       </View>
-    </TouchableOpacity>
+      {item.replies && item.replies.length > 0 && (
+        <View>
+          {item.replies.map(reply => (
+            <TouchableOpacity onPress={() => onPressMessage(item)}>
+              <View
+                style={{
+                  flex: 1,
+                  flexDirection: 'column',
+                  backgroundColor: '#d9d9d940',
+                  padding: 8,
+                  marginVertical: 8,
+                  marginLeft: 30,
+                  borderRadius: 8,
+                }}>
+                <Text style={{fontSize: 16, fontFamily: 'HighTide-Sans'}}>
+                  {reply.title}
+                </Text>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    fontFamily: 'Vonique64',
+                    marginBottom: 10,
+                  }}>
+                  {reply.text}
+                </Text>
+                <View style={{alignItems: 'flex-end', flexDirection: 'row'}}>
+                  <View style={{flexDirection: 'column'}}>
+                    <Text
+                      style={{
+                        fontSize: 12,
+                        fontFamily: 'HighTide-Sans',
+                        opacity: 0.4,
+                        marginBottom: 5,
+                      }}>
+                      {reply.time}
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: 12,
+                        fontFamily: 'HighTide-Sans',
+                        opacity: 0.6,
+                      }}>
+                      {reply.date}
+                    </Text>
+                  </View>
+                  <View style={{alignItems: 'flex-end', flex: 1}}>
+                    <View
+                      style={{
+                        flex: 1,
+                        flexDirection: 'row',
+                        alignItems: 'baseline',
+                        backgroundColor: '#b6e7cc',
+                        borderRadius: 8,
+                        maxHeight: 40,
+                      }}>
+                      <Image
+                        style={{
+                          height: 30,
+                          width: 30,
+                          borderRadius: 50,
+                          margin: 5,
+                        }}
+                        source={
+                          reply.photo
+                            ? {uri: reply.photo}
+                            : require('../../Images/profilepictureicon.png')
+                        }></Image>
+                      <Text
+                        style={{
+                          fontSize: 12,
+                          marginLeft: 5,
+                          marginRight: 5,
+                          marginBottom: 5,
+                          fontFamily: 'HighTide-Sans',
+                        }}>
+                        {'. . . ' + reply.name}
+                      </Text>
+                    </View>
+                  </View>
+                </View>
+              </View>
+            </TouchableOpacity>
+          ))}
+        </View>
+      )}
+    </>
   );
   return (
     <View
@@ -274,17 +345,11 @@ const MessageBoardScreen: FC = () => {
         <FlatList
           ref={flatListRef}
           data={messages}
-          keyExtractor={item => item.id}
+          keyExtractor={item => `${item.id}-${item.date}`}
           renderItem={renderItem}
         />
       )}
       <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.input}
-          placeholder="Set the title of your message..."
-          value={newTitle}
-          onChangeText={title => setNewTitle(title)}
-        />
         <TextInput
           style={styles.input2}
           placeholder="Type your message..."
@@ -468,7 +533,7 @@ const styles = StyleSheet.create({
     fontFamily: 'HighTide-Sans',
   },
   input2: {
-    height: 60,
+    height: 90,
     padding: 8,
     borderWidth: 1,
     borderColor: '#ccc',
