@@ -286,7 +286,7 @@ const MessageBoardScreen: FC = () => {
                         flex: 1,
                         flexDirection: 'row',
                         alignItems: 'baseline',
-                        backgroundColor: '#b6e7cc',
+                        backgroundColor: '#b6e7cc60',
                         borderRadius: 8,
                         maxHeight: 40,
                       }}>
@@ -296,6 +296,7 @@ const MessageBoardScreen: FC = () => {
                           width: 30,
                           borderRadius: 50,
                           margin: 5,
+                          opacity: 0.7,
                         }}
                         source={
                           reply.photo
@@ -309,6 +310,7 @@ const MessageBoardScreen: FC = () => {
                           marginRight: 5,
                           marginBottom: 5,
                           fontFamily: 'HighTide-Sans',
+                          opacity: 0.7,
                         }}>
                         {'. . . ' + reply.name}
                       </Text>

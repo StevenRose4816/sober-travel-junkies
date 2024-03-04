@@ -107,7 +107,6 @@ const HomeScreen: FC = () => {
         const data = snapshot.val();
         setData(data);
         setDataFlag(true);
-        console.log('data: ', data);
         setAddress(data.address || '');
         setFullName(data.username || '');
         setPhoneNumber(data.phoneNumber || '');
@@ -214,9 +213,6 @@ const HomeScreen: FC = () => {
   const [showTripModal, setShowTripModal] = useState(false);
   const [bio, setBio] = useState('');
   const [initialBio, setInitialBio] = useState('');
-
-  // const date = new Date();
-  // const formattedDate = date.toDateString();
 
   const checkName = () => {
     if (
@@ -333,7 +329,7 @@ const HomeScreen: FC = () => {
     setFirstPhotoPressed(true);
     setTimeout(() => {
       toggleBackgroundPhotoModal();
-    }, 500);
+    }, 300);
     source();
   };
 
@@ -344,7 +340,7 @@ const HomeScreen: FC = () => {
     setSecondPhotoPressed(true);
     setTimeout(() => {
       toggleBackgroundPhotoModal();
-    }, 500);
+    }, 300);
     source();
   };
 
@@ -355,7 +351,7 @@ const HomeScreen: FC = () => {
     setThirdPhotoPressed(true);
     setTimeout(() => {
       toggleBackgroundPhotoModal();
-    }, 500);
+    }, 300);
     source();
   };
 
@@ -366,7 +362,7 @@ const HomeScreen: FC = () => {
     setFourthPhotoPressed(true);
     setTimeout(() => {
       toggleBackgroundPhotoModal();
-    }, 500);
+    }, 300);
     source();
   };
 
