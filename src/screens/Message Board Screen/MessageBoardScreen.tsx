@@ -19,7 +19,6 @@ import {useRoute} from '@react-navigation/native';
 interface RouteParams {
   fullName?: string;
   userPhotoFromDB?: string;
-  formattedDate?: string;
 }
 
 interface Message {
@@ -29,6 +28,8 @@ interface Message {
   name?: string;
   photo?: string;
   date?: string;
+  time?: string;
+  replies?: Message[];
 }
 
 const MessageBoardScreen: FC = () => {
@@ -44,13 +45,14 @@ const MessageBoardScreen: FC = () => {
   const screenWidth = Dimensions.get('window').width;
   const date = new Date();
   const formattedDate = date.toDateString();
+  const formattedTime = date.toLocaleTimeString();
+  const [replyingTo, setReplyingTo] = useState<Message | null>(null);
+  const [isReply, setIsReply] = useState(false);
 
   const flatListRef = useRef<FlatList>(null!);
 
   useEffect(() => {
     readData();
-    console.log('Messages in db: ', messages);
-    console.log('FullName: ', fullName);
   }, []);
 
   const create = async (messages: any) => {
@@ -87,6 +89,8 @@ const MessageBoardScreen: FC = () => {
           name: fullName,
           photo: userPhotoFromDB,
           date: formattedDate,
+          time: formattedTime,
+          replies: [],
         },
       ];
       setMessages(updatedMessages);
@@ -96,6 +100,32 @@ const MessageBoardScreen: FC = () => {
       readData();
       flatListRef.current.scrollToEnd();
     }
+  };
+
+  const onSendReply = async () => {
+    if (newMessage.trim() !== '' && replyingTo) {
+      const reply: Message = {
+        text: newMessage,
+        id: Math.random().toString(),
+        name: fullName,
+        photo: userPhotoFromDB,
+        date: formattedDate,
+        time: formattedTime,
+      };
+      const updatedMessages = messages.map(message =>
+        message.id === replyingTo.id
+          ? {...message, replies: [...(message.replies || []), reply]}
+          : message,
+      );
+      setMessages(updatedMessages);
+      await create(updatedMessages);
+      setNewMessage('');
+      setReplyingTo(null);
+      readData();
+      setIsReply(false);
+      flatListRef.current.scrollToEnd();
+    }
+    console.log('Reply sent.');
   };
 
   const onSetTitle = (title: string) => {
@@ -110,71 +140,116 @@ const MessageBoardScreen: FC = () => {
   };
 
   const onPressScroll = () => {
-    flatListRef.current.scrollToEnd();
+    flatListRef.current?.scrollToEnd();
+  };
+
+  const onPressMessage = (item: Message) => {
+    setReplyingTo(item);
+    toggleModal();
+  };
+
+  const onPressYesSubmit = () => {
+    toggleModal();
+    setIsReply(true);
   };
 
   const renderItem = ({item}: {item: Message}) => (
-    <View
-      style={{
-        flex: 1,
-        flexDirection: 'column',
-        backgroundColor: '#e0e0e0',
-        padding: 8,
-        marginVertical: 8,
-        borderRadius: 8,
-      }}>
-      <Text style={{fontSize: 16, fontFamily: 'HighTide-Sans'}}>
-        {item.title}
-      </Text>
-      <Text
+    <TouchableOpacity onPress={() => onPressMessage(item)}>
+      <View
         style={{
-          fontSize: 16,
-          fontFamily: 'Vonique64',
-          marginBottom: 10,
+          flex: 1,
+          flexDirection: 'column',
+          backgroundColor: '#e0e0e0',
+          padding: 8,
+          marginVertical: 8,
+          borderRadius: 8,
         }}>
-        {item.text}
-      </Text>
-      <View style={{alignItems: 'flex-end', flexDirection: 'row'}}>
-        <Text style={{fontSize: 12, fontFamily: 'HighTide-Sans', opacity: 0.5}}>
-          {item.date}
+        <Text style={{fontSize: 16, fontFamily: 'HighTide-Sans'}}>
+          {item.title}
         </Text>
-
-        <View style={{alignItems: 'flex-end', flex: 1}}>
+        <Text
+          style={{
+            fontSize: 16,
+            fontFamily: 'Vonique64',
+            marginBottom: 10,
+          }}>
+          {item.text}
+        </Text>
+        {item.replies && item.replies.length > 0 && (
           <View
             style={{
-              flex: 1,
-              flexDirection: 'row',
-              alignItems: 'baseline',
-              backgroundColor: '#b6e7cc',
+              marginLeft: 20,
+              backgroundColor: '#d9d9d9',
               borderRadius: 8,
-              maxHeight: 40,
+              padding: 8,
             }}>
-            <Image
-              style={{
-                height: 30,
-                width: 30,
-                borderRadius: 50,
-                margin: 5,
-              }}
-              source={
-                item.photo
-                  ? {uri: item.photo}
-                  : require('../../Images/profilepictureicon.png')
-              }></Image>
+            {item.replies.map(reply => (
+              <View key={reply.id}>
+                <Text
+                  style={{
+                    fontSize: 14,
+                    fontFamily: 'HighTide-Sans',
+                    marginBottom: 5,
+                  }}>
+                  {reply.name}: {reply.text}
+                </Text>
+              </View>
+            ))}
+          </View>
+        )}
+        <View style={{alignItems: 'flex-end', flexDirection: 'row'}}>
+          <View style={{flexDirection: 'column'}}>
             <Text
               style={{
                 fontSize: 12,
-                marginLeft: 5,
-                marginRight: 5,
-                marginBottom: 5,
                 fontFamily: 'HighTide-Sans',
+                opacity: 0.4,
+                marginBottom: 5,
               }}>
-              {'. . . ' + item.name}
+              {item.time}
             </Text>
+            <Text
+              style={{fontSize: 12, fontFamily: 'HighTide-Sans', opacity: 0.6}}>
+              {item.date}
+            </Text>
+          </View>
+          <View style={{alignItems: 'flex-end', flex: 1}}>
+            <View
+              style={{
+                flex: 1,
+                flexDirection: 'row',
+                alignItems: 'baseline',
+                backgroundColor: '#b6e7cc',
+                borderRadius: 8,
+                maxHeight: 40,
+              }}>
+              <Image
+                style={{
+                  height: 30,
+                  width: 30,
+                  borderRadius: 50,
+                  margin: 5,
+                }}
+                source={
+                  item.photo
+                    ? {uri: item.photo}
+                    : require('../../Images/profilepictureicon.png')
+                }></Image>
+              <Text
+                style={{
+                  fontSize: 12,
+                  marginLeft: 5,
+                  marginRight: 5,
+                  marginBottom: 5,
+                  fontFamily: 'HighTide-Sans',
+                }}>
+                {'. . . ' + item.name}
+              </Text>
+            </View>
           </View>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
   return (
     <View
@@ -211,7 +286,7 @@ const MessageBoardScreen: FC = () => {
           onChangeText={title => setNewTitle(title)}
         />
         <TextInput
-          style={styles.input}
+          style={styles.input2}
           placeholder="Type your message..."
           value={newMessage}
           onChangeText={newMessage => setNewMessage(newMessage)}
@@ -232,20 +307,36 @@ const MessageBoardScreen: FC = () => {
             marginTop: 10,
             borderColor: '#eee7da',
           }}
-          onPress={onSend}>
-          <Text
-            style={{
-              color: '#0c0b09',
-              fontSize: 12,
-              textAlign: 'center',
-              justifyContent: 'center',
-              alignItems: 'center',
-              marginTop: 15,
-              marginBottom: 15,
-              fontFamily: 'HighTide-Sans',
-            }}>
-            {'Send'}
-          </Text>
+          onPress={!isReply ? onSend : onSendReply}>
+          {!isReply ? (
+            <Text
+              style={{
+                color: '#0c0b09',
+                fontSize: 12,
+                textAlign: 'center',
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginTop: 15,
+                marginBottom: 15,
+                fontFamily: 'HighTide-Sans',
+              }}>
+              {'Send'}
+            </Text>
+          ) : (
+            <Text
+              style={{
+                color: '#0c0b09',
+                fontSize: 12,
+                textAlign: 'center',
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginTop: 15,
+                marginBottom: 15,
+                fontFamily: 'HighTide-Sans',
+              }}>
+              {'Reply'}
+            </Text>
+          )}
         </TouchableOpacity>
         <TouchableOpacity
           style={{
@@ -277,12 +368,67 @@ const MessageBoardScreen: FC = () => {
         animationType={'slide'}
         transparent={true}
         onRequestClose={toggleModal}>
-        <View style={styles.modalView5}>
-          <TouchableOpacity onPress={toggleModal}>
-            <View style={styles.modalView6}>
-              <Text>{'Modal'}</Text>
+        <View style={styles.modalView1}>
+          <View style={styles.modalView2}>
+            <View style={styles.modalView3}>
+              <Text
+                style={{
+                  color: '#eee7da',
+                  fontSize: 21,
+                  textAlign: 'center',
+                  fontFamily: 'HighTide-Sans',
+                }}>
+                {'Reply?'}
+              </Text>
             </View>
-          </TouchableOpacity>
+            <View style={styles.modalView4}>
+              <TouchableOpacity
+                onPress={onPressYesSubmit}
+                style={{
+                  marginTop: 20,
+                  backgroundColor: 'blue',
+                  minHeight: 50,
+                  justifyContent: 'center',
+                  borderRadius: 5,
+                  marginHorizontal: 10,
+                  width: 120,
+                }}>
+                <Text
+                  style={{
+                    textAlign: 'center',
+                    color: '#eee7da',
+                    fontSize: 21,
+                    backgroundColor: 'blue',
+                    fontFamily: 'HighTide-Sans',
+                  }}>
+                  {'Yes'}
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={toggleModal}
+                style={{
+                  marginTop: 20,
+                  backgroundColor: 'blue',
+                  minHeight: 50,
+                  justifyContent: 'center',
+                  borderRadius: 5,
+                  marginHorizontal: 10,
+                  width: 120,
+                }}>
+                <Text
+                  style={{
+                    textAlign: 'center',
+                    color: '#eee7da',
+                    fontSize: 21,
+                    backgroundColor: 'blue',
+                    borderRadius: 5,
+                    fontFamily: 'HighTide-Sans',
+                  }}>
+                  {'No'}
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
         </View>
       </Modal>
     </View>
@@ -309,12 +455,20 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     backgroundColor: '#eee7da',
-    height: 100,
+    height: 90,
     justifyContent: 'flex-start',
     borderRadius: 8,
   },
   input: {
-    height: 50,
+    height: 30,
+    padding: 8,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 8,
+    fontFamily: 'HighTide-Sans',
+  },
+  input2: {
+    height: 60,
     padding: 8,
     borderWidth: 1,
     borderColor: '#ccc',
@@ -328,10 +482,56 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   modalView6: {
+    borderColor: '#0c0b09',
     backgroundColor: '#b6e7cc',
-    height: 300,
-    width: 300,
+    minHeight: 300,
+    width: '80%',
+    justifyContent: 'center',
     borderRadius: 5,
+    padding: 20,
+  },
+  modalView1: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalView2: {
+    borderColor: '#0c0b09',
+    backgroundColor: '#b6e7cc',
+    minHeight: 300,
+    width: '80%',
+    justifyContent: 'center',
+    borderRadius: 5,
+    padding: 20,
+  },
+  modalView3: {
+    flex: 1,
+    borderRadius: 5,
+    backgroundColor: 'grey',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderColor: '#eee7da',
+    borderWidth: 2,
+  },
+  modalView4: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  text1: {
+    borderRadius: 5,
+    marginTop: 10,
+    marginLeft: 10,
+    marginBottom: 10,
+    fontFamily: 'HighTide-Sans',
+  },
+  text2: {
+    borderRadius: 5,
+    marginTop: 10,
+    marginLeft: 10,
+    marginBottom: 10,
+    fontFamily: 'HighTide-Sans',
   },
 });
 
