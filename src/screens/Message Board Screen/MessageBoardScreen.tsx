@@ -39,6 +39,8 @@ const MessageBoardScreen: FC = () => {
   const [postedTitle, setPostedTitle] = useState<string>('');
   const [modalVisible, setModalVisible] = useState(false);
   const [data, setData] = useState(false);
+  const [dataObj, setDataObj] = useState('');
+
   const route = useRoute();
   const {fullName}: RouteParams = route.params || {};
   const {userPhotoFromDB}: RouteParams = route.params || {};
@@ -48,10 +50,6 @@ const MessageBoardScreen: FC = () => {
   const [replyingTo, setReplyingTo] = useState<Message | null>(null);
   const [isReply, setIsReply] = useState(false);
   const [showReplies, setShowReplies] = useState<string[]>([]);
-  const [selectedMessageId, setSelectedMessageId] = useState<string | null>(
-    null,
-  );
-  const [isOpen, setIsOpen] = useState(true);
 
   const flatListRef = useRef<FlatList>(null!);
 
@@ -71,6 +69,7 @@ const MessageBoardScreen: FC = () => {
       if (snapshot.exists()) {
         const data = snapshot.val();
         console.log('Data: ', data);
+        setDataObj(data);
         setMessages(data.messages);
         setData(true);
       } else {
@@ -148,7 +147,6 @@ const MessageBoardScreen: FC = () => {
 
   const onPressMessage = (item: Message) => {
     toggleModal();
-    setSelectedMessageId(item.id);
     setReplyingTo(item);
   };
 
@@ -166,8 +164,6 @@ const MessageBoardScreen: FC = () => {
       }
     });
   };
-
-  const onPressNo = () => {};
 
   const renderItem = ({item}: {item: Message}) => (
     <>

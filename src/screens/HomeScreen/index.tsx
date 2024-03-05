@@ -421,12 +421,11 @@ const HomeScreen: FC = () => {
             <View style={styles.nestedView1}>
               <Animated.Image
                 style={{
-                  height: 150,
-                  width: 150,
-                  marginTop: 10,
+                  height: 250,
+                  width: 250,
                   opacity: fadeAnim,
                 }}
-                source={require('../../Images/STJ.png')}></Animated.Image>
+                source={require('../../Images/STJLogoTransparent.png')}></Animated.Image>
             </View>
             {dataFlag && (
               <>
