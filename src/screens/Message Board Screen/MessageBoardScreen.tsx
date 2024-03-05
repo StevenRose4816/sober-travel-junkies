@@ -47,7 +47,7 @@ const MessageBoardScreen: FC = () => {
   const formattedTime = date.toLocaleTimeString();
   const [replyingTo, setReplyingTo] = useState<Message | null>(null);
   const [isReply, setIsReply] = useState(false);
-  const [showReply, setShowReply] = useState(false);
+  const [showReplies, setShowReplies] = useState<string[]>([]);
   const [selectedMessageId, setSelectedMessageId] = useState<string | null>(
     null,
   );
@@ -157,8 +157,13 @@ const MessageBoardScreen: FC = () => {
   };
 
   const onPressReplyTab = (messageId: string) => {
-    setShowReply(!showReply);
-    setSelectedMessageId(messageId === selectedMessageId ? null : messageId);
+    setShowReplies(prevState => {
+      if (prevState.includes(messageId)) {
+        return prevState.filter(id => id !== messageId);
+      } else {
+        return [...prevState, messageId];
+      }
+    });
   };
 
   const renderItem = ({item}: {item: Message}) => (
@@ -246,7 +251,7 @@ const MessageBoardScreen: FC = () => {
         {item.replies && (
           <TouchableOpacity onPress={() => onPressReplyTab(item.id)}>
             <View style={styles.redTab}>
-              {showReply ? (
+              {showReplies.includes(item.id) ? (
                 <Text
                   style={{
                     marginLeft: 5,
@@ -275,9 +280,9 @@ const MessageBoardScreen: FC = () => {
       </View>
       {item.replies &&
         item.replies.length > 0 &&
-        showReply &&
-        selectedMessageId === item.id && (
-          <View>
+        showReplies.includes(item.id) && (
+          <View
+            style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
             {item.replies.map(reply => (
               <View
                 key={reply.id}
@@ -289,7 +294,7 @@ const MessageBoardScreen: FC = () => {
                   marginTop: 10,
                   marginVertical: 8,
                   borderRadius: 8,
-                  maxWidth: '80%',
+                  minWidth: '90%',
                 }}>
                 <Text style={{fontSize: 16, fontFamily: 'HighTide-Sans'}}>
                   {reply.title}
