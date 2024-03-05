@@ -186,7 +186,7 @@ const MessageBoardScreen: FC = () => {
             <Text
               style={{
                 fontSize: 16,
-                fontFamily: 'Vonique64',
+                fontFamily: 'HighTide-Sans',
                 marginBottom: 10,
               }}>
               {item.text}
@@ -285,7 +285,7 @@ const MessageBoardScreen: FC = () => {
             style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
             {item.replies.map(reply => (
               <View
-                key={reply.id}
+                key={`reply-${reply.id}-${Date.now()}`}
                 style={{
                   flex: 1,
                   flexDirection: 'column',
@@ -302,7 +302,7 @@ const MessageBoardScreen: FC = () => {
                 <Text
                   style={{
                     fontSize: 16,
-                    fontFamily: 'Vonique64',
+                    fontFamily: 'HighTide-Sans',
                     marginBottom: 10,
                   }}>
                   {reply.text}
