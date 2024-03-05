@@ -347,7 +347,7 @@ const MessageBoardScreen: FC = () => {
         <FlatList
           ref={flatListRef}
           data={messages}
-          keyExtractor={() => Math.random().toString()}
+          keyExtractor={item => item.id}
           renderItem={renderItem}
         />
       )}
