@@ -33,7 +33,6 @@ interface Message {
 }
 
 const MessageBoardScreen: FC = () => {
-  const userId = auth().currentUser?.uid as string;
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState<string>('');
   const [newTitle, setNewTitle] = useState<string>('');
@@ -43,12 +42,16 @@ const MessageBoardScreen: FC = () => {
   const route = useRoute();
   const {fullName}: RouteParams = route.params || {};
   const {userPhotoFromDB}: RouteParams = route.params || {};
-  const screenWidth = Dimensions.get('window').width;
   const date = new Date();
   const formattedDate = date.toDateString();
   const formattedTime = date.toLocaleTimeString();
   const [replyingTo, setReplyingTo] = useState<Message | null>(null);
   const [isReply, setIsReply] = useState(false);
+  const [showReply, setShowReply] = useState(false);
+  const [selectedMessageId, setSelectedMessageId] = useState<string | null>(
+    null,
+  );
+  const [isOpen, setIsOpen] = useState(true);
 
   const flatListRef = useRef<FlatList>(null!);
 
@@ -56,7 +59,7 @@ const MessageBoardScreen: FC = () => {
     readData();
   }, []);
 
-  const create = async (messages: any) => {
+  const create = async (messages: Message[]) => {
     await set(ref(db, 'messages/'), {messages});
     console.log('db created/updated');
   };
@@ -106,7 +109,7 @@ const MessageBoardScreen: FC = () => {
     if (newMessage.trim() !== '' && replyingTo) {
       const reply: Message = {
         text: newMessage,
-        id: Math.random().toString(),
+        id: replyingTo.id,
         name: fullName,
         photo: userPhotoFromDB,
         date: formattedDate,
@@ -122,7 +125,6 @@ const MessageBoardScreen: FC = () => {
       setNewMessage('');
       setReplyingTo(null);
       readData();
-      // setIsReply(false);
       flatListRef.current.scrollToEnd();
     }
     console.log('Reply sent.');
@@ -145,12 +147,18 @@ const MessageBoardScreen: FC = () => {
 
   const onPressMessage = (item: Message) => {
     toggleModal();
+    setSelectedMessageId(item.id);
     setReplyingTo(item);
   };
 
   const onPressYesSubmit = () => {
     toggleModal();
     setIsReply(true);
+  };
+
+  const onPressReplyTab = (messageId: string) => {
+    setShowReply(!showReply);
+    setSelectedMessageId(messageId === selectedMessageId ? null : messageId);
   };
 
   const renderItem = ({item}: {item: Message}) => (
@@ -161,9 +169,10 @@ const MessageBoardScreen: FC = () => {
             style={{
               flex: 1,
               flexDirection: 'column',
-              backgroundColor: '#e0e0e0',
+              backgroundColor: '#b6e7cc',
               padding: 8,
               marginVertical: 8,
+              marginBottom: 20,
               borderRadius: 8,
             }}>
             <Text style={{fontSize: 16, fontFamily: 'HighTide-Sans'}}>
@@ -234,20 +243,53 @@ const MessageBoardScreen: FC = () => {
             </View>
           </View>
         </TouchableOpacity>
+        {item.replies && (
+          <TouchableOpacity onPress={() => onPressReplyTab(item.id)}>
+            <View style={styles.redTab}>
+              {showReply ? (
+                <Text
+                  style={{
+                    marginLeft: 5,
+                    marginTop: 10,
+                    fontSize: 8,
+                    fontFamily: 'HighTide-Sans',
+                    opacity: 0.7,
+                  }}>
+                  {'hide'}
+                </Text>
+              ) : (
+                <Text
+                  style={{
+                    marginLeft: 5,
+                    marginTop: 10,
+                    fontSize: 8,
+                    fontFamily: 'HighTide-Sans',
+                    opacity: 0.7,
+                  }}>
+                  {'show'}
+                </Text>
+              )}
+            </View>
+          </TouchableOpacity>
+        )}
       </View>
-      {item.replies && item.replies.length > 0 && (
-        <View>
-          {item.replies.map(reply => (
-            <TouchableOpacity onPress={() => onPressMessage(item)}>
+      {item.replies &&
+        item.replies.length > 0 &&
+        showReply &&
+        selectedMessageId === item.id && (
+          <View>
+            {item.replies.map(reply => (
               <View
+                key={reply.id}
                 style={{
                   flex: 1,
                   flexDirection: 'column',
                   backgroundColor: '#d9d9d940',
                   padding: 8,
+                  marginTop: 10,
                   marginVertical: 8,
-                  marginLeft: 30,
                   borderRadius: 8,
+                  maxWidth: '80%',
                 }}>
                 <Text style={{fontSize: 16, fontFamily: 'HighTide-Sans'}}>
                   {reply.title}
@@ -318,10 +360,9 @@ const MessageBoardScreen: FC = () => {
                   </View>
                 </View>
               </View>
-            </TouchableOpacity>
-          ))}
-        </View>
-      )}
+            ))}
+          </View>
+        )}
     </>
   );
   return (
@@ -599,6 +640,15 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginBottom: 10,
     fontFamily: 'HighTide-Sans',
+  },
+  redTab: {
+    position: 'absolute',
+    bottom: 5,
+    left: '5%',
+    width: '90%',
+    height: 20,
+    backgroundColor: '#b6e7cc90',
+    borderRadius: 5,
   },
 });
 
