@@ -127,6 +127,7 @@ const MessageBoardScreen: FC = () => {
       readData();
       flatListRef.current.scrollToEnd();
     }
+    setIsReply(!isReply);
     console.log('Reply sent.');
   };
 
@@ -165,6 +166,8 @@ const MessageBoardScreen: FC = () => {
       }
     });
   };
+
+  const onPressNo = () => {};
 
   const renderItem = ({item}: {item: Message}) => (
     <>
@@ -216,8 +219,10 @@ const MessageBoardScreen: FC = () => {
                   style={{
                     flex: 1,
                     flexDirection: 'row',
-                    alignItems: 'baseline',
+                    alignItems: 'flex-end',
                     backgroundColor: '#b6e7cc',
+                    borderColor: '#eee7da',
+                    borderWidth: 1,
                     borderRadius: 8,
                     maxHeight: 40,
                   }}>
@@ -236,12 +241,11 @@ const MessageBoardScreen: FC = () => {
                   <Text
                     style={{
                       fontSize: 12,
-                      marginLeft: 5,
                       marginRight: 5,
-                      marginBottom: 5,
+                      marginBottom: 10,
                       fontFamily: 'HighTide-Sans',
                     }}>
-                    {'. . . ' + item.name}
+                    {' ' + item.name}
                   </Text>
                 </View>
               </View>
@@ -285,7 +289,7 @@ const MessageBoardScreen: FC = () => {
             style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
             {item.replies.map(reply => (
               <View
-                key={`reply-${reply.id}-${Date.now()}`}
+                key={reply.id + reply.time}
                 style={{
                   flex: 1,
                   flexDirection: 'column',
@@ -327,12 +331,12 @@ const MessageBoardScreen: FC = () => {
                       {reply.date}
                     </Text>
                   </View>
-                  <View style={{alignItems: 'flex-end', flex: 1}}>
+                  <View style={{flex: 1, alignItems: 'flex-end'}}>
                     <View
                       style={{
                         flex: 1,
                         flexDirection: 'row',
-                        alignItems: 'baseline',
+                        alignItems: 'flex-end',
                         backgroundColor: '#b6e7cc60',
                         borderRadius: 8,
                         maxHeight: 40,
@@ -355,11 +359,11 @@ const MessageBoardScreen: FC = () => {
                           fontSize: 12,
                           marginLeft: 5,
                           marginRight: 5,
-                          marginBottom: 5,
+                          marginBottom: 10,
                           fontFamily: 'HighTide-Sans',
                           opacity: 0.7,
                         }}>
-                        {'. . . ' + reply.name}
+                        {'' + reply.name}
                       </Text>
                     </View>
                   </View>
