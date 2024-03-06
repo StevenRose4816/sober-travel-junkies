@@ -4,6 +4,7 @@ import {
   Dimensions,
   FlatList,
   Image,
+  ImageBackground,
   Modal,
   StyleSheet,
   Text,
@@ -19,6 +20,7 @@ import {useRoute} from '@react-navigation/native';
 interface RouteParams {
   fullName?: string;
   userPhotoFromDB?: string;
+  backgroundPhoto?: number;
 }
 
 interface Message {
@@ -40,10 +42,9 @@ const MessageBoardScreen: FC = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [data, setData] = useState(false);
   const [dataObj, setDataObj] = useState('');
-
   const route = useRoute();
-  const {fullName}: RouteParams = route.params || {};
-  const {userPhotoFromDB}: RouteParams = route.params || {};
+  const {userPhotoFromDB, fullName, backgroundPhoto}: RouteParams =
+    route.params || {};
   const date = new Date();
   const formattedDate = date.toDateString();
   const formattedTime = date.toLocaleTimeString();
@@ -55,6 +56,7 @@ const MessageBoardScreen: FC = () => {
 
   useEffect(() => {
     readData();
+    console.log('backgroundPhoto: ', backgroundPhoto);
   }, []);
 
   const create = async (messages: Message[]) => {
@@ -289,7 +291,7 @@ const MessageBoardScreen: FC = () => {
                 style={{
                   flex: 1,
                   flexDirection: 'column',
-                  backgroundColor: '#d9d9d940',
+                  backgroundColor: '#b6e7cc95',
                   padding: 8,
                   marginTop: 10,
                   marginVertical: 8,
@@ -376,35 +378,43 @@ const MessageBoardScreen: FC = () => {
         flex: 1,
         justifyContent: 'flex-start',
         padding: 16,
-        borderColor: '#b6e7cc',
-        borderWidth: 3,
+        borderTopColor: '#b6e7cc',
+        borderBottomColor: '#b6e7cc',
+        borderTopWidth: 3,
+        borderBottomWidth: 3,
         borderRadius: 5,
       }}>
-      <Text
-        style={{
-          fontSize: 18,
-          textAlign: 'center',
-          marginBottom: 10,
-          fontFamily: 'HighTide-Sans',
-        }}>
-        {'Message Board'}
-      </Text>
-      {data && (
-        <FlatList
-          ref={flatListRef}
-          data={messages}
-          keyExtractor={item => item.id}
-          renderItem={renderItem}
-        />
-      )}
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.input2}
-          placeholder="Type your message..."
-          value={newMessage}
-          onChangeText={newMessage => setNewMessage(newMessage)}
-        />
-      </View>
+      <ImageBackground
+        style={{flex: 1}}
+        imageStyle={{opacity: 0.3}}
+        source={backgroundPhoto}>
+        <Text
+          style={{
+            fontSize: 18,
+            textAlign: 'center',
+            marginBottom: 10,
+            marginTop: 20,
+            fontFamily: 'HighTide-Sans',
+          }}>
+          {'Message Board'}
+        </Text>
+        {data && (
+          <FlatList
+            ref={flatListRef}
+            data={messages}
+            keyExtractor={item => item.id}
+            renderItem={renderItem}
+          />
+        )}
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.input2}
+            placeholder="Type your message..."
+            value={newMessage}
+            onChangeText={newMessage => setNewMessage(newMessage)}
+          />
+        </View>
+      </ImageBackground>
       <View
         style={{
           flexDirection: 'row',
@@ -585,7 +595,6 @@ const styles = StyleSheet.create({
     padding: 8,
     borderWidth: 1,
     borderColor: '#ccc',
-    borderRadius: 8,
     fontFamily: 'HighTide-Sans',
   },
   modalView5: {
@@ -652,7 +661,7 @@ const styles = StyleSheet.create({
     left: '5%',
     width: '90%',
     height: 20,
-    backgroundColor: '#b6e7cc90',
+    backgroundColor: '#b6e7cc95',
     borderRadius: 5,
   },
 });

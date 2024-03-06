@@ -189,7 +189,6 @@ const HomeScreen: FC = () => {
 
   const email = useAppSelector(state => state.auth.user?.email);
   const userPhoto = useAppSelector(state => state.user.userPhoto);
-  const backgroundPhoto = useAppSelector(state => state.backgroundPhoto.uri);
   const [fullName, setFullName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [address, setAddress] = useState('');
@@ -378,15 +377,20 @@ const HomeScreen: FC = () => {
 
   const source = () => {
     if (firstPhotoPressed) {
-      return require('../../Images/backgroundPhoto1.jpeg');
+      const background1 = require('../../Images/backgroundPhoto1.jpeg');
+      return background1;
     } else if (secondPhotoPressed) {
-      return require('../../Images/backgroundPhoto2.jpeg');
+      const background2 = require('../../Images/backgroundPhoto2.jpeg');
+      return background2;
     } else if (thirdPhotoPressed) {
-      return require('../../Images/backgroundPhoto3.jpeg');
+      const background3 = require('../../Images/backgroundPhoto3.jpeg');
+      return background3;
     } else if (fourthPhotoPressed) {
-      return require('../../Images/backgroundPhoto4.jpeg');
+      const background4 = require('../../Images/backgroundPhoto4.jpeg');
+      return background4;
     } else {
-      return require('../../Images/backgroundPhoto1.jpeg');
+      const background1 = require('../../Images/backgroundPhoto1.jpeg');
+      return background1;
     }
   };
 
@@ -400,6 +404,7 @@ const HomeScreen: FC = () => {
     navigation.navigate('MessageBoardScreen', {
       fullName: fullName,
       userPhotoFromDB: userPhotoFromDB,
+      backgroundPhoto: source(),
     });
   };
 
@@ -421,8 +426,8 @@ const HomeScreen: FC = () => {
             <View style={styles.nestedView1}>
               <Animated.Image
                 style={{
-                  height: 250,
-                  width: 250,
+                  height: 150,
+                  width: 300,
                   opacity: fadeAnim,
                 }}
                 source={require('../../Images/STJLogoTransparent.png')}></Animated.Image>
@@ -432,8 +437,8 @@ const HomeScreen: FC = () => {
                 {userPhotoFromDB ? (
                   <Animated.Image
                     style={{
-                      height: 300,
-                      width: screenWidth * 0.95,
+                      height: 200,
+                      width: 200,
                       marginLeft: 10,
                       marginBottom: 10,
                       borderRadius: 5,
@@ -445,8 +450,8 @@ const HomeScreen: FC = () => {
                 ) : (
                   <Animated.Image
                     style={{
-                      height: 300,
-                      width: screenWidth * 0.95,
+                      height: 200,
+                      width: 200,
                       borderRadius: 5,
                       marginLeft: 10,
                       marginBottom: 10,
@@ -454,10 +459,7 @@ const HomeScreen: FC = () => {
                       borderColor: '#eee7da',
                       borderWidth: 2,
                     }}
-                    source={
-                      {uri: userPhoto} ||
-                      require('../../Images/profilepictureicon.png')
-                    }></Animated.Image>
+                    source={require('../../Images/profilepictureicon.png')}></Animated.Image>
                 )}
                 <TouchableOpacity
                   onPress={onPressTripInfo}
@@ -465,7 +467,7 @@ const HomeScreen: FC = () => {
                     backgroundColor: '#b6e7cc',
                     marginLeft: 10,
                     marginTop: 10,
-                    marginRight: screenWidth * 0.4,
+                    width: 250,
                     borderRadius: 5,
                     borderWidth: 1,
                     borderColor: '#eee7da',
@@ -479,7 +481,7 @@ const HomeScreen: FC = () => {
                     marginLeft: 10,
                     marginTop: 10,
                     marginBottom: 10,
-                    marginRight: screenWidth * 0.4,
+                    width: 250,
                     borderRadius: 5,
                     borderWidth: 1,
                     borderColor: '#eee7da',
@@ -491,7 +493,7 @@ const HomeScreen: FC = () => {
                   style={{
                     backgroundColor: '#b6e7cc',
                     marginLeft: 10,
-                    marginRight: screenWidth * 0.4,
+                    width: 250,
                     borderRadius: 5,
                     borderWidth: 1,
                     borderColor: '#eee7da',
@@ -1223,20 +1225,15 @@ const styles = StyleSheet.create({
     borderColor: '#f86ca7',
   },
   nestedView1: {
-    borderRadius: 10,
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
     width: '100%',
-    marginBottom: 30,
-    backgroundColor: '#eee7da95',
   },
   nestedView2: {
     backgroundColor: '#eee7da',
     marginTop: 10,
     marginLeft: 10,
     marginRight: 10,
-    marginBottom: 10,
     borderRadius: 5,
   },
   nestedView3: {
@@ -1320,15 +1317,16 @@ const styles = StyleSheet.create({
   text1: {
     borderRadius: 5,
     marginTop: 10,
-    marginLeft: 10,
     marginBottom: 10,
+    textAlign: 'center',
     fontFamily: 'HighTide-Sans',
   },
   text2: {
     borderRadius: 5,
     marginTop: 10,
-    marginLeft: 10,
+    marginLeft: 20,
     marginBottom: 10,
+    textAlign: 'left',
     fontFamily: 'HighTide-Sans',
   },
 });
