@@ -377,7 +377,7 @@ const MessageBoardScreen: FC = () => {
       style={{
         flex: 1,
         justifyContent: 'flex-start',
-        padding: 16,
+        padding: 8,
         borderTopColor: '#b6e7cc',
         borderBottomColor: '#b6e7cc',
         borderTopWidth: 3,
@@ -398,6 +398,7 @@ const MessageBoardScreen: FC = () => {
           }}>
           {'Message Board'}
         </Text>
+
         {data && (
           <FlatList
             ref={flatListRef}

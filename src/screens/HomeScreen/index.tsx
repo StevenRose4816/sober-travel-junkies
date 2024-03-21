@@ -408,10 +408,10 @@ const HomeScreen: FC = () => {
     });
   };
 
-  useEffect(() => {
-    console.log('userPhoto: ', userPhoto);
-    console.log('userPhotoFromDB: ', userPhotoFromDB);
-  }, [userPhoto, userPhotoFromDB]);
+  // useEffect(() => {
+  //   console.log('userPhoto: ', userPhoto);
+  //   console.log('userPhotoFromDB: ', userPhotoFromDB);
+  // }, [userPhoto, userPhotoFromDB]);
 
   return (
     <View style={{flex: 1, backgroundColor: '#eee7da'}}>
@@ -459,7 +459,10 @@ const HomeScreen: FC = () => {
                       borderColor: '#eee7da',
                       borderWidth: 2,
                     }}
-                    source={require('../../Images/profilepictureicon.png')}></Animated.Image>
+                    source={
+                      {uri: userPhoto} ||
+                      require('../../Images/profilepictureicon.png')
+                    }></Animated.Image>
                 )}
                 <TouchableOpacity
                   onPress={onPressTripInfo}

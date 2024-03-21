@@ -1,15 +1,11 @@
 import {PayloadAction, createSlice} from '@reduxjs/toolkit';
 
-export interface IUserPhoto {
-  uri: string;
-}
-
 interface UserState {
-  userPhoto: IUserPhoto | null;
+  userPhoto: string | undefined;
 }
 
 const initialState: UserState = {
-  userPhoto: null,
+  userPhoto: undefined,
 };
 
 type SetUserPhoto = PayloadAction<{userPhoto: any}>;
