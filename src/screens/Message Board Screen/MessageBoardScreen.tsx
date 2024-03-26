@@ -16,6 +16,7 @@ import auth from '@react-native-firebase/auth';
 import {get, onValue, ref, set} from 'firebase/database';
 import {db} from '../HomeScreen/FirebaseConfigurations';
 import {useRoute} from '@react-navigation/native';
+import {useAppSelector} from '../../hooks';
 
 interface RouteParams {
   fullName?: string;
@@ -51,12 +52,14 @@ const MessageBoardScreen: FC = () => {
   const [replyingTo, setReplyingTo] = useState<Message | null>(null);
   const [isReply, setIsReply] = useState(false);
   const [showReplies, setShowReplies] = useState<string[]>([]);
+  const bgPhoto = useAppSelector(state => state.user.uri);
+  console.log('bgPhoto: ', bgPhoto);
+  console.log('backgroundPhoto: ', backgroundPhoto);
 
   const flatListRef = useRef<FlatList>(null!);
 
   useEffect(() => {
     readData();
-    console.log('backgroundPhoto: ', backgroundPhoto);
   }, []);
 
   const create = async (messages: Message[]) => {
@@ -127,6 +130,7 @@ const MessageBoardScreen: FC = () => {
       setReplyingTo(null);
       readData();
       flatListRef.current.scrollToEnd();
+      setShowReplies(state => [...state, replyingTo.id]);
     }
     setIsReply(!isReply);
     console.log('Reply sent.');
@@ -158,11 +162,11 @@ const MessageBoardScreen: FC = () => {
   };
 
   const onPressReplyTab = (messageId: string) => {
-    setShowReplies(prevState => {
-      if (prevState.includes(messageId)) {
-        return prevState.filter(id => id !== messageId);
+    setShowReplies(state => {
+      if (state.includes(messageId)) {
+        return state.filter(id => id !== messageId);
       } else {
-        return [...prevState, messageId];
+        return [...state, messageId];
       }
     });
   };

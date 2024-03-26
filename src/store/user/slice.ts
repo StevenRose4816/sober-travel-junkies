@@ -2,13 +2,13 @@ import {PayloadAction, createSlice} from '@reduxjs/toolkit';
 
 interface UserState {
   userPhoto: string | undefined;
-  uri: string | null;
+  uri: string | undefined;
   selected: boolean;
 }
 
 const initialState: UserState = {
   userPhoto: undefined,
-  uri: null,
+  uri: undefined,
   selected: false,
 };
 

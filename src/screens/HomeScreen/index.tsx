@@ -18,7 +18,7 @@ import {useAppSelector} from '../../hooks';
 import {db} from '../HomeScreen/FirebaseConfigurations';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
-import {setUserPhoto} from '../../store/user/slice';
+import {setBackgroundPhoto, setUserPhoto} from '../../store/user/slice';
 import {DocPicker} from '../../components/DocumentPicker';
 import {setSelected} from '../../store/user/slice';
 import {setSelectedDocument} from '../../store/document/slice';
@@ -378,18 +378,23 @@ const HomeScreen: FC = () => {
   const source = () => {
     if (firstPhotoPressed) {
       const background1 = require('../../Images/backgroundPhoto1.jpeg');
+      // dispatch(setBackgroundPhoto({uri: background1}));
       return background1;
     } else if (secondPhotoPressed) {
       const background2 = require('../../Images/backgroundPhoto2.jpeg');
+      // dispatch(setBackgroundPhoto({uri: background2}));
       return background2;
     } else if (thirdPhotoPressed) {
       const background3 = require('../../Images/backgroundPhoto3.jpeg');
+      // dispatch(setBackgroundPhoto({uri: background3}));
       return background3;
     } else if (fourthPhotoPressed) {
       const background4 = require('../../Images/backgroundPhoto4.jpeg');
+      // dispatch(setBackgroundPhoto({uri: background4}));
       return background4;
     } else {
       const background1 = require('../../Images/backgroundPhoto1.jpeg');
+      // dispatch(setBackgroundPhoto({uri: background1}));
       return background1;
     }
   };
