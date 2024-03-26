@@ -648,8 +648,6 @@ const HomeScreen: FC = () => {
                         width: screenWidth * 0.95,
                         borderRadius: 5,
                         opacity: fadeAnim,
-                        borderColor: '#eee7da',
-                        borderWidth: 2,
                       }}
                       source={
                         !userPhoto

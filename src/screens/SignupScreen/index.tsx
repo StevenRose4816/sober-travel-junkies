@@ -18,7 +18,7 @@ const SignupScreen: FC = () => {
   const [emailPasswordError, setEmailPasswordError] = useState('');
 
   const toggleModal = () => {
-    setModalVisible(!modalVisible);
+    setModalVisible(modalVisible => !modalVisible);
   };
 
   const mapUser = () => {
@@ -96,34 +96,6 @@ const SignupScreen: FC = () => {
           value={password}
           onChangeText={val => setPassword(val)}
           secureTextEntry={true}
-        />
-        <Text style={{marginLeft: 10, marginTop: 10}}>{'name'}</Text>
-        <TextInput
-          style={{
-            backgroundColor: 'white',
-            marginHorizontal: 10,
-            borderRadius: 5,
-            minHeight: 50,
-            borderWidth: 1,
-            borderColor: 'black',
-          }}
-          value={name}
-          onChangeText={val => setName(val)}
-          secureTextEntry={false}
-        />
-        <Text style={{marginLeft: 10, marginTop: 10}}>{'phone number'}</Text>
-        <TextInput
-          style={{
-            backgroundColor: 'white',
-            marginHorizontal: 10,
-            borderRadius: 5,
-            minHeight: 50,
-            borderWidth: 1,
-            borderColor: 'black',
-          }}
-          value={phoneNumber}
-          onChangeText={val => setPhoneNumber(val)}
-          secureTextEntry={false}
         />
         <View
           style={{

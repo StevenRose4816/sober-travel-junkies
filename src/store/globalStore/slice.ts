@@ -1,9 +1,9 @@
 import {PayloadAction, createSlice} from '@reduxjs/toolkit';
 
 export interface IUserInfo {
-  phoneNumber: string | number;
-  address: string;
-  name: string;
+  phoneNumber?: string | number;
+  address?: string;
+  name?: string;
 }
 
 const initialState: IUserInfo = {

@@ -129,8 +129,8 @@ const MessageBoardScreen: FC = () => {
       setNewMessage('');
       setReplyingTo(null);
       readData();
-      flatListRef.current.scrollToEnd();
       setShowReplies(state => [...state, replyingTo.id]);
+      flatListRef.current.scrollToEnd();
     }
     setIsReply(!isReply);
     console.log('Reply sent.');

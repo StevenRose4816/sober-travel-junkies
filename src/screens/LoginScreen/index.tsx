@@ -14,17 +14,23 @@ import {
 import auth from '@react-native-firebase/auth';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {useAppSelector} from '../../hooks';
+import {IUserInfo, setUserInfo} from '../../store/globalStore/slice';
+import {useDispatch} from 'react-redux';
 
 const LoginScreen: FC = () => {
+  const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
+  const [showsignupModal, setShowsignupModal] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(undefined);
   const address = useAppSelector(state => state.globalStore.address);
   const name = useAppSelector(state => state.globalStore.name);
   const phoneNumber = useAppSelector(state => state.globalStore.phoneNumber);
   const user = auth().currentUser;
+  const userInfo = useAppSelector(state => state.globalStore);
   const screenWidth = Dimensions.get('window').width;
+  const [emailPasswordError, setEmailPasswordError] = useState('');
 
   useEffect(() => {
     console.log('Updated address=', address);
@@ -34,7 +40,7 @@ const LoginScreen: FC = () => {
   }, [address, name, phoneNumber, user]);
 
   const toggleModal = () => {
-    setModalVisible(!modalVisible);
+    setModalVisible(modalVisible => !modalVisible);
   };
 
   const {navigate} = useNavigation();
@@ -42,6 +48,8 @@ const LoginScreen: FC = () => {
   const route = useRoute();
   const routes = navigation.getState()?.routes;
   const prevRoute = routes[routes.length - 2];
+  const [passwordCreate, setPasswordCreate] = useState('');
+  const [emailCreate, setEmailCreate] = useState('');
 
   useEffect(() => {
     console.log('current route is ', route);
@@ -58,6 +66,55 @@ const LoginScreen: FC = () => {
       toggleModal();
     }
   };
+
+  const onPressCreateAccount = () => {
+    toggleModal();
+  };
+
+  const mapUser = () => {
+    // Captures textInput to access in global state.
+    if (!!userInfo) {
+      const mappedUserInfo: IUserInfo = {
+        phoneNumber: phoneNumber,
+        address: address,
+        name: name,
+      };
+      dispatch(setUserInfo(mappedUserInfo));
+    } else {
+      console.log('no userInfo');
+    }
+  };
+
+  const signUp = async () => {
+    try {
+      await auth().createUserWithEmailAndPassword(email, password);
+      mapUser();
+    } catch (e: any) {
+      console.log(e);
+      setErrorMessage(e);
+      toggleModal();
+    }
+  };
+
+  const checkEmail = (email: string) => {
+    if (email.length <= 12 && password.length <= 6) {
+      setEmailPasswordError(
+        'Your email address needs to be at least 12 characters and your password need to be at least 6 characters.',
+      );
+      toggleModal();
+    } else if (email.length >= 12 && password.length <= 6) {
+      setEmailPasswordError('Your password needs to be at least 6 characters.');
+      toggleModal();
+    } else if (password.length >= 6 && email.length <= 12) {
+      setEmailPasswordError(
+        'Your email address needs to be at least 12 characters.',
+      );
+      toggleModal();
+    } else {
+      signUp();
+    }
+  };
+
   return (
     <ImageBackground
       source={require('../../Images/STJLogin.jpeg')}
@@ -167,7 +224,7 @@ const LoginScreen: FC = () => {
       </View>
       <TouchableOpacity
         // @ts-ignore
-        onPress={() => navigate('SignupScreen')}
+        onPress={() => onPressCreateAccount()}
         style={{
           backgroundColor: '#b6e7cc',
           minHeight: 35,
@@ -211,9 +268,45 @@ const LoginScreen: FC = () => {
               borderRadius: 5,
               padding: 20,
             }}>
-            <Text style={{textAlign: 'center', color: '#0c0b09'}}>
-              {errorMessage + '\n'}
-            </Text>
+            {!!errorMessage ? (
+              <Text style={{textAlign: 'center', color: '#0c0b09'}}>
+                {errorMessage + '\n'}
+              </Text>
+            ) : (
+              <>
+                <Text style={{marginLeft: 10, marginTop: 10}}>{'email'}</Text>
+                <TextInput
+                  style={{
+                    backgroundColor: 'white',
+                    marginHorizontal: 10,
+                    borderRadius: 5,
+                    minHeight: 50,
+                    borderWidth: 1,
+                    borderColor: 'black',
+                  }}
+                  autoCapitalize={'none'}
+                  value={emailCreate}
+                  onChangeText={val => setEmailCreate(val)}
+                  secureTextEntry={false}
+                />
+                <Text style={{marginLeft: 10, marginTop: 10}}>
+                  {'password'}
+                </Text>
+                <TextInput
+                  style={{
+                    backgroundColor: 'white',
+                    marginHorizontal: 10,
+                    borderRadius: 5,
+                    minHeight: 50,
+                    borderWidth: 1,
+                    borderColor: 'black',
+                  }}
+                  value={passwordCreate}
+                  onChangeText={val => setPasswordCreate(val)}
+                  secureTextEntry={true}
+                />
+              </>
+            )}
             <TouchableOpacity
               onPress={toggleModal}
               style={{
