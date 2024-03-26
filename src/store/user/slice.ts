@@ -2,13 +2,19 @@ import {PayloadAction, createSlice} from '@reduxjs/toolkit';
 
 interface UserState {
   userPhoto: string | undefined;
+  uri: string | null;
+  selected: boolean;
 }
 
 const initialState: UserState = {
   userPhoto: undefined,
+  uri: null,
+  selected: false,
 };
 
 type SetUserPhoto = PayloadAction<{userPhoto: any}>;
+type SetUri = PayloadAction<{uri: any}>;
+type SetSelected = PayloadAction<{selected: boolean}>;
 
 const userPhotoSlice = createSlice({
   name: 'userPhoto',
@@ -17,9 +23,17 @@ const userPhotoSlice = createSlice({
     setUserPhoto: (state, {payload}: SetUserPhoto) => {
       state.userPhoto = payload.userPhoto;
     },
+    setBackgroundPhoto: (state, {payload}: SetUri) => {
+      state.uri = payload.uri;
+    },
+    setSelected: (state, {payload}: SetSelected) => {
+      state.selected = payload.selected;
+    },
   },
 });
 
 export const {setUserPhoto} = userPhotoSlice.actions;
+export const {setBackgroundPhoto} = userPhotoSlice.actions;
+export const {setSelected} = userPhotoSlice.actions;
 
 export const userPhotoReducer = userPhotoSlice.reducer;

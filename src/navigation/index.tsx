@@ -20,7 +20,10 @@ export type RootStackParamList = {
   LoginScreen: undefined;
   SignupScreen: undefined;
   TripInfoScreen: undefined;
-  BooneScreen: undefined;
+  BooneScreen: {
+    setShowTripModal: boolean;
+    toggleBackgroundPhotoModal: () => void;
+  };
   MessageBoardScreen: {
     fullName: string;
     userPhotoFromDB: string;
@@ -28,14 +31,7 @@ export type RootStackParamList = {
   };
 };
 
-// export type RootStackProps<T extends keyof RootStackParamList> = {
-//   navigation: NativeStackNavigationProp<RootStackParamList, T>;
-//   route: NativeStackScreenProps<RootStackParamList, T>['route'];
-// };
-
 const RootStack = createNativeStackNavigator<RootStackParamList>();
-
-// const RootStack = createNativeStackNavigator();
 
 const RootNavigator: FC = () => {
   const [initializing, setInitializing] = useState(true);

@@ -20,7 +20,7 @@ import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import {setUserPhoto} from '../../store/user/slice';
 import {DocPicker} from '../../components/DocumentPicker';
-import {setSelected} from '../../store/photo/slice';
+import {setSelected} from '../../store/user/slice';
 import {setSelectedDocument} from '../../store/document/slice';
 
 const HomeScreen: FC = () => {
@@ -200,7 +200,7 @@ const HomeScreen: FC = () => {
   const [showCameraIcon, setShowCameraIcon] = useState(true);
   const [showCheckListIcon, setShowCheckListIcon] = useState(true);
   const [showFolderIcon, setShowFolderIcon] = useState(true);
-  const photoSelected = useAppSelector(state => state.photo.selected);
+  const photoSelected = useAppSelector(state => state.user.selected);
   const selectedDocument = useAppSelector(
     state => state.document.selectedDocument,
   );
@@ -408,14 +408,9 @@ const HomeScreen: FC = () => {
     });
   };
 
-  // useEffect(() => {
-  //   console.log('userPhoto: ', userPhoto);
-  //   console.log('userPhotoFromDB: ', userPhotoFromDB);
-  // }, [userPhoto, userPhotoFromDB]);
-
   return (
     <View style={{flex: 1, backgroundColor: '#eee7da'}}>
-      {data && (
+      {
         <ScrollView
           ref={scrollViewRef}
           style={{flex: 1, backgroundColor: 'transparent'}}>
@@ -994,7 +989,7 @@ const HomeScreen: FC = () => {
             )}
           </ImageBackground>
         </ScrollView>
-      )}
+      }
       <Modal
         visible={modalVisible}
         animationType={'slide'}

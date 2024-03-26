@@ -22,7 +22,7 @@ const SignupScreen: FC = () => {
   };
 
   const mapUser = () => {
-    // Captures textInput for phoneNumber and address to access in global state.
+    // Captures textInput to access in global state.
     if (!!userInfo) {
       const mappedUserInfo: IUserInfo = {
         phoneNumber: phoneNumber,
@@ -80,7 +80,7 @@ const SignupScreen: FC = () => {
           }}
           autoCapitalize={'none'}
           value={email}
-          onChangeText={setEmail}
+          onChangeText={val => setEmail(val)}
           secureTextEntry={false}
         />
         <Text style={{marginLeft: 10, marginTop: 10}}>{'password'}</Text>
@@ -94,8 +94,36 @@ const SignupScreen: FC = () => {
             borderColor: 'black',
           }}
           value={password}
-          onChangeText={setPassword}
+          onChangeText={val => setPassword(val)}
           secureTextEntry={true}
+        />
+        <Text style={{marginLeft: 10, marginTop: 10}}>{'name'}</Text>
+        <TextInput
+          style={{
+            backgroundColor: 'white',
+            marginHorizontal: 10,
+            borderRadius: 5,
+            minHeight: 50,
+            borderWidth: 1,
+            borderColor: 'black',
+          }}
+          value={name}
+          onChangeText={val => setName(val)}
+          secureTextEntry={false}
+        />
+        <Text style={{marginLeft: 10, marginTop: 10}}>{'phone number'}</Text>
+        <TextInput
+          style={{
+            backgroundColor: 'white',
+            marginHorizontal: 10,
+            borderRadius: 5,
+            minHeight: 50,
+            borderWidth: 1,
+            borderColor: 'black',
+          }}
+          value={phoneNumber}
+          onChangeText={val => setPhoneNumber(val)}
+          secureTextEntry={false}
         />
         <View
           style={{
