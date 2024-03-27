@@ -5,8 +5,6 @@ import {
   TextInput,
   TouchableOpacity,
   Modal,
-  Button,
-  useWindowDimensions,
   Image,
   ImageBackground,
   Dimensions,
@@ -22,15 +20,13 @@ const LoginScreen: FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
-  const [showsignupModal, setShowsignupModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState(undefined);
-  const address = useAppSelector(state => state.globalStore.address);
-  const name = useAppSelector(state => state.globalStore.name);
-  const phoneNumber = useAppSelector(state => state.globalStore.phoneNumber);
   const user = auth().currentUser;
   const userInfo = useAppSelector(state => state.globalStore);
   const screenWidth = Dimensions.get('window').width;
-  const [emailPasswordError, setEmailPasswordError] = useState('');
+  const [name, setName] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [address, setAddress] = useState('');
 
   useEffect(() => {
     console.log('Updated address=', address);
@@ -43,7 +39,6 @@ const LoginScreen: FC = () => {
     setModalVisible(modalVisible => !modalVisible);
   };
 
-  const {navigate} = useNavigation();
   const navigation = useNavigation();
   const route = useRoute();
   const routes = navigation.getState()?.routes;
@@ -69,6 +64,7 @@ const LoginScreen: FC = () => {
 
   const onPressCreateAccount = () => {
     toggleModal();
+    errorMessage && setErrorMessage(undefined);
   };
 
   const mapUser = () => {
@@ -87,29 +83,24 @@ const LoginScreen: FC = () => {
 
   const signUp = async () => {
     try {
-      await auth().createUserWithEmailAndPassword(email, password);
+      await auth().createUserWithEmailAndPassword(emailCreate, passwordCreate);
       mapUser();
     } catch (e: any) {
       console.log(e);
       setErrorMessage(e);
-      toggleModal();
     }
   };
 
-  const checkEmail = (email: string) => {
-    if (email.length <= 12 && password.length <= 6) {
-      setEmailPasswordError(
-        'Your email address needs to be at least 12 characters and your password need to be at least 6 characters.',
-      );
-      toggleModal();
-    } else if (email.length >= 12 && password.length <= 6) {
-      setEmailPasswordError('Your password needs to be at least 6 characters.');
-      toggleModal();
-    } else if (password.length >= 6 && email.length <= 12) {
-      setEmailPasswordError(
-        'Your email address needs to be at least 12 characters.',
-      );
-      toggleModal();
+  const closeModal = () => {
+    setErrorMessage(undefined);
+    setPasswordCreate('');
+    setEmailCreate('');
+    toggleModal();
+  };
+
+  const onSubmit = () => {
+    if (!!errorMessage) {
+      setTimeout(() => toggleModal(), 500);
     } else {
       signUp();
     }
@@ -259,77 +250,90 @@ const LoginScreen: FC = () => {
             alignItems: 'center',
             backgroundColor: 'rgba(0, 0, 0, 0.5)',
           }}>
-          <View
+          <TouchableOpacity
             style={{
               backgroundColor: '#b6e7cc',
               minHeight: 300,
               width: '80%',
               justifyContent: 'center',
+              alignItems: 'center',
               borderRadius: 5,
               padding: 20,
-            }}>
+            }}
+            onPress={closeModal}>
             {!!errorMessage ? (
               <Text style={{textAlign: 'center', color: '#0c0b09'}}>
                 {errorMessage + '\n'}
               </Text>
             ) : (
               <>
-                <Text style={{marginLeft: 10, marginTop: 10}}>{'email'}</Text>
                 <TextInput
                   style={{
-                    backgroundColor: 'white',
+                    backgroundColor: '#0c0b09',
+                    color: '#eee7da',
+                    width: 175,
                     marginHorizontal: 10,
-                    borderRadius: 5,
-                    minHeight: 50,
+                    marginBottom: 10,
+                    borderRadius: 10,
+                    minHeight: 40,
                     borderWidth: 1,
                     borderColor: 'black',
+                    textAlign: 'center',
+                    fontFamily: 'Vonique64',
                   }}
+                  placeholder=" username"
+                  placeholderTextColor={'#eee7da'}
                   autoCapitalize={'none'}
                   value={emailCreate}
                   onChangeText={val => setEmailCreate(val)}
-                  secureTextEntry={false}
                 />
-                <Text style={{marginLeft: 10, marginTop: 10}}>
-                  {'password'}
-                </Text>
                 <TextInput
                   style={{
-                    backgroundColor: 'white',
+                    backgroundColor: '#0c0b09',
+                    color: '#eee7da',
+                    width: 175,
                     marginHorizontal: 10,
-                    borderRadius: 5,
-                    minHeight: 50,
+                    borderRadius: 10,
+                    minHeight: 40,
                     borderWidth: 1,
                     borderColor: 'black',
+                    textAlign: 'center',
+                    fontFamily: 'Vonique64',
                   }}
+                  placeholder=" password"
+                  placeholderTextColor={'#eee7da'}
+                  autoCapitalize={'none'}
+                  secureTextEntry={true}
                   value={passwordCreate}
                   onChangeText={val => setPasswordCreate(val)}
-                  secureTextEntry={true}
                 />
               </>
             )}
             <TouchableOpacity
-              onPress={toggleModal}
+              onPress={!!errorMessage ? closeModal : onSubmit}
               style={{
-                marginTop: 20,
-                backgroundColor: 'blue',
-                minHeight: 50,
+                backgroundColor: '#fb445c',
+                minHeight: 35,
+                width: screenWidth * 0.4,
                 justifyContent: 'center',
-                borderRadius: 5,
-                marginHorizontal: 10,
+                borderRadius: 10,
+                marginBottom: 80,
+                marginTop: 10,
               }}>
               <Text
                 style={{
+                  color: '#0c0b09',
+                  fontSize: 12,
                   textAlign: 'center',
-                  color: 'white',
-                  fontSize: 21,
-                  fontWeight: '600',
-                  backgroundColor: 'blue',
-                  borderRadius: 5,
+                  marginLeft: 10,
+                  marginRight: 10,
+                  marginTop: 5,
+                  fontFamily: 'Vonique64',
                 }}>
-                {'Close'}
+                {!!errorMessage ? 'Close' : 'Submit'}
               </Text>
             </TouchableOpacity>
-          </View>
+          </TouchableOpacity>
         </View>
       </Modal>
     </ImageBackground>
