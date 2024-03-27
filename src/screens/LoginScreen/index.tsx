@@ -28,13 +28,6 @@ const LoginScreen: FC = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [address, setAddress] = useState('');
 
-  useEffect(() => {
-    console.log('Updated address=', address);
-    console.log('name=', name);
-    console.log('phoneNumber=', phoneNumber);
-    console.log('user=', user);
-  }, [address, name, phoneNumber, user]);
-
   const toggleModal = () => {
     setModalVisible(modalVisible => !modalVisible);
   };
@@ -45,12 +38,6 @@ const LoginScreen: FC = () => {
   const prevRoute = routes[routes.length - 2];
   const [passwordCreate, setPasswordCreate] = useState('');
   const [emailCreate, setEmailCreate] = useState('');
-
-  useEffect(() => {
-    console.log('current route is ', route);
-    console.log('routes=', routes);
-    console.log('previous route=', prevRoute);
-  }, [routes, prevRoute]);
 
   const login = async () => {
     try {
@@ -87,7 +74,7 @@ const LoginScreen: FC = () => {
       mapUser();
     } catch (e: any) {
       console.log(e);
-      setErrorMessage(e);
+      setErrorMessage(e.message);
     }
   };
 
@@ -317,7 +304,6 @@ const LoginScreen: FC = () => {
                 width: screenWidth * 0.4,
                 justifyContent: 'center',
                 borderRadius: 10,
-                marginBottom: 80,
                 marginTop: 10,
               }}>
               <Text
