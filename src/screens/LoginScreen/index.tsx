@@ -69,6 +69,7 @@ const LoginScreen: FC = () => {
   };
 
   const signUp = async () => {
+    toggleModal();
     try {
       await auth().createUserWithEmailAndPassword(emailCreate, passwordCreate);
       mapUser();
