@@ -240,89 +240,103 @@ const LoginScreen: FC = () => {
             alignItems: 'center',
             backgroundColor: 'rgba(0, 0, 0, 0.5)',
           }}>
-          <TouchableOpacity
+          <View
             style={{
               backgroundColor: '#b6e7cc',
               minHeight: 300,
               width: '80%',
-              justifyContent: 'center',
-              alignItems: 'center',
+              // justifyContent: 'center',
+              // alignItems: 'center',
               borderRadius: 5,
               padding: 20,
-            }}
-            onPress={closeModal}>
-            {!!errorMessage ? (
-              <Text style={{textAlign: 'center', color: '#0c0b09'}}>
-                {errorMessage + '\n'}
-              </Text>
-            ) : (
-              <>
-                <TextInput
-                  style={{
-                    backgroundColor: '#0c0b09',
-                    color: '#eee7da',
-                    width: 175,
-                    marginHorizontal: 10,
-                    marginBottom: 10,
-                    borderRadius: 10,
-                    minHeight: 40,
-                    borderWidth: 1,
-                    borderColor: 'black',
-                    textAlign: 'center',
-                    fontFamily: 'Vonique64',
-                  }}
-                  placeholder=" username"
-                  placeholderTextColor={'#eee7da'}
-                  autoCapitalize={'none'}
-                  value={emailCreate}
-                  onChangeText={val => setEmailCreate(val)}
-                />
-                <TextInput
-                  style={{
-                    backgroundColor: '#0c0b09',
-                    color: '#eee7da',
-                    width: 175,
-                    marginHorizontal: 10,
-                    borderRadius: 10,
-                    minHeight: 40,
-                    borderWidth: 1,
-                    borderColor: 'black',
-                    textAlign: 'center',
-                    fontFamily: 'Vonique64',
-                  }}
-                  placeholder=" password"
-                  placeholderTextColor={'#eee7da'}
-                  autoCapitalize={'none'}
-                  secureTextEntry={true}
-                  value={passwordCreate}
-                  onChangeText={val => setPasswordCreate(val)}
-                />
-              </>
-            )}
-            <TouchableOpacity
-              onPress={!!errorMessage ? closeModal : onSubmit}
+            }}>
+            <View
               style={{
-                backgroundColor: '#fb445c',
-                minHeight: 35,
-                width: screenWidth * 0.4,
-                justifyContent: 'center',
-                borderRadius: 10,
-                marginTop: 10,
+                flex: 1,
+                flexDirection: 'row-reverse',
               }}>
-              <Text
+              <TouchableOpacity onPress={closeModal}>
+                <Image
+                  style={{height: 25, width: 25}}
+                  source={require('../../Images/close2.png')}></Image>
+              </TouchableOpacity>
+            </View>
+            <View
+              style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+              {!!errorMessage ? (
+                <Text style={{textAlign: 'center', color: '#0c0b09'}}>
+                  {errorMessage + '\n'}
+                </Text>
+              ) : (
+                <>
+                  <TextInput
+                    style={{
+                      backgroundColor: '#0c0b09',
+                      color: '#eee7da',
+                      width: 175,
+                      marginHorizontal: 10,
+                      marginBottom: 10,
+                      borderRadius: 10,
+                      minHeight: 40,
+                      borderWidth: 1,
+                      borderColor: 'black',
+                      textAlign: 'center',
+                      fontFamily: 'Vonique64',
+                    }}
+                    placeholder=" username"
+                    placeholderTextColor={'#eee7da'}
+                    autoCapitalize={'none'}
+                    value={emailCreate}
+                    onChangeText={val => setEmailCreate(val)}
+                  />
+                  <TextInput
+                    style={{
+                      backgroundColor: '#0c0b09',
+                      color: '#eee7da',
+                      width: 175,
+                      marginHorizontal: 10,
+                      borderRadius: 10,
+                      minHeight: 40,
+                      borderWidth: 1,
+                      borderColor: 'black',
+                      textAlign: 'center',
+                      fontFamily: 'Vonique64',
+                    }}
+                    placeholder=" password"
+                    placeholderTextColor={'#eee7da'}
+                    autoCapitalize={'none'}
+                    secureTextEntry={true}
+                    value={passwordCreate}
+                    onChangeText={val => setPasswordCreate(val)}
+                  />
+                </>
+              )}
+
+              <TouchableOpacity
+                onPress={!!errorMessage ? closeModal : onSubmit}
                 style={{
-                  color: '#0c0b09',
-                  fontSize: 12,
-                  textAlign: 'center',
-                  marginLeft: 10,
-                  marginRight: 10,
-                  marginTop: 5,
-                  fontFamily: 'Vonique64',
+                  backgroundColor: '#fb445c',
+                  minHeight: 35,
+                  width: screenWidth * 0.4,
+                  justifyContent: 'center',
+                  borderRadius: 10,
+                  marginTop: 10,
                 }}>
-                {!!errorMessage ? 'Close' : 'Submit'}
-              </Text>
-            </TouchableOpacity>
-          </TouchableOpacity>
+                <Text
+                  style={{
+                    color: '#0c0b09',
+                    fontSize: 12,
+                    textAlign: 'center',
+                    marginLeft: 10,
+                    marginRight: 10,
+                    marginTop: 5,
+                    fontFamily: 'Vonique64',
+                  }}>
+                  {!!errorMessage ? 'Close' : 'Submit'}
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
         </View>
       </Modal>
     </ImageBackground>

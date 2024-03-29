@@ -66,7 +66,13 @@ const RootNavigator: FC = () => {
   return (
     <NavigationContainer>
       {!!user ? (
-        <RootStack.Navigator screenOptions={{headerBackTitleVisible: false}}>
+        <RootStack.Navigator
+          screenOptions={{
+            headerBackTitleVisible: false,
+            headerShown: true,
+            headerTransparent: true,
+            headerTitle: '',
+          }}>
           <RootStack.Screen
             name={'HomeScreen'}
             component={HomeScreen}
@@ -114,7 +120,8 @@ const RootNavigator: FC = () => {
           />
         </RootStack.Navigator>
       ) : (
-        <RootStack.Navigator screenOptions={{headerBackTitleVisible: false}}>
+        <RootStack.Navigator
+          screenOptions={{headerBackTitleVisible: false, headerShown: false}}>
           <RootStack.Screen
             name={'LoginScreen'}
             component={LoginScreen}
