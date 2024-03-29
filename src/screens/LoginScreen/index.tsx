@@ -52,6 +52,8 @@ const LoginScreen: FC = () => {
   const onPressCreateAccount = () => {
     toggleModal();
     errorMessage && setErrorMessage(undefined);
+    setEmailCreate('');
+    setPasswordCreate('');
   };
 
   const mapUser = () => {
@@ -69,7 +71,6 @@ const LoginScreen: FC = () => {
   };
 
   const signUp = async () => {
-    toggleModal();
     try {
       await auth().createUserWithEmailAndPassword(emailCreate, passwordCreate);
       mapUser();
@@ -90,6 +91,7 @@ const LoginScreen: FC = () => {
     if (!!errorMessage) {
       setTimeout(() => toggleModal(), 500);
     } else {
+      setTimeout(() => toggleModal(), 1000);
       signUp();
     }
   };
