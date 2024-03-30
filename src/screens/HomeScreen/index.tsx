@@ -510,7 +510,13 @@ const HomeScreen: FC = () => {
                 </TouchableOpacity>
 
                 <View style={styles.nestedView2}>
-                  <View style={{flex: 1, flexDirection: 'row'}}>
+                  <View
+                    style={{
+                      flex: 1,
+                      flexDirection: 'row',
+                      margin: 10,
+                      backgroundColor: '#b6e7cc',
+                    }}>
                     <Image
                       style={{width: 40, height: 40, marginLeft: 10}}
                       source={require('../../Images/homeaddressicon.png')}></Image>
@@ -524,7 +530,13 @@ const HomeScreen: FC = () => {
                       <Text style={{fontFamily: 'Vonique64'}}>{address}</Text>
                     </Text>
                   </View>
-                  <View style={{flex: 1, flexDirection: 'row'}}>
+                  <View
+                    style={{
+                      flex: 1,
+                      flexDirection: 'row',
+                      backgroundColor: '#b6e7cc',
+                      margin: 10,
+                    }}>
                     <Image
                       style={{width: 40, height: 40, marginLeft: 10}}
                       source={require('../../Images/emailaddressicon.png')}></Image>
@@ -538,7 +550,13 @@ const HomeScreen: FC = () => {
                       <Text style={{fontFamily: 'Vonique64'}}>{email}</Text>
                     </Text>
                   </View>
-                  <View style={{flex: 1, flexDirection: 'row'}}>
+                  <View
+                    style={{
+                      flex: 1,
+                      flexDirection: 'row',
+                      backgroundColor: '#b6e7cc',
+                      margin: 10,
+                    }}>
                     <Image
                       style={{width: 40, height: 40, marginLeft: 10}}
                       source={require('../../Images/phonenumbericon.png')}></Image>
@@ -554,7 +572,13 @@ const HomeScreen: FC = () => {
                       </Text>
                     </Text>
                   </View>
-                  <View style={{flex: 1, flexDirection: 'row'}}>
+                  <View
+                    style={{
+                      flex: 1,
+                      flexDirection: 'row',
+                      backgroundColor: '#b6e7cc',
+                      margin: 10,
+                    }}>
                     <Image
                       style={{width: 40, height: 40, marginLeft: 10}}
                       source={require('../../Images/appicon.png')}></Image>
@@ -568,29 +592,34 @@ const HomeScreen: FC = () => {
                       <Text style={{fontFamily: 'Vonique64'}}>{fullName}</Text>
                     </Text>
                   </View>
-                  <Text
-                    style={{
-                      marginLeft: 10,
-                      marginTop: 10,
-                      marginBottom: 10,
-                      fontFamily: 'HighTide-Sans',
-                    }}>
-                    {'Emergency Contact Name: '}
-                    <Text style={{fontFamily: 'Vonique64'}}>
-                      {emergencyContact}
+                  <View style={{margin: 10, backgroundColor: '#b6e7cc'}}>
+                    <Text
+                      style={{
+                        marginLeft: 10,
+                        marginTop: 10,
+                        marginBottom: 10,
+                        fontFamily: 'HighTide-Sans',
+                      }}>
+                      {'Emergency Contact Name: '}
+                      <Text style={{fontFamily: 'Vonique64'}}>
+                        {emergencyContact}
+                      </Text>
                     </Text>
-                  </Text>
-                  <Text
-                    style={{
-                      marginLeft: 10,
-                      marginBottom: 10,
-                      fontFamily: 'HighTide-Sans',
-                    }}>
-                    {'Emergency Contact Phone: '}
-                    <Text style={{fontFamily: 'Vonique64'}}>
-                      {emergencyContactPhone}
+                  </View>
+                  <View style={{backgroundColor: '#b6e7cc', margin: 10}}>
+                    <Text
+                      style={{
+                        marginLeft: 10,
+                        marginTop: 10,
+                        marginBottom: 10,
+                        fontFamily: 'HighTide-Sans',
+                      }}>
+                      {'Emergency Contact Phone: '}
+                      <Text style={{fontFamily: 'Vonique64'}}>
+                        {emergencyContactPhone}
+                      </Text>
                     </Text>
-                  </Text>
+                  </View>
                 </View>
                 <View
                   style={{
@@ -1236,10 +1265,9 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   nestedView2: {
+    // backgroundColor: '#eee7da',
     backgroundColor: '#eee7da',
-    marginTop: 10,
-    marginLeft: 10,
-    marginRight: 10,
+    margin: 10,
     borderRadius: 5,
   },
   nestedView3: {

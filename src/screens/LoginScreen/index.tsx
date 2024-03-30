@@ -1,4 +1,4 @@
-import {FC, useEffect, useState} from 'react';
+import {FC, useState} from 'react';
 import {
   View,
   Text,
@@ -10,13 +10,7 @@ import {
   Dimensions,
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
-import {useNavigation, useRoute} from '@react-navigation/native';
-import {useAppSelector} from '../../hooks';
-import {
-  IUserInfo,
-  setNewUser,
-  setUserInfo,
-} from '../../store/globalStore/slice';
+import {setNewUser} from '../../store/globalStore/slice';
 import {useDispatch} from 'react-redux';
 
 const LoginScreen: FC = () => {
@@ -26,8 +20,6 @@ const LoginScreen: FC = () => {
   const [errorModalVisible, setErrorModalVisible] = useState(false);
   const [signupModalVisible, setSignupModalVisible] = useState(false);
   const [errorMessage, setErrorMessage] = useState(undefined);
-  const user = auth().currentUser;
-  const userInfo = useAppSelector(state => state.globalStore);
   const screenWidth = Dimensions.get('window').width;
 
   const toggleErrorModal = () => {
