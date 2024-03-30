@@ -36,6 +36,7 @@ const HomeScreen: FC = () => {
   };
 
   const openPicker = () => {
+    // @ts-ignore
     navigation.navigate('ImagePicker');
   };
 
@@ -253,8 +254,7 @@ const HomeScreen: FC = () => {
   };
 
   const toggleDataFlag = () => {
-    dataFlag && setDataFlag(false);
-    !dataFlag && setDataFlag(true);
+    setDataFlag(dataFlag => !dataFlag);
   };
 
   const onPressNo = () => {
@@ -400,12 +400,14 @@ const HomeScreen: FC = () => {
   };
 
   const onPressTripDest = () => {
+    // @ts-ignore
     navigation.navigate('BooneScreen');
     setShowTripModal(false);
     toggleBackgroundPhotoModal();
   };
 
   const onPressMessageBoard = () => {
+    // @ts-ignore
     navigation.navigate('MessageBoardScreen', {
       fullName: fullName,
       userPhotoFromDB: userPhotoFromDB,
@@ -1154,7 +1156,7 @@ const HomeScreen: FC = () => {
                       fontFamily: 'HighTide-Sans',
                       fontSize: 18,
                     }}>
-                    {"Boone 24'"}
+                    {"Valle Crucis 24'"}
                   </Text>
                 </TouchableOpacity>
                 <TouchableOpacity

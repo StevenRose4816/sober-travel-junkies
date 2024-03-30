@@ -19,23 +19,21 @@ const LoginScreen: FC = () => {
   const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [modalVisible, setModalVisible] = useState(false);
+  const [errorModalVisible, setErrorModalVisible] = useState(false);
+  const [signupModalVisible, setSignupModalVisible] = useState(false);
   const [errorMessage, setErrorMessage] = useState(undefined);
   const user = auth().currentUser;
   const userInfo = useAppSelector(state => state.globalStore);
   const screenWidth = Dimensions.get('window').width;
-  const [name, setName] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [address, setAddress] = useState('');
 
-  const toggleModal = () => {
-    setModalVisible(modalVisible => !modalVisible);
+  const toggleErrorModal = () => {
+    setErrorModalVisible(errorModalVisible => !errorModalVisible);
   };
 
-  const navigation = useNavigation();
-  const route = useRoute();
-  const routes = navigation.getState()?.routes;
-  const prevRoute = routes[routes.length - 2];
+  const toggleSignupModal = () => {
+    setSignupModalVisible(signupModalVisible => !signupModalVisible);
+  };
+
   const [passwordCreate, setPasswordCreate] = useState('');
   const [emailCreate, setEmailCreate] = useState('');
 
@@ -45,51 +43,40 @@ const LoginScreen: FC = () => {
     } catch (e: any) {
       setErrorMessage(e.message);
       console.log(errorMessage);
-      toggleModal();
+      toggleErrorModal();
     }
   };
 
   const onPressCreateAccount = () => {
-    toggleModal();
-    errorMessage && setErrorMessage(undefined);
+    toggleSignupModal();
     setEmailCreate('');
     setPasswordCreate('');
   };
 
-  const mapUser = () => {
-    // Captures textInput to access in global state.
-    if (!!userInfo) {
-      const mappedUserInfo: IUserInfo = {
-        phoneNumber: phoneNumber,
-        address: address,
-        name: name,
-      };
-      dispatch(setUserInfo(mappedUserInfo));
-    } else {
-      console.log('no userInfo');
-    }
-  };
-
   const signUp = async () => {
+    toggleSignupModal();
     try {
       await auth().createUserWithEmailAndPassword(emailCreate, passwordCreate);
-      mapUser();
     } catch (e: any) {
+      toggleErrorModal();
+      setErrorMessage(e.message);
       console.log(e);
+      setErrorModalVisible(true);
       setErrorMessage(e.message);
     }
   };
 
-  const closeModal = () => {
+  const closeErrorModal = () => {
     setErrorMessage(undefined);
     setPasswordCreate('');
     setEmailCreate('');
-    toggleModal();
+    toggleErrorModal();
   };
 
-  const onSubmit = () => {
-    setTimeout(() => toggleModal(), 1000);
-    signUp();
+  const closeSignupModal = () => {
+    setPasswordCreate('');
+    setEmailCreate('');
+    toggleSignupModal();
   };
 
   return (
@@ -225,10 +212,10 @@ const LoginScreen: FC = () => {
         </Text>
       </TouchableOpacity>
       <Modal
-        visible={modalVisible}
+        visible={errorModalVisible}
         animationType={'slide'}
         transparent={true}
-        onRequestClose={toggleModal}>
+        onRequestClose={toggleErrorModal}>
         <View
           style={{
             flex: 1,
@@ -245,7 +232,7 @@ const LoginScreen: FC = () => {
               padding: 20,
             }}>
             <TouchableOpacity
-              onPress={closeModal}
+              onPress={closeErrorModal}
               style={{alignSelf: 'flex-end'}}>
               <Image
                 style={{height: 25, width: 25}}
@@ -253,61 +240,16 @@ const LoginScreen: FC = () => {
               />
             </TouchableOpacity>
             <View style={{alignItems: 'center', justifyContent: 'center'}}>
-              {!!errorMessage ? (
-                <Text
-                  style={{
-                    textAlign: 'center',
-                    color: '#0c0b09',
-                    marginTop: 60,
-                  }}>
-                  {errorMessage}
-                </Text>
-              ) : (
-                <>
-                  <TextInput
-                    style={{
-                      backgroundColor: '#0c0b09',
-                      color: '#eee7da',
-                      width: 175,
-                      marginBottom: 10,
-                      marginTop: 40,
-                      borderRadius: 10,
-                      minHeight: 40,
-                      borderWidth: 1,
-                      borderColor: 'black',
-                      textAlign: 'center',
-                      fontFamily: 'Vonique64',
-                    }}
-                    placeholder=" email"
-                    placeholderTextColor={'#eee7da'}
-                    autoCapitalize={'none'}
-                    value={emailCreate}
-                    onChangeText={val => setEmailCreate(val)}
-                  />
-                  <TextInput
-                    style={{
-                      backgroundColor: '#0c0b09',
-                      color: '#eee7da',
-                      width: 175,
-                      marginHorizontal: 10,
-                      borderRadius: 10,
-                      minHeight: 40,
-                      borderWidth: 1,
-                      borderColor: 'black',
-                      textAlign: 'center',
-                      fontFamily: 'Vonique64',
-                    }}
-                    placeholder=" password"
-                    placeholderTextColor={'#eee7da'}
-                    autoCapitalize={'none'}
-                    secureTextEntry={true}
-                    value={passwordCreate}
-                    onChangeText={val => setPasswordCreate(val)}
-                  />
-                </>
-              )}
+              <Text
+                style={{
+                  textAlign: 'center',
+                  color: '#0c0b09',
+                  marginTop: 60,
+                }}>
+                {errorMessage}
+              </Text>
               <TouchableOpacity
-                onPress={!!errorMessage ? closeModal : onSubmit}
+                onPress={closeErrorModal}
                 style={{
                   backgroundColor: '#fb445c',
                   minHeight: 35,
@@ -326,7 +268,105 @@ const LoginScreen: FC = () => {
                     marginTop: 5,
                     fontFamily: 'Vonique64',
                   }}>
-                  {!!errorMessage ? 'Close' : 'Submit'}
+                  {'Close'}
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
+      <Modal
+        visible={signupModalVisible}
+        animationType={'slide'}
+        transparent={true}
+        onRequestClose={toggleSignupModal}>
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          }}>
+          <View
+            style={{
+              backgroundColor: '#b6e7cc',
+              minHeight: 300,
+              width: '80%',
+              borderRadius: 5,
+              padding: 20,
+            }}>
+            <TouchableOpacity
+              onPress={closeSignupModal}
+              style={{alignSelf: 'flex-end'}}>
+              <Image
+                style={{height: 25, width: 25}}
+                source={require('../../Images/close2.png')}
+              />
+            </TouchableOpacity>
+            <View style={{alignItems: 'center', justifyContent: 'center'}}>
+              <>
+                <TextInput
+                  style={{
+                    backgroundColor: '#0c0b09',
+                    color: '#eee7da',
+                    width: 175,
+                    marginBottom: 10,
+                    marginTop: 40,
+                    borderRadius: 10,
+                    minHeight: 40,
+                    borderWidth: 1,
+                    borderColor: 'black',
+                    textAlign: 'center',
+                    fontFamily: 'Vonique64',
+                  }}
+                  placeholder=" email"
+                  placeholderTextColor={'#eee7da'}
+                  autoCapitalize={'none'}
+                  value={emailCreate}
+                  onChangeText={val => setEmailCreate(val)}
+                />
+                <TextInput
+                  style={{
+                    backgroundColor: '#0c0b09',
+                    color: '#eee7da',
+                    width: 175,
+                    marginHorizontal: 10,
+                    borderRadius: 10,
+                    minHeight: 40,
+                    borderWidth: 1,
+                    borderColor: 'black',
+                    textAlign: 'center',
+                    fontFamily: 'Vonique64',
+                  }}
+                  placeholder=" password"
+                  placeholderTextColor={'#eee7da'}
+                  autoCapitalize={'none'}
+                  secureTextEntry={true}
+                  value={passwordCreate}
+                  onChangeText={val => setPasswordCreate(val)}
+                />
+              </>
+              <TouchableOpacity
+                onPress={signUp}
+                style={{
+                  backgroundColor: '#fb445c',
+                  minHeight: 35,
+                  width: screenWidth * 0.4,
+                  justifyContent: 'center',
+                  borderRadius: 10,
+                  marginTop: 10,
+                }}>
+                <Text
+                  style={{
+                    color: '#0c0b09',
+                    fontSize: 12,
+                    textAlign: 'center',
+                    marginLeft: 10,
+                    marginRight: 10,
+                    marginTop: 5,
+                    fontFamily: 'Vonique64',
+                  }}>
+                  {'Submit'}
                 </Text>
               </TouchableOpacity>
             </View>
