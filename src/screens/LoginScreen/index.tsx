@@ -239,6 +239,7 @@ const LoginScreen: FC = () => {
                   color: '#0c0b09',
                   marginTop: 60,
                   marginBottom: 50,
+                  fontFamily: 'HighTide-Sans',
                 }}>
                 {errorMessage}
               </Text>

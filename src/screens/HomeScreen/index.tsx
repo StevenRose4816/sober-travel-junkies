@@ -516,6 +516,7 @@ const HomeScreen: FC = () => {
                       flexDirection: 'row',
                       margin: 10,
                       backgroundColor: '#b6e7cc',
+                      borderRadius: 5,
                     }}>
                     <Image
                       style={{width: 40, height: 40, marginLeft: 10}}
@@ -536,6 +537,7 @@ const HomeScreen: FC = () => {
                       flexDirection: 'row',
                       backgroundColor: '#b6e7cc',
                       margin: 10,
+                      borderRadius: 5,
                     }}>
                     <Image
                       style={{width: 40, height: 40, marginLeft: 10}}
@@ -556,6 +558,7 @@ const HomeScreen: FC = () => {
                       flexDirection: 'row',
                       backgroundColor: '#b6e7cc',
                       margin: 10,
+                      borderRadius: 5,
                     }}>
                     <Image
                       style={{width: 40, height: 40, marginLeft: 10}}
@@ -578,6 +581,7 @@ const HomeScreen: FC = () => {
                       flexDirection: 'row',
                       backgroundColor: '#b6e7cc',
                       margin: 10,
+                      borderRadius: 5,
                     }}>
                     <Image
                       style={{width: 40, height: 40, marginLeft: 10}}
@@ -592,7 +596,12 @@ const HomeScreen: FC = () => {
                       <Text style={{fontFamily: 'Vonique64'}}>{fullName}</Text>
                     </Text>
                   </View>
-                  <View style={{margin: 10, backgroundColor: '#b6e7cc'}}>
+                  <View
+                    style={{
+                      margin: 10,
+                      backgroundColor: '#b6e7cc',
+                      borderRadius: 5,
+                    }}>
                     <Text
                       style={{
                         marginLeft: 10,
@@ -606,7 +615,12 @@ const HomeScreen: FC = () => {
                       </Text>
                     </Text>
                   </View>
-                  <View style={{backgroundColor: '#b6e7cc', margin: 10}}>
+                  <View
+                    style={{
+                      backgroundColor: '#b6e7cc',
+                      margin: 10,
+                      borderRadius: 5,
+                    }}>
                     <Text
                       style={{
                         marginLeft: 10,
