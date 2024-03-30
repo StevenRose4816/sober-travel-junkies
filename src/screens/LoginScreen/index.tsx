@@ -12,7 +12,11 @@ import {
 import auth from '@react-native-firebase/auth';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {useAppSelector} from '../../hooks';
-import {IUserInfo, setUserInfo} from '../../store/globalStore/slice';
+import {
+  IUserInfo,
+  setNewUser,
+  setUserInfo,
+} from '../../store/globalStore/slice';
 import {useDispatch} from 'react-redux';
 
 const LoginScreen: FC = () => {
@@ -57,6 +61,7 @@ const LoginScreen: FC = () => {
     toggleSignupModal();
     try {
       await auth().createUserWithEmailAndPassword(emailCreate, passwordCreate);
+      dispatch(setNewUser({newUser: true}));
     } catch (e: any) {
       toggleErrorModal();
       setErrorMessage(e.message);
@@ -213,7 +218,7 @@ const LoginScreen: FC = () => {
       </TouchableOpacity>
       <Modal
         visible={errorModalVisible}
-        animationType={'slide'}
+        animationType={'fade'}
         transparent={true}
         onRequestClose={toggleErrorModal}>
         <View

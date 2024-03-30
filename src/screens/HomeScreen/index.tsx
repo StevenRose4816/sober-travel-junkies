@@ -22,6 +22,7 @@ import {setBackgroundPhoto, setUserPhoto} from '../../store/user/slice';
 import {DocPicker} from '../../components/DocumentPicker';
 import {setSelected} from '../../store/user/slice';
 import {setSelectedDocument} from '../../store/document/slice';
+import {setNewUser} from '../../store/globalStore/slice';
 
 const HomeScreen: FC = () => {
   const navigation = useNavigation();
@@ -32,6 +33,7 @@ const HomeScreen: FC = () => {
   const logout = () => {
     dispatch(setUserPhoto({userPhoto: null}));
     dispatch(setSelectedDocument({selectedDocument: undefined}));
+    dispatch(setNewUser({newUser: false}));
     auth().signOut();
   };
 
@@ -43,7 +45,7 @@ const HomeScreen: FC = () => {
   const user = auth().currentUser;
   const userId = auth().currentUser?.uid;
   const [modalVisible, setModalVisible] = useState(false);
-  const [data, setData] = useState(undefined);
+  const [data, setData] = useState(false);
   const [modalVisible2, setModalVisible2] = useState(false);
   const [dataFlag, setDataFlag] = useState(false);
   const [showBackButton, setShowBackButton] = useState(false);
@@ -106,7 +108,7 @@ const HomeScreen: FC = () => {
       const snapshot = await get(countRef);
       if (snapshot.exists()) {
         const data = snapshot.val();
-        setData(data);
+        setData(true);
         setDataFlag(true);
         setAddress(data.address || '');
         setFullName(data.username || '');
@@ -213,6 +215,7 @@ const HomeScreen: FC = () => {
   const [showTripModal, setShowTripModal] = useState(false);
   const [bio, setBio] = useState('');
   const [initialBio, setInitialBio] = useState('');
+  const newUser = useAppSelector(state => state.globalStore.newUser);
 
   const checkName = () => {
     if (
@@ -417,7 +420,7 @@ const HomeScreen: FC = () => {
 
   return (
     <View style={{flex: 1, backgroundColor: '#eee7da'}}>
-      {
+      {(data || newUser) && (
         <ScrollView
           ref={scrollViewRef}
           style={{flex: 1, backgroundColor: 'transparent'}}>
@@ -631,7 +634,7 @@ const HomeScreen: FC = () => {
                 </TouchableOpacity>
               </>
             )}
-            {!dataFlag && (
+            {(!dataFlag || newUser) && (
               <>
                 <Text
                   style={{
@@ -994,7 +997,7 @@ const HomeScreen: FC = () => {
             )}
           </ImageBackground>
         </ScrollView>
-      }
+      )}
       <Modal
         visible={modalVisible}
         animationType={'slide'}
