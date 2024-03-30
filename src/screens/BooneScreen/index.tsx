@@ -19,7 +19,7 @@ const BooneScreen: FC = () => {
           fontFamily: 'HighTide-Sans',
           fontSize: 18,
         }}>
-        {"Boone 24'"}
+        {"Valle Crucis 24'"}
       </Text>
     </View>
   );

@@ -105,7 +105,7 @@ const MessageBoardScreen: FC = () => {
       setNewMessage('');
       onSetTitle(newTitle);
       readData();
-      flatListRef.current && flatListRef.current.scrollToEnd();
+      flatListRef.current?.scrollToEnd();
     }
   };
 
@@ -130,7 +130,6 @@ const MessageBoardScreen: FC = () => {
       setReplyingTo(null);
       readData();
       setShowReplies(state => [...state, replyingTo.id]);
-      flatListRef.current.scrollToEnd();
     }
     setIsReply(!isReply);
     console.log('Reply sent.');

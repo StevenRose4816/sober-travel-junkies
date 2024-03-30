@@ -236,20 +236,17 @@ const LoginScreen: FC = () => {
               borderRadius: 5,
               padding: 20,
             }}>
-            <TouchableOpacity
-              onPress={closeErrorModal}
-              style={{alignSelf: 'flex-end'}}>
-              <Image
-                style={{height: 25, width: 25}}
-                source={require('../../Images/close2.png')}
-              />
-            </TouchableOpacity>
-            <View style={{alignItems: 'center', justifyContent: 'center'}}>
+            <View
+              style={{
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
               <Text
                 style={{
                   textAlign: 'center',
                   color: '#0c0b09',
                   marginTop: 60,
+                  marginBottom: 50,
                 }}>
                 {errorMessage}
               </Text>
