@@ -88,12 +88,8 @@ const LoginScreen: FC = () => {
   };
 
   const onSubmit = () => {
-    if (!!errorMessage) {
-      setTimeout(() => toggleModal(), 500);
-    } else {
-      setTimeout(() => toggleModal(), 1000);
-      signUp();
-    }
+    setTimeout(() => toggleModal(), 1000);
+    signUp();
   };
 
   return (
@@ -120,7 +116,7 @@ const LoginScreen: FC = () => {
           textAlign: 'center',
           fontFamily: 'Vonique64',
         }}
-        placeholder=" username"
+        placeholder=" email"
         placeholderTextColor={'#eee7da'}
         autoCapitalize={'none'}
         value={email}
@@ -245,27 +241,26 @@ const LoginScreen: FC = () => {
               backgroundColor: '#b6e7cc',
               minHeight: 300,
               width: '80%',
-              // justifyContent: 'center',
-              // alignItems: 'center',
               borderRadius: 5,
               padding: 20,
             }}>
-            <View
-              style={{
-                flex: 1,
-                flexDirection: 'row-reverse',
-              }}>
-              <TouchableOpacity onPress={closeModal}>
-                <Image
-                  style={{height: 25, width: 25}}
-                  source={require('../../Images/close2.png')}></Image>
-              </TouchableOpacity>
-            </View>
-            <View
-              style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+            <TouchableOpacity
+              onPress={closeModal}
+              style={{alignSelf: 'flex-end'}}>
+              <Image
+                style={{height: 25, width: 25}}
+                source={require('../../Images/close2.png')}
+              />
+            </TouchableOpacity>
+            <View style={{alignItems: 'center', justifyContent: 'center'}}>
               {!!errorMessage ? (
-                <Text style={{textAlign: 'center', color: '#0c0b09'}}>
-                  {errorMessage + '\n'}
+                <Text
+                  style={{
+                    textAlign: 'center',
+                    color: '#0c0b09',
+                    marginTop: 60,
+                  }}>
+                  {errorMessage}
                 </Text>
               ) : (
                 <>
@@ -274,8 +269,8 @@ const LoginScreen: FC = () => {
                       backgroundColor: '#0c0b09',
                       color: '#eee7da',
                       width: 175,
-                      marginHorizontal: 10,
                       marginBottom: 10,
+                      marginTop: 40,
                       borderRadius: 10,
                       minHeight: 40,
                       borderWidth: 1,
@@ -283,7 +278,7 @@ const LoginScreen: FC = () => {
                       textAlign: 'center',
                       fontFamily: 'Vonique64',
                     }}
-                    placeholder=" username"
+                    placeholder=" email"
                     placeholderTextColor={'#eee7da'}
                     autoCapitalize={'none'}
                     value={emailCreate}
@@ -311,7 +306,6 @@ const LoginScreen: FC = () => {
                   />
                 </>
               )}
-
               <TouchableOpacity
                 onPress={!!errorMessage ? closeModal : onSubmit}
                 style={{
