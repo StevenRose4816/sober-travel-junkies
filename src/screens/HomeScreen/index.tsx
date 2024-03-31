@@ -317,6 +317,7 @@ const HomeScreen: FC = () => {
     setSuccessMessage(false);
     setModalVisible(false);
     dispatch(setSelected({selected: false}));
+    newUser && dispatch(setNewUser({newUser: false}));
     console.log('Submit pressed.');
   };
 
