@@ -330,9 +330,6 @@ const HomeScreen: FC = () => {
     thirdPhotoPressed && setThirdPhotoPressed(false);
     fourthPhotoPressed && setFourthPhotoPressed(false);
     setFirstPhotoPressed(true);
-    setTimeout(() => {
-      toggleBackgroundPhotoModal();
-    }, 300);
     source();
   };
 
@@ -341,9 +338,6 @@ const HomeScreen: FC = () => {
     thirdPhotoPressed && setThirdPhotoPressed(false);
     fourthPhotoPressed && setFourthPhotoPressed(false);
     setSecondPhotoPressed(true);
-    setTimeout(() => {
-      toggleBackgroundPhotoModal();
-    }, 300);
     source();
   };
 
@@ -352,9 +346,6 @@ const HomeScreen: FC = () => {
     secondPhotoPressed && setSecondPhotoPressed(false);
     fourthPhotoPressed && setFourthPhotoPressed(false);
     setThirdPhotoPressed(true);
-    setTimeout(() => {
-      toggleBackgroundPhotoModal();
-    }, 300);
     source();
   };
 
@@ -363,9 +354,6 @@ const HomeScreen: FC = () => {
     secondPhotoPressed && setSecondPhotoPressed(false);
     thirdPhotoPressed && setThirdPhotoPressed(false);
     setFourthPhotoPressed(true);
-    setTimeout(() => {
-      toggleBackgroundPhotoModal();
-    }, 300);
     source();
   };
 
@@ -377,6 +365,11 @@ const HomeScreen: FC = () => {
   const toggleDocPickerSwitch = () => {
     setDocPickerState(previousState => !previousState);
     toggleModal();
+  };
+
+  const onPressCloseModal = () => {
+    toggleBackgroundPhotoModal();
+    showTripModal && setShowTripModal(false);
   };
 
   const source = () => {
@@ -1144,10 +1137,29 @@ const HomeScreen: FC = () => {
         transparent={true}
         onRequestClose={toggleBackgroundPhotoModal}>
         <View style={styles.modalView5}>
-          <View style={styles.modalView6}>
+          <View
+            style={{
+              flexDirection: 'row',
+              flexWrap: 'wrap',
+              justifyContent: 'space-around',
+              backgroundColor: '#b6e7cc',
+              height: 400,
+              width: '80%',
+              borderRadius: 5,
+            }}>
+            <TouchableOpacity
+              onPress={() => onPressCloseModal()}
+              style={{position: 'absolute', top: 10, right: 15}}>
+              <Image
+                style={{height: 25, width: 25}}
+                source={require('../../Images/close2.png')}
+              />
+            </TouchableOpacity>
             {!showTripModal && (
               <>
-                <TouchableOpacity onPress={onPressFirstBackgroundPhoto}>
+                <TouchableOpacity
+                  style={{marginTop: 50}}
+                  onPress={onPressFirstBackgroundPhoto}>
                   <Image
                     style={[
                       !firstPhotoPressed && styles.backgroundBefore,
@@ -1155,7 +1167,9 @@ const HomeScreen: FC = () => {
                     ]}
                     source={require('../../Images/backgroundPhoto1.jpeg')}></Image>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={onPressSecondBackgroundPhoto}>
+                <TouchableOpacity
+                  onPress={onPressSecondBackgroundPhoto}
+                  style={{marginTop: 50}}>
                   <Image
                     style={[
                       !secondPhotoPressed && styles.backgroundBefore,
@@ -1163,7 +1177,9 @@ const HomeScreen: FC = () => {
                     ]}
                     source={require('../../Images/backgroundPhoto2.jpeg')}></Image>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={onPressThirdBackgroundPhoto}>
+                <TouchableOpacity
+                  onPress={onPressThirdBackgroundPhoto}
+                  style={{marginTop: 50}}>
                   <Image
                     style={[
                       !thirdPhotoPressed && styles.backgroundBefore,
@@ -1171,7 +1187,9 @@ const HomeScreen: FC = () => {
                     ]}
                     source={require('../../Images/backgroundPhoto3.jpeg')}></Image>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={onPressFourthBackgroundPhoto}>
+                <TouchableOpacity
+                  onPress={onPressFourthBackgroundPhoto}
+                  style={{marginTop: 50}}>
                   <Image
                     style={[
                       !fourthPhotoPressed && styles.backgroundBefore,
@@ -1263,13 +1281,11 @@ const styles = StyleSheet.create({
   backgroundBefore: {
     height: 125,
     width: 125,
-    marginTop: 15,
     borderRadius: 5,
   },
   backgroundAfter: {
     height: 125,
     width: 125,
-    marginTop: 15,
     borderRadius: 5,
     borderWidth: 5,
     borderColor: '#f86ca7',
