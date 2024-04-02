@@ -1141,7 +1141,7 @@ const HomeScreen: FC = () => {
             style={{
               flexDirection: 'row',
               flexWrap: 'wrap',
-              justifyContent: 'space-around',
+              justifyContent: 'space-evenly',
               backgroundColor: '#b6e7cc',
               height: 400,
               width: '80%',

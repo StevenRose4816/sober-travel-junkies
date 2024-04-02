@@ -1,4 +1,4 @@
-import {FC, useState} from 'react';
+import {FC, useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -19,7 +19,12 @@ const LoginScreen: FC = () => {
   const [password, setPassword] = useState('');
   const [errorModalVisible, setErrorModalVisible] = useState(false);
   const [signupModalVisible, setSignupModalVisible] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(undefined);
+  const [errorMessage, setErrorMessage] = useState<string | undefined>(
+    undefined,
+  );
+  const [formattedErrorMessage, setFormattedErrorMessage] = useState<
+    string | undefined
+  >(undefined);
   const screenWidth = Dimensions.get('window').width;
 
   const toggleErrorModal = () => {
@@ -37,8 +42,7 @@ const LoginScreen: FC = () => {
     try {
       await auth().signInWithEmailAndPassword(email, password);
     } catch (e: any) {
-      setErrorMessage(e.message);
-      console.log(errorMessage);
+      formatError(e.message);
       toggleErrorModal();
     }
   };
@@ -57,7 +61,6 @@ const LoginScreen: FC = () => {
     } catch (e: any) {
       toggleErrorModal();
       setErrorMessage(e.message);
-      console.log(e);
       setErrorModalVisible(true);
       setErrorMessage(e.message);
     }
@@ -74,6 +77,15 @@ const LoginScreen: FC = () => {
     setPasswordCreate('');
     setEmailCreate('');
     toggleSignupModal();
+  };
+
+  const formatError = (errorMessage: string) => {
+    if (!!errorMessage) {
+      const formatErrorMessage: string | undefined = errorMessage.split(']')[1];
+      console.log('formattedError: ', formatErrorMessage);
+      setFormattedErrorMessage(formatErrorMessage);
+      return formattedErrorMessage;
+    }
   };
 
   return (
@@ -241,7 +253,7 @@ const LoginScreen: FC = () => {
                   marginBottom: 50,
                   fontFamily: 'HighTide-Sans',
                 }}>
-                {errorMessage}
+                {formattedErrorMessage}
               </Text>
               <TouchableOpacity
                 onPress={closeErrorModal}
