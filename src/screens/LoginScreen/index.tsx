@@ -51,6 +51,7 @@ const LoginScreen: FC = () => {
     toggleSignupModal();
     setEmailCreate('');
     setPasswordCreate('');
+    formattedErrorMessage && setFormattedErrorMessage(undefined);
   };
 
   const signUp = async () => {
@@ -59,10 +60,8 @@ const LoginScreen: FC = () => {
       await auth().createUserWithEmailAndPassword(emailCreate, passwordCreate);
       dispatch(setNewUser({newUser: true}));
     } catch (e: any) {
+      formatError(e.message);
       toggleErrorModal();
-      setErrorMessage(e.message);
-      setErrorModalVisible(true);
-      setErrorMessage(e.message);
     }
   };
 
@@ -82,7 +81,6 @@ const LoginScreen: FC = () => {
   const formatError = (errorMessage: string) => {
     if (!!errorMessage) {
       const formatErrorMessage: string | undefined = errorMessage.split(']')[1];
-      console.log('formattedError: ', formatErrorMessage);
       setFormattedErrorMessage(formatErrorMessage);
       return formattedErrorMessage;
     }
