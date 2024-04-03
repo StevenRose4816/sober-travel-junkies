@@ -19,9 +19,6 @@ const LoginScreen: FC = () => {
   const [password, setPassword] = useState('');
   const [errorModalVisible, setErrorModalVisible] = useState(false);
   const [signupModalVisible, setSignupModalVisible] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<string | undefined>(
-    undefined,
-  );
   const [formattedErrorMessage, setFormattedErrorMessage] = useState<
     string | undefined
   >(undefined);
@@ -66,7 +63,6 @@ const LoginScreen: FC = () => {
   };
 
   const closeErrorModal = () => {
-    setErrorMessage(undefined);
     setPasswordCreate('');
     setEmailCreate('');
     toggleErrorModal();

@@ -139,13 +139,13 @@ const HomeScreen: FC = () => {
           <TouchableOpacity
             onPress={onPressGoBack}
             style={{
-              width: 40,
+              width: 20,
             }}>
             <Image
               source={require('../../Images/caret_left.png')}
               style={{
-                height: 40,
-                width: 40,
+                height: 20,
+                width: 20,
               }}></Image>
           </TouchableOpacity>
         ),
@@ -233,6 +233,11 @@ const HomeScreen: FC = () => {
   };
 
   useEffect(() => {
+    console.log('userPhoto: ', userPhoto);
+    console.log('userPhotoFromDB: ', userPhotoFromDB);
+  }, [userPhoto, userPhotoFromDB]);
+
+  useEffect(() => {
     if (!dataFlag) {
       fadeIn();
     }
@@ -271,6 +276,7 @@ const HomeScreen: FC = () => {
     toggleModal();
     setSuccessMessage(false);
     dispatch(setUserPhoto({userPhoto: null}));
+    dispatch(setSelectedDocument({selectedDocument: undefined}));
   };
 
   const onPressSubmit = () => {
@@ -433,7 +439,7 @@ const HomeScreen: FC = () => {
             </View>
             {dataFlag && (
               <>
-                {userPhotoFromDB ? (
+                {userPhotoFromDB !== '' ? (
                   <Animated.Image
                     style={{
                       height: 200,
@@ -459,7 +465,7 @@ const HomeScreen: FC = () => {
                       borderWidth: 2,
                     }}
                     source={
-                      {uri: userPhoto} ||
+                      (userPhoto === '' && {uri: userPhoto}) ||
                       require('../../Images/profilepictureicon.png')
                     }></Animated.Image>
                 )}
@@ -541,6 +547,7 @@ const HomeScreen: FC = () => {
                         marginLeft: 10,
                         marginTop: 10,
                         fontFamily: 'HighTide-Sans',
+                        maxWidth: screenWidth * 0.7,
                       }}>
                       {'Email Address: '}
                       <Text style={{fontFamily: 'Vonique64'}}>{email}</Text>
@@ -562,6 +569,7 @@ const HomeScreen: FC = () => {
                         marginLeft: 10,
                         marginTop: 10,
                         fontFamily: 'HighTide-Sans',
+                        maxWidth: screenWidth * 0.7,
                       }}>
                       {'Phone number: '}
                       <Text style={{fontFamily: 'Vonique64'}}>
@@ -585,6 +593,7 @@ const HomeScreen: FC = () => {
                         marginLeft: 10,
                         marginTop: 10,
                         fontFamily: 'HighTide-Sans',
+                        maxWidth: screenWidth * 0.7,
                       }}>
                       {'Full name: '}
                       <Text style={{fontFamily: 'Vonique64'}}>{fullName}</Text>
@@ -602,6 +611,7 @@ const HomeScreen: FC = () => {
                         marginTop: 10,
                         marginBottom: 10,
                         fontFamily: 'HighTide-Sans',
+                        maxWidth: screenWidth * 0.7,
                       }}>
                       {'Emergency Contact Name: '}
                       <Text style={{fontFamily: 'Vonique64'}}>
@@ -621,6 +631,7 @@ const HomeScreen: FC = () => {
                         marginTop: 10,
                         marginBottom: 10,
                         fontFamily: 'HighTide-Sans',
+                        maxWidth: screenWidth * 0.7,
                       }}>
                       {'Emergency Contact Phone: '}
                       <Text style={{fontFamily: 'Vonique64'}}>
@@ -641,6 +652,7 @@ const HomeScreen: FC = () => {
                       marginBottom: 10,
                       marginTop: 10,
                       fontFamily: 'HighTide-Sans',
+                      maxWidth: screenWidth * 0.7,
                     }}>
                     {'Bio: '}
                     <Text style={{fontFamily: 'Vonique64'}}>{bio}</Text>
@@ -1206,7 +1218,7 @@ const HomeScreen: FC = () => {
                     height: 100,
                     width: screenWidth * 0.4,
                     marginRight: 10,
-                    marginTop: 40,
+                    marginTop: 60,
                     marginLeft: 10,
                     backgroundColor: '#eee7da',
                     borderRadius: 5,
@@ -1229,7 +1241,7 @@ const HomeScreen: FC = () => {
                     height: 100,
                     width: screenWidth * 0.4,
                     marginRight: 10,
-                    marginTop: 20,
+                    marginTop: 60,
                     marginLeft: 10,
                     backgroundColor: '#eee7da',
                     borderRadius: 5,

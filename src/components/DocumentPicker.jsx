@@ -50,9 +50,9 @@ export const DocPicker = ({toggleModal, toggleDocPickerSwitch}) => {
         onPress={handleDocumentSelection}>
         <Text
           style={{
+            fontFamily: 'HighTide-Sans',
             color: 'white',
             fontSize: 18,
-            fontWeight: '600',
             textAlign: 'center',
           }}>
           {'Select 📑'}
