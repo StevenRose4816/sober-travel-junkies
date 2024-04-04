@@ -13,25 +13,27 @@ import ImagePicker from '../components/ImagePicker.jsx';
 import TripInfoScreen from '../screens/TripInfo/index.tsx';
 import BooneScreen from '../screens/BooneScreen/index.tsx';
 import MessageBoardScreen from '../screens/Message Board Screen/MessageBoardScreen.tsx';
+import {AppStackParams} from './types.ts';
+import Routes from '../navigation/routes.ts';
 
-export type RootStackParamList = {
-  HomeScreen: undefined;
-  ImagePicker: undefined;
-  LoginScreen: undefined;
-  SignupScreen: undefined;
-  TripInfoScreen: undefined;
-  BooneScreen: {
-    setShowTripModal: boolean;
-    toggleBackgroundPhotoModal: () => void;
-  };
-  MessageBoardScreen: {
-    fullName: string;
-    userPhotoFromDB: string;
-    formattedDate: string;
-  };
-};
+// export type RootStackParamList = {
+//   HomeScreen: undefined;
+//   ImagePicker: undefined;
+//   LoginScreen: undefined;
+//   SignupScreen: undefined;
+//   TripInfoScreen: undefined;
+//   BooneScreen: {
+//     setShowTripModal: boolean;
+//     toggleBackgroundPhotoModal: () => void;
+//   };
+//   MessageBoardScreen: {
+//     fullName: string;
+//     userPhotoFromDB: string;
+//     formattedDate: string;
+//   };
+// };
 
-const RootStack = createNativeStackNavigator<RootStackParamList>();
+const RootStack = createNativeStackNavigator<AppStackParams>();
 
 const RootNavigator: FC = () => {
   const [initializing, setInitializing] = useState(true);
@@ -74,7 +76,7 @@ const RootNavigator: FC = () => {
             headerTitle: '',
           }}>
           <RootStack.Screen
-            name={'HomeScreen'}
+            name={Routes.homeScreen}
             component={HomeScreen}
             options={{
               headerTitleStyle: {
@@ -83,7 +85,7 @@ const RootNavigator: FC = () => {
             }}
           />
           <RootStack.Screen
-            name={'ImagePicker'}
+            name={Routes.imagePicker}
             component={ImagePicker}
             options={{
               headerTitleStyle: {
@@ -92,7 +94,7 @@ const RootNavigator: FC = () => {
             }}
           />
           <RootStack.Screen
-            name={'TripInfoScreen'}
+            name={Routes.tripInfoScreen}
             component={TripInfoScreen}
             options={{
               headerTitleStyle: {
@@ -101,7 +103,7 @@ const RootNavigator: FC = () => {
             }}
           />
           <RootStack.Screen
-            name={'BooneScreen'}
+            name={Routes.booneScreen}
             component={BooneScreen}
             options={{
               headerTitleStyle: {
@@ -110,7 +112,7 @@ const RootNavigator: FC = () => {
             }}
           />
           <RootStack.Screen
-            name={'MessageBoardScreen'}
+            name={Routes.messageBoardScreen}
             component={MessageBoardScreen}
             options={{
               headerTitleStyle: {
@@ -123,7 +125,7 @@ const RootNavigator: FC = () => {
         <RootStack.Navigator
           screenOptions={{headerBackTitleVisible: false, headerShown: false}}>
           <RootStack.Screen
-            name={'LoginScreen'}
+            name={Routes.loginScreen}
             component={LoginScreen}
             options={{
               headerTitleStyle: {
@@ -132,7 +134,7 @@ const RootNavigator: FC = () => {
             }}
           />
           <RootStack.Screen
-            name={'SignupScreen'}
+            name={Routes.signupScreen}
             component={SignupScreen}
             options={{
               headerTitleStyle: {

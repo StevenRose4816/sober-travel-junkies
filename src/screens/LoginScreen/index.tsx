@@ -190,7 +190,6 @@ const LoginScreen: FC = () => {
           }}></Image>
       </View>
       <TouchableOpacity
-        // @ts-ignore
         onPress={() => onPressCreateAccount()}
         style={{
           backgroundColor: '#b6e7cc',

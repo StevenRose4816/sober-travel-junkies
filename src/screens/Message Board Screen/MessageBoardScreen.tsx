@@ -15,17 +15,11 @@ import {
 import auth from '@react-native-firebase/auth';
 import {get, onValue, ref, set} from 'firebase/database';
 import {db} from '../HomeScreen/FirebaseConfigurations';
-import {RouteGroupConfig, RouteProp, useRoute} from '@react-navigation/native';
+import {RouteProp} from '@react-navigation/native';
 import {useAppSelector} from '../../hooks';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {AppStackParams} from '../../navigation/types';
 import Routes from '../../navigation/routes';
-
-interface RouteParams {
-  fullName?: string;
-  userPhotoFromDB?: string;
-  backgroundPhoto?: number;
-}
 
 interface Message {
   text: string;
@@ -39,7 +33,7 @@ interface Message {
 }
 
 interface IProps {
-  // navigation?: NativeStackNavigationProp<any, any>;
+  navigation?: NativeStackNavigationProp<any, any>;
   route?: RouteProp<AppStackParams, Routes.messageBoardScreen>;
 }
 
@@ -47,7 +41,6 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState<string>('');
   const [newTitle, setNewTitle] = useState<string>('');
-  const [postedTitle, setPostedTitle] = useState<string>('');
   const [modalVisible, setModalVisible] = useState(false);
   const [data, setData] = useState(false);
   const [dataObj, setDataObj] = useState('');
@@ -145,7 +138,6 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
 
   const onSetTitle = (title: string) => {
     if (newTitle.trim() !== '') {
-      setPostedTitle(title);
       setNewTitle('');
     }
   };
