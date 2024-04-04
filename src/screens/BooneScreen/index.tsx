@@ -58,6 +58,21 @@ const BooneScreen: FC = () => {
     setShowModal(showModal => !showModal);
   };
 
+  const onSubmitDates = () => {
+    console.log('submit pressed');
+    toggleModal();
+  };
+
+  const onPressYes = () => {
+    console.log('yes pressed');
+    toggleModal();
+  };
+
+  const onPressNo = () => {
+    console.log('no pressed');
+    toggleModal();
+  };
+
   return (
     <>
       <ImageBackground
@@ -156,7 +171,7 @@ const BooneScreen: FC = () => {
               marginRight: 20,
               marginBottom: 5,
             }}
-            onPress={() => console.log('submitDates pressed')}>
+            onPress={() => onSubmitDates()}>
             <Text
               style={{
                 fontFamily: 'HighTide-Sans',
@@ -180,22 +195,83 @@ const BooneScreen: FC = () => {
               alignItems: 'center',
               backgroundColor: 'rgba(0, 0, 0, 0.5)',
             }}>
-            <View
+            <TouchableOpacity
               style={{
                 backgroundColor: '#b6e7cc',
                 minHeight: 300,
                 width: '80%',
                 borderRadius: 5,
                 padding: 20,
-              }}>
+              }}
+              onPress={() => toggleModal()}>
               <View
                 style={{
                   alignItems: 'center',
                   justifyContent: 'center',
                 }}>
-                <Text>Modal</Text>
+                <Text
+                  style={{fontFamily: 'HighTide-Sans', textAlign: 'center'}}>
+                  Do you want to submit the follwing dates?
+                </Text>
+                <Text
+                  style={{
+                    fontFamily: 'HighTide-Sans',
+                    marginTop: 70,
+                  }}>
+                  {startDate}-{endDate}
+                </Text>
+                <View style={{flex: 1, flexDirection: 'row'}}>
+                  <TouchableOpacity
+                    style={{
+                      marginTop: 40,
+                      backgroundColor: 'blue',
+                      minHeight: 50,
+                      justifyContent: 'center',
+                      borderRadius: 5,
+                      marginHorizontal: 10,
+                      width: 120,
+                    }}
+                    onPress={() => onPressYes()}>
+                    <Text
+                      style={{
+                        textAlign: 'center',
+                        color: '#eee7da',
+                        fontSize: 21,
+                        fontWeight: '600',
+                        backgroundColor: 'blue',
+                        borderRadius: 5,
+                        fontFamily: 'Vonique64',
+                      }}>
+                      Yes
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={{
+                      marginTop: 40,
+                      backgroundColor: 'blue',
+                      minHeight: 50,
+                      justifyContent: 'center',
+                      borderRadius: 5,
+                      marginHorizontal: 10,
+                      width: 120,
+                    }}
+                    onPress={() => onPressNo()}>
+                    <Text
+                      style={{
+                        textAlign: 'center',
+                        color: '#eee7da',
+                        fontSize: 21,
+                        fontWeight: '600',
+                        backgroundColor: 'blue',
+                        borderRadius: 5,
+                        fontFamily: 'Vonique64',
+                      }}>
+                      No
+                    </Text>
+                  </TouchableOpacity>
+                </View>
               </View>
-            </View>
+            </TouchableOpacity>
           </View>
         </Modal>
       </ImageBackground>
