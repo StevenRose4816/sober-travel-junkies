@@ -15,8 +15,11 @@ import {
 import auth from '@react-native-firebase/auth';
 import {get, onValue, ref, set} from 'firebase/database';
 import {db} from '../HomeScreen/FirebaseConfigurations';
-import {useRoute} from '@react-navigation/native';
+import {RouteGroupConfig, RouteProp, useRoute} from '@react-navigation/native';
 import {useAppSelector} from '../../hooks';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {AppStackParams} from '../../navigation/types';
+import Routes from '../../navigation/routes';
 
 interface RouteParams {
   fullName?: string;
@@ -35,7 +38,12 @@ interface Message {
   replies?: Message[];
 }
 
-const MessageBoardScreen: FC = () => {
+interface IProps {
+  // navigation?: NativeStackNavigationProp<any, any>;
+  route?: RouteProp<AppStackParams, Routes.messageBoardScreen>;
+}
+
+const MessageBoardScreen: FC<IProps> = ({route}) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState<string>('');
   const [newTitle, setNewTitle] = useState<string>('');
@@ -43,9 +51,9 @@ const MessageBoardScreen: FC = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [data, setData] = useState(false);
   const [dataObj, setDataObj] = useState('');
-  const route = useRoute();
-  const {userPhotoFromDB, fullName, backgroundPhoto}: RouteParams =
-    route.params || {};
+  const userPhotoFromDB = route?.params.userPhotoFromDB;
+  const fullName = route?.params.fullName;
+  const backgroundPhoto = route?.params.backgroundPhoto;
   const date = new Date();
   const formattedDate = date.toDateString();
   const formattedTime = date.toLocaleTimeString();

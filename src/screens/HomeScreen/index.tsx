@@ -23,9 +23,10 @@ import {DocPicker} from '../../components/DocumentPicker';
 import {setSelected} from '../../store/user/slice';
 import {setSelectedDocument} from '../../store/document/slice';
 import {setNewUser} from '../../store/globalStore/slice';
+import {NavPropAny} from '../../navigation/types';
 
 const HomeScreen: FC = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavPropAny>();
   const dispatch = useDispatch();
   const screenWidth = Dimensions.get('window').width;
   const screenHeight = Dimensions.get('window').height;
@@ -38,7 +39,6 @@ const HomeScreen: FC = () => {
   };
 
   const openPicker = () => {
-    // @ts-ignore
     navigation.navigate('ImagePicker');
   };
 
@@ -403,14 +403,12 @@ const HomeScreen: FC = () => {
   };
 
   const onPressTripDest = () => {
-    // @ts-ignore
     navigation.navigate('BooneScreen');
     setShowTripModal(false);
     toggleBackgroundPhotoModal();
   };
 
   const onPressMessageBoard = () => {
-    // @ts-ignore
     navigation.navigate('MessageBoardScreen', {
       fullName: fullName,
       userPhotoFromDB: userPhotoFromDB,
