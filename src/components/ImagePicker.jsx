@@ -12,6 +12,7 @@ import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import {setUserPhoto} from '../store/user/slice';
 import {setSelected} from '../store/photo/slice';
+import Routes from '../navigation/routes';
 
 const ImagePicker = () => {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -27,7 +28,7 @@ const ImagePicker = () => {
   const navAway = () => {
     dispatch(setUserPhoto({userPhoto: selectedImage}));
     // dispatch(setSelected({selected: true}));
-    navigate('HomeScreen');
+    navigate(Routes.homeScreen);
   };
 
   const openImagePicker = () => {

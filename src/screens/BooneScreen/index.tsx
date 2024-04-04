@@ -1,15 +1,17 @@
-import React, {FC, useEffect, useState} from 'react';
-import {Dimensions, Image, Text, TouchableOpacity, View} from 'react-native';
+import React, {FC, useState} from 'react';
+import {Dimensions, Text, View} from 'react-native';
+import CalendarPicker from 'react-native-calendar-picker';
 
 const BooneScreen: FC = () => {
-  const screenWidth = Dimensions.get('window').width;
-  const screenHeight = Dimensions.get('window').height;
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+
+  const handleDateChange = (date: Date) => {
+    setSelectedDate(date);
+    console.log('date: ', selectedDate);
+  };
 
   return (
-    <View
-      style={{
-        flex: 1,
-      }}>
+    <View style={{flex: 1}}>
       <Text
         style={{
           borderRadius: 5,
@@ -19,7 +21,16 @@ const BooneScreen: FC = () => {
           fontFamily: 'HighTide-Sans',
           fontSize: 18,
         }}>
-        {"Valle Crucis 24'"}
+        {'Valle Crucis 24'}
+      </Text>
+      <CalendarPicker
+        onDateChange={handleDateChange}
+        selectedDayStyle={{backgroundColor: 'red'}}
+      />
+      <Text
+        style={{fontFamily: 'HighTide-Sans', marginLeft: 20, marginTop: 20}}>
+        SELECTED DATES:{' '}
+        {selectedDate ? selectedDate.toString() : 'None Selected'}
       </Text>
     </View>
   );

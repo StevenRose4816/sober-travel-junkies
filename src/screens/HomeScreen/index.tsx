@@ -24,6 +24,7 @@ import {setSelected} from '../../store/user/slice';
 import {setSelectedDocument} from '../../store/document/slice';
 import {setNewUser} from '../../store/globalStore/slice';
 import {NavPropAny} from '../../navigation/types';
+import Routes from '../../navigation/routes';
 
 const HomeScreen: FC = () => {
   const navigation = useNavigation<NavPropAny>();
@@ -39,7 +40,7 @@ const HomeScreen: FC = () => {
   };
 
   const openPicker = () => {
-    navigation.navigate('ImagePicker');
+    navigation.navigate(Routes.imagePicker);
   };
 
   const user = auth().currentUser;
@@ -403,13 +404,13 @@ const HomeScreen: FC = () => {
   };
 
   const onPressTripDest = () => {
-    navigation.navigate('BooneScreen');
+    navigation.navigate(Routes.booneScreen);
     setShowTripModal(false);
     toggleBackgroundPhotoModal();
   };
 
   const onPressMessageBoard = () => {
-    navigation.navigate('MessageBoardScreen', {
+    navigation.navigate(Routes.messageBoardScreen, {
       fullName: fullName,
       userPhotoFromDB: userPhotoFromDB,
       backgroundPhoto: source(),

@@ -2930,6 +2930,14 @@
   resolved "https://registry.npmjs.org/@types/prop-types/-/prop-types-15.7.11.tgz"
   integrity sha512-ga8y9v9uyeiLdpKddhxYQkxNDrfvuPrlFb0N1qnZZByvcElJaXthF1UhvCh9TLWJBEHeNtdnbysW7Y6Uq8CVng==
 
+"@types/react-native-calendar-picker@^8.0.0":
+  version "8.0.0"
+  resolved "https://registry.npmjs.org/@types/react-native-calendar-picker/-/react-native-calendar-picker-8.0.0.tgz"
+  integrity sha512-Mymc+MxHx2ue+YoTdF6nnu9V7r2Sxn2eecFZ5qX3B+87MAMBAd7+/jaJzfUVEkIeb8rQKhWiYI1QvvN+hCglXw==
+  dependencies:
+    "@types/react" "*"
+    react-native "*"
+
 "@types/react-test-renderer@^18.0.0":
   version "18.0.7"
   resolved "https://registry.npmjs.org/@types/react-test-renderer/-/react-test-renderer-18.0.7.tgz"
