@@ -1,14 +1,20 @@
+import {RouteProp, useRoute} from '@react-navigation/native';
 import React, {FC, useState} from 'react';
-import {Text, TouchableOpacity, View} from 'react-native';
+import {ImageBackground, Text, TouchableOpacity, View} from 'react-native';
 import CalendarPicker, {
   DateChangedCallback,
 } from 'react-native-calendar-picker';
+import {AppStackParams} from '../../navigation/types';
+import Routes from '../../navigation/routes';
 
 const BooneScreen: FC = () => {
   const [selectedStartDate, setSelectedStartDate] = useState<Date | null>(null);
   const [selectedEndDate, setSelectedEndDate] = useState<Date | null>(null);
   const minDate = new Date();
   const maxDate = new Date(2025, 1, 1);
+  const route =
+    useRoute<RouteProp<AppStackParams, Routes.messageBoardScreen>>();
+  const backgroundPhoto = route?.params.backgroundPhoto;
 
   const generateDisabledDates = () => {
     const startDate = new Date(2025, 9, 1); // Month is 0-indexed
@@ -41,88 +47,97 @@ const BooneScreen: FC = () => {
 
   return (
     <>
-      <View style={{flex: 1}}>
-        <Text
-          style={{
-            borderRadius: 5,
-            textAlign: 'center',
-            marginTop: 40,
-            marginBottom: 10,
-            fontFamily: 'HighTide-Sans',
-            fontSize: 18,
-          }}>
-          {'Valle Crucis 24'}
-        </Text>
-        <TouchableOpacity
-          style={{
-            backgroundColor: '#b6e7cc',
-            borderRadius: 5,
-            width: 120,
-            marginLeft: 20,
-          }}
-          onPress={() => onPressViewCalender()}>
+      <ImageBackground
+        style={{flex: 1}}
+        imageStyle={{opacity: 0.3}}
+        source={backgroundPhoto}>
+        <View>
+          <Text
+            style={{
+              borderRadius: 5,
+              textAlign: 'center',
+              marginTop: 40,
+              marginBottom: 10,
+              fontFamily: 'HighTide-Sans',
+              fontSize: 18,
+            }}>
+            {'Valle Crucis 24'}
+          </Text>
+          <TouchableOpacity
+            style={{
+              backgroundColor: '#b6e7cc',
+              borderRadius: 5,
+              width: 120,
+              marginLeft: 20,
+            }}
+            onPress={() => onPressViewCalender()}>
+            <Text
+              style={{
+                fontFamily: 'HighTide-Sans',
+                textAlign: 'center',
+                marginTop: 5,
+                marginBottom: 5,
+              }}>
+              {!showCalender ? 'View Calender' : 'Hide Calender'}
+            </Text>
+          </TouchableOpacity>
+          {showCalender && (
+            <View style={{marginTop: 50}}>
+              <CalendarPicker
+                onDateChange={handleDateChange}
+                selectedDayStyle={{backgroundColor: 'red'}}
+                todayBackgroundColor={'grey'}
+                textStyle={{fontFamily: 'HighTide-Sans'}}
+                allowRangeSelection={true}
+                allowBackwardRangeSelect={true}
+                minDate={minDate}
+                maxDate={maxDate}
+                disabledDates={generateDisabledDates()}
+              />
+            </View>
+          )}
           <Text
             style={{
               fontFamily: 'HighTide-Sans',
-              textAlign: 'center',
-              marginTop: 5,
-              marginBottom: 5,
+              marginLeft: 20,
+              marginTop: 20,
+              marginBottom: 10,
             }}>
-            View Calender
+            Selected Start Date: {startDate || 'None'}
           </Text>
-        </TouchableOpacity>
-        {showCalender && (
-          <View style={{marginTop: 50}}>
-            <CalendarPicker
-              onDateChange={handleDateChange}
-              selectedDayStyle={{backgroundColor: 'red'}}
-              todayBackgroundColor={'grey'}
-              textStyle={{fontFamily: 'HighTide-Sans'}}
-              allowRangeSelection={true}
-              allowBackwardRangeSelect={true}
-              minDate={minDate}
-              maxDate={maxDate}
-              disabledDates={generateDisabledDates()}
-            />
-          </View>
-        )}
-        <Text
-          style={{
-            fontFamily: 'HighTide-Sans',
-            marginLeft: 20,
-            marginTop: 20,
-            marginBottom: 10,
-          }}>
-          SELECTED START DATE: {startDate || 'None'}
-        </Text>
-        <Text
-          style={{fontFamily: 'HighTide-Sans', marginLeft: 20, marginTop: 10}}>
-          SELECTED END DATE: {endDate || 'None'}
-        </Text>
-      </View>
-      <View
-        style={{flex: 1, justifyContent: 'flex-end', alignItems: 'flex-end'}}>
-        <TouchableOpacity
-          style={{
-            backgroundColor: '#b6e7cc',
-            borderRadius: 5,
-            width: 120,
-            marginLeft: 20,
-            marginRight: 20,
-            marginBottom: 5,
-          }}
-          onPress={() => console.log('submitDates pressed')}>
           <Text
             style={{
               fontFamily: 'HighTide-Sans',
-              textAlign: 'center',
-              marginTop: 5,
-              marginBottom: 5,
+              marginLeft: 20,
+              marginTop: 10,
             }}>
-            Submit Dates
+            Selected End Date: {endDate || 'None'}
           </Text>
-        </TouchableOpacity>
-      </View>
+        </View>
+        <View
+          style={{flex: 1, justifyContent: 'flex-end', alignItems: 'flex-end'}}>
+          <TouchableOpacity
+            style={{
+              backgroundColor: '#b6e7cc',
+              borderRadius: 5,
+              width: 120,
+              marginLeft: 20,
+              marginRight: 20,
+              marginBottom: 5,
+            }}
+            onPress={() => console.log('submitDates pressed')}>
+            <Text
+              style={{
+                fontFamily: 'HighTide-Sans',
+                textAlign: 'center',
+                marginTop: 5,
+                marginBottom: 5,
+              }}>
+              Submit Dates
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </ImageBackground>
     </>
   );
 };

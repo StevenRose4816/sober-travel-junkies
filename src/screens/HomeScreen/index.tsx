@@ -397,7 +397,7 @@ const HomeScreen: FC = () => {
   };
 
   const onPressTripDest = () => {
-    navigation.navigate(Routes.booneScreen);
+    navigation.navigate(Routes.booneScreen, {backgroundPhoto: source()});
     setShowTripModal(false);
     toggleBackgroundPhotoModal();
   };
@@ -781,7 +781,7 @@ const HomeScreen: FC = () => {
                     onChangeText={fullName => setFullName(fullName)}
                     secureTextEntry={false}
                     style={{
-                      fontFamily: 'Vonique64',
+                      fontFamily: 'HighTide-Sans',
                       backgroundColor: '#eee7da',
                       marginHorizontal: 10,
                       marginBottom: 10,
@@ -809,7 +809,7 @@ const HomeScreen: FC = () => {
                     onChangeText={phoneNumber => setPhoneNumber(phoneNumber)}
                     secureTextEntry={false}
                     style={{
-                      fontFamily: 'Vonique64',
+                      fontFamily: 'HighTide-Sans',
                       backgroundColor: '#eee7da',
                       marginHorizontal: 10,
                       marginBottom: 10,
@@ -836,7 +836,7 @@ const HomeScreen: FC = () => {
                     onChangeText={address => setAddress(address)}
                     secureTextEntry={false}
                     style={{
-                      fontFamily: 'Vonique64',
+                      fontFamily: 'HighTide-Sans',
                       backgroundColor: '#eee7da',
                       marginHorizontal: 10,
                       marginBottom: 10,
@@ -864,7 +864,7 @@ const HomeScreen: FC = () => {
                     }
                     secureTextEntry={false}
                     style={{
-                      fontFamily: 'Vonique64',
+                      fontFamily: 'HighTide-Sans',
                       backgroundColor: '#eee7da',
                       marginHorizontal: 10,
                       marginBottom: 10,
@@ -892,7 +892,7 @@ const HomeScreen: FC = () => {
                     }
                     secureTextEntry={false}
                     style={{
-                      fontFamily: 'Vonique64',
+                      fontFamily: 'HighTide-Sans',
                       backgroundColor: '#eee7da',
                       marginHorizontal: 10,
                       marginBottom: 10,
@@ -920,7 +920,7 @@ const HomeScreen: FC = () => {
                     multiline={true}
                     maxLength={2000}
                     style={{
-                      fontFamily: 'Vonique64',
+                      fontFamily: 'HighTide-Sans',
                       backgroundColor: '#eee7da',
                       marginHorizontal: 10,
                       marginBottom: 10,

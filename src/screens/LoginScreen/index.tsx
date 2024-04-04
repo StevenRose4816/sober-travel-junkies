@@ -40,6 +40,7 @@ const LoginScreen: FC = () => {
       await auth().signInWithEmailAndPassword(email, password);
     } catch (e: any) {
       formatError(e.message);
+      console.log(e);
       toggleErrorModal();
     }
   };
