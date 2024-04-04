@@ -1,6 +1,13 @@
 import {RouteProp, useRoute} from '@react-navigation/native';
 import React, {FC, useState} from 'react';
-import {ImageBackground, Text, TouchableOpacity, View} from 'react-native';
+import {
+  Dimensions,
+  ImageBackground,
+  Modal,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import CalendarPicker, {
   DateChangedCallback,
 } from 'react-native-calendar-picker';
@@ -15,6 +22,7 @@ const BooneScreen: FC = () => {
   const route =
     useRoute<RouteProp<AppStackParams, Routes.messageBoardScreen>>();
   const backgroundPhoto = route?.params.backgroundPhoto;
+  const screenWidth = Dimensions.get('window').width;
 
   const generateDisabledDates = () => {
     const startDate = new Date(2025, 9, 1); // Month is 0-indexed
@@ -40,16 +48,21 @@ const BooneScreen: FC = () => {
     : '';
   const endDate = selectedEndDate ? selectedEndDate.toLocaleDateString() : '';
   const [showCalender, setShowCalender] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const onPressViewCalender = () => {
     setShowCalender(showCalender => !showCalender);
+  };
+
+  const toggleModal = () => {
+    setShowModal(showModal => !showModal);
   };
 
   return (
     <>
       <ImageBackground
         style={{flex: 1}}
-        imageStyle={{opacity: 0.3}}
+        imageStyle={{opacity: 0.4}}
         source={backgroundPhoto}>
         <View>
           <Text
@@ -69,6 +82,7 @@ const BooneScreen: FC = () => {
               borderRadius: 5,
               width: 120,
               marginLeft: 20,
+              marginBottom: 10,
             }}
             onPress={() => onPressViewCalender()}>
             <Text
@@ -93,26 +107,43 @@ const BooneScreen: FC = () => {
                 minDate={minDate}
                 maxDate={maxDate}
                 disabledDates={generateDisabledDates()}
+                selectedRangeStyle={{backgroundColor: '#b6e7cc'}}
               />
             </View>
           )}
-          <Text
+          <View
             style={{
-              fontFamily: 'HighTide-Sans',
+              justifyContent: 'center',
+              alignItems: 'flex-start',
               marginLeft: 20,
-              marginTop: 20,
-              marginBottom: 10,
             }}>
-            Selected Start Date: {startDate || 'None'}
-          </Text>
-          <Text
-            style={{
-              fontFamily: 'HighTide-Sans',
-              marginLeft: 20,
-              marginTop: 10,
-            }}>
-            Selected End Date: {endDate || 'None'}
-          </Text>
+            <View
+              style={{
+                backgroundColor: '#eee7da',
+                maxWidth: screenWidth * 0.9,
+                borderRadius: 10,
+              }}>
+              <Text
+                style={{
+                  fontFamily: 'HighTide-Sans',
+                  marginLeft: 10,
+                  marginTop: 10,
+                  marginBottom: 10,
+                  marginRight: 10,
+                }}>
+                Selected Start Date: {startDate || 'None'}
+              </Text>
+              <Text
+                style={{
+                  fontFamily: 'HighTide-Sans',
+                  marginLeft: 10,
+                  marginTop: 10,
+                  marginBottom: 10,
+                }}>
+                Selected End Date: {endDate || 'None'}
+              </Text>
+            </View>
+          </View>
         </View>
         <View
           style={{flex: 1, justifyContent: 'flex-end', alignItems: 'flex-end'}}>
@@ -137,6 +168,36 @@ const BooneScreen: FC = () => {
             </Text>
           </TouchableOpacity>
         </View>
+        <Modal
+          visible={showModal}
+          animationType={'fade'}
+          transparent={true}
+          onRequestClose={toggleModal}>
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            }}>
+            <View
+              style={{
+                backgroundColor: '#b6e7cc',
+                minHeight: 300,
+                width: '80%',
+                borderRadius: 5,
+                padding: 20,
+              }}>
+              <View
+                style={{
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}>
+                <Text>Modal</Text>
+              </View>
+            </View>
+          </View>
+        </Modal>
       </ImageBackground>
     </>
   );
