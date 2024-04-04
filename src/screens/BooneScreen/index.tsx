@@ -29,8 +29,10 @@ const BooneScreen: FC = () => {
     }
   };
 
-  const startDate = selectedStartDate ? selectedStartDate.toString() : '';
-  const endDate = selectedEndDate ? selectedEndDate.toString() : '';
+  const startDate = selectedStartDate
+    ? selectedStartDate.toLocaleDateString()
+    : '';
+  const endDate = selectedEndDate ? selectedEndDate.toLocaleDateString() : '';
   const [showCalender, setShowCalender] = useState(false);
 
   const onPressViewCalender = () => {
@@ -38,50 +40,90 @@ const BooneScreen: FC = () => {
   };
 
   return (
-    <View style={{flex: 1}}>
-      <Text
-        style={{
-          borderRadius: 5,
-          textAlign: 'center',
-          marginTop: 40,
-          marginBottom: 10,
-          fontFamily: 'HighTide-Sans',
-          fontSize: 18,
-        }}>
-        {'Valle Crucis 24'}
-      </Text>
-      <TouchableOpacity
-        style={{
-          backgroundColor: '#b6e7cc',
-          borderRadius: 5,
-          width: 120,
-        }}
-        onPress={() => onPressViewCalender()}>
-        <Text style={{fontFamily: 'HighTide-Sans', textAlign: 'center'}}>
-          View Calender
+    <>
+      <View style={{flex: 1}}>
+        <Text
+          style={{
+            borderRadius: 5,
+            textAlign: 'center',
+            marginTop: 40,
+            marginBottom: 10,
+            fontFamily: 'HighTide-Sans',
+            fontSize: 18,
+          }}>
+          {'Valle Crucis 24'}
         </Text>
-      </TouchableOpacity>
-      {showCalender && (
-        <View style={{marginTop: 50}}>
-          <CalendarPicker
-            onDateChange={handleDateChange}
-            selectedDayStyle={{backgroundColor: 'red'}}
-            todayBackgroundColor={'grey'}
-            textStyle={{fontFamily: 'HighTide-Sans'}}
-            allowRangeSelection={true}
-            allowBackwardRangeSelect={true}
-            minDate={minDate}
-            maxDate={maxDate}
-            disabledDates={generateDisabledDates()}
-          />
-        </View>
-      )}
-      <Text
-        style={{fontFamily: 'HighTide-Sans', marginLeft: 20, marginTop: 20}}>
-        SELECTED START DATE: {startDate || 'None'} {'\n'}
-        SELECTED END DATE: {endDate || 'None'}
-      </Text>
-    </View>
+        <TouchableOpacity
+          style={{
+            backgroundColor: '#b6e7cc',
+            borderRadius: 5,
+            width: 120,
+            marginLeft: 20,
+          }}
+          onPress={() => onPressViewCalender()}>
+          <Text
+            style={{
+              fontFamily: 'HighTide-Sans',
+              textAlign: 'center',
+              marginTop: 5,
+              marginBottom: 5,
+            }}>
+            View Calender
+          </Text>
+        </TouchableOpacity>
+        {showCalender && (
+          <View style={{marginTop: 50}}>
+            <CalendarPicker
+              onDateChange={handleDateChange}
+              selectedDayStyle={{backgroundColor: 'red'}}
+              todayBackgroundColor={'grey'}
+              textStyle={{fontFamily: 'HighTide-Sans'}}
+              allowRangeSelection={true}
+              allowBackwardRangeSelect={true}
+              minDate={minDate}
+              maxDate={maxDate}
+              disabledDates={generateDisabledDates()}
+            />
+          </View>
+        )}
+        <Text
+          style={{
+            fontFamily: 'HighTide-Sans',
+            marginLeft: 20,
+            marginTop: 20,
+            marginBottom: 10,
+          }}>
+          SELECTED START DATE: {startDate || 'None'}
+        </Text>
+        <Text
+          style={{fontFamily: 'HighTide-Sans', marginLeft: 20, marginTop: 10}}>
+          SELECTED END DATE: {endDate || 'None'}
+        </Text>
+      </View>
+      <View
+        style={{flex: 1, justifyContent: 'flex-end', alignItems: 'flex-end'}}>
+        <TouchableOpacity
+          style={{
+            backgroundColor: '#b6e7cc',
+            borderRadius: 5,
+            width: 120,
+            marginLeft: 20,
+            marginRight: 20,
+            marginBottom: 5,
+          }}
+          onPress={() => console.log('submitDates pressed')}>
+          <Text
+            style={{
+              fontFamily: 'HighTide-Sans',
+              textAlign: 'center',
+              marginTop: 5,
+              marginBottom: 5,
+            }}>
+            Submit Dates
+          </Text>
+        </TouchableOpacity>
+      </View>
+    </>
   );
 };
 
