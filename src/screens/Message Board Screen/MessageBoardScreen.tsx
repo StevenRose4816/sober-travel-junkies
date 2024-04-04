@@ -1,7 +1,5 @@
 import React, {FC, useEffect, useRef, useState} from 'react';
 import {
-  Button,
-  Dimensions,
   FlatList,
   Image,
   ImageBackground,
@@ -12,7 +10,6 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import auth from '@react-native-firebase/auth';
 import {get, onValue, ref, set} from 'firebase/database';
 import {db} from '../HomeScreen/FirebaseConfigurations';
 import {RouteProp} from '@react-navigation/native';

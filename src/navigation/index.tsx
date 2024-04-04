@@ -1,10 +1,6 @@
 import {FC, useEffect, useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import {
-  createNativeStackNavigator,
-  NativeStackNavigationProp,
-  NativeStackScreenProps,
-} from '@react-navigation/native-stack';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {HomeScreen, LoginScreen, SignupScreen} from '../screens';
 import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
 import {IUser, setUser} from '../store/auth/slice';
@@ -15,23 +11,6 @@ import BooneScreen from '../screens/BooneScreen/index.tsx';
 import MessageBoardScreen from '../screens/Message Board Screen/MessageBoardScreen.tsx';
 import {AppStackParams} from './types.ts';
 import Routes from '../navigation/routes.ts';
-
-// export type RootStackParamList = {
-//   HomeScreen: undefined;
-//   ImagePicker: undefined;
-//   LoginScreen: undefined;
-//   SignupScreen: undefined;
-//   TripInfoScreen: undefined;
-//   BooneScreen: {
-//     setShowTripModal: boolean;
-//     toggleBackgroundPhotoModal: () => void;
-//   };
-//   MessageBoardScreen: {
-//     fullName: string;
-//     userPhotoFromDB: string;
-//     formattedDate: string;
-//   };
-// };
 
 const RootStack = createNativeStackNavigator<AppStackParams>();
 

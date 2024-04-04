@@ -1,5 +1,5 @@
 import React, {FC, useState} from 'react';
-import {Dimensions, Text, View} from 'react-native';
+import {Text, View} from 'react-native';
 import CalendarPicker from 'react-native-calendar-picker';
 
 const BooneScreen: FC = () => {

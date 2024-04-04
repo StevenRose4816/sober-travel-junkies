@@ -1,17 +1,9 @@
 import React, {useState} from 'react';
-import {
-  Button,
-  Image,
-  View,
-  TouchableOpacity,
-  Text,
-  ScrollView,
-} from 'react-native';
+import {Image, View, TouchableOpacity, Text} from 'react-native';
 import {launchImageLibrary, launchCamera} from 'react-native-image-picker';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import {setUserPhoto} from '../store/user/slice';
-import {setSelected} from '../store/photo/slice';
 import Routes from '../navigation/routes';
 
 const ImagePicker = () => {
@@ -27,7 +19,6 @@ const ImagePicker = () => {
 
   const navAway = () => {
     dispatch(setUserPhoto({userPhoto: selectedImage}));
-    // dispatch(setSelected({selected: true}));
     navigate(Routes.homeScreen);
   };
 

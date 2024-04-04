@@ -30,7 +30,6 @@ const HomeScreen: FC = () => {
   const navigation = useNavigation<NavPropAny>();
   const dispatch = useDispatch();
   const screenWidth = Dimensions.get('window').width;
-  const screenHeight = Dimensions.get('window').height;
 
   const logout = () => {
     dispatch(setUserPhoto({userPhoto: null}));
@@ -43,7 +42,6 @@ const HomeScreen: FC = () => {
     navigation.navigate(Routes.imagePicker);
   };
 
-  const user = auth().currentUser;
   const userId = auth().currentUser?.uid;
   const [modalVisible, setModalVisible] = useState(false);
   const [data, setData] = useState(false);
@@ -382,23 +380,18 @@ const HomeScreen: FC = () => {
   const source = () => {
     if (firstPhotoPressed) {
       const background1 = require('../../Images/backgroundPhoto1.jpeg');
-      // dispatch(setBackgroundPhoto({uri: background1}));
       return background1;
     } else if (secondPhotoPressed) {
       const background2 = require('../../Images/backgroundPhoto2.jpeg');
-      // dispatch(setBackgroundPhoto({uri: background2}));
       return background2;
     } else if (thirdPhotoPressed) {
       const background3 = require('../../Images/backgroundPhoto3.jpeg');
-      // dispatch(setBackgroundPhoto({uri: background3}));
       return background3;
     } else if (fourthPhotoPressed) {
       const background4 = require('../../Images/backgroundPhoto4.jpeg');
-      // dispatch(setBackgroundPhoto({uri: background4}));
       return background4;
     } else {
       const background1 = require('../../Images/backgroundPhoto1.jpeg');
-      // dispatch(setBackgroundPhoto({uri: background1}));
       return background1;
     }
   };
