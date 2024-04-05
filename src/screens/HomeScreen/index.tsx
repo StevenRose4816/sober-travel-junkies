@@ -486,19 +486,7 @@ const HomeScreen: FC = () => {
                     borderWidth: 1,
                     borderColor: '#eee7da',
                   }}>
-                  <Text style={styles.text2}>{'Message Board'}</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={onPressChangeBackground}
-                  style={{
-                    backgroundColor: '#b6e7cc',
-                    marginLeft: 10,
-                    width: 250,
-                    borderRadius: 5,
-                    borderWidth: 1,
-                    borderColor: '#eee7da',
-                  }}>
-                  <Text style={styles.text1}>{'Change background photo'}</Text>
+                  <Text style={styles.text2}>{'View Message Board'}</Text>
                 </TouchableOpacity>
 
                 <View style={styles.nestedView2}>
@@ -758,6 +746,28 @@ const HomeScreen: FC = () => {
                           transform: [{translateX}],
                         }}
                         source={require('../../Images/ndaicon.png')}></Animated.Image>
+                    </TouchableOpacity>
+                  </View>
+                  <View
+                    style={{
+                      flex: 1,
+                      alignItems: 'flex-start',
+                      justifyContent: 'flex-start',
+                    }}>
+                    <TouchableOpacity
+                      onPress={onPressChangeBackground}
+                      style={{
+                        backgroundColor: '#b6e7cc',
+                        marginLeft: 10,
+                        marginTop: 10,
+                        width: 250,
+                        borderRadius: 5,
+                        borderWidth: 1,
+                        borderColor: '#eee7da',
+                      }}>
+                      <Text style={styles.text1}>
+                        {'Change background photo'}
+                      </Text>
                     </TouchableOpacity>
                   </View>
                 </View>
@@ -1329,7 +1339,7 @@ const styles = StyleSheet.create({
   },
   nestedView5: {
     flex: 1,
-    marginTop: 20,
+    marginTop: 10,
     justifyContent: 'center',
     alignItems: 'center',
   },

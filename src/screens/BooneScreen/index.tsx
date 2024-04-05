@@ -114,7 +114,7 @@ const BooneScreen: FC = () => {
                 marginTop: 5,
                 marginBottom: 5,
               }}>
-              {!showCalender ? 'View Calender' : 'Hide Calender'}
+              {!showCalender ? 'View Trip Calender' : 'Hide Trip Calender'}
             </Text>
           </TouchableOpacity>
           {showCalender && (
@@ -229,7 +229,7 @@ const BooneScreen: FC = () => {
                 <Text
                   style={{
                     fontFamily: 'HighTide-Sans',
-                    marginTop: 70,
+                    marginTop: 50,
                   }}>
                   {startDate}-{endDate}
                 </Text>
