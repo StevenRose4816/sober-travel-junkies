@@ -1,5 +1,5 @@
-import {RouteProp, useRoute} from '@react-navigation/native';
-import React, {FC, useState} from 'react';
+import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
+import React, {FC, useEffect, useState} from 'react';
 import {
   Dimensions,
   ImageBackground,
@@ -11,7 +11,7 @@ import {
 import CalendarPicker, {
   DateChangedCallback,
 } from 'react-native-calendar-picker';
-import {AppStackParams} from '../../navigation/types';
+import {AppStackParams, NavPropAny} from '../../navigation/types';
 import Routes from '../../navigation/routes';
 
 const BooneScreen: FC = () => {
@@ -23,6 +23,7 @@ const BooneScreen: FC = () => {
     useRoute<RouteProp<AppStackParams, Routes.messageBoardScreen>>();
   const backgroundPhoto = route?.params.backgroundPhoto;
   const screenWidth = Dimensions.get('window').width;
+  const navigation = useNavigation<NavPropAny>();
 
   const generateDisabledDates = () => {
     const startDate = new Date(2025, 9, 1); // Month is 0-indexed
@@ -66,6 +67,7 @@ const BooneScreen: FC = () => {
   const onPressYes = () => {
     console.log('yes pressed');
     toggleModal();
+    navigation.navigate(Routes.homeScreen);
   };
 
   const onPressNo = () => {
@@ -73,11 +75,16 @@ const BooneScreen: FC = () => {
     toggleModal();
   };
 
+  useEffect(() => {
+    console.log('startDate: ', startDate);
+    console.log('endDate: ', endDate);
+  }, [startDate, endDate]);
+
   return (
     <>
       <ImageBackground
         style={{flex: 1}}
-        imageStyle={{opacity: 0.4}}
+        imageStyle={!showCalender ? {opacity: 0.8} : {opacity: 0.4}}
         source={backgroundPhoto}>
         <View>
           <Text
@@ -89,7 +96,7 @@ const BooneScreen: FC = () => {
               fontFamily: 'HighTide-Sans',
               fontSize: 18,
             }}>
-            {'Valle Crucis 24'}
+            {"Valle Crucis 24'"}
           </Text>
           <TouchableOpacity
             style={{
@@ -114,7 +121,6 @@ const BooneScreen: FC = () => {
             <View style={{marginTop: 50}}>
               <CalendarPicker
                 onDateChange={handleDateChange}
-                selectedDayStyle={{backgroundColor: 'red'}}
                 todayBackgroundColor={'grey'}
                 textStyle={{fontFamily: 'HighTide-Sans'}}
                 allowRangeSelection={true}
@@ -126,51 +132,55 @@ const BooneScreen: FC = () => {
               />
             </View>
           )}
-          <View
-            style={{
-              justifyContent: 'center',
-              alignItems: 'flex-start',
-              marginLeft: 20,
-            }}>
+          {startDate !== '' && (
             <View
               style={{
-                backgroundColor: '#eee7da',
-                maxWidth: screenWidth * 0.9,
-                borderRadius: 10,
+                justifyContent: 'center',
+                alignItems: 'flex-start',
+                marginLeft: 20,
               }}>
-              <Text
+              <View
                 style={{
-                  fontFamily: 'HighTide-Sans',
-                  marginLeft: 10,
-                  marginTop: 10,
-                  marginBottom: 10,
-                  marginRight: 10,
+                  backgroundColor: '#eee7da',
+                  maxWidth: screenWidth * 0.9,
+                  borderRadius: 10,
                 }}>
-                Selected Start Date: {startDate || 'None'}
-              </Text>
-              <Text
-                style={{
-                  fontFamily: 'HighTide-Sans',
-                  marginLeft: 10,
-                  marginTop: 10,
-                  marginBottom: 10,
-                }}>
-                Selected End Date: {endDate || 'None'}
-              </Text>
+                <Text
+                  style={{
+                    fontFamily: 'HighTide-Sans',
+                    marginLeft: 10,
+                    marginTop: 10,
+                    marginBottom: 10,
+                    marginRight: 10,
+                  }}>
+                  Selected Start Date: {startDate || 'None'}
+                </Text>
+                <Text
+                  style={{
+                    fontFamily: 'HighTide-Sans',
+                    marginLeft: 10,
+                    marginTop: 10,
+                    marginBottom: 10,
+                  }}>
+                  Selected End Date: {endDate || 'None'}
+                </Text>
+              </View>
             </View>
-          </View>
+          )}
         </View>
         <View
           style={{flex: 1, justifyContent: 'flex-end', alignItems: 'flex-end'}}>
           <TouchableOpacity
             style={{
-              backgroundColor: '#b6e7cc',
+              backgroundColor: endDate !== '' ? '#b6e7cc' : 'grey',
               borderRadius: 5,
               width: 120,
               marginLeft: 20,
               marginRight: 20,
               marginBottom: 5,
+              opacity: endDate !== '' ? 1 : 0.5,
             }}
+            disabled={endDate === ''}
             onPress={() => onSubmitDates()}>
             <Text
               style={{
@@ -195,22 +205,25 @@ const BooneScreen: FC = () => {
               alignItems: 'center',
               backgroundColor: 'rgba(0, 0, 0, 0.5)',
             }}>
-            <TouchableOpacity
+            <View
               style={{
                 backgroundColor: '#b6e7cc',
                 minHeight: 300,
                 width: '80%',
                 borderRadius: 5,
                 padding: 20,
-              }}
-              onPress={() => toggleModal()}>
+              }}>
               <View
                 style={{
                   alignItems: 'center',
                   justifyContent: 'center',
                 }}>
                 <Text
-                  style={{fontFamily: 'HighTide-Sans', textAlign: 'center'}}>
+                  style={{
+                    fontFamily: 'HighTide-Sans',
+                    textAlign: 'center',
+                    marginTop: 40,
+                  }}>
                   Do you want to submit the follwing dates?
                 </Text>
                 <Text
@@ -271,7 +284,7 @@ const BooneScreen: FC = () => {
                   </TouchableOpacity>
                 </View>
               </View>
-            </TouchableOpacity>
+            </View>
           </View>
         </Modal>
       </ImageBackground>
