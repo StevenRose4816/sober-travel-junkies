@@ -42,14 +42,14 @@ const BooneScreen: FC = () => {
     Animated.parallel([
       Animated.timing(translateY, {
         toValue: 550,
-        duration: 2000,
+        duration: 1500,
         useNativeDriver: true, // Delay translateY animation (same as translateX duration)
       }),
       Animated.timing(translateX, {
         toValue: 125,
-        duration: 800,
+        duration: 400,
         useNativeDriver: true,
-        delay: 2000,
+        delay: 1500,
       }),
     ]).start();
   };
