@@ -1,14 +1,23 @@
 import React, {useState} from 'react';
 import {Image, View, TouchableOpacity, Text} from 'react-native';
-import {launchImageLibrary, launchCamera} from 'react-native-image-picker';
+import {
+  launchImageLibrary,
+  launchCamera,
+  MediaType,
+  ImagePickerResponse,
+  OptionsCommon,
+} from 'react-native-image-picker';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import {setUserPhoto} from '../store/user/slice';
 import Routes from '../navigation/routes';
+import {NavPropAny} from '../navigation/types';
 
 const ImagePicker = () => {
-  const [selectedImage, setSelectedImage] = useState(null);
-  const {navigate} = useNavigation();
+  const [selectedImage, setSelectedImage] = useState<string | undefined>(
+    undefined,
+  );
+  const {navigate} = useNavigation<NavPropAny>();
   const dispatch = useDispatch();
 
   const navigation = useNavigation();
@@ -22,9 +31,11 @@ const ImagePicker = () => {
     navigate(Routes.homeScreen);
   };
 
+  const photo = 'photo' as MediaType;
+
   const openImagePicker = () => {
     const options = {
-      mediaType: 'photo',
+      mediaType: photo,
       includeBase64: false,
     };
 
@@ -32,20 +43,20 @@ const ImagePicker = () => {
       console.log('Response = ', response);
       if (response.didCancel) {
         console.log('User cancelled image picker');
-      } else if (response.error) {
-        console.log('Image picker error: ', response.error);
+      } else if (response.errorCode) {
+        console.log('Image picker error: ', response.errorCode);
       } else {
-        console.log('response.uri=', response.uri);
+        console.log('response.assets=', response.assets?.[0]);
         console.log('response.assets.[0].uri=', response.assets?.[0]?.uri);
-        let imageUri = response.uri || response.assets?.[0]?.uri;
+        let imageUri = response.assets?.[0]?.uri;
         setSelectedImage(imageUri);
       }
     });
   };
 
-  handleCameraLaunch = () => {
+  const handleCameraLaunch = () => {
     const options = {
-      mediaType: 'photo',
+      mediaType: photo,
       includeBase64: false,
       maxHeight: 2000,
       maxWidth: 2000,
@@ -55,11 +66,11 @@ const ImagePicker = () => {
       console.log('Response = ', response);
       if (response.didCancel) {
         console.log('User cancelled camera');
-      } else if (response.error) {
-        console.log('Camera Error: ', response.error);
+      } else if (response.errorCode) {
+        console.log('Camera Error: ', response.errorCode);
       } else {
         // Process the captured image
-        let imageUri = response.uri || response.assets?.[0]?.uri;
+        let imageUri = response.assets?.[0]?.uri;
         setSelectedImage(imageUri);
         console.log(imageUri);
       }
@@ -79,23 +90,22 @@ const ImagePicker = () => {
             <TouchableOpacity
               onPress={navAway}
               style={{
-                backgroundColor: 'blue',
-                justifyContent: 'center',
+                backgroundColor: '#b6e7cc',
                 borderRadius: 5,
-                width: '70%',
+                marginBottom: 20,
+                width: 100,
+                borderWidth: 1,
+                borderColor: '#eee7da',
               }}>
               <Text
                 style={{
-                  color: 'white',
+                  color: '#0c0b09',
                   fontSize: 12,
-                  marginLeft: 5,
-                  marginRight: 5,
-                  marginTop: 5,
-                  marginBottom: 5,
-                  fontWeight: '600',
+                  margin: 10,
                   textAlign: 'center',
+                  fontFamily: 'HighTide-Sans',
                 }}>
-                {'This looks good!'}
+                {'This looks good'}
               </Text>
             </TouchableOpacity>
           </View>

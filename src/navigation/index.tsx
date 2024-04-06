@@ -5,7 +5,7 @@ import {HomeScreen, LoginScreen, SignupScreen} from '../screens';
 import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
 import {IUser, setUser} from '../store/auth/slice';
 import {useAppDispatch, useAppSelector} from '../hooks';
-import ImagePicker from '../components/ImagePicker.jsx';
+import ImagePicker from '../components/ImagePicker.tsx';
 import TripInfoScreen from '../screens/TripInfo/index.tsx';
 import BooneScreen from '../screens/BooneScreen/index.tsx';
 import MessageBoardScreen from '../screens/Message Board Screen/MessageBoardScreen.tsx';
