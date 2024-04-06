@@ -1,6 +1,7 @@
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, useEffect, useRef, useState} from 'react';
 import {
+  Animated,
   Dimensions,
   ImageBackground,
   Modal,
@@ -24,6 +25,39 @@ const BooneScreen: FC = () => {
   const backgroundPhoto = route?.params.backgroundPhoto;
   const screenWidth = Dimensions.get('window').width;
   const navigation = useNavigation<NavPropAny>();
+  const translateX = useRef(new Animated.Value(0)).current;
+  const translateY = useRef(new Animated.Value(0)).current;
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+  console.log('screenWidth: ', screenWidth);
+
+  const fadeIn = () => {
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 5000,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  const moveImage = () => {
+    Animated.parallel([
+      Animated.timing(translateY, {
+        toValue: 550, // Adjust this value as needed
+        duration: 2000,
+        useNativeDriver: true, // Delay translateY animation (same as translateX duration)
+      }),
+      Animated.timing(translateX, {
+        toValue: 125,
+        duration: 800,
+        useNativeDriver: true,
+        delay: 2000,
+      }),
+    ]).start();
+  };
+
+  useEffect(() => {
+    moveImage();
+    fadeIn();
+  }, []);
 
   const generateDisabledDates = () => {
     const startDate = new Date(2025, 9, 1); // Month is 0-indexed
@@ -139,35 +173,53 @@ const BooneScreen: FC = () => {
                 alignItems: 'flex-start',
                 marginLeft: 20,
               }}>
-              <View
-                style={{
-                  backgroundColor: '#eee7da',
-                  maxWidth: screenWidth * 0.9,
-                  borderRadius: 10,
-                }}>
-                <Text
+              {showCalender && (
+                <View
                   style={{
-                    fontFamily: 'HighTide-Sans',
-                    marginLeft: 10,
-                    marginTop: 10,
-                    marginBottom: 10,
-                    marginRight: 10,
+                    backgroundColor: '#eee7da',
+                    maxWidth: screenWidth * 0.9,
+                    borderRadius: 10,
                   }}>
-                  Selected Start Date: {startDate || 'None'}
-                </Text>
-                <Text
-                  style={{
-                    fontFamily: 'HighTide-Sans',
-                    marginLeft: 10,
-                    marginTop: 10,
-                    marginBottom: 10,
-                  }}>
-                  Selected End Date: {endDate || 'None'}
-                </Text>
-              </View>
+                  <Text
+                    style={{
+                      fontFamily: 'HighTide-Sans',
+                      marginLeft: 10,
+                      marginTop: 10,
+                      marginBottom: 10,
+                      marginRight: 10,
+                    }}>
+                    Selected Start Date: {startDate || 'None'}
+                  </Text>
+                  <Text
+                    style={{
+                      fontFamily: 'HighTide-Sans',
+                      marginLeft: 10,
+                      marginTop: 10,
+                      marginBottom: 10,
+                    }}>
+                    Selected End Date: {endDate || 'None'}
+                  </Text>
+                </View>
+              )}
             </View>
           )}
         </View>
+        {!showCalender && (
+          <View
+            style={{
+              flex: 1,
+              alignItems: 'flex-start',
+              justifyContent: 'flex-start',
+            }}>
+            <Animated.Image
+              style={{
+                height: 150,
+                width: 300,
+                transform: [{translateY}, {translateX}],
+              }}
+              source={require('../../Images/STJLogoTransparent.png')}></Animated.Image>
+          </View>
+        )}
         <View
           style={{flex: 1, justifyContent: 'flex-end', alignItems: 'flex-end'}}>
           <TouchableOpacity
