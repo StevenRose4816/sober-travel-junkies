@@ -41,7 +41,7 @@ const BooneScreen: FC = () => {
   const moveImage = () => {
     Animated.parallel([
       Animated.timing(translateY, {
-        toValue: 550, // Adjust this value as needed
+        toValue: 550,
         duration: 2000,
         useNativeDriver: true, // Delay translateY animation (same as translateX duration)
       }),

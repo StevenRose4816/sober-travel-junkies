@@ -771,10 +771,18 @@ const HomeScreen: FC = () => {
                     </TouchableOpacity>
                   </View>
                 </View>
-                <View style={styles.nestedView5}>
+                <View
+                  style={{
+                    flex: 1,
+                    marginTop: 10,
+                    justifyContent: 'flex-start',
+                    alignItems: 'flex-start',
+                  }}>
                   <Text
                     style={{
                       fontFamily: 'HighTide-Sans',
+                      marginLeft: 25,
+                      marginTop: 10,
                     }}>
                     {'Full Name'}
                   </Text>
@@ -803,16 +811,20 @@ const HomeScreen: FC = () => {
                       borderBottomWidth: 3,
                       width: screenWidth * 0.9,
                     }}></TextInput>
-                  <Text
+                  <View
                     style={{
-                      textAlign: 'left',
-                      marginLeft: 10,
-                      fontWeight: '600',
-                      marginTop: 10,
-                      fontFamily: 'HighTide-Sans',
+                      flex: 1,
+                      alignSelf: 'flex-start',
                     }}>
-                    {'Phone Number'}
-                  </Text>
+                    <Text
+                      style={{
+                        marginLeft: 25,
+                        marginTop: 10,
+                        fontFamily: 'HighTide-Sans',
+                      }}>
+                      {'Phone Number'}
+                    </Text>
+                  </View>
                   <TextInput
                     value={phoneNumber}
                     placeholder=" phone number"
@@ -831,15 +843,21 @@ const HomeScreen: FC = () => {
                       borderBottomWidth: 3,
                       width: screenWidth * 0.9,
                     }}></TextInput>
-                  <Text
+                  <View
                     style={{
-                      marginLeft: 10,
-                      marginTop: 10,
-                      fontWeight: '600',
-                      fontFamily: 'HighTide-Sans',
+                      flex: 1,
+                      alignSelf: 'flex-start',
                     }}>
-                    {'Address'}
-                  </Text>
+                    <Text
+                      style={{
+                        marginLeft: 25,
+                        marginTop: 10,
+                        fontWeight: '600',
+                        fontFamily: 'HighTide-Sans',
+                      }}>
+                      {'Address'}
+                    </Text>
+                  </View>
                   <TextInput
                     value={address}
                     placeholder=" address"
@@ -858,14 +876,20 @@ const HomeScreen: FC = () => {
                       borderColor: '#5A6472',
                       width: screenWidth * 0.9,
                     }}></TextInput>
-                  <Text
+                  <View
                     style={{
-                      marginLeft: 10,
-                      marginTop: 10,
-                      fontFamily: 'HighTide-Sans',
+                      flex: 1,
+                      alignSelf: 'flex-start',
                     }}>
-                    {'Emergency Contact Name'}
-                  </Text>
+                    <Text
+                      style={{
+                        marginLeft: 25,
+                        marginTop: 10,
+                        fontFamily: 'HighTide-Sans',
+                      }}>
+                      {'Emergency Contact Name'}
+                    </Text>
+                  </View>
                   <TextInput
                     value={emergencyContact}
                     placeholder=" emergency contact name"
@@ -886,14 +910,20 @@ const HomeScreen: FC = () => {
                       borderColor: '#5A6472',
                       width: screenWidth * 0.9,
                     }}></TextInput>
-                  <Text
+                  <View
                     style={{
-                      marginLeft: 10,
-                      marginTop: 10,
-                      fontFamily: 'HighTide-Sans',
+                      flex: 1,
+                      alignSelf: 'flex-start',
                     }}>
-                    {'Emergency Contact Phone'}
-                  </Text>
+                    <Text
+                      style={{
+                        marginLeft: 25,
+                        marginTop: 10,
+                        fontFamily: 'HighTide-Sans',
+                      }}>
+                      {'Emergency Contact Phone'}
+                    </Text>
+                  </View>
                   <TextInput
                     value={emergencyContactPhone}
                     placeholder=" emergency contact phone"
@@ -914,14 +944,20 @@ const HomeScreen: FC = () => {
                       borderColor: '#5A6472',
                       width: screenWidth * 0.9,
                     }}></TextInput>
-                  <Text
+                  <View
                     style={{
-                      marginLeft: 10,
-                      marginTop: 10,
-                      fontFamily: 'HighTide-Sans',
+                      flex: 1,
+                      alignSelf: 'flex-start',
                     }}>
-                    {'Bio'}
-                  </Text>
+                    <Text
+                      style={{
+                        marginLeft: 25,
+                        marginTop: 10,
+                        fontFamily: 'HighTide-Sans',
+                      }}>
+                      {'Bio'}
+                    </Text>
+                  </View>
                   <TextInput
                     value={bio}
                     placeholder=" bio"
