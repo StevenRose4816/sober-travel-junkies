@@ -34,11 +34,12 @@ const ImagePicker = () => {
   const translateYLooksGood = useRef(new Animated.Value(0)).current;
   const translateXChoose = useRef(new Animated.Value(0)).current;
   const translateYChoose = useRef(new Animated.Value(0)).current;
+  const scaleX = useRef(new Animated.Value(1)).current;
   console.log('routes=', routes);
   console.log('previous route=', prevRoute);
 
   useEffect(() => {
-    selectedImage && moveImage();
+    selectedImage && animateTouchables();
   }, [selectedImage]);
 
   const navAway = () => {
@@ -69,6 +70,7 @@ const ImagePicker = () => {
         translateYLooksGood.setValue(0);
         translateXChoose.setValue(0);
         translateYChoose.setValue(0);
+        scaleX.setValue(1);
       }
     });
   };
@@ -94,7 +96,7 @@ const ImagePicker = () => {
     });
   };
 
-  const moveImage = () => {
+  const animateTouchables = () => {
     Animated.parallel([
       Animated.timing(translateYLooksGood, {
         toValue: -132,
@@ -108,6 +110,12 @@ const ImagePicker = () => {
         delay: 500,
       }),
     ]).start();
+    Animated.timing(scaleX, {
+      toValue: 1.1,
+      duration: 1000,
+      useNativeDriver: true,
+      // delay: 1000, // Delay translateY animation (same as translateX duration)
+    }).start();
   };
 
   return (
@@ -187,10 +195,12 @@ const ImagePicker = () => {
             transform: [
               {translateX: translateXLooksGood},
               {translateY: translateYLooksGood},
+              {scale: scaleX},
             ],
           }}>
           <TouchableOpacity
             onPress={navAway}
+            disabled={!selectedImage}
             style={{
               backgroundColor: '#b6e7cc',
               borderRadius: 5,
