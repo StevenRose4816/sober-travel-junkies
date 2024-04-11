@@ -231,7 +231,7 @@ const BooneScreen: FC = () => {
                         marginTop: 5,
                         marginBottom: 5,
                       }}>
-                      Add Dates to Mobile Calender
+                      Add To Your Calender
                     </Text>
                   </TouchableOpacity>
                 </>

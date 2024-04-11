@@ -30,13 +30,15 @@ const ImagePicker = () => {
   const navigation = useNavigation();
   const routes = navigation.getState()?.routes;
   const prevRoute = routes[routes.length - 2];
-  const translateX = useRef(new Animated.Value(0)).current;
-  const translateY = useRef(new Animated.Value(0)).current;
+  const translateXLooksGood = useRef(new Animated.Value(0)).current;
+  const translateYLooksGood = useRef(new Animated.Value(0)).current;
+  const translateXChoose = useRef(new Animated.Value(0)).current;
+  const translateYChoose = useRef(new Animated.Value(0)).current;
   console.log('routes=', routes);
   console.log('previous route=', prevRoute);
 
   useEffect(() => {
-    moveImage();
+    selectedImage && moveImage();
   }, [selectedImage]);
 
   const navAway = () => {
@@ -63,8 +65,10 @@ const ImagePicker = () => {
         console.log('response.assets.[0].uri=', response.assets?.[0]?.uri);
         let imageUri = response.assets?.[0]?.uri;
         setSelectedImage(imageUri);
-        translateX.setValue(0);
-        translateY.setValue(0);
+        translateXLooksGood.setValue(0);
+        translateYLooksGood.setValue(0);
+        translateXChoose.setValue(0);
+        translateYChoose.setValue(0);
       }
     });
   };
@@ -83,7 +87,6 @@ const ImagePicker = () => {
       } else if (response.errorCode) {
         console.log('Camera Error: ', response.errorCode);
       } else {
-        // Process the captured image
         let imageUri = response.assets?.[0]?.uri;
         setSelectedImage(imageUri);
         console.log(imageUri);
@@ -93,70 +96,30 @@ const ImagePicker = () => {
 
   const moveImage = () => {
     Animated.parallel([
-      Animated.timing(translateX, {
-        toValue: -100,
+      Animated.timing(translateYLooksGood, {
+        toValue: -132,
         duration: 500,
         useNativeDriver: true, // Delay translateY animation (same as translateX duration)
       }),
-      Animated.timing(translateY, {
-        toValue: 200,
+      Animated.timing(translateYChoose, {
+        toValue: 132,
         duration: 500,
         useNativeDriver: true,
         delay: 500,
       }),
-    ]).start(() => {
-      Animated.timing(translateX, {
-        toValue: 0,
-        duration: 500,
-        useNativeDriver: true,
-      }).start(() => {
-        Animated.timing(translateY, {
-          toValue: 10,
-          duration: 500,
-          useNativeDriver: true,
-        }).start();
-      });
-    });
+    ]).start();
   };
 
   return (
     <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      {selectedImage && (
-        <>
-          <Image
-            resizeMode="center"
-            source={{uri: selectedImage}}
-            style={{marginBottom: 20, height: 300, width: 300}}
-          />
-          <Animated.View
-            style={{
-              alignItems: 'center',
-              justifyContent: 'center',
-              transform: [{translateX}, {translateY}],
-            }}>
-            <TouchableOpacity
-              onPress={navAway}
-              style={{
-                backgroundColor: '#b6e7cc',
-                borderRadius: 5,
-                marginBottom: 20,
-                width: 100,
-                borderWidth: 1,
-                borderColor: '#eee7da',
-              }}>
-              <Text
-                style={{
-                  color: '#0c0b09',
-                  fontSize: 12,
-                  margin: 10,
-                  textAlign: 'center',
-                  fontFamily: 'HighTide-Sans',
-                }}>
-                {'This looks good'}
-              </Text>
-            </TouchableOpacity>
-          </Animated.View>
-        </>
+      {selectedImage ? (
+        <Image
+          resizeMode="center"
+          source={{uri: selectedImage}}
+          style={{marginBottom: 20, height: 300, width: 300}}
+        />
+      ) : (
+        <View style={{marginBottom: 20, height: 300, width: 300}}></View>
       )}
       <View
         style={{
@@ -165,48 +128,90 @@ const ImagePicker = () => {
           justifyContent: 'center',
           alignItems: 'center',
         }}>
-        <TouchableOpacity
+        <Animated.View
           style={{
-            backgroundColor: '#b6e7cc',
-            borderRadius: 5,
-            marginBottom: 20,
-            width: 100,
-            borderWidth: 1,
-            borderColor: '#eee7da',
-          }}
-          onPress={openImagePicker}>
-          <Text
+            transform: [
+              {translateX: translateXChoose},
+              {translateY: translateYChoose},
+            ],
+          }}>
+          <TouchableOpacity
             style={{
-              color: '#0c0b09',
-              fontSize: 12,
-              margin: 10,
-              textAlign: 'center',
-              fontFamily: 'HighTide-Sans',
-            }}>
-            {'Choose from Device'}
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
+              backgroundColor: '#b6e7cc',
+              borderRadius: 5,
+              marginBottom: 20,
+              width: 100,
+              borderWidth: 1,
+              borderColor: '#eee7da',
+            }}
+            onPress={openImagePicker}>
+            <Text
+              style={{
+                color: '#0c0b09',
+                fontSize: 12,
+                margin: 10,
+                textAlign: 'center',
+                fontFamily: 'HighTide-Sans',
+              }}>
+              {'Choose from Device'}
+            </Text>
+          </TouchableOpacity>
+        </Animated.View>
+        <Animated.View>
+          <TouchableOpacity
+            style={{
+              backgroundColor: '#b6e7cc',
+              borderRadius: 5,
+              marginBottom: 20,
+              width: 100,
+              borderWidth: 1,
+              borderColor: '#eee7da',
+            }}
+            onPress={handleCameraLaunch}>
+            <Text
+              style={{
+                color: '#0c0b09',
+                fontSize: 12,
+                margin: 10,
+                textAlign: 'center',
+                fontFamily: 'HighTide-Sans',
+              }}>
+              {'Open Camera'}
+            </Text>
+          </TouchableOpacity>
+        </Animated.View>
+        <Animated.View
           style={{
-            backgroundColor: '#b6e7cc',
-            borderRadius: 5,
-            marginBottom: 20,
-            width: 100,
-            borderWidth: 1,
-            borderColor: '#eee7da',
-          }}
-          onPress={handleCameraLaunch}>
-          <Text
+            alignItems: 'center',
+            justifyContent: 'center',
+            transform: [
+              {translateX: translateXLooksGood},
+              {translateY: translateYLooksGood},
+            ],
+          }}>
+          <TouchableOpacity
+            onPress={navAway}
             style={{
-              color: '#0c0b09',
-              fontSize: 12,
-              margin: 10,
-              textAlign: 'center',
-              fontFamily: 'HighTide-Sans',
+              backgroundColor: '#b6e7cc',
+              borderRadius: 5,
+              marginBottom: 20,
+              width: 100,
+              borderWidth: 1,
+              borderColor: '#eee7da',
+              opacity: selectedImage ? 1 : 0.5,
             }}>
-            {'Open Camera'}
-          </Text>
-        </TouchableOpacity>
+            <Text
+              style={{
+                color: '#0c0b09',
+                fontSize: 12,
+                margin: 10,
+                textAlign: 'center',
+                fontFamily: 'HighTide-Sans',
+              }}>
+              {'This looks good'}
+            </Text>
+          </TouchableOpacity>
+        </Animated.View>
       </View>
     </View>
   );
