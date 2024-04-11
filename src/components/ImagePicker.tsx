@@ -1,5 +1,12 @@
-import React, {useState} from 'react';
-import {Image, View, TouchableOpacity, Text} from 'react-native';
+import React, {useEffect, useRef, useState} from 'react';
+import {
+  Image,
+  View,
+  TouchableOpacity,
+  Text,
+  Animated,
+  Dimensions,
+} from 'react-native';
 import {
   launchImageLibrary,
   launchCamera,
@@ -19,12 +26,18 @@ const ImagePicker = () => {
   );
   const {navigate} = useNavigation<NavPropAny>();
   const dispatch = useDispatch();
-
+  const screenWidth = Dimensions.get('window').width;
   const navigation = useNavigation();
   const routes = navigation.getState()?.routes;
   const prevRoute = routes[routes.length - 2];
+  const translateX = useRef(new Animated.Value(0)).current;
+  const translateY = useRef(new Animated.Value(0)).current;
   console.log('routes=', routes);
   console.log('previous route=', prevRoute);
+
+  useEffect(() => {
+    moveImage();
+  }, [selectedImage]);
 
   const navAway = () => {
     dispatch(setUserPhoto({userPhoto: selectedImage}));
@@ -50,6 +63,8 @@ const ImagePicker = () => {
         console.log('response.assets.[0].uri=', response.assets?.[0]?.uri);
         let imageUri = response.assets?.[0]?.uri;
         setSelectedImage(imageUri);
+        translateX.setValue(0);
+        translateY.setValue(0);
       }
     });
   };
@@ -63,7 +78,6 @@ const ImagePicker = () => {
     };
 
     launchCamera(options, response => {
-      console.log('Response = ', response);
       if (response.didCancel) {
         console.log('User cancelled camera');
       } else if (response.errorCode) {
@@ -77,6 +91,34 @@ const ImagePicker = () => {
     });
   };
 
+  const moveImage = () => {
+    Animated.parallel([
+      Animated.timing(translateX, {
+        toValue: -100,
+        duration: 500,
+        useNativeDriver: true, // Delay translateY animation (same as translateX duration)
+      }),
+      Animated.timing(translateY, {
+        toValue: 200,
+        duration: 500,
+        useNativeDriver: true,
+        delay: 500,
+      }),
+    ]).start(() => {
+      Animated.timing(translateX, {
+        toValue: 0,
+        duration: 500,
+        useNativeDriver: true,
+      }).start(() => {
+        Animated.timing(translateY, {
+          toValue: 10,
+          duration: 500,
+          useNativeDriver: true,
+        }).start();
+      });
+    });
+  };
+
   return (
     <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
       {selectedImage && (
@@ -86,7 +128,12 @@ const ImagePicker = () => {
             source={{uri: selectedImage}}
             style={{marginBottom: 20, height: 300, width: 300}}
           />
-          <View style={{alignItems: 'center', justifyContent: 'center'}}>
+          <Animated.View
+            style={{
+              alignItems: 'center',
+              justifyContent: 'center',
+              transform: [{translateX}, {translateY}],
+            }}>
             <TouchableOpacity
               onPress={navAway}
               style={{
@@ -108,7 +155,7 @@ const ImagePicker = () => {
                 {'This looks good'}
               </Text>
             </TouchableOpacity>
-          </View>
+          </Animated.View>
         </>
       )}
       <View

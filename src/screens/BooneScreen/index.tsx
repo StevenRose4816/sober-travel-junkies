@@ -4,7 +4,9 @@ import {
   Animated,
   Dimensions,
   ImageBackground,
+  Linking,
   Modal,
+  Platform,
   Text,
   TouchableOpacity,
   View,
@@ -114,6 +116,18 @@ const BooneScreen: FC = () => {
     console.log('endDate: ', endDate);
   }, [startDate, endDate]);
 
+  const handleOnPress = () => {
+    if (Platform.OS === 'ios') {
+      Linking.openURL('calshow:');
+    } else if (Platform.OS === 'android') {
+      Linking.openURL('content://com.android.calendar/time/');
+    } else {
+      console.log(
+        'Calendar functionality is only available on iOS and Android.',
+      );
+    }
+  };
+
   return (
     <>
       <ImageBackground
@@ -174,32 +188,53 @@ const BooneScreen: FC = () => {
                 marginLeft: 20,
               }}>
               {showCalender && (
-                <View
-                  style={{
-                    backgroundColor: '#eee7da',
-                    maxWidth: screenWidth * 0.9,
-                    borderRadius: 10,
-                  }}>
-                  <Text
+                <>
+                  <View
                     style={{
-                      fontFamily: 'HighTide-Sans',
-                      marginLeft: 10,
-                      marginTop: 10,
-                      marginBottom: 10,
-                      marginRight: 10,
+                      backgroundColor: '#eee7da',
+                      maxWidth: screenWidth * 0.9,
+                      borderRadius: 5,
                     }}>
-                    Selected Start Date: {startDate || 'None'}
-                  </Text>
-                  <Text
+                    <Text
+                      style={{
+                        fontFamily: 'HighTide-Sans',
+                        marginLeft: 10,
+                        marginTop: 10,
+                        marginBottom: 10,
+                        marginRight: 10,
+                      }}>
+                      Selected Start Date: {startDate || 'None'}
+                    </Text>
+                    <Text
+                      style={{
+                        fontFamily: 'HighTide-Sans',
+                        marginLeft: 10,
+                        marginTop: 10,
+                        marginBottom: 10,
+                      }}>
+                      Selected End Date: {endDate || 'None'}
+                    </Text>
+                  </View>
+                  <TouchableOpacity
                     style={{
-                      fontFamily: 'HighTide-Sans',
-                      marginLeft: 10,
-                      marginTop: 10,
+                      backgroundColor: '#b6e7cc',
+                      borderRadius: 5,
+                      width: 120,
                       marginBottom: 10,
-                    }}>
-                    Selected End Date: {endDate || 'None'}
-                  </Text>
-                </View>
+                      marginTop: 10,
+                    }}
+                    onPress={handleOnPress}>
+                    <Text
+                      style={{
+                        fontFamily: 'HighTide-Sans',
+                        textAlign: 'center',
+                        marginTop: 5,
+                        marginBottom: 5,
+                      }}>
+                      Add Dates to Mobile Calender
+                    </Text>
+                  </TouchableOpacity>
+                </>
               )}
             </View>
           )}
