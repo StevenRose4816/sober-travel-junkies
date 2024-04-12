@@ -494,7 +494,9 @@ const HomeScreen: FC = () => {
                     style={{
                       flex: 1,
                       flexDirection: 'row',
-                      margin: 10,
+                      marginLeft: 10,
+                      marginRight: 10,
+                      marginTop: 10,
                       backgroundColor: '#b6e7cc',
                       borderRadius: 5,
                     }}>
@@ -538,7 +540,8 @@ const HomeScreen: FC = () => {
                       flex: 1,
                       flexDirection: 'row',
                       backgroundColor: '#b6e7cc',
-                      margin: 10,
+                      marginLeft: 10,
+                      marginRight: 10,
                       borderRadius: 5,
                     }}>
                     <Image
@@ -581,7 +584,8 @@ const HomeScreen: FC = () => {
                   </View>
                   <View
                     style={{
-                      margin: 10,
+                      marginLeft: 10,
+                      marginRight: 10,
                       backgroundColor: '#b6e7cc',
                       borderRadius: 5,
                     }}>

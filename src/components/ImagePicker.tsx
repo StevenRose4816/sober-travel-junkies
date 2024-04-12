@@ -101,7 +101,7 @@ const ImagePicker = () => {
       Animated.timing(translateYLooksGood, {
         toValue: -132,
         duration: 500,
-        useNativeDriver: true, // Delay translateY animation (same as translateX duration)
+        useNativeDriver: true,
       }),
       Animated.timing(translateYChoose, {
         toValue: 132,
@@ -111,10 +111,9 @@ const ImagePicker = () => {
       }),
     ]).start();
     Animated.timing(scaleX, {
-      toValue: 1.1,
+      toValue: 1.2,
       duration: 1000,
       useNativeDriver: true,
-      // delay: 1000, // Delay translateY animation (same as translateX duration)
     }).start();
   };
 
@@ -122,7 +121,7 @@ const ImagePicker = () => {
     <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
       {selectedImage ? (
         <Image
-          resizeMode="center"
+          resizeMode="cover"
           source={{uri: selectedImage}}
           style={{marginBottom: 20, height: 300, width: 300}}
         />
