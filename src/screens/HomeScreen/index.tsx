@@ -12,6 +12,8 @@ import {
   Animated,
   ImageBackground,
   FlatList,
+  Platform,
+  Linking,
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import {get, onValue, ref, set} from 'firebase/database';
@@ -473,6 +475,14 @@ const HomeScreen: FC = () => {
     Clipboard.setString(JSON.stringify(users));
     console.log('String copied to clipboard:', JSON.stringify(users));
   };
+
+  // const openContacts = () => {
+  //   if (Platform.OS === 'android') {
+  //     Linking.openURL('content://com.android.contacts/contacts');
+  //   } else if (Platform.OS === 'ios') {
+  //     Contacts.openContactForm();
+  //   }
+  // };
 
   return (
     <View style={{flex: 1, backgroundColor: '#eee7da'}}>
@@ -1441,7 +1451,7 @@ const HomeScreen: FC = () => {
                     </Text>
                   </TouchableOpacity>
                   <TouchableOpacity
-                    onPress={() => console.log('open contacts pressed')}
+                    onPress={() => console.log('add new contact pressed')}
                     style={{
                       backgroundColor: '#b6e7cc',
                       borderRadius: 5,
@@ -1459,7 +1469,7 @@ const HomeScreen: FC = () => {
                         textAlign: 'center',
                         fontFamily: 'HighTide-Sans',
                       }}>
-                      {'Open Contacts'}
+                      {'Add to Contacts'}
                     </Text>
                   </TouchableOpacity>
                 </View>
