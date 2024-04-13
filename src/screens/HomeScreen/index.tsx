@@ -63,6 +63,10 @@ const HomeScreen: FC = () => {
   const [initialEmergencyContactPhone, setInitialEmergencyContactPhone] =
     useState('');
   const [users, setUsers] = useState<User[]>([]);
+  const names = users.filter(i => i.username !== '').map(i => i.username);
+  console.log('names:', names);
+  const numbs = users.filter(i => i.phoneNumber !== '').map(i => i.phoneNumber);
+  console.log('numbs: ', numbs);
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const translateX = useRef(new Animated.Value(0)).current;
   const scrollViewRef = useRef<ScrollView>(null);
@@ -185,7 +189,7 @@ const HomeScreen: FC = () => {
     readData();
     fetchAllUsersData();
     moveImage();
-  }, []);
+  }, [users]);
 
   useEffect(() => {
     fadeIn();
@@ -1376,7 +1380,7 @@ const HomeScreen: FC = () => {
               </>
             )}
             {modalVisible3 && (
-              <View>
+              <View style={{marginTop: 10}}>
                 <FlatList
                   data={users}
                   renderItem={({item}) => (
@@ -1409,6 +1413,7 @@ const HomeScreen: FC = () => {
                 />
                 <View
                   style={{
+                    marginTop: 10,
                     flexDirection: 'row',
                     justifyContent: 'space-between',
                   }}>
