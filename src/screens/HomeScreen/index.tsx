@@ -26,6 +26,7 @@ import {setSelectedDocument} from '../../store/document/slice';
 import {setNewUser} from '../../store/globalStore/slice';
 import {NavPropAny} from '../../navigation/types';
 import Routes from '../../navigation/routes';
+import Clipboard from '@react-native-clipboard/clipboard';
 
 interface User {
   username: string;
@@ -219,6 +220,7 @@ const HomeScreen: FC = () => {
   const [secondPhotoPressed, setSecondPhotoPressed] = useState(false);
   const [thirdPhotoPressed, setThirdPhotoPressed] = useState(false);
   const [fourthPhotoPressed, setFourthPhotoPressed] = useState(false);
+  const [copiedText, setCopiedText] = useState('');
 
   const [showTripModal, setShowTripModal] = useState(false);
   const [bio, setBio] = useState('');
@@ -461,6 +463,10 @@ const HomeScreen: FC = () => {
       console.error('Error fetching users data:', error);
       return [];
     }
+  };
+
+  const copyToClipboard = () => {
+    Clipboard.setString('');
   };
 
   return (
@@ -1374,12 +1380,12 @@ const HomeScreen: FC = () => {
                 <FlatList
                   data={users}
                   renderItem={({item}) => (
-                    <View style={{width: screenWidth * 0.6}}>
+                    <View style={{width: screenWidth * 0.6, marginTop: 20}}>
                       <Text
                         style={{
                           borderRadius: 5,
-                          textAlign: 'center',
-                          marginTop: 40,
+                          textAlign: 'left',
+                          marginTop: 10,
                           marginBottom: 10,
                           fontFamily: 'HighTide-Sans',
                           fontSize: 18,
@@ -1389,8 +1395,8 @@ const HomeScreen: FC = () => {
                       <Text
                         style={{
                           borderRadius: 5,
-                          textAlign: 'center',
-                          marginTop: 40,
+                          textAlign: 'left',
+                          marginTop: 10,
                           marginBottom: 10,
                           fontFamily: 'HighTide-Sans',
                           fontSize: 18,
@@ -1401,6 +1407,56 @@ const HomeScreen: FC = () => {
                   )}
                   keyExtractor={item => item.username}
                 />
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                  }}>
+                  <TouchableOpacity
+                    onPress={copyToClipboard}
+                    style={{
+                      backgroundColor: '#b6e7cc',
+                      borderRadius: 5,
+                      marginBottom: 20,
+                      width: 100,
+                      borderWidth: 1,
+                      borderColor: '#eee7da',
+                    }}>
+                    <Text
+                      style={{
+                        color: '#0c0b09',
+                        fontSize: 12,
+                        fontWeight: '600',
+                        margin: 10,
+                        textAlign: 'center',
+                        fontFamily: 'HighTide-Sans',
+                      }}>
+                      {'Copy to Clipboard'}
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => console.log('open contacts pressed')}
+                    style={{
+                      backgroundColor: '#b6e7cc',
+                      borderRadius: 5,
+                      marginBottom: 20,
+                      width: 100,
+                      borderWidth: 1,
+                      borderColor: '#eee7da',
+                    }}>
+                    <Text
+                      style={{
+                        color: '#0c0b09',
+                        fontSize: 12,
+                        fontWeight: '600',
+                        margin: 10,
+                        textAlign: 'center',
+                        fontFamily: 'HighTide-Sans',
+                      }}>
+                      {'Open Contacts'}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
               </View>
             )}
           </View>
