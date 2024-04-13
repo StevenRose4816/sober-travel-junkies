@@ -41,6 +41,7 @@ const HomeScreen: FC = () => {
   const navigation = useNavigation<NavPropAny>();
   const dispatch = useDispatch();
   const screenWidth = Dimensions.get('window').width;
+  const screenHeight = Dimensions.get('window').height;
 
   const logout = () => {
     dispatch(setUserPhoto({userPhoto: null}));
@@ -67,10 +68,8 @@ const HomeScreen: FC = () => {
   const [initialEmergencyContactPhone, setInitialEmergencyContactPhone] =
     useState('');
   const [users, setUsers] = useState<User[]>([]);
-  const names = users.filter(i => i.username !== '').map(i => i.username);
-  console.log('names:', names);
-  const numbs = users.filter(i => i.phoneNumber !== '').map(i => i.phoneNumber);
-  console.log('numbs: ', numbs);
+  // const names = users.filter(i => i.username !== '').map(i => i.username);
+  // const numbs = users.filter(i => i.phoneNumber !== '').map(i => i.phoneNumber);
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const translateX = useRef(new Animated.Value(0)).current;
   const scrollViewRef = useRef<ScrollView>(null);
@@ -273,10 +272,10 @@ const HomeScreen: FC = () => {
     }
   };
 
-  useEffect(() => {
-    console.log('userPhoto: ', userPhoto);
-    console.log('userPhotoFromDB: ', userPhotoFromDB);
-  }, [userPhoto, userPhotoFromDB]);
+  // useEffect(() => {
+  //   console.log('userPhoto: ', userPhoto);
+  //   console.log('userPhotoFromDB: ', userPhotoFromDB);
+  // }, [userPhoto, userPhotoFromDB]);
 
   useEffect(() => {
     if (!dataFlag) {
@@ -479,6 +478,7 @@ const HomeScreen: FC = () => {
         const usersData = snapshot.val();
         const usersArray = Object.keys(usersData).map(userId => {
           const userData = usersData[userId];
+          //filter out the empty string usernames or disallow it to happen in general.
           return {
             username: userData.username,
             phoneNumber: userData.phoneNumber,
@@ -500,14 +500,6 @@ const HomeScreen: FC = () => {
     Clipboard.setString(JSON.stringify(users));
     console.log('String copied to clipboard:', JSON.stringify(users));
   };
-
-  // const openContacts = () => {
-  //   if (Platform.OS === 'android') {
-  //     Linking.openURL('content://com.android.contacts/contacts');
-  //   } else if (Platform.OS === 'ios') {
-  //     Contacts.openContactForm();
-  //   }
-  // };
 
   return (
     <View style={{flex: 1, backgroundColor: '#eee7da'}}>
@@ -1416,40 +1408,50 @@ const HomeScreen: FC = () => {
               </>
             )}
             {modalVisible3 && (
-              <View style={{marginTop: 10}}>
-                <FlatList
-                  data={users}
-                  renderItem={({item}) => (
-                    <View style={{width: screenWidth * 0.6, marginTop: 20}}>
-                      <Text
-                        style={{
-                          borderRadius: 5,
-                          textAlign: 'left',
-                          marginTop: 10,
-                          marginBottom: 10,
-                          fontFamily: 'HighTide-Sans',
-                          fontSize: 18,
-                        }}>
-                        {item.username}
-                      </Text>
-                      <Text
-                        style={{
-                          borderRadius: 5,
-                          textAlign: 'left',
-                          marginTop: 10,
-                          marginBottom: 10,
-                          fontFamily: 'HighTide-Sans',
-                          fontSize: 18,
-                        }}>
-                        {item.phoneNumber}
-                      </Text>
-                    </View>
-                  )}
-                  keyExtractor={item => item.username}
-                />
+              <>
                 <View
                   style={{
-                    marginTop: 10,
+                    marginTop: 40,
+                    backgroundColor: 'pink',
+                    maxHeight: screenHeight * 0.3,
+                    borderRadius: 10,
+                  }}>
+                  <FlatList
+                    data={users}
+                    renderItem={({item}) => (
+                      <View style={{width: screenWidth * 0.6, marginTop: 20}}>
+                        <Text
+                          style={{
+                            borderRadius: 5,
+                            textAlign: 'left',
+                            marginTop: 10,
+                            marginBottom: 10,
+                            marginLeft: 5,
+                            fontFamily: 'HighTide-Sans',
+                            fontSize: 18,
+                          }}>
+                          {item.username}
+                        </Text>
+                        <Text
+                          style={{
+                            borderRadius: 5,
+                            textAlign: 'left',
+                            marginTop: 10,
+                            marginBottom: 10,
+                            marginLeft: 5,
+                            fontFamily: 'HighTide-Sans',
+                            fontSize: 18,
+                          }}>
+                          {item.phoneNumber}
+                        </Text>
+                      </View>
+                    )}
+                    keyExtractor={item => item.username}
+                  />
+                </View>
+                <View
+                  style={{
+                    marginTop: 30,
                     flexDirection: 'row',
                     justifyContent: 'space-between',
                   }}>
@@ -1498,7 +1500,7 @@ const HomeScreen: FC = () => {
                     </Text>
                   </TouchableOpacity>
                 </View>
-              </View>
+              </>
             )}
           </View>
         </View>
