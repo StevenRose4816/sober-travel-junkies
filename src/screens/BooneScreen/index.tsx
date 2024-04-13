@@ -30,7 +30,6 @@ const BooneScreen: FC = () => {
   const translateX = useRef(new Animated.Value(0)).current;
   const translateY = useRef(new Animated.Value(0)).current;
   const fadeAnim = useRef(new Animated.Value(0)).current;
-  console.log('screenWidth: ', screenWidth);
 
   const fadeIn = () => {
     Animated.timing(fadeAnim, {
@@ -154,7 +153,7 @@ const BooneScreen: FC = () => {
               marginLeft: 20,
               marginBottom: 10,
             }}
-            onPress={() => onPressViewCalender()}>
+            onPress={onPressViewCalender}>
             <Text
               style={{
                 fontFamily: 'HighTide-Sans',
@@ -268,7 +267,7 @@ const BooneScreen: FC = () => {
               opacity: endDate !== '' ? 1 : 0.5,
             }}
             disabled={endDate === ''}
-            onPress={() => onSubmitDates()}>
+            onPress={onSubmitDates}>
             <Text
               style={{
                 fontFamily: 'HighTide-Sans',
@@ -331,7 +330,7 @@ const BooneScreen: FC = () => {
                       marginHorizontal: 10,
                       width: 120,
                     }}
-                    onPress={() => onPressYes()}>
+                    onPress={onPressYes}>
                     <Text
                       style={{
                         textAlign: 'center',
@@ -355,7 +354,7 @@ const BooneScreen: FC = () => {
                       marginHorizontal: 10,
                       width: 120,
                     }}
-                    onPress={() => onPressNo()}>
+                    onPress={onPressNo}>
                     <Text
                       style={{
                         textAlign: 'center',

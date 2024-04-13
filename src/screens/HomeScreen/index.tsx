@@ -11,6 +11,7 @@ import {
   StyleSheet,
   Animated,
   ImageBackground,
+  FlatList,
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import {get, onValue, ref, set} from 'firebase/database';
@@ -25,6 +26,11 @@ import {setSelectedDocument} from '../../store/document/slice';
 import {setNewUser} from '../../store/globalStore/slice';
 import {NavPropAny} from '../../navigation/types';
 import Routes from '../../navigation/routes';
+
+interface User {
+  username: string;
+  phoneNumber: string;
+}
 
 const HomeScreen: FC = () => {
   const navigation = useNavigation<NavPropAny>();
@@ -46,6 +52,7 @@ const HomeScreen: FC = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [data, setData] = useState(false);
   const [modalVisible2, setModalVisible2] = useState(false);
+  const [modalVisible3, setModalVisible3] = useState(false);
   const [dataFlag, setDataFlag] = useState(false);
   const [showBackButton, setShowBackButton] = useState(false);
   const [initialName, setInitialName] = useState('');
@@ -54,6 +61,7 @@ const HomeScreen: FC = () => {
   const [initialEmergencyContact, setInitialEmergencyContact] = useState('');
   const [initialEmergencyContactPhone, setInitialEmergencyContactPhone] =
     useState('');
+  const [users, setUsers] = useState<User[]>([]);
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const translateX = useRef(new Animated.Value(0)).current;
   const scrollViewRef = useRef<ScrollView>(null);
@@ -174,6 +182,7 @@ const HomeScreen: FC = () => {
 
   useEffect(() => {
     readData();
+    fetchAllUsersData();
     moveImage();
   }, []);
 
@@ -375,6 +384,7 @@ const HomeScreen: FC = () => {
   const onPressCloseModal = () => {
     toggleBackgroundPhotoModal();
     showTripModal && setShowTripModal(false);
+    modalVisible3 && setModalVisible3(false);
   };
 
   const source = () => {
@@ -408,6 +418,49 @@ const HomeScreen: FC = () => {
       userPhotoFromDB: userPhotoFromDB,
       backgroundPhoto: source(),
     });
+  };
+
+  const onPressGroupContactInfo = () => {
+    fetchAllUsersData();
+    setModalVisible2(true);
+    setModalVisible3(true);
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const usersArray = await fetchAllUsersData();
+        setUsers(usersArray);
+      } catch (error) {
+        console.error('Error fetching users:', error);
+      }
+    };
+    fetchData();
+  }, [users]);
+
+  const fetchAllUsersData = async () => {
+    const usersRef = ref(db, 'users');
+    try {
+      const snapshot = await get(usersRef);
+      if (snapshot.exists()) {
+        const usersData = snapshot.val();
+        const usersArray = Object.keys(usersData).map(userId => {
+          const userData = usersData[userId];
+          return {
+            username: userData.username,
+            phoneNumber: userData.phoneNumber,
+          };
+        });
+        console.log('usersArray: ', usersArray);
+        return usersArray;
+      } else {
+        console.log('No users available');
+        return [];
+      }
+    } catch (error) {
+      console.error('Error fetching users data:', error);
+      return [];
+    }
   };
 
   return (
@@ -487,6 +540,19 @@ const HomeScreen: FC = () => {
                     borderColor: '#eee7da',
                   }}>
                   <Text style={styles.text2}>{'View Message Board'}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={onPressGroupContactInfo}
+                  style={{
+                    backgroundColor: '#b6e7cc',
+                    marginLeft: 10,
+                    marginBottom: 10,
+                    width: 250,
+                    borderRadius: 5,
+                    borderWidth: 1,
+                    borderColor: '#eee7da',
+                  }}>
+                  <Text style={styles.text2}>{'Get Group Contact Info'}</Text>
                 </TouchableOpacity>
 
                 <View style={styles.nestedView2}>
@@ -1202,14 +1268,14 @@ const HomeScreen: FC = () => {
               borderRadius: 5,
             }}>
             <TouchableOpacity
-              onPress={() => onPressCloseModal()}
+              onPress={onPressCloseModal}
               style={{position: 'absolute', top: 10, right: 15}}>
               <Image
                 style={{height: 25, width: 25}}
                 source={require('../../Images/close2.png')}
               />
             </TouchableOpacity>
-            {!showTripModal && (
+            {!showTripModal && !modalVisible3 && (
               <>
                 <TouchableOpacity
                   style={{marginTop: 50}}
@@ -1253,7 +1319,7 @@ const HomeScreen: FC = () => {
                 </TouchableOpacity>
               </>
             )}
-            {showTripModal && (
+            {showTripModal && !modalVisible3 && (
               <>
                 <TouchableOpacity
                   style={{
@@ -1265,7 +1331,7 @@ const HomeScreen: FC = () => {
                     backgroundColor: '#eee7da',
                     borderRadius: 5,
                   }}
-                  onPress={() => onPressTripDest()}>
+                  onPress={onPressTripDest}>
                   <Text
                     style={{
                       borderRadius: 5,
@@ -1288,7 +1354,7 @@ const HomeScreen: FC = () => {
                     backgroundColor: '#eee7da',
                     borderRadius: 5,
                   }}
-                  onPress={() => onPressTripDest()}>
+                  onPress={onPressTripDest}>
                   <Text
                     style={{
                       borderRadius: 5,
@@ -1302,6 +1368,40 @@ const HomeScreen: FC = () => {
                   </Text>
                 </TouchableOpacity>
               </>
+            )}
+            {modalVisible3 && (
+              <View>
+                <FlatList
+                  data={users}
+                  renderItem={({item}) => (
+                    <View style={{width: screenWidth * 0.6}}>
+                      <Text
+                        style={{
+                          borderRadius: 5,
+                          textAlign: 'center',
+                          marginTop: 40,
+                          marginBottom: 10,
+                          fontFamily: 'HighTide-Sans',
+                          fontSize: 18,
+                        }}>
+                        {item.username}
+                      </Text>
+                      <Text
+                        style={{
+                          borderRadius: 5,
+                          textAlign: 'center',
+                          marginTop: 40,
+                          marginBottom: 10,
+                          fontFamily: 'HighTide-Sans',
+                          fontSize: 18,
+                        }}>
+                        {item.phoneNumber}
+                      </Text>
+                    </View>
+                  )}
+                  keyExtractor={item => item.username}
+                />
+              </View>
             )}
           </View>
         </View>
