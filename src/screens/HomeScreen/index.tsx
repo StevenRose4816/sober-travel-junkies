@@ -1,4 +1,5 @@
 import {FC, useEffect, useRef, useState} from 'react';
+import Contacts from 'react-native-contacts';
 import {
   View,
   Text,
@@ -14,6 +15,7 @@ import {
   FlatList,
   Platform,
   Linking,
+  PermissionsAndroid,
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import {get, onValue, ref, set} from 'firebase/database';
@@ -227,11 +229,34 @@ const HomeScreen: FC = () => {
   const [thirdPhotoPressed, setThirdPhotoPressed] = useState(false);
   const [fourthPhotoPressed, setFourthPhotoPressed] = useState(false);
   const [copiedText, setCopiedText] = useState('');
+  const [contacts, setContacts] = useState<Contacts.Contact[] | null>(null);
 
   const [showTripModal, setShowTripModal] = useState(false);
   const [bio, setBio] = useState('');
   const [initialBio, setInitialBio] = useState('');
   const newUser = useAppSelector(state => state.globalStore.newUser);
+
+  useEffect(() => {
+    if (Platform.OS === 'android') {
+      PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.READ_CONTACTS, {
+        title: 'Contacts',
+        message: 'ContactsList app would like to access your contacts.',
+        buttonPositive: 'Accept',
+      }).then(value => {
+        if (value === 'granted') {
+          Contacts.getAll().then(contacts => {
+            setContacts(contacts);
+            console.log('contacts: ', contacts);
+          });
+        }
+      });
+    } else {
+      Contacts.getAll().then(contacts => {
+        setContacts(contacts);
+        console.log('contacts: ', contacts);
+      });
+    }
+  }, []);
 
   const checkName = () => {
     if (
