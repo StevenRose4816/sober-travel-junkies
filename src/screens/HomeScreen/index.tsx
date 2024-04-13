@@ -469,8 +469,9 @@ const HomeScreen: FC = () => {
     }
   };
 
-  const copyToClipboard = () => {
-    Clipboard.setString('');
+  const copyToClipboard = (users: User[]) => {
+    Clipboard.setString(JSON.stringify(users));
+    console.log('String copied to clipboard:', JSON.stringify(users));
   };
 
   return (
@@ -1418,7 +1419,7 @@ const HomeScreen: FC = () => {
                     justifyContent: 'space-between',
                   }}>
                   <TouchableOpacity
-                    onPress={copyToClipboard}
+                    onPress={() => copyToClipboard(users)}
                     style={{
                       backgroundColor: '#b6e7cc',
                       borderRadius: 5,
