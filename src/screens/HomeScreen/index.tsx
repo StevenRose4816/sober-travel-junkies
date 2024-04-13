@@ -436,7 +436,7 @@ const HomeScreen: FC = () => {
       }
     };
     fetchData();
-  }, [users]);
+  }, []);
 
   const fetchAllUsersData = async () => {
     const usersRef = ref(db, 'users');
