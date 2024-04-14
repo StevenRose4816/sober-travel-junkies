@@ -1487,7 +1487,7 @@ const HomeScreen: FC = () => {
                   </TouchableOpacity>
                   <TouchableOpacity
                     onPress={() =>
-                      navigation.navigate(Routes.contactScreen, {contacts})
+                      navigation.navigate(Routes.contactScreen, contacts)
                     }
                     style={{
                       backgroundColor: '#b6e7cc',
@@ -1506,7 +1506,7 @@ const HomeScreen: FC = () => {
                         textAlign: 'center',
                         fontFamily: 'HighTide-Sans',
                       }}>
-                      {'Add to Contacts'}
+                      {'Open Contacts'}
                     </Text>
                   </TouchableOpacity>
                 </View>
