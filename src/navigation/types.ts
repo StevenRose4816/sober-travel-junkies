@@ -15,4 +15,5 @@ export type AppStackParams = {
   };
   [Routes.signupScreen]: {};
   [Routes.tripInfoScreen]: {};
+  [Routes.contactScreen]: {};
 };

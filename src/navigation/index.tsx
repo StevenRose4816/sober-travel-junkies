@@ -11,6 +11,7 @@ import BooneScreen from '../screens/BooneScreen/index.tsx';
 import MessageBoardScreen from '../screens/Message Board Screen/MessageBoardScreen.tsx';
 import {AppStackParams} from './types.ts';
 import Routes from '../navigation/routes.ts';
+import ContactScreen from '../screens/ContactScreen/index.tsx';
 
 const RootStack = createNativeStackNavigator<AppStackParams>();
 
@@ -93,6 +94,15 @@ const RootNavigator: FC = () => {
           <RootStack.Screen
             name={Routes.messageBoardScreen}
             component={MessageBoardScreen}
+            options={{
+              headerTitleStyle: {
+                fontSize: 20,
+              },
+            }}
+          />
+          <RootStack.Screen
+            name={Routes.contactScreen}
+            component={ContactScreen}
             options={{
               headerTitleStyle: {
                 fontSize: 20,

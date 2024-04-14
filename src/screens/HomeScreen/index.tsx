@@ -252,7 +252,7 @@ const HomeScreen: FC = () => {
     } else {
       Contacts.getAll().then(contacts => {
         setContacts(contacts);
-        console.log('contacts: ', contacts);
+        console.log('contacts: ', JSON.stringify(contacts));
       });
     }
   }, []);
@@ -1420,30 +1420,38 @@ const HomeScreen: FC = () => {
                     data={users}
                     renderItem={({item}) => (
                       <View style={{width: screenWidth * 0.6, marginTop: 20}}>
-                        <Text
+                        <View
                           style={{
-                            borderRadius: 5,
-                            textAlign: 'left',
-                            marginTop: 10,
-                            marginBottom: 10,
-                            marginLeft: 5,
-                            fontFamily: 'HighTide-Sans',
-                            fontSize: 18,
+                            borderTopColor: '#b6e7cc',
+                            borderTopWidth: 3,
                           }}>
-                          {item.username}
-                        </Text>
-                        <Text
-                          style={{
-                            borderRadius: 5,
-                            textAlign: 'left',
-                            marginTop: 10,
-                            marginBottom: 10,
-                            marginLeft: 5,
-                            fontFamily: 'HighTide-Sans',
-                            fontSize: 18,
-                          }}>
-                          {item.phoneNumber}
-                        </Text>
+                          <Text
+                            style={{
+                              borderRadius: 5,
+                              textAlign: 'left',
+                              marginTop: 30,
+                              marginBottom: 10,
+                              marginLeft: 5,
+                              fontFamily: 'HighTide-Sans',
+                              fontSize: 18,
+                            }}>
+                            {item.username}
+                          </Text>
+                        </View>
+                        <View>
+                          <Text
+                            style={{
+                              borderRadius: 5,
+                              textAlign: 'left',
+                              marginTop: 10,
+                              marginBottom: 10,
+                              marginLeft: 5,
+                              fontFamily: 'HighTide-Sans',
+                              fontSize: 18,
+                            }}>
+                            {item.phoneNumber}
+                          </Text>
+                        </View>
                       </View>
                     )}
                     keyExtractor={item => item.username}
@@ -1478,7 +1486,9 @@ const HomeScreen: FC = () => {
                     </Text>
                   </TouchableOpacity>
                   <TouchableOpacity
-                    onPress={() => console.log('add new contact pressed')}
+                    onPress={() =>
+                      navigation.navigate(Routes.contactScreen, {contacts})
+                    }
                     style={{
                       backgroundColor: '#b6e7cc',
                       borderRadius: 5,
