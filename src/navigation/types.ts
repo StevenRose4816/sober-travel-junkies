@@ -7,14 +7,14 @@ export type NavPropAny = NativeStackNavigationProp<any, any>;
 export type AppStackParams = {
   [Routes.homeScreen]: undefined;
   [Routes.loginScreen]: undefined;
-  [Routes.imagePicker]: {};
-  [Routes.booneScreen]: {};
+  [Routes.imagePicker]: undefined;
+  [Routes.booneScreen]: undefined;
   [Routes.messageBoardScreen]: {
     fullName: string;
     userPhotoFromDB: string;
     backgroundPhoto: any;
   };
-  [Routes.signupScreen]: {};
-  [Routes.tripInfoScreen]: {};
-  [Routes.contactScreen]: [Contacts.Contact[] | null];
+  [Routes.signupScreen]: undefined;
+  [Routes.tripInfoScreen]: undefined;
+  [Routes.contactScreen]: Contacts.Contact[];
 };
