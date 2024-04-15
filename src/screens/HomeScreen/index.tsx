@@ -501,6 +501,11 @@ const HomeScreen: FC = () => {
     console.log('String copied to clipboard:', JSON.stringify(users));
   };
 
+  const onPressOpenContacts = () => {
+    navigation.navigate(Routes.contactScreen, contacts);
+    setModalVisible2(!modalVisible2);
+  };
+
   return (
     <View style={{flex: 1, backgroundColor: '#eee7da'}}>
       {(data || newUser) && (
@@ -1486,9 +1491,7 @@ const HomeScreen: FC = () => {
                     </Text>
                   </TouchableOpacity>
                   <TouchableOpacity
-                    onPress={() =>
-                      navigation.navigate(Routes.contactScreen, contacts)
-                    }
+                    onPress={onPressOpenContacts}
                     style={{
                       backgroundColor: '#b6e7cc',
                       borderRadius: 5,
