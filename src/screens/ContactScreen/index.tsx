@@ -1,21 +1,35 @@
 import {RouteProp, useRoute} from '@react-navigation/native';
-import {FC} from 'react';
+import {FC, useEffect, useState} from 'react';
 import {
   Dimensions,
   FlatList,
-  ScrollView,
+  Modal,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import {AppStackParams} from '../../navigation/types';
 import Routes from '../../navigation/routes';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import Clipboard from '@react-native-clipboard/clipboard';
 
 const ContactScreen: FC = () => {
   const route = useRoute<RouteProp<AppStackParams, Routes.contactScreen>>();
   const contacts = route.params;
   const screenHeight = Dimensions.get('window').height;
+  const screenWidth = Dimensions.get('window').width;
+  const [isVisible, setIsVisible] = useState(false);
+  const [copiedText, setCopiedText] = useState<string | undefined>(undefined);
+
+  useEffect(() => {
+    retrieveCopyFromClipboard();
+    if (!!copiedText) {
+      console.log('copiedText: ', copiedText);
+    } else {
+      console.log('copied text is undefined');
+    }
+  }, [copiedText]);
 
   const renderItem = ({item}: {item: any}) => {
     return (
@@ -81,10 +95,116 @@ const ContactScreen: FC = () => {
   console.log('Contacts: ', JSON.stringify(contacts));
   console.log('Mapped Contacts: ', JSON.stringify(mappedContacts));
 
+  const toggleModal = () => {
+    setIsVisible(!isVisible);
+  };
+
+  const onPressAddGroup = () => {
+    toggleModal();
+    console.log('pressed');
+  };
+
+  const retrieveCopyFromClipboard = async () => {
+    try {
+      const text = await Clipboard.getString();
+      setCopiedText(text);
+    } catch (e: any) {
+      console.log('error: ', e.message);
+    }
+  };
+
   return (
-    <SafeAreaView style={{height: screenHeight, marginTop: 40}}>
-      <FlatList data={mappedContacts} renderItem={renderItem}></FlatList>
-    </SafeAreaView>
+    <>
+      <SafeAreaView style={{flex: 1, height: screenHeight, marginTop: 40}}>
+        <FlatList data={mappedContacts} renderItem={renderItem}></FlatList>
+        <TouchableOpacity
+          onPress={onPressAddGroup}
+          style={{
+            backgroundColor: '#b6e7cc',
+            borderRadius: 5,
+            marginBottom: 20,
+            marginLeft: 10,
+            width: 100,
+            borderWidth: 1,
+            borderColor: '#eee7da',
+            alignSelf: 'flex-start',
+          }}>
+          <Text
+            style={{
+              color: '#0c0b09',
+              fontSize: 12,
+              fontWeight: '600',
+              margin: 10,
+              textAlign: 'center',
+              fontFamily: 'HighTide-Sans',
+            }}>
+            {'Add Group Contact'}
+          </Text>
+        </TouchableOpacity>
+      </SafeAreaView>
+      <Modal
+        visible={isVisible}
+        animationType={'fade'}
+        transparent={true}
+        onRequestClose={toggleModal}>
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          }}>
+          <View
+            style={{
+              backgroundColor: '#b6e7cc',
+              minHeight: 300,
+              width: '80%',
+              borderRadius: 5,
+              padding: 20,
+            }}>
+            <View
+              style={{
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              <Text
+                style={{
+                  textAlign: 'center',
+                  color: '#0c0b09',
+                  marginTop: 60,
+                  marginBottom: 50,
+                  fontFamily: 'HighTide-Sans',
+                }}>
+                {'Group Contact: '}
+              </Text>
+              <TouchableOpacity
+                onPress={toggleModal}
+                style={{
+                  backgroundColor: '#fb445c',
+                  minHeight: 35,
+                  width: screenWidth * 0.4,
+                  justifyContent: 'center',
+                  borderRadius: 10,
+                  marginTop: 10,
+                }}>
+                <Text
+                  style={{
+                    color: '#0c0b09',
+                    fontSize: 12,
+                    textAlign: 'center',
+                    marginLeft: 10,
+                    marginRight: 10,
+                    marginTop: 5,
+                    fontFamily: 'Vonique64',
+                  }}>
+                  {'Close'}
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
+    </>
   );
 };
 

@@ -1487,7 +1487,7 @@ const HomeScreen: FC = () => {
                         textAlign: 'center',
                         fontFamily: 'HighTide-Sans',
                       }}>
-                      {'Copy to Clipboard'}
+                      {'Copy Group Contact'}
                     </Text>
                   </TouchableOpacity>
                   <TouchableOpacity
