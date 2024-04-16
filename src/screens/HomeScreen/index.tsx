@@ -31,6 +31,7 @@ import {setNewUser} from '../../store/globalStore/slice';
 import {NavPropAny} from '../../navigation/types';
 import Routes from '../../navigation/routes';
 import Clipboard from '@react-native-clipboard/clipboard';
+import {setContacts as setTheseContacts} from '../../store/contacts/index';
 
 export interface User {
   username: string;
@@ -253,6 +254,7 @@ const HomeScreen: FC = () => {
         if (value === 'granted') {
           Contacts.getAll().then(contacts => {
             setContacts(contacts);
+            dispatch(setTheseContacts({contacts}));
             console.log('contacts: ', contacts);
           });
         }
