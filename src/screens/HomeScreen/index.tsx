@@ -32,9 +32,17 @@ import {NavPropAny} from '../../navigation/types';
 import Routes from '../../navigation/routes';
 import Clipboard from '@react-native-clipboard/clipboard';
 
-interface User {
+export interface User {
   username: string;
-  phoneNumber: string;
+  familyName: string;
+  givenName: string;
+  phoneNumbers: {
+    mobile: string;
+    main: string;
+    homeFax: string;
+    work: string;
+    home: string;
+  };
 }
 
 const HomeScreen: FC = () => {
@@ -481,7 +489,15 @@ const HomeScreen: FC = () => {
           //filter out the empty string usernames or disallow it to happen in general.
           return {
             username: userData.username,
-            phoneNumber: userData.phoneNumber,
+            familyName: userData.username,
+            givenName: '',
+            phoneNumbers: {
+              mobile: '',
+              main: userData.phoneNumber,
+              homeFax: '',
+              work: '',
+              home: '',
+            },
           };
         });
         console.log('usersArray: ', usersArray);
@@ -502,7 +518,7 @@ const HomeScreen: FC = () => {
   };
 
   const onPressOpenContacts = () => {
-    navigation.navigate(Routes.contactScreen, contacts);
+    navigation.navigate(Routes.contactScreen, {contacts, users});
     setModalVisible2(!modalVisible2);
   };
 
@@ -1454,7 +1470,15 @@ const HomeScreen: FC = () => {
                               fontFamily: 'HighTide-Sans',
                               fontSize: 18,
                             }}>
-                            {item.phoneNumber}
+                            {`Mobile: ${
+                              item.phoneNumbers.mobile || ''
+                            }\nMain: ${
+                              item.phoneNumbers.main || ''
+                            }\nHome Fax: ${
+                              item.phoneNumbers.homeFax || ''
+                            }\nWork: ${item.phoneNumbers.work || ''}\nHome: ${
+                              item.phoneNumbers.home || ''
+                            }`}
                           </Text>
                         </View>
                       </View>

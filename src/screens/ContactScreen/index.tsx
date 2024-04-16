@@ -13,10 +13,11 @@ import {AppStackParams} from '../../navigation/types';
 import Routes from '../../navigation/routes';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Clipboard from '@react-native-clipboard/clipboard';
+import Contacts from 'react-native-contacts';
 
 const ContactScreen: FC = () => {
   const route = useRoute<RouteProp<AppStackParams, Routes.contactScreen>>();
-  const contacts = route.params;
+  const {contacts, users} = route.params;
   const screenHeight = Dimensions.get('window').height;
   const screenWidth = Dimensions.get('window').width;
   const [isVisible, setIsVisible] = useState(false);
@@ -38,12 +39,11 @@ const ContactScreen: FC = () => {
           {item.givenName} {item.familyName}
         </Text>
         <Text style={styles.phoneNumber}>
-          {item.phoneNumbers.mobile && 'mobile:'} {item.phoneNumbers.mobile}
-          {item.phoneNumbers.main && '\n' + 'main:'} {item.phoneNumbers.main}
-          {item.phoneNumbers.homeFax && '\n' + 'home fax:'}{' '}
-          {item.phoneNumbers.homeFax}
-          {item.phoneNumbers.work && '\n' + 'work:'} {item.phoneNumbers.work}
-          {item.phoneNumbers.home && '\n' + 'home:'} {item.phoneNumbers.home}
+          {'mobile:'} {item.phoneNumbers.mobile}
+          {'\n' + 'main:'} {item.phoneNumbers.main}
+          {'\n' + 'home fax:'} {item.phoneNumbers.homeFax}
+          {'\n' + 'work:'} {item.phoneNumbers.work}
+          {'\n' + 'home:'} {item.phoneNumbers.home}
         </Text>
       </View>
     );
@@ -56,23 +56,23 @@ const ContactScreen: FC = () => {
   const mappedContacts = filteredContacts.map(contact => {
     const mobilePhoneNumber =
       contact.phoneNumbers.find(phoneNumber => phoneNumber.label === 'mobile')
-        ?.number || undefined;
+        ?.number || '';
 
     const mainPhoneNumber =
       contact.phoneNumbers.find(phoneNumber => phoneNumber.label === 'main')
-        ?.number || undefined;
+        ?.number || '';
 
     const homeFaxPhoneNumber =
       contact.phoneNumbers.find(phoneNumber => phoneNumber.label === 'home fax')
-        ?.number || undefined;
+        ?.number || '';
 
     const workPhoneNumber =
       contact.phoneNumbers.find(phoneNumber => phoneNumber.label === 'work')
-        ?.number || undefined;
+        ?.number || '';
 
     const homePhoneNumber =
       contact.phoneNumbers.find(phoneNumber => phoneNumber.label === 'home')
-        ?.number || undefined;
+        ?.number || '';
 
     return {
       familyName: contact.familyName,
@@ -110,6 +110,27 @@ const ContactScreen: FC = () => {
       setCopiedText(text);
     } catch (e: any) {
       console.log('error: ', e.message);
+    }
+  };
+
+  const onAddGroupContact = async () => {
+    try {
+      for (const user of users) {
+        await Contacts.addContact({
+          givenName: user.givenName,
+          familyName: user.familyName,
+          phoneNumbers: [
+            {label: 'mobile', number: user.phoneNumbers.mobile},
+            {label: 'main', number: user.phoneNumbers.main},
+            {label: 'home fax', number: user.phoneNumbers.homeFax},
+            {label: 'work', number: user.phoneNumbers.work},
+            {label: 'home', number: user.phoneNumbers.home},
+          ],
+        });
+      }
+      console.log('Contacts added successfully');
+    } catch (error: any) {
+      console.error('Error adding contacts:', error.message);
     }
   };
 
@@ -171,35 +192,73 @@ const ContactScreen: FC = () => {
                 style={{
                   textAlign: 'center',
                   color: '#0c0b09',
-                  marginTop: 60,
+                  marginTop: 40,
                   marginBottom: 50,
                   fontFamily: 'HighTide-Sans',
                 }}>
-                {'Group Contact: '}
+                {'Do you want to add this Group Contact? '}
               </Text>
-              <TouchableOpacity
-                onPress={toggleModal}
+              <Text
                 style={{
-                  backgroundColor: '#fb445c',
-                  minHeight: 35,
-                  width: screenWidth * 0.4,
-                  justifyContent: 'center',
-                  borderRadius: 10,
+                  textAlign: 'center',
+                  color: '#0c0b09',
                   marginTop: 10,
+                  marginBottom: 50,
+                  fontFamily: 'HighTide-Sans',
                 }}>
-                <Text
+                {copiedText || 'Nothing Copied'}
+              </Text>
+              <View
+                style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                <TouchableOpacity
+                  onPress={onAddGroupContact}
                   style={{
-                    color: '#0c0b09',
-                    fontSize: 12,
-                    textAlign: 'center',
-                    marginLeft: 10,
-                    marginRight: 10,
-                    marginTop: 5,
-                    fontFamily: 'Vonique64',
+                    backgroundColor: '#fb445c',
+                    minHeight: 35,
+                    width: screenWidth * 0.2,
+                    justifyContent: 'center',
+                    borderRadius: 10,
+                    marginTop: 10,
+                    marginRight: 5,
                   }}>
-                  {'Close'}
-                </Text>
-              </TouchableOpacity>
+                  <Text
+                    style={{
+                      color: '#0c0b09',
+                      fontSize: 12,
+                      textAlign: 'center',
+                      marginLeft: 10,
+                      marginRight: 10,
+                      marginTop: 5,
+                      fontFamily: 'Vonique64',
+                    }}>
+                    {'Add'}
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={toggleModal}
+                  style={{
+                    backgroundColor: '#fb445c',
+                    minHeight: 35,
+                    width: screenWidth * 0.2,
+                    justifyContent: 'center',
+                    borderRadius: 10,
+                    marginTop: 10,
+                    marginLeft: 5,
+                  }}>
+                  <Text
+                    style={{
+                      color: '#0c0b09',
+                      fontSize: 12,
+                      textAlign: 'center',
+                      marginLeft: 10,
+                      marginRight: 10,
+                      marginTop: 5,
+                      fontFamily: 'Vonique64',
+                    }}>
+                    {'Close'}
+                  </Text>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
         </View>

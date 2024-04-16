@@ -1,6 +1,7 @@
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import Routes from '../navigation/routes';
 import Contacts from 'react-native-contacts';
+import {User} from '../screens/HomeScreen';
 
 export type NavPropAny = NativeStackNavigationProp<any, any>;
 
@@ -16,5 +17,8 @@ export type AppStackParams = {
   };
   [Routes.signupScreen]: undefined;
   [Routes.tripInfoScreen]: undefined;
-  [Routes.contactScreen]: Contacts.Contact[];
+  [Routes.contactScreen]: {
+    contacts: Contacts.Contact[];
+    users: User[];
+  };
 };
