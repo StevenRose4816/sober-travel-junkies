@@ -14,6 +14,7 @@ import Routes from '../../navigation/routes';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Clipboard from '@react-native-clipboard/clipboard';
 import Contacts from 'react-native-contacts';
+import {User} from '../HomeScreen';
 
 const ContactScreen: FC = () => {
   const route = useRoute<RouteProp<AppStackParams, Routes.contactScreen>>();
@@ -22,6 +23,7 @@ const ContactScreen: FC = () => {
   const screenWidth = Dimensions.get('window').width;
   const [isVisible, setIsVisible] = useState(false);
   const [copiedText, setCopiedText] = useState<string | undefined>(undefined);
+  const [addedContacts, setAddedContacts] = useState<User[]>([]);
 
   useEffect(() => {
     retrieveCopyFromClipboard();
@@ -39,11 +41,11 @@ const ContactScreen: FC = () => {
           {item.givenName} {item.familyName}
         </Text>
         <Text style={styles.phoneNumber}>
-          {'mobile:'} {item.phoneNumbers.mobile}
-          {'\n' + 'main:'} {item.phoneNumbers.main}
-          {'\n' + 'home fax:'} {item.phoneNumbers.homeFax}
-          {'\n' + 'work:'} {item.phoneNumbers.work}
-          {'\n' + 'home:'} {item.phoneNumbers.home}
+          {'mobile:'} {item.phoneNumbers?.mobile}
+          {'\n' + 'main:'} {item.phoneNumbers?.main}
+          {'\n' + 'home fax:'} {item.phoneNumbers?.homeFax}
+          {'\n' + 'work:'} {item.phoneNumbers?.work}
+          {'\n' + 'home:'} {item.phoneNumbers?.home}
         </Text>
       </View>
     );
@@ -115,6 +117,7 @@ const ContactScreen: FC = () => {
 
   const onAddGroupContact = async () => {
     try {
+      const newContacts: User[] = [];
       for (const user of users) {
         await Contacts.addContact({
           givenName: user.givenName,
@@ -127,7 +130,20 @@ const ContactScreen: FC = () => {
             {label: 'home', number: user.phoneNumbers.home},
           ],
         });
+        newContacts.push({
+          username: '',
+          familyName: user.familyName,
+          givenName: user.givenName,
+          phoneNumbers: {
+            mobile: user.phoneNumbers.mobile,
+            main: user.phoneNumbers.main,
+            homeFax: user.phoneNumbers.homeFax,
+            work: user.phoneNumbers.work,
+            home: user.phoneNumbers.home,
+          },
+        });
       }
+      setAddedContacts(prevContacts => [...prevContacts, ...newContacts]);
       console.log('Contacts added successfully');
     } catch (error: any) {
       console.error('Error adding contacts:', error.message);
@@ -137,7 +153,13 @@ const ContactScreen: FC = () => {
   return (
     <>
       <SafeAreaView style={{flex: 1, height: screenHeight, marginTop: 40}}>
-        <FlatList data={mappedContacts} renderItem={renderItem}></FlatList>
+        <FlatList
+          data={
+            addedContacts.length > 0
+              ? [...mappedContacts, ...addedContacts]
+              : mappedContacts
+          }
+          renderItem={renderItem}></FlatList>
         <TouchableOpacity
           onPress={onPressAddGroup}
           style={{
@@ -145,6 +167,7 @@ const ContactScreen: FC = () => {
             borderRadius: 5,
             marginBottom: 20,
             marginLeft: 10,
+            marginTop: 10,
             width: 100,
             borderWidth: 1,
             borderColor: '#eee7da',

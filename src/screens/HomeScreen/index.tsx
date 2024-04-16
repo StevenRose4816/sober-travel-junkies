@@ -514,7 +514,7 @@ const HomeScreen: FC = () => {
 
   const copyToClipboard = (users: User[]) => {
     Clipboard.setString(JSON.stringify(users));
-    console.log('String copied to clipboard:', JSON.stringify(users));
+    console.log('Copied to clipboard:', JSON.stringify(users));
   };
 
   const onPressOpenContacts = () => {
@@ -1483,7 +1483,7 @@ const HomeScreen: FC = () => {
                         </View>
                       </View>
                     )}
-                    keyExtractor={item => item.username}
+                    keyExtractor={item => item.familyName}
                   />
                 </View>
                 <View
