@@ -263,6 +263,7 @@ const HomeScreen: FC = () => {
     } else {
       Contacts.getAll().then(contacts => {
         setContacts(contacts);
+        dispatch(setTheseContacts({contacts}));
         console.log('contacts: ', JSON.stringify(contacts));
       });
     }

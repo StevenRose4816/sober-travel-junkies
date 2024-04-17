@@ -15,10 +15,15 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import Clipboard from '@react-native-clipboard/clipboard';
 import Contacts from 'react-native-contacts';
 import {User} from '../HomeScreen';
+import {useAppSelector} from '../../hooks';
+import {setContacts as setTheseContacts} from '../../store/contacts/index';
+import {useDispatch} from 'react-redux';
 
 const ContactScreen: FC = () => {
   const route = useRoute<RouteProp<AppStackParams, Routes.contactScreen>>();
   const {contacts, users} = route.params;
+  const dispatch = useDispatch();
+  const contactsFromState = useAppSelector(state => state.contacts.contacts);
   const screenHeight = Dimensions.get('window').height;
   const screenWidth = Dimensions.get('window').width;
   const [isVisible, setIsVisible] = useState(false);
@@ -53,7 +58,7 @@ const ContactScreen: FC = () => {
     );
   };
 
-  const filteredContacts = contacts.filter(
+  const filteredContacts = contactsFromState.filter(
     contact => contact.familyName !== '' && contact.givenName !== '',
   );
 
@@ -90,14 +95,6 @@ const ContactScreen: FC = () => {
       },
     };
   });
-
-  const mobilePhoneNumbers = mappedContacts
-    .filter(contact => contact.phoneNumbers.mobile !== undefined)
-    .map(contact => contact.phoneNumbers.mobile);
-
-  console.log('Mobile Phone Numbers: ', mobilePhoneNumbers);
-  console.log('Contacts: ', JSON.stringify(contacts));
-  console.log('Mapped Contacts: ', JSON.stringify(mappedContacts));
 
   const toggleModal = () => {
     setIsVisible(!isVisible);
@@ -146,6 +143,7 @@ const ContactScreen: FC = () => {
         });
       }
       setAddedContacts(prevContacts => [...prevContacts, ...newContacts]);
+      dispatch(setTheseContacts({contacts, ...newContacts}));
       console.log('Contacts added successfully');
     } catch (error: any) {
       console.error('Error adding contacts:', error.message);
