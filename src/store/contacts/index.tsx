@@ -1,21 +1,23 @@
 import {PayloadAction, createSlice} from '@reduxjs/toolkit';
 import {User} from '../../screens/HomeScreen';
+import Contacts from 'react-native-contacts';
 
 export interface IContact {
-  contacts: User[];
+  contacts: Contacts.Contact[];
 }
 
 const initialState: IContact = {
   contacts: [],
 };
 
-type SetContacts = PayloadAction<{contacts: any}>;
-
 const contactSlice = createSlice({
   name: 'contact',
   initialState,
   reducers: {
-    setContacts: (state, {payload}: SetContacts) => {
+    setContacts: (
+      state,
+      {payload}: PayloadAction<{contacts: Contacts.Contact[]}>,
+    ) => {
       state.contacts = payload.contacts;
     },
   },

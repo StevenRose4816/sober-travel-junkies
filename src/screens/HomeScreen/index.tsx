@@ -34,7 +34,7 @@ import Clipboard from '@react-native-clipboard/clipboard';
 import {setContacts as setTheseContacts} from '../../store/contacts/index';
 
 export interface User {
-  username: string;
+  username?: string;
   familyName: string;
   givenName: string;
   phoneNumbers: {
@@ -243,6 +243,7 @@ const HomeScreen: FC = () => {
   const [bio, setBio] = useState('');
   const [initialBio, setInitialBio] = useState('');
   const newUser = useAppSelector(state => state.globalStore.newUser);
+  const contactsFromState = useAppSelector(state => state.contacts.contacts);
 
   useEffect(() => {
     if (Platform.OS === 'android') {
@@ -266,6 +267,10 @@ const HomeScreen: FC = () => {
       });
     }
   }, []);
+
+  useEffect(() => {
+    console.log('contactsFromState: ', contactsFromState);
+  }, [contactsFromState]);
 
   const checkName = () => {
     if (

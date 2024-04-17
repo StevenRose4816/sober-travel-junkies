@@ -23,7 +23,9 @@ const ContactScreen: FC = () => {
   const screenWidth = Dimensions.get('window').width;
   const [isVisible, setIsVisible] = useState(false);
   const [copiedText, setCopiedText] = useState<string | undefined>(undefined);
-  const [addedContacts, setAddedContacts] = useState<User[]>([]);
+  const [addedContacts, setAddedContacts] = useState<
+    (Contacts.Contact | User)[]
+  >([]);
 
   useEffect(() => {
     retrieveCopyFromClipboard();
