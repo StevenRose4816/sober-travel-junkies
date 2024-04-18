@@ -1,5 +1,5 @@
 import {RouteProp, useRoute} from '@react-navigation/native';
-import {FC, useEffect, useState} from 'react';
+import {FC, useEffect, useRef, useState} from 'react';
 import {
   Dimensions,
   FlatList,
@@ -16,7 +16,10 @@ import Clipboard from '@react-native-clipboard/clipboard';
 import Contacts from 'react-native-contacts';
 import {User} from '../HomeScreen';
 import {useAppSelector} from '../../hooks';
-import {setContacts as setTheseContacts} from '../../store/contacts/index';
+import {
+  setHaveContactsBeenAdded,
+  setContacts as setTheseContacts,
+} from '../../store/contacts/index';
 import {useDispatch} from 'react-redux';
 
 const ContactScreen: FC = () => {
@@ -27,6 +30,8 @@ const ContactScreen: FC = () => {
   const screenHeight = Dimensions.get('window').height;
   const screenWidth = Dimensions.get('window').width;
   const [isVisible, setIsVisible] = useState(false);
+  const [isVisible2, setIsVisible2] = useState(false);
+  const [groupContactAdded, setGroupContactAdded] = useState(false);
   const [copiedText, setCopiedText] = useState<string | undefined>(undefined);
   const [addedContacts, setAddedContacts] = useState<
     (Contacts.Contact | User)[]
@@ -100,6 +105,10 @@ const ContactScreen: FC = () => {
     setIsVisible(!isVisible);
   };
 
+  const toggleModal2 = () => {
+    setIsVisible2(!isVisible2);
+  };
+
   const onPressAddGroup = () => {
     toggleModal();
     console.log('pressed');
@@ -115,6 +124,7 @@ const ContactScreen: FC = () => {
   };
 
   const onAddGroupContact = async () => {
+    toggleModal();
     try {
       const newContacts: User[] = [];
       for (const user of users) {
@@ -145,6 +155,9 @@ const ContactScreen: FC = () => {
       setAddedContacts(prevContacts => [...prevContacts, ...newContacts]);
       dispatch(setTheseContacts({contacts, ...newContacts}));
       console.log('Contacts added successfully');
+      setGroupContactAdded(true);
+      dispatch(setHaveContactsBeenAdded({haveContactsBeenAdded: true}));
+      setIsVisible2(true);
     } catch (error: any) {
       console.error('Error adding contacts:', error.message);
     }
@@ -163,7 +176,7 @@ const ContactScreen: FC = () => {
         <TouchableOpacity
           onPress={onPressAddGroup}
           style={{
-            backgroundColor: '#b6e7cc',
+            backgroundColor: !groupContactAdded ? '#b6e7cc' : '#b6e7cc50',
             borderRadius: 5,
             marginBottom: 20,
             marginLeft: 10,
@@ -172,10 +185,11 @@ const ContactScreen: FC = () => {
             borderWidth: 1,
             borderColor: '#eee7da',
             alignSelf: 'flex-start',
-          }}>
+          }}
+          disabled={groupContactAdded}>
           <Text
             style={{
-              color: '#0c0b09',
+              color: !groupContactAdded ? '#0c0b09' : '#0c0b0950',
               fontSize: 12,
               fontWeight: '600',
               margin: 10,
@@ -279,6 +293,71 @@ const ContactScreen: FC = () => {
                       fontFamily: 'Vonique64',
                     }}>
                     {'Close'}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        </View>
+      </Modal>
+      <Modal
+        visible={isVisible2}
+        animationType={'fade'}
+        transparent={true}
+        onRequestClose={toggleModal2}>
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          }}>
+          <View
+            style={{
+              backgroundColor: '#b6e7cc',
+              minHeight: 300,
+              width: '80%',
+              borderRadius: 5,
+              padding: 20,
+            }}>
+            <View
+              style={{
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              <Text
+                style={{
+                  textAlign: 'center',
+                  color: '#0c0b09',
+                  marginTop: 40,
+                  marginBottom: 50,
+                  fontFamily: 'HighTide-Sans',
+                }}>
+                {'New contacts added successfully.'}
+              </Text>
+              <View style={{flex: 1}}>
+                <TouchableOpacity
+                  onPress={toggleModal2}
+                  style={{
+                    backgroundColor: '#fb445c',
+                    minHeight: 35,
+                    width: screenWidth * 0.2,
+                    justifyContent: 'center',
+                    borderRadius: 10,
+                    marginTop: 70,
+                    marginRight: 5,
+                  }}>
+                  <Text
+                    style={{
+                      color: '#0c0b09',
+                      fontSize: 12,
+                      textAlign: 'center',
+                      marginLeft: 10,
+                      marginRight: 10,
+                      marginTop: 5,
+                      fontFamily: 'Vonique64',
+                    }}>
+                    {'close'}
                   </Text>
                 </TouchableOpacity>
               </View>

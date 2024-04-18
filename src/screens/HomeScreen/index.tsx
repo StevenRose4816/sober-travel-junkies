@@ -31,7 +31,10 @@ import {setNewUser} from '../../store/globalStore/slice';
 import {NavPropAny} from '../../navigation/types';
 import Routes from '../../navigation/routes';
 import Clipboard from '@react-native-clipboard/clipboard';
-import {setContacts as setTheseContacts} from '../../store/contacts/index';
+import {
+  setHaveContactsBeenAdded,
+  setContacts as setTheseContacts,
+} from '../../store/contacts/index';
 
 export interface User {
   username?: string;
@@ -56,6 +59,7 @@ const HomeScreen: FC = () => {
     dispatch(setUserPhoto({userPhoto: null}));
     dispatch(setSelectedDocument({selectedDocument: undefined}));
     dispatch(setNewUser({newUser: false}));
+    dispatch(setHaveContactsBeenAdded({haveContactsBeenAdded: false}));
     auth().signOut();
   };
 
@@ -244,6 +248,10 @@ const HomeScreen: FC = () => {
   const [initialBio, setInitialBio] = useState('');
   const newUser = useAppSelector(state => state.globalStore.newUser);
   const contactsFromState = useAppSelector(state => state.contacts.contacts);
+  const haveContactsBeenAdded = useAppSelector(
+    state => state.contacts.haveContactsBeenAdded,
+  );
+  console.log('haveContactsBeenAdded: ', haveContactsBeenAdded);
 
   useEffect(() => {
     if (Platform.OS === 'android') {
@@ -256,7 +264,7 @@ const HomeScreen: FC = () => {
           Contacts.getAll().then(contacts => {
             setContacts(contacts);
             dispatch(setTheseContacts({contacts}));
-            console.log('contacts: ', contacts);
+            console.log('contacts: ', JSON.stringify(contacts));
           });
         }
       });
@@ -270,7 +278,7 @@ const HomeScreen: FC = () => {
   }, []);
 
   useEffect(() => {
-    console.log('contactsFromState: ', contactsFromState);
+    console.log('contactsFromState: ', JSON.stringify(contactsFromState));
   }, [contactsFromState]);
 
   const checkName = () => {
@@ -618,8 +626,21 @@ const HomeScreen: FC = () => {
                     borderRadius: 5,
                     borderWidth: 1,
                     borderColor: '#eee7da',
-                  }}>
-                  <Text style={styles.text2}>{'Get Group Contact Info'}</Text>
+                    opacity: haveContactsBeenAdded ? 0.5 : 1,
+                  }}
+                  disabled={haveContactsBeenAdded}>
+                  <Text
+                    style={{
+                      borderRadius: 5,
+                      marginTop: 10,
+                      marginLeft: 20,
+                      marginBottom: 10,
+                      textAlign: 'left',
+                      fontFamily: 'HighTide-Sans',
+                      opacity: haveContactsBeenAdded ? 0.5 : 1,
+                    }}>
+                    {'Get Group Contact Info'}
+                  </Text>
                 </TouchableOpacity>
 
                 <View style={styles.nestedView2}>
