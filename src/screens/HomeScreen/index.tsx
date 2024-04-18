@@ -629,18 +629,28 @@ const HomeScreen: FC = () => {
                     opacity: haveContactsBeenAdded ? 0.5 : 1,
                   }}
                   disabled={haveContactsBeenAdded}>
-                  <Text
-                    style={{
-                      borderRadius: 5,
-                      marginTop: 10,
-                      marginLeft: 20,
-                      marginBottom: 10,
-                      textAlign: 'left',
-                      fontFamily: 'HighTide-Sans',
-                      opacity: haveContactsBeenAdded ? 0.5 : 1,
-                    }}>
-                    {'Get Group Contact Info'}
-                  </Text>
+                  <View style={{flex: 1, flexDirection: 'row'}}>
+                    <Text
+                      style={{
+                        borderRadius: 5,
+                        marginTop: 10,
+                        marginLeft: 20,
+                        marginBottom: 10,
+                        textAlign: 'left',
+                        fontFamily: 'HighTide-Sans',
+                        opacity: haveContactsBeenAdded ? 0.5 : 1,
+                      }}>
+                      {'Get Group Contact Info'}
+                    </Text>
+                    {haveContactsBeenAdded && (
+                      <Image
+                        source={require('../../Images/check2.png')}
+                        style={{
+                          height: 30,
+                          width: 40,
+                        }}></Image>
+                    )}
+                  </View>
                 </TouchableOpacity>
 
                 <View style={styles.nestedView2}>
