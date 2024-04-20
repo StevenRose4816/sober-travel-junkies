@@ -32,16 +32,26 @@ const BooneScreen: FC = () => {
   const translateY = useRef(new Animated.Value(0)).current;
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const [countries, setCountries] = useState<any[] | null>([]);
+  const [photo, setPhoto] = useState<any>();
 
   useEffect(() => {
     getCountries();
-    console.log('countries: ', countries);
+    getPhoto();
   }, []);
 
   async function getCountries() {
     try {
       const {data} = await supabase.from('countries').select();
       setCountries(data);
+    } catch (e) {
+      console.log('error: ', e);
+    }
+  }
+
+  async function getPhoto() {
+    try {
+      const {data} = supabase.storage.from('Photos2').getPublicUrl('check.png');
+      setPhoto(data);
     } catch (e) {
       console.log('error: ', e);
     }
@@ -103,6 +113,7 @@ const BooneScreen: FC = () => {
   const [showModal, setShowModal] = useState(false);
 
   const onPressViewCalender = () => {
+    console.log('photo: ', photo);
     setShowCalender(showCalender => !showCalender);
   };
 
