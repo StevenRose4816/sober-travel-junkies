@@ -16,9 +16,10 @@ import {
 } from 'react-native-image-picker';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
-import {setUserPhoto} from '../store/user/slice';
+import {setUserPhoto as setThisUserPhoto} from '../store/user/slice';
 import Routes from '../navigation/routes';
 import {NavPropAny} from '../navigation/types';
+import {supabase} from '../screens/SupabaseConfig';
 
 const ImagePicker = () => {
   const [selectedImage, setSelectedImage] = useState<string | undefined>(
@@ -35,15 +36,59 @@ const ImagePicker = () => {
   const translateXChoose = useRef(new Animated.Value(0)).current;
   const translateYChoose = useRef(new Animated.Value(0)).current;
   const scaleX = useRef(new Animated.Value(1)).current;
+  const [countries, setCountries] = useState<any[] | null>([]);
+  const [userPhoto, setUserPhoto] = useState<any>();
+
   console.log('routes=', routes);
   console.log('previous route=', prevRoute);
+
+  useEffect(() => {
+    getCountries();
+    getPhoto();
+  }, []);
+
+  async function getCountries() {
+    try {
+      const {data} = await supabase.from('countries').select();
+      setCountries(data);
+    } catch (e) {
+      console.log('error: ', e);
+    }
+  }
+
+  async function getPhoto() {
+    try {
+      const {data} = supabase.storage.from('Photos2').getPublicUrl('check.png');
+      setUserPhoto(data);
+    } catch (e) {
+      console.log('error: ', e);
+    }
+  }
+
+  async function uploadPhoto(imageUri: string | undefined) {
+    try {
+      const fileName = 'photo3.png'; // Provide a unique filename
+      const {data, error} = await supabase.storage
+        .from('Photos2')
+        .upload(fileName, imageUri); // Upload the image
+
+      if (error) {
+        console.error('Error uploading photo:', error.message);
+      } else {
+        const photoUrl = data?.path; // Get the URL of the uploaded photo
+        setUserPhoto(photoUrl);
+      }
+    } catch (e) {
+      console.log('error: ', e);
+    }
+  }
 
   useEffect(() => {
     selectedImage && animateTouchables();
   }, [selectedImage]);
 
   const navAway = () => {
-    dispatch(setUserPhoto({userPhoto: selectedImage}));
+    dispatch(setThisUserPhoto({userPhoto: selectedImage}));
     navigate(Routes.homeScreen);
   };
 
@@ -66,6 +111,7 @@ const ImagePicker = () => {
         console.log('response.assets.[0].uri=', response.assets?.[0]?.uri);
         let imageUri = response.assets?.[0]?.uri;
         setSelectedImage(imageUri);
+        uploadPhoto(imageUri);
         translateXLooksGood.setValue(0);
         translateYLooksGood.setValue(0);
         translateXChoose.setValue(0);

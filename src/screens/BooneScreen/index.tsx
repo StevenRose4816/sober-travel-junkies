@@ -34,28 +34,28 @@ const BooneScreen: FC = () => {
   const [countries, setCountries] = useState<any[] | null>([]);
   const [photo, setPhoto] = useState<any>();
 
-  useEffect(() => {
-    getCountries();
-    getPhoto();
-  }, []);
+  // useEffect(() => {
+  //   getCountries();
+  //   getPhoto();
+  // }, []);
 
-  async function getCountries() {
-    try {
-      const {data} = await supabase.from('countries').select();
-      setCountries(data);
-    } catch (e) {
-      console.log('error: ', e);
-    }
-  }
+  // async function getCountries() {
+  //   try {
+  //     const {data} = await supabase.from('countries').select();
+  //     setCountries(data);
+  //   } catch (e) {
+  //     console.log('error: ', e);
+  //   }
+  // }
 
-  async function getPhoto() {
-    try {
-      const {data} = supabase.storage.from('Photos2').getPublicUrl('check.png');
-      setPhoto(data);
-    } catch (e) {
-      console.log('error: ', e);
-    }
-  }
+  // async function getPhoto() {
+  //   try {
+  //     const {data} = supabase.storage.from('Photos2').getPublicUrl('check.png');
+  //     setPhoto(data);
+  //   } catch (e) {
+  //     console.log('error: ', e);
+  //   }
+  // }
 
   const fadeIn = () => {
     Animated.timing(fadeAnim, {
