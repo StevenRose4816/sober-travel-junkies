@@ -111,7 +111,7 @@ const ImagePicker = () => {
         console.log('response.assets.[0].uri=', response.assets?.[0]?.uri);
         let imageUri = response.assets?.[0]?.uri;
         setSelectedImage(imageUri);
-        uploadPhoto(imageUri);
+        // uploadPhoto(imageUri);
         translateXLooksGood.setValue(0);
         translateYLooksGood.setValue(0);
         translateXChoose.setValue(0);

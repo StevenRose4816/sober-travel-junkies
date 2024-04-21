@@ -184,6 +184,8 @@ const HomeScreen: FC = () => {
             backgroundColor: '#b6e7cc',
             borderRadius: 5,
             width: 65,
+            borderWidth: 2,
+            borderColor: '#eee7da',
           }}>
           <Text
             style={{
@@ -428,6 +430,9 @@ const HomeScreen: FC = () => {
   };
 
   const onPressTripInfo = () => {
+    if (haveContactsBeenAdded) {
+      setModalVisible3(false);
+    }
     setShowTripModal(true);
     toggleBackgroundPhotoModal();
   };
@@ -559,99 +564,106 @@ const HomeScreen: FC = () => {
             </View>
             {dataFlag && (
               <>
-                {userPhotoFromDB !== '' ? (
-                  <Animated.Image
-                    style={{
-                      height: 200,
-                      width: 200,
-                      marginLeft: 10,
-                      marginBottom: 10,
-                      borderRadius: 5,
-                      opacity: fadeAnim,
-                      borderColor: '#eee7da',
-                      borderWidth: 2,
-                    }}
-                    source={{uri: userPhotoFromDB}}></Animated.Image>
-                ) : (
-                  <Animated.Image
-                    style={{
-                      height: 200,
-                      width: 200,
-                      borderRadius: 5,
-                      marginLeft: 10,
-                      marginBottom: 10,
-                      opacity: fadeAnim,
-                      borderColor: '#eee7da',
-                      borderWidth: 2,
-                    }}
-                    source={
-                      (userPhoto === '' && {uri: userPhoto}) ||
-                      require('../../Images/profilepictureicon.png')
-                    }></Animated.Image>
-                )}
-                <TouchableOpacity
-                  onPress={onPressTripInfo}
+                <View
                   style={{
-                    backgroundColor: '#b6e7cc',
-                    marginLeft: 10,
-                    marginTop: 10,
-                    width: 250,
-                    borderRadius: 5,
-                    borderWidth: 1,
-                    borderColor: '#eee7da',
+                    flex: 1,
+                    alignItems: 'center',
+                    justifyContent: 'center',
                   }}>
-                  <Text style={styles.text2}>{'Register For A Trip'}</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={onPressMessageBoard}
-                  style={{
-                    backgroundColor: '#b6e7cc',
-                    marginLeft: 10,
-                    marginTop: 10,
-                    marginBottom: 10,
-                    width: 250,
-                    borderRadius: 5,
-                    borderWidth: 1,
-                    borderColor: '#eee7da',
-                  }}>
-                  <Text style={styles.text2}>{'View Message Board'}</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={onPressGroupContactInfo}
-                  style={{
-                    backgroundColor: '#b6e7cc',
-                    marginLeft: 10,
-                    marginBottom: 10,
-                    width: 250,
-                    borderRadius: 5,
-                    borderWidth: 1,
-                    borderColor: '#eee7da',
-                    opacity: haveContactsBeenAdded ? 0.5 : 1,
-                  }}
-                  disabled={haveContactsBeenAdded}>
-                  <View style={{flex: 1, flexDirection: 'row'}}>
-                    <Text
+                  {userPhotoFromDB !== '' ? (
+                    <Animated.Image
                       style={{
-                        borderRadius: 5,
-                        marginTop: 10,
-                        marginLeft: 20,
+                        height: 200,
+                        width: 200,
                         marginBottom: 10,
-                        textAlign: 'left',
-                        fontFamily: 'HighTide-Sans',
-                        opacity: haveContactsBeenAdded ? 0.5 : 1,
+                        borderRadius: 5,
+                        opacity: fadeAnim,
+                        borderColor: '#eee7da',
+                        borderWidth: 2,
+                      }}
+                      source={{uri: userPhotoFromDB}}></Animated.Image>
+                  ) : (
+                    <Animated.Image
+                      style={{
+                        height: 200,
+                        width: 200,
+                        borderRadius: 5,
+                        marginBottom: 10,
+                        opacity: fadeAnim,
+                        borderColor: '#eee7da',
+                        borderWidth: 2,
+                      }}
+                      source={
+                        (userPhoto === '' && {uri: userPhoto}) ||
+                        require('../../Images/profilepictureicon.png')
+                      }></Animated.Image>
+                  )}
+                  <TouchableOpacity
+                    onPress={onPressTripInfo}
+                    style={{
+                      backgroundColor: '#b6e7cc',
+                      marginTop: 10,
+                      width: screenWidth * 0.7,
+                      borderRadius: 5,
+                      borderWidth: 2,
+                      borderColor: '#eee7da',
+                    }}>
+                    <Text style={styles.text2}>{'Register For A Trip'}</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={onPressMessageBoard}
+                    style={{
+                      backgroundColor: '#b6e7cc',
+                      marginTop: 10,
+                      marginBottom: 10,
+                      width: screenWidth * 0.7,
+                      borderRadius: 5,
+                      borderWidth: 2,
+                      borderColor: '#eee7da',
+                    }}>
+                    <Text style={styles.text2}>{'View Message Board'}</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={onPressGroupContactInfo}
+                    style={{
+                      backgroundColor: '#b6e7cc',
+                      marginBottom: 10,
+                      width: screenWidth * 0.7,
+                      borderRadius: 5,
+                      borderWidth: 2,
+                      borderColor: '#eee7da',
+                      opacity: haveContactsBeenAdded ? 0.5 : 1,
+                    }}
+                    disabled={haveContactsBeenAdded}>
+                    <View
+                      style={{
+                        flex: 1,
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        justifyContent: 'center',
                       }}>
-                      {'Get Group Contact Info'}
-                    </Text>
-                    {haveContactsBeenAdded && (
-                      <Image
-                        source={require('../../Images/check2.png')}
+                      <Text
                         style={{
-                          height: 30,
-                          width: 40,
-                        }}></Image>
-                    )}
-                  </View>
-                </TouchableOpacity>
+                          borderRadius: 5,
+                          marginTop: 10,
+                          marginBottom: 10,
+                          textAlign: 'left',
+                          fontFamily: 'HighTide-Sans',
+                          opacity: haveContactsBeenAdded ? 0.5 : 1,
+                        }}>
+                        {'Get Group Contact Info'}
+                      </Text>
+                      {haveContactsBeenAdded && (
+                        <Image
+                          source={require('../../Images/check2.png')}
+                          style={{
+                            height: 30,
+                            width: 40,
+                          }}></Image>
+                      )}
+                    </View>
+                  </TouchableOpacity>
+                </View>
 
                 <View style={styles.nestedView2}>
                   <View
@@ -930,7 +942,7 @@ const HomeScreen: FC = () => {
                         marginTop: 10,
                         width: 250,
                         borderRadius: 5,
-                        borderWidth: 1,
+                        borderWidth: 2,
                         borderColor: '#eee7da',
                       }}>
                       <Text style={styles.text1}>
@@ -1244,7 +1256,7 @@ const HomeScreen: FC = () => {
                     fontSize: 21,
                     fontWeight: '600',
                     textAlign: 'center',
-                    fontFamily: 'Vonique64',
+                    fontFamily: 'HighTide-Sans',
                   }}>
                   {'Submit'}
                 </Text>
@@ -1718,9 +1730,8 @@ const styles = StyleSheet.create({
   text2: {
     borderRadius: 5,
     marginTop: 10,
-    marginLeft: 20,
     marginBottom: 10,
-    textAlign: 'left',
+    textAlign: 'center',
     fontFamily: 'HighTide-Sans',
   },
 });
