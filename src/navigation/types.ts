@@ -20,5 +20,6 @@ export type AppStackParams = {
   [Routes.contactScreen]: {
     contacts: Contacts.Contact[];
     users: User[];
+    names: string[];
   };
 };

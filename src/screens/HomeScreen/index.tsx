@@ -81,8 +81,7 @@ const HomeScreen: FC = () => {
   const [initialEmergencyContactPhone, setInitialEmergencyContactPhone] =
     useState('');
   const [users, setUsers] = useState<User[]>([]);
-  // const names = users.filter(i => i.username !== '').map(i => i.username);
-  // const numbs = users.filter(i => i.phoneNumber !== '').map(i => i.phoneNumber);
+  const names = users.filter(i => i.username !== '').map(i => i.username);
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const translateX = useRef(new Animated.Value(0)).current;
   const scrollViewRef = useRef<ScrollView>(null);
@@ -430,9 +429,7 @@ const HomeScreen: FC = () => {
   };
 
   const onPressTripInfo = () => {
-    if (haveContactsBeenAdded) {
-      setModalVisible3(false);
-    }
+    modalVisible3 && setModalVisible3(false);
     setShowTripModal(true);
     toggleBackgroundPhotoModal();
   };
@@ -539,7 +536,7 @@ const HomeScreen: FC = () => {
   };
 
   const onPressOpenContacts = () => {
-    navigation.navigate(Routes.contactScreen, {contacts, users});
+    navigation.navigate(Routes.contactScreen, {contacts, users, names});
     setModalVisible2(!modalVisible2);
   };
 
@@ -558,7 +555,7 @@ const HomeScreen: FC = () => {
                 style={{
                   marginTop: 20,
                   height: 150,
-                  width: 300,
+                  width: screenWidth * 0.9,
                   opacity: fadeAnim,
                 }}
                 source={require('../../Images/STJLogoTransparent.png')}></Animated.Image>
@@ -1149,7 +1146,6 @@ const HomeScreen: FC = () => {
                     style={{
                       fontFamily: 'HighTide-Sans',
                       backgroundColor: '#eee7da',
-                      marginHorizontal: 10,
                       marginBottom: 10,
                       marginTop: 5,
                       borderRadius: 5,
@@ -1638,7 +1634,6 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   nestedView2: {
-    // backgroundColor: '#eee7da',
     backgroundColor: '#eee7da',
     margin: 10,
     borderRadius: 5,

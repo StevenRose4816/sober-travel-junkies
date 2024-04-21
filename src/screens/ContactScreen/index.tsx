@@ -24,7 +24,7 @@ import {useDispatch} from 'react-redux';
 
 const ContactScreen: FC = () => {
   const route = useRoute<RouteProp<AppStackParams, Routes.contactScreen>>();
-  const {contacts, users} = route.params;
+  const {contacts, users, names} = route.params;
   const dispatch = useDispatch();
   const contactsFromState = useAppSelector(state => state.contacts.contacts);
   const screenHeight = Dimensions.get('window').height;
@@ -36,6 +36,12 @@ const ContactScreen: FC = () => {
   const [addedContacts, setAddedContacts] = useState<
     (Contacts.Contact | User)[]
   >([]);
+  const cleanedNames = names
+    .filter(name => name.trim() !== '') // Remove empty strings
+    .map(name => name.trim()); // Trim whitespaces from each string
+  const formattedNames = cleanedNames.join(', ');
+
+  console.log(formattedNames);
 
   useEffect(() => {
     retrieveCopyFromClipboard();
@@ -243,7 +249,7 @@ const ContactScreen: FC = () => {
                   marginBottom: 50,
                   fontFamily: 'HighTide-Sans',
                 }}>
-                {copiedText || 'Nothing Copied'}
+                {formattedNames}
               </Text>
               <View
                 style={{flexDirection: 'row', justifyContent: 'space-between'}}>

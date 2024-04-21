@@ -378,10 +378,6 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
         flex: 1,
         justifyContent: 'flex-start',
         padding: 8,
-        borderTopColor: '#b6e7cc',
-        borderBottomColor: '#b6e7cc',
-        borderTopWidth: 3,
-        borderBottomWidth: 3,
         borderRadius: 5,
       }}>
       <ImageBackground
