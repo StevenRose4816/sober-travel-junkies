@@ -38,13 +38,14 @@ const ImagePicker = () => {
   const scaleX = useRef(new Animated.Value(1)).current;
   const [countries, setCountries] = useState<any[] | null>([]);
   const [userPhoto, setUserPhoto] = useState<any>();
+  const [userPhoto2, setUserPhoto2] = useState<any>();
 
   console.log('routes=', routes);
   console.log('previous route=', prevRoute);
 
   useEffect(() => {
     getCountries();
-    getPhoto();
+    // getPhoto();
   }, []);
 
   async function getCountries() {
@@ -58,8 +59,10 @@ const ImagePicker = () => {
 
   async function getPhoto() {
     try {
-      const {data} = supabase.storage.from('Photos2').getPublicUrl('check.png');
-      setUserPhoto(data);
+      const {data} = supabase.storage
+        .from('Photos2')
+        .getPublicUrl('photo0.9471572240538436.png');
+      setUserPhoto2(data);
     } catch (e) {
       console.log('error: ', e);
     }
@@ -67,7 +70,7 @@ const ImagePicker = () => {
 
   async function uploadPhoto(imageUri: string | undefined) {
     try {
-      const fileName = 'photo3.png'; // Provide a unique filename
+      const fileName = 'photo' + Math.random() + '.png'; // Provide a unique filename
       const {data, error} = await supabase.storage
         .from('Photos2')
         .upload(fileName, imageUri); // Upload the image
@@ -97,7 +100,7 @@ const ImagePicker = () => {
   const openImagePicker = () => {
     const options = {
       mediaType: photo,
-      includeBase64: false,
+      includeBase64: true,
     };
 
     launchImageLibrary(options, response => {
@@ -109,9 +112,10 @@ const ImagePicker = () => {
       } else {
         console.log('response.assets=', response.assets?.[0]);
         console.log('response.assets.[0].uri=', response.assets?.[0]?.uri);
-        let imageUri = response.assets?.[0]?.uri;
-        setSelectedImage(imageUri);
-        // uploadPhoto(imageUri);
+        let base64 = response.assets?.[0]?.base64;
+        let uri = response.assets?.[0]?.uri;
+        setSelectedImage(uri);
+        // uploadPhoto(base64);
         translateXLooksGood.setValue(0);
         translateYLooksGood.setValue(0);
         translateXChoose.setValue(0);

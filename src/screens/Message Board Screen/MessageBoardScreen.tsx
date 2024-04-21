@@ -175,7 +175,7 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
             style={{
               flex: 1,
               flexDirection: 'column',
-              backgroundColor: '#b6e7cc',
+              backgroundColor: '#eee7da',
               padding: 8,
               marginVertical: 8,
               marginBottom: 20,
@@ -291,7 +291,7 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
                 style={{
                   flex: 1,
                   flexDirection: 'column',
-                  backgroundColor: '#b6e7cc95',
+                  backgroundColor: '#eee7da99',
                   padding: 8,
                   marginTop: 10,
                   marginVertical: 8,
@@ -335,7 +335,7 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
                         flex: 1,
                         flexDirection: 'row',
                         alignItems: 'flex-end',
-                        backgroundColor: '#b6e7cc60',
+                        backgroundColor: '#b6e7cc98',
                         borderRadius: 8,
                         maxHeight: 40,
                       }}>
@@ -583,14 +583,6 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     borderRadius: 8,
   },
-  input: {
-    height: 30,
-    padding: 8,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 8,
-    fontFamily: 'HighTide-Sans',
-  },
   input2: {
     height: 90,
     padding: 8,
@@ -662,7 +654,7 @@ const styles = StyleSheet.create({
     left: '5%',
     width: '90%',
     height: 20,
-    backgroundColor: '#b6e7cc95',
+    backgroundColor: '#eee7da99',
     borderRadius: 5,
   },
 });

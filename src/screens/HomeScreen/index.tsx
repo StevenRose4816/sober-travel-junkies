@@ -556,6 +556,7 @@ const HomeScreen: FC = () => {
             <View style={styles.nestedView1}>
               <Animated.Image
                 style={{
+                  marginTop: 20,
                   height: 150,
                   width: 300,
                   opacity: fadeAnim,
@@ -573,8 +574,8 @@ const HomeScreen: FC = () => {
                   {userPhotoFromDB !== '' ? (
                     <Animated.Image
                       style={{
-                        height: 200,
-                        width: 200,
+                        height: 250,
+                        width: screenWidth * 0.7,
                         marginBottom: 10,
                         borderRadius: 5,
                         opacity: fadeAnim,
@@ -585,8 +586,8 @@ const HomeScreen: FC = () => {
                   ) : (
                     <Animated.Image
                       style={{
-                        height: 200,
-                        width: 200,
+                        height: 250,
+                        width: screenWidth * 0.7,
                         borderRadius: 5,
                         marginBottom: 10,
                         opacity: fadeAnim,
@@ -603,12 +604,12 @@ const HomeScreen: FC = () => {
                     style={{
                       backgroundColor: '#b6e7cc',
                       marginTop: 10,
-                      width: screenWidth * 0.7,
+                      width: screenWidth * 0.8,
                       borderRadius: 5,
                       borderWidth: 2,
                       borderColor: '#eee7da',
                     }}>
-                    <Text style={styles.text2}>{'Register For A Trip'}</Text>
+                    <Text style={styles.text2}>{'View Trip Info'}</Text>
                   </TouchableOpacity>
                   <TouchableOpacity
                     onPress={onPressMessageBoard}
@@ -616,7 +617,7 @@ const HomeScreen: FC = () => {
                       backgroundColor: '#b6e7cc',
                       marginTop: 10,
                       marginBottom: 10,
-                      width: screenWidth * 0.7,
+                      width: screenWidth * 0.8,
                       borderRadius: 5,
                       borderWidth: 2,
                       borderColor: '#eee7da',
@@ -628,7 +629,7 @@ const HomeScreen: FC = () => {
                     style={{
                       backgroundColor: '#b6e7cc',
                       marginBottom: 10,
-                      width: screenWidth * 0.7,
+                      width: screenWidth * 0.8,
                       borderRadius: 5,
                       borderWidth: 2,
                       borderColor: '#eee7da',
@@ -651,7 +652,7 @@ const HomeScreen: FC = () => {
                           fontFamily: 'HighTide-Sans',
                           opacity: haveContactsBeenAdded ? 0.5 : 1,
                         }}>
-                        {'Get Group Contact Info'}
+                        {"Get Your Group's Contact Info"}
                       </Text>
                       {haveContactsBeenAdded && (
                         <Image
