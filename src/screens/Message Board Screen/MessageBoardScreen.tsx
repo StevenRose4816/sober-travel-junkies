@@ -493,7 +493,7 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
             <View style={styles.modalView3}>
               <Text
                 style={{
-                  color: '#eee7da',
+                  color: '#0c0b09',
                   fontSize: 21,
                   textAlign: 'center',
                   fontFamily: 'HighTide-Sans',
@@ -506,7 +506,7 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
                 onPress={onPressYesSubmit}
                 style={{
                   marginTop: 20,
-                  backgroundColor: 'blue',
+                  backgroundColor: '#e7b6cc',
                   minHeight: 50,
                   justifyContent: 'center',
                   borderRadius: 5,
@@ -516,9 +516,8 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
                 <Text
                   style={{
                     textAlign: 'center',
-                    color: '#eee7da',
-                    fontSize: 21,
-                    backgroundColor: 'blue',
+                    color: '#0c0b09',
+                    fontSize: 18,
                     fontFamily: 'HighTide-Sans',
                   }}>
                   {'Yes'}
@@ -528,7 +527,7 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
                 onPress={toggleModal}
                 style={{
                   marginTop: 20,
-                  backgroundColor: 'blue',
+                  backgroundColor: '#e7b6cc',
                   minHeight: 50,
                   justifyContent: 'center',
                   borderRadius: 5,
@@ -538,9 +537,8 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
                 <Text
                   style={{
                     textAlign: 'center',
-                    color: '#eee7da',
-                    fontSize: 21,
-                    backgroundColor: 'blue',
+                    color: '#0c0b09',
+                    fontSize: 18,
                     borderRadius: 5,
                     fontFamily: 'HighTide-Sans',
                   }}>
@@ -619,14 +617,12 @@ const styles = StyleSheet.create({
   modalView3: {
     flex: 1,
     borderRadius: 5,
-    backgroundColor: 'grey',
     justifyContent: 'center',
     alignItems: 'center',
-    borderColor: '#eee7da',
-    borderWidth: 2,
   },
   modalView4: {
     flex: 1,
+    flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
   },

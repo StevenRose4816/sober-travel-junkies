@@ -51,7 +51,7 @@ export const DocPicker = ({toggleModal, toggleDocPickerSwitch}) => {
         <Text
           style={{
             fontFamily: 'HighTide-Sans',
-            color: 'white',
+            color: '#0c0b09',
             fontSize: 18,
             textAlign: 'center',
           }}>

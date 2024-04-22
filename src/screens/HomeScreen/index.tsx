@@ -819,7 +819,7 @@ const HomeScreen: FC = () => {
                 <TouchableOpacity
                   onPress={onEditPress}
                   style={{
-                    backgroundColor: '#b6e7cc',
+                    backgroundColor: '#e7b6cc',
                     borderRadius: 5,
                     marginLeft: screenWidth * 0.72,
                     marginBottom: 20,
@@ -1239,19 +1239,22 @@ const HomeScreen: FC = () => {
               <TouchableOpacity
                 onPress={onPressSubmit}
                 style={{
-                  backgroundColor: 'blue',
+                  backgroundColor: '#e7b6cc',
                   minHeight: 50,
+                  width: screenWidth * 0.7,
                   justifyContent: 'center',
                   borderRadius: 5,
+                  borderWidth: 2,
+                  borderColor: '#eee7da',
                   marginHorizontal: 10,
                   marginTop: 10,
                   marginBottom: 10,
+                  alignSelf: 'center',
                 }}>
                 <Text
                   style={{
-                    color: '#eee7da',
+                    color: '#0c0b09',
                     fontSize: 21,
-                    fontWeight: '600',
                     textAlign: 'center',
                     fontFamily: 'HighTide-Sans',
                   }}>
@@ -1274,12 +1277,13 @@ const HomeScreen: FC = () => {
                 <Text
                   style={{
                     textAlign: 'center',
-                    color: '#eee7da',
-                    fontWeight: '500',
+                    color: '#0c0b09',
                     fontSize: 16,
                     borderRadius: 5,
+                    marginLeft: 5,
+                    marginRight: 5,
                     borderColor: '#0c0b09',
-                    fontFamily: 'Vonique64',
+                    fontFamily: 'HighTide-Sans',
                   }}>
                   {'Are you sure you want to make this change? '}
                 </Text>
@@ -1288,13 +1292,14 @@ const HomeScreen: FC = () => {
                   <Text
                     style={{
                       textAlign: 'center',
-                      color: '#eee7da',
-                      fontWeight: '500',
+                      color: '#0c0b09',
                       fontSize: 18,
                       borderRadius: 5,
-                      fontFamily: 'Vonique64',
+                      marginLeft: 5,
+                      marginRight: 5,
+                      fontFamily: 'HighTide-Sans',
                     }}>
-                    {'Do you want to edit your information?'}
+                    {'Would you like to edit your information?'}
                   </Text>
                 )
               )}
@@ -1309,22 +1314,22 @@ const HomeScreen: FC = () => {
                 <TouchableOpacity
                   onPress={successMessage ? onPressYesSubmit : onPressYes}
                   style={{
-                    marginTop: 20,
-                    backgroundColor: 'blue',
-                    minHeight: 50,
-                    justifyContent: 'center',
+                    // backgroundColor: '#b6e7cc',
+                    backgroundColor: '#e7b6cc',
                     borderRadius: 5,
-                    marginHorizontal: 10,
-                    width: 120,
+                    margin: 10,
+                    width: 100,
+                    borderWidth: 2,
+                    borderColor: '#eee7da',
                   }}>
                   <Text
                     style={{
-                      textAlign: 'center',
-                      color: '#eee7da',
-                      fontSize: 21,
+                      color: '#0c0b09',
+                      fontSize: 12,
                       fontWeight: '600',
-                      backgroundColor: 'blue',
-                      fontFamily: 'Vonique64',
+                      margin: 10,
+                      textAlign: 'center',
+                      fontFamily: 'HighTide-Sans',
                     }}>
                     {'Yes'}
                   </Text>
@@ -1333,23 +1338,22 @@ const HomeScreen: FC = () => {
               <TouchableOpacity
                 onPress={onPressNo}
                 style={{
-                  marginTop: 20,
-                  backgroundColor: 'blue',
-                  minHeight: 50,
-                  justifyContent: 'center',
+                  //aqua blue
+                  backgroundColor: '#e7b6cc',
                   borderRadius: 5,
-                  marginHorizontal: 10,
-                  width: 120,
+                  margin: 10,
+                  width: 100,
+                  borderWidth: 2,
+                  borderColor: '#eee7da',
                 }}>
                 <Text
                   style={{
-                    textAlign: 'center',
-                    color: '#eee7da',
-                    fontSize: 21,
+                    color: '#0c0b09',
+                    fontSize: 12,
                     fontWeight: '600',
-                    backgroundColor: 'blue',
-                    borderRadius: 5,
-                    fontFamily: 'Vonique64',
+                    margin: 10,
+                    textAlign: 'center',
+                    fontFamily: 'HighTide-Sans',
                   }}>
                   {!docPickerState ? 'No' : 'Cancel'}
                 </Text>
@@ -1433,7 +1437,7 @@ const HomeScreen: FC = () => {
                     height: 100,
                     width: screenWidth * 0.4,
                     marginRight: 10,
-                    marginTop: 60,
+                    marginTop: 75,
                     marginLeft: 10,
                     backgroundColor: '#eee7da',
                     borderRadius: 5,
@@ -1545,7 +1549,7 @@ const HomeScreen: FC = () => {
                     style={{
                       backgroundColor: '#b6e7cc',
                       borderRadius: 5,
-                      marginBottom: 20,
+                      margin: 10,
                       width: 100,
                       borderWidth: 1,
                       borderColor: '#eee7da',
@@ -1567,7 +1571,7 @@ const HomeScreen: FC = () => {
                     style={{
                       backgroundColor: '#b6e7cc',
                       borderRadius: 5,
-                      marginBottom: 20,
+                      margin: 10,
                       width: 100,
                       borderWidth: 1,
                       borderColor: '#eee7da',
@@ -1690,16 +1694,16 @@ const styles = StyleSheet.create({
   modalView3: {
     flex: 1,
     borderRadius: 5,
-    backgroundColor: 'grey',
+    marginTop: 20,
+    // backgroundColor: '#f2f2f2',
     justifyContent: 'center',
     alignItems: 'center',
-    borderColor: '#eee7da',
-    borderWidth: 2,
   },
   modalView4: {
     flex: 1,
+    flexDirection: 'row',
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'flex-end',
   },
   modalView5: {
     flex: 1,

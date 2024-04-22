@@ -39,6 +39,8 @@ const ContactScreen: FC = () => {
   const cleanedNames = names
     .filter(name => name.trim() !== '') // Remove empty strings
     .map(name => name.trim()); // Trim whitespaces from each string
+
+  // Join the cleaned names with commas
   const formattedNames = cleanedNames.join(', ');
 
   console.log(formattedNames);
@@ -249,19 +251,20 @@ const ContactScreen: FC = () => {
                   marginBottom: 50,
                   fontFamily: 'HighTide-Sans',
                 }}>
-                {formattedNames}
+                {'(' + formattedNames + ')'}
               </Text>
               <View
-                style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                style={{
+                  flexDirection: 'row',
+                }}>
                 <TouchableOpacity
                   onPress={onAddGroupContact}
                   style={{
-                    backgroundColor: '#fb445c',
-                    minHeight: 35,
-                    width: screenWidth * 0.2,
-                    justifyContent: 'center',
-                    borderRadius: 10,
-                    marginTop: 10,
+                    backgroundColor: '#e7b6cc',
+                    borderRadius: 5,
+                    width: 100,
+                    borderWidth: 1,
+                    borderColor: '#eee7da',
                     marginRight: 5,
                   }}>
                   <Text
@@ -269,10 +272,8 @@ const ContactScreen: FC = () => {
                       color: '#0c0b09',
                       fontSize: 12,
                       textAlign: 'center',
-                      marginLeft: 10,
-                      marginRight: 10,
-                      marginTop: 5,
                       fontFamily: 'Vonique64',
+                      margin: 10,
                     }}>
                     {'Add'}
                   </Text>
@@ -280,12 +281,11 @@ const ContactScreen: FC = () => {
                 <TouchableOpacity
                   onPress={toggleModal}
                   style={{
-                    backgroundColor: '#fb445c',
-                    minHeight: 35,
-                    width: screenWidth * 0.2,
-                    justifyContent: 'center',
-                    borderRadius: 10,
-                    marginTop: 10,
+                    backgroundColor: '#e7b6cc',
+                    borderRadius: 5,
+                    width: 100,
+                    borderWidth: 1,
+                    borderColor: '#eee7da',
                     marginLeft: 5,
                   }}>
                   <Text
@@ -293,10 +293,8 @@ const ContactScreen: FC = () => {
                       color: '#0c0b09',
                       fontSize: 12,
                       textAlign: 'center',
-                      marginLeft: 10,
-                      marginRight: 10,
-                      marginTop: 5,
                       fontFamily: 'Vonique64',
+                      margin: 10,
                     }}>
                     {'Close'}
                   </Text>
@@ -345,7 +343,7 @@ const ContactScreen: FC = () => {
                 <TouchableOpacity
                   onPress={toggleModal2}
                   style={{
-                    backgroundColor: '#fb445c',
+                    backgroundColor: '#e7b6cc',
                     minHeight: 35,
                     width: screenWidth * 0.2,
                     justifyContent: 'center',
