@@ -1482,65 +1482,76 @@ const HomeScreen: FC = () => {
             )}
             {modalVisible3 && (
               <>
-                <View
-                  style={{
-                    marginTop: 40,
-                    backgroundColor: 'pink',
-                    maxHeight: screenHeight * 0.3,
-                    borderRadius: 10,
-                  }}>
-                  <FlatList
-                    data={users}
-                    renderItem={({item}) => (
-                      <View style={{width: screenWidth * 0.6, marginTop: 20}}>
-                        <View
-                          style={{
-                            borderTopColor: '#b6e7cc',
-                            borderTopWidth: 3,
-                          }}>
-                          <Text
+                <View style={{}}>
+                  <Text
+                    style={{
+                      alignSelf: 'center',
+                      marginTop: 20,
+                      fontFamily: 'HighTide-Sans',
+                      fontSize: 18,
+                    }}>
+                    Valle Crucis 24'
+                  </Text>
+                  <View
+                    style={{
+                      marginTop: 20,
+                      backgroundColor: 'pink',
+                      maxHeight: screenHeight * 0.3,
+                      borderRadius: 10,
+                    }}>
+                    <FlatList
+                      data={users}
+                      renderItem={({item}) => (
+                        <View style={{width: screenWidth * 0.6, marginTop: 10}}>
+                          <View
                             style={{
-                              borderRadius: 5,
-                              textAlign: 'left',
-                              marginTop: 30,
-                              marginBottom: 10,
-                              marginLeft: 5,
-                              fontFamily: 'HighTide-Sans',
-                              fontSize: 18,
+                              borderTopColor: '#b6e7cc',
+                              borderTopWidth: 3,
                             }}>
-                            {item.username}
-                          </Text>
+                            <Text
+                              style={{
+                                borderRadius: 5,
+                                textAlign: 'left',
+                                marginTop: 30,
+                                marginBottom: 10,
+                                marginLeft: 5,
+                                fontFamily: 'HighTide-Sans',
+                                fontSize: 18,
+                              }}>
+                              {item.username}
+                            </Text>
+                          </View>
+                          <View>
+                            <Text
+                              style={{
+                                borderRadius: 5,
+                                textAlign: 'left',
+                                marginTop: 10,
+                                marginBottom: 10,
+                                marginLeft: 5,
+                                fontFamily: 'HighTide-Sans',
+                                fontSize: 18,
+                              }}>
+                              {`Mobile: ${
+                                item.phoneNumbers.mobile || ''
+                              }\nMain: ${
+                                item.phoneNumbers.main || ''
+                              }\nHome Fax: ${
+                                item.phoneNumbers.homeFax || ''
+                              }\nWork: ${item.phoneNumbers.work || ''}\nHome: ${
+                                item.phoneNumbers.home || ''
+                              }`}
+                            </Text>
+                          </View>
                         </View>
-                        <View>
-                          <Text
-                            style={{
-                              borderRadius: 5,
-                              textAlign: 'left',
-                              marginTop: 10,
-                              marginBottom: 10,
-                              marginLeft: 5,
-                              fontFamily: 'HighTide-Sans',
-                              fontSize: 18,
-                            }}>
-                            {`Mobile: ${
-                              item.phoneNumbers.mobile || ''
-                            }\nMain: ${
-                              item.phoneNumbers.main || ''
-                            }\nHome Fax: ${
-                              item.phoneNumbers.homeFax || ''
-                            }\nWork: ${item.phoneNumbers.work || ''}\nHome: ${
-                              item.phoneNumbers.home || ''
-                            }`}
-                          </Text>
-                        </View>
-                      </View>
-                    )}
-                    keyExtractor={item => item.familyName}
-                  />
+                      )}
+                      keyExtractor={item => item.familyName}
+                    />
+                  </View>
                 </View>
                 <View
                   style={{
-                    marginTop: 30,
+                    marginTop: 10,
                     flexDirection: 'row',
                     justifyContent: 'space-between',
                   }}>
