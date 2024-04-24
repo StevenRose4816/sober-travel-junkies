@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useRef, useState} from 'react';
+import React, {FC, useCallback, useEffect, useRef, useState} from 'react';
 import {
   FlatList,
   Image,
@@ -40,7 +40,6 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
   const [newTitle, setNewTitle] = useState<string>('');
   const [modalVisible, setModalVisible] = useState(false);
   const [data, setData] = useState(false);
-  const [dataObj, setDataObj] = useState('');
   const userPhotoFromDB = route?.params.userPhotoFromDB;
   const fullName = route?.params.fullName;
   const backgroundPhoto = route?.params.backgroundPhoto;
@@ -51,10 +50,8 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
   const [isReply, setIsReply] = useState(false);
   const [showReplies, setShowReplies] = useState<string[]>([]);
   const bgPhoto = useAppSelector(state => state.user.uri);
-  console.log('bgPhoto: ', bgPhoto);
-  console.log('backgroundPhoto: ', backgroundPhoto);
-
   const flatListRef = useRef<FlatList>(null!);
+  console.log('re-render');
 
   useEffect(() => {
     readData();
@@ -72,7 +69,6 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
       if (snapshot.exists()) {
         const data = snapshot.val();
         console.log('Data: ', data);
-        setDataObj(data);
         setMessages(data.messages);
         setData(true);
       } else {
@@ -167,6 +163,13 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
     });
   };
 
+  const handleChangeText = useCallback(
+    (text: string) => {
+      setNewMessage(text);
+    },
+    [setNewMessage],
+  );
+
   const renderItem = ({item}: {item: Message}) => (
     <>
       <View>
@@ -219,10 +222,9 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
                     flexDirection: 'row',
                     alignItems: 'flex-end',
                     backgroundColor: '#b6e7cc',
-                    borderColor: '#eee7da',
-                    borderWidth: 1,
                     borderRadius: 8,
                     maxHeight: 40,
+                    maxWidth: 100,
                   }}>
                   <Image
                     style={{
@@ -240,10 +242,11 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
                     style={{
                       fontSize: 12,
                       marginRight: 5,
-                      marginBottom: 10,
+                      marginBottom: 5,
                       fontFamily: 'HighTide-Sans',
+                      width: 50,
                     }}>
-                    {' ' + item.name}
+                    {item.name}
                   </Text>
                 </View>
               </View>
@@ -338,6 +341,7 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
                         backgroundColor: '#b6e7cc98',
                         borderRadius: 8,
                         maxHeight: 40,
+                        maxWidth: 100,
                       }}>
                       <Image
                         style={{
@@ -357,11 +361,12 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
                           fontSize: 12,
                           marginLeft: 5,
                           marginRight: 5,
-                          marginBottom: 10,
+                          marginBottom: 5,
                           fontFamily: 'HighTide-Sans',
                           opacity: 0.7,
+                          width: 50,
                         }}>
-                        {'' + reply.name}
+                        {reply.name}
                       </Text>
                     </View>
                   </View>
@@ -408,7 +413,7 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
             style={styles.input2}
             placeholder="Type your message..."
             value={newMessage}
-            onChangeText={newMessage => setNewMessage(newMessage)}
+            onChangeText={handleChangeText}
           />
         </View>
       </ImageBackground>
