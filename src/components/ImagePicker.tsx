@@ -38,6 +38,7 @@ const ImagePicker = () => {
   const [userPhoto, setUserPhoto] = useState<any>();
 
   const uploadPhoto = async (uri: any) => {
+    animateTouchables();
     try {
       const response = await fetch(uri);
       const blob = await response.blob();
@@ -61,10 +62,6 @@ const ImagePicker = () => {
     }
   };
 
-  useEffect(() => {
-    selectedImage && animateTouchables();
-  }, [selectedImage]);
-
   const navAway = () => {
     dispatch(setThisUserPhoto({userPhoto: selectedImage}));
     navigate(Routes.homeScreen);
@@ -85,11 +82,6 @@ const ImagePicker = () => {
         let uri = response.assets?.[0]?.uri;
         setSelectedImage(uri);
         await uploadPhoto(uri);
-        translateXLooksGood.setValue(0);
-        translateYLooksGood.setValue(0);
-        translateXChoose.setValue(0);
-        translateYChoose.setValue(0);
-        scaleX.setValue(1);
       }
     });
   };
