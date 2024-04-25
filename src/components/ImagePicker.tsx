@@ -12,7 +12,6 @@ import {
   launchCamera,
   MediaType,
   ImagePickerResponse,
-  OptionsCommon,
 } from 'react-native-image-picker';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
@@ -36,55 +35,31 @@ const ImagePicker = () => {
   const translateXChoose = useRef(new Animated.Value(0)).current;
   const translateYChoose = useRef(new Animated.Value(0)).current;
   const scaleX = useRef(new Animated.Value(1)).current;
-  const [countries, setCountries] = useState<any[] | null>([]);
   const [userPhoto, setUserPhoto] = useState<any>();
-  const [userPhoto2, setUserPhoto2] = useState<any>();
 
-  console.log('routes=', routes);
-  console.log('previous route=', prevRoute);
-
-  useEffect(() => {
-    getCountries();
-    // getPhoto();
-  }, []);
-
-  async function getCountries() {
+  const uploadPhoto = async (uri: any) => {
     try {
-      const {data} = await supabase.from('countries').select();
-      setCountries(data);
-    } catch (e) {
-      console.log('error: ', e);
-    }
-  }
-
-  async function getPhoto() {
-    try {
-      const {data} = supabase.storage
-        .from('Photos2')
-        .getPublicUrl('photo0.9471572240538436.png');
-      setUserPhoto2(data);
-    } catch (e) {
-      console.log('error: ', e);
-    }
-  }
-
-  async function uploadPhoto(imageUri: string | undefined) {
-    try {
-      const fileName = 'photo' + Math.random() + '.png'; // Provide a unique filename
+      const response = await fetch(uri);
+      const blob = await response.blob();
+      const arrayBuffer = await new Response(blob).arrayBuffer();
+      console.log('arrayBuffer.byteLength: ', arrayBuffer.byteLength);
+      const fileName = 'photo' + new Date().getTime();
+      const contentType = 'image/jpeg';
       const {data, error} = await supabase.storage
         .from('Photos2')
-        .upload(fileName, imageUri); // Upload the image
+        .upload(fileName, arrayBuffer, {contentType});
 
       if (error) {
         console.error('Error uploading photo:', error.message);
       } else {
-        const photoUrl = data?.path; // Get the URL of the uploaded photo
+        const photoUrl = data?.path;
         setUserPhoto(photoUrl);
+        console.log('Uploaded photo URL:', photoUrl);
       }
-    } catch (e) {
-      console.log('error: ', e);
+    } catch (e: any) {
+      console.error('Error uploading photo:', e.message);
     }
-  }
+  };
 
   useEffect(() => {
     selectedImage && animateTouchables();
@@ -95,27 +70,21 @@ const ImagePicker = () => {
     navigate(Routes.homeScreen);
   };
 
-  const photo = 'photo' as MediaType;
-
   const openImagePicker = () => {
     const options = {
-      mediaType: photo,
+      mediaType: 'photo' as MediaType,
       includeBase64: true,
     };
 
-    launchImageLibrary(options, response => {
-      console.log('Response = ', response);
+    launchImageLibrary(options, async (response: ImagePickerResponse) => {
       if (response.didCancel) {
         console.log('User cancelled image picker');
       } else if (response.errorCode) {
         console.log('Image picker error: ', response.errorCode);
       } else {
-        console.log('response.assets=', response.assets?.[0]);
-        console.log('response.assets.[0].uri=', response.assets?.[0]?.uri);
-        let base64 = response.assets?.[0]?.base64;
         let uri = response.assets?.[0]?.uri;
         setSelectedImage(uri);
-        // uploadPhoto(base64);
+        await uploadPhoto(uri);
         translateXLooksGood.setValue(0);
         translateYLooksGood.setValue(0);
         translateXChoose.setValue(0);
@@ -127,7 +96,7 @@ const ImagePicker = () => {
 
   const handleCameraLaunch = () => {
     const options = {
-      mediaType: photo,
+      mediaType: 'photo' as MediaType,
       includeBase64: false,
       maxHeight: 2000,
       maxWidth: 2000,
