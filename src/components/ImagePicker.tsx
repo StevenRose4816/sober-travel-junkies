@@ -38,7 +38,7 @@ const ImagePicker = () => {
   const [userPhoto, setUserPhoto] = useState<any>();
 
   const uploadPhoto = async (uri: any) => {
-    animateTouchables();
+    // animateTouchables();
     try {
       const response = await fetch(uri);
       const blob = await response.blob();
@@ -62,9 +62,27 @@ const ImagePicker = () => {
     }
   };
 
-  const navAway = () => {
+  const onPressThisLooksGood = async () => {
+    await uploadPhoto(selectedImage);
     dispatch(setThisUserPhoto({userPhoto: selectedImage}));
     navigate(Routes.homeScreen);
+  };
+
+  const resetValues = () => {
+    translateXLooksGood.setValue(0);
+    translateYLooksGood.setValue(0);
+    translateXChoose.setValue(0);
+    translateYChoose.setValue(0);
+    scaleX.setValue(1);
+  };
+
+  const onPressChooseFromDevice = () => {
+    //if there is a selectedImage already, we want to launch the imagePicker but also reset animation values
+    openImagePicker();
+    //timeout here so user doesnt see text transition
+    if (selectedImage) {
+      setTimeout(() => resetValues(), 500);
+    }
   };
 
   const openImagePicker = () => {
@@ -81,7 +99,8 @@ const ImagePicker = () => {
       } else {
         let uri = response.assets?.[0]?.uri;
         setSelectedImage(uri);
-        await uploadPhoto(uri);
+        animateTouchables();
+        // await uploadPhoto(uri);
       }
     });
   };
@@ -162,7 +181,7 @@ const ImagePicker = () => {
               borderWidth: 1,
               borderColor: '#eee7da',
             }}
-            onPress={openImagePicker}>
+            onPress={onPressChooseFromDevice}>
             <Text
               style={{
                 color: '#0c0b09',
@@ -209,7 +228,7 @@ const ImagePicker = () => {
             ],
           }}>
           <TouchableOpacity
-            onPress={navAway}
+            onPress={onPressThisLooksGood}
             disabled={!selectedImage}
             style={{
               backgroundColor: '#b6e7cc',
