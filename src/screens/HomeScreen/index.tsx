@@ -74,8 +74,8 @@ const HomeScreen: FC = () => {
   const getPhotoFromSupabase = async () => {
     try {
       const {data} = supabase.storage
-        .from('Photos2/user')
-        .getPublicUrl('check.png');
+        .from('Photos2')
+        .getPublicUrl(userId + 'profilePic');
       setUserPhoto2(data);
       console.log('userPhoto2: ', userPhoto2);
     } catch (e) {
@@ -84,6 +84,7 @@ const HomeScreen: FC = () => {
   };
 
   const userId = auth().currentUser?.uid;
+  console.log('UID: ', userId);
   const [modalVisible, setModalVisible] = useState(false);
   const [data, setData] = useState(false);
   const [modalVisible2, setModalVisible2] = useState(false);

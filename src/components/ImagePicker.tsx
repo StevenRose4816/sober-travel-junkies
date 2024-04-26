@@ -19,6 +19,7 @@ import {setUserPhoto as setThisUserPhoto} from '../store/user/slice';
 import Routes from '../navigation/routes';
 import {NavPropAny} from '../navigation/types';
 import {supabase} from '../screens/SupabaseConfig';
+import auth from '@react-native-firebase/auth';
 
 const ImagePicker = () => {
   const [selectedImage, setSelectedImage] = useState<string | undefined>(
@@ -36,6 +37,7 @@ const ImagePicker = () => {
   const translateYChoose = useRef(new Animated.Value(0)).current;
   const scaleX = useRef(new Animated.Value(1)).current;
   const [userPhoto, setUserPhoto] = useState<any>();
+  const userId = auth().currentUser?.uid || '';
 
   const uploadPhoto = async (uri: any) => {
     try {
@@ -43,7 +45,7 @@ const ImagePicker = () => {
       const blob = await response.blob();
       const arrayBuffer = await new Response(blob).arrayBuffer();
       console.log('arrayBuffer.byteLength: ', arrayBuffer.byteLength);
-      const fileName = 'photo' + new Date().getTime();
+      const fileName = userId + 'profilePic';
       const contentType = 'image/jpeg';
       const {data, error} = await supabase.storage
         .from('Photos2')
