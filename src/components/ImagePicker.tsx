@@ -38,7 +38,6 @@ const ImagePicker = () => {
   const [userPhoto, setUserPhoto] = useState<any>();
 
   const uploadPhoto = async (uri: any) => {
-    // animateTouchables();
     try {
       const response = await fetch(uri);
       const blob = await response.blob();
@@ -100,7 +99,6 @@ const ImagePicker = () => {
         let uri = response.assets?.[0]?.uri;
         setSelectedImage(uri);
         animateTouchables();
-        // await uploadPhoto(uri);
       }
     });
   };

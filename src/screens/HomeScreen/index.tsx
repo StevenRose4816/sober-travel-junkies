@@ -35,6 +35,7 @@ import {
   setHaveContactsBeenAdded,
   setContacts as setTheseContacts,
 } from '../../store/contacts/index';
+import {supabase} from '../../screens/SupabaseConfig';
 
 export interface User {
   username?: string;
@@ -54,6 +55,9 @@ const HomeScreen: FC = () => {
   const dispatch = useDispatch();
   const screenWidth = Dimensions.get('window').width;
   const screenHeight = Dimensions.get('window').height;
+  const [userPhoto2, setUserPhoto2] = useState<{publicUrl: string}>({
+    publicUrl: '',
+  });
 
   const logout = () => {
     dispatch(setUserPhoto({userPhoto: null}));
@@ -65,6 +69,18 @@ const HomeScreen: FC = () => {
 
   const openPicker = () => {
     navigation.navigate(Routes.imagePicker);
+  };
+
+  const getPhotoFromSupabase = async () => {
+    try {
+      const {data} = supabase.storage
+        .from('Photos2/user')
+        .getPublicUrl('photo0.9471572240538436.png');
+      setUserPhoto2(data);
+      console.log('userPhoto2: ', userPhoto2);
+    } catch (e) {
+      console.log('error: ', e);
+    }
   };
 
   const userId = auth().currentUser?.uid;
@@ -206,6 +222,7 @@ const HomeScreen: FC = () => {
     readData();
     fetchAllUsersData();
     moveImage();
+    getPhotoFromSupabase();
   }, [users]);
 
   useEffect(() => {
