@@ -221,7 +221,7 @@ const HomeScreen: FC = () => {
 
   useEffect(() => {
     readData();
-    fetchAllUsersData();
+    fetchAllJSONData();
     moveImage();
     getPhotoFromSupabase();
   }, [users]);
@@ -497,7 +497,7 @@ const HomeScreen: FC = () => {
   };
 
   const onPressGroupContactInfo = () => {
-    fetchAllUsersData();
+    fetchAllJSONData();
     setModalVisible2(true);
     setModalVisible3(true);
   };
@@ -505,7 +505,7 @@ const HomeScreen: FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const usersArray = await fetchAllUsersData();
+        const usersArray = await fetchAllJSONData();
         setUsers(usersArray);
       } catch (error) {
         console.error('Error fetching users:', error);
@@ -514,7 +514,7 @@ const HomeScreen: FC = () => {
     fetchData();
   }, []);
 
-  const fetchAllUsersData = async () => {
+  const fetchAllJSONData = async () => {
     const usersRef = ref(db, 'users');
     try {
       const snapshot = await get(usersRef);
@@ -610,7 +610,7 @@ const HomeScreen: FC = () => {
                         borderWidth: 2,
                       }}
                       source={
-                        (userPhoto === '' && {uri: userPhoto}) ||
+                        (userPhoto !== '' && {uri: userPhoto}) ||
                         require('../../Images/profilepictureicon.png')
                       }></Animated.Image>
                   )}
@@ -871,7 +871,7 @@ const HomeScreen: FC = () => {
                   {"Let's get some informaton."}
                 </Text>
                 <View style={{flex: 1, alignItems: 'center'}}>
-                  {!userPhotoFromDB ? (
+                  {userPhotoFromDB === '' ? (
                     <Animated.Image
                       style={{
                         height: 300,
