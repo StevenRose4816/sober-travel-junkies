@@ -75,7 +75,7 @@ const HomeScreen: FC = () => {
     try {
       const {data} = supabase.storage
         .from('Photos2/user')
-        .getPublicUrl('photo0.9471572240538436.png');
+        .getPublicUrl('check.png');
       setUserPhoto2(data);
       console.log('userPhoto2: ', userPhoto2);
     } catch (e) {
