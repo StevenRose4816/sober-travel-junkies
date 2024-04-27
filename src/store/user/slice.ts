@@ -4,12 +4,14 @@ interface UserState {
   userPhoto: string | undefined;
   uri: string | undefined;
   selected: boolean;
+  messages: any;
 }
 
 const initialState: UserState = {
   userPhoto: undefined,
   uri: undefined,
   selected: false,
+  messages: undefined,
 };
 
 type SetUserPhoto = PayloadAction<{userPhoto: any}>;
@@ -29,11 +31,12 @@ const userPhotoSlice = createSlice({
     setSelected: (state, {payload}: SetSelected) => {
       state.selected = payload.selected;
     },
+    setMessages: (state, {payload}: PayloadAction<{messages: any}>) => {
+      state.messages = payload.messages;
+    },
   },
 });
 
-export const {setUserPhoto} = userPhotoSlice.actions;
-export const {setBackgroundPhoto} = userPhotoSlice.actions;
-export const {setSelected} = userPhotoSlice.actions;
-
+export const {setUserPhoto, setBackgroundPhoto, setSelected, setMessages} =
+  userPhotoSlice.actions;
 export const userPhotoReducer = userPhotoSlice.reducer;

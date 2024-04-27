@@ -2,6 +2,7 @@ import React from 'react';
 import {SafeAreaView, StatusBar, useColorScheme} from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import RootNavigator from './navigation';
+import MessagesListener from './components/MessagesListener';
 import {Provider} from 'react-redux';
 import store from './store';
 
@@ -21,6 +22,7 @@ function App(): React.JSX.Element {
           backgroundColor={backgroundStyle.backgroundColor}
         />
         <RootNavigator />
+        <MessagesListener />
       </SafeAreaView>
     </Provider>
   );
