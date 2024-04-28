@@ -55,9 +55,6 @@ const HomeScreen: FC = () => {
   const dispatch = useDispatch();
   const screenWidth = Dimensions.get('window').width;
   const screenHeight = Dimensions.get('window').height;
-  // const [userPhoto2, setUserPhoto2] = useState<{publicUrl: string}>({
-  //   publicUrl: '',
-  // });
 
   const logout = () => {
     dispatch(setUserPhoto({userPhoto: null}));
@@ -123,13 +120,13 @@ const HomeScreen: FC = () => {
     setModalVisible2(!modalVisible2);
   };
 
-  const create = async (userId: string | undefined) => {
+  const writeToRealTimeDB = async (userId: string | undefined) => {
     set(ref(db, 'users/' + userId), {
       username: fullName,
       email: email,
       address: address,
       phoneNumber: phoneNumber,
-      userPhoto: userPhoto || userPhotoFromDB,
+      userPhoto: url,
       emergencyContact: emergencyContact,
       emergencyContactPhone: emergencyContactPhone,
       bio: bio,
@@ -142,7 +139,7 @@ const HomeScreen: FC = () => {
       });
   };
 
-  const readData = async () => {
+  const readDataFromRealTimeDB = async () => {
     const countRef = ref(db, 'users/' + userId);
     try {
       const snapshot = await get(countRef);
@@ -216,10 +213,9 @@ const HomeScreen: FC = () => {
   }, [navigation, showBackButton]);
 
   useEffect(() => {
-    readData();
+    readDataFromRealTimeDB();
     fetchAllJSONData();
     moveImage();
-    // getPhotoFromSupabase();
   }, [users]);
 
   useEffect(() => {
@@ -255,9 +251,7 @@ const HomeScreen: FC = () => {
   const [secondPhotoPressed, setSecondPhotoPressed] = useState(false);
   const [thirdPhotoPressed, setThirdPhotoPressed] = useState(false);
   const [fourthPhotoPressed, setFourthPhotoPressed] = useState(false);
-  const [copiedText, setCopiedText] = useState('');
   const [contacts, setContacts] = useState<Contacts.Contact[] | null>(null);
-
   const [showTripModal, setShowTripModal] = useState(false);
   const [bio, setBio] = useState('');
   const [initialBio, setInitialBio] = useState('');
@@ -266,9 +260,7 @@ const HomeScreen: FC = () => {
   const haveContactsBeenAdded = useAppSelector(
     state => state.contacts.haveContactsBeenAdded,
   );
-  console.log('haveContactsBeenAdded: ', haveContactsBeenAdded);
   const messages = useAppSelector(state => state.user.messages);
-  console.log('Messages from listener: ', messages);
 
   useEffect(() => {
     if (Platform.OS === 'android') {
@@ -399,8 +391,8 @@ const HomeScreen: FC = () => {
     !dataFlag && setDataFlag(true);
     showCheckListIcon && setShowCheckListIcon(false);
     checkName();
-    create(userId);
-    readData();
+    writeToRealTimeDB(userId);
+    readDataFromRealTimeDB();
     setSuccessMessage(false);
     setModalVisible(false);
     dispatch(setSelected({selected: false}));
@@ -585,7 +577,7 @@ const HomeScreen: FC = () => {
                     alignItems: 'center',
                     justifyContent: 'center',
                   }}>
-                  {userPhotoFromDB !== '' ? (
+                  {url !== undefined ? (
                     <Animated.Image
                       style={{
                         height: 250,
@@ -873,7 +865,7 @@ const HomeScreen: FC = () => {
                   {"Let's get some informaton."}
                 </Text>
                 <View style={{flex: 1, alignItems: 'center'}}>
-                  {userPhotoFromDB === '' ? (
+                  {url === undefined ? (
                     <Animated.Image
                       style={{
                         height: 300,
@@ -897,7 +889,7 @@ const HomeScreen: FC = () => {
                         borderColor: '#eee7da',
                         borderWidth: 2,
                       }}
-                      source={{uri: userPhoto || userPhotoFromDB}}
+                      source={{uri: userPhoto || url}}
                     />
                   )}
                 </View>
