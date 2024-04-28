@@ -126,7 +126,7 @@ const HomeScreen: FC = () => {
       email: email,
       address: address,
       phoneNumber: phoneNumber,
-      userPhoto: url,
+      userPhoto: url || undefined,
       emergencyContact: emergencyContact,
       emergencyContactPhone: emergencyContactPhone,
       bio: bio,
@@ -147,19 +147,19 @@ const HomeScreen: FC = () => {
         const data = snapshot.val();
         setData(true);
         setDataFlag(true);
-        setAddress(data.address || '');
-        setFullName(data.username || '');
-        setPhoneNumber(data.phoneNumber || '');
-        setUserPhotoFromDB(data.userPhoto || '');
-        setEmergencyContact(data.emergencyContact || '');
-        setEmergencyContactPhone(data.emergencyContactPhone || '');
-        setBio(data.bio || '');
-        setInitialBio(data.bio || '');
-        setInitialName(data.username || '');
-        setInitialAddress(data.address || '');
-        setInitialPhoneNumber(data.phoneNumber || '');
-        setInitialEmergencyContact(data.emergencyContact || '');
-        setInitialEmergencyContactPhone(data.emergencyContactPhone || '');
+        setAddress(data.address);
+        setFullName(data.username);
+        setPhoneNumber(data.phoneNumber);
+        setUserPhotoFromDB(data.userPhoto);
+        setEmergencyContact(data.emergencyContact);
+        setEmergencyContactPhone(data.emergencyContactPhone);
+        setBio(data.bio);
+        setInitialBio(data.bio);
+        setInitialName(data.username);
+        setInitialAddress(data.address);
+        setInitialPhoneNumber(data.phoneNumber);
+        setInitialEmergencyContact(data.emergencyContact);
+        setInitialEmergencyContactPhone(data.emergencyContactPhone);
       } else {
         console.log('No data available');
         setDataFlag(false);
@@ -214,7 +214,7 @@ const HomeScreen: FC = () => {
 
   useEffect(() => {
     readDataFromRealTimeDB();
-    fetchAllJSONData();
+    fetchJSONDataForContactInfo();
     moveImage();
   }, [users]);
 
@@ -223,6 +223,7 @@ const HomeScreen: FC = () => {
     if (dataFlag) {
       setShowCheckListIcon(true);
       console.log('dataFlag is true.');
+      console.log('url: ', url);
     } else if (!dataFlag) {
       console.log('dataFlag is false.');
     } else {
@@ -481,13 +482,13 @@ const HomeScreen: FC = () => {
   const onPressMessageBoard = () => {
     navigation.navigate(Routes.messageBoardScreen, {
       fullName: fullName,
-      userPhotoFromDB: userPhotoFromDB,
+      userPhotoFromDB: url || userPhotoFromDB,
       backgroundPhoto: source(),
     });
   };
 
   const onPressGroupContactInfo = () => {
-    fetchAllJSONData();
+    fetchJSONDataForContactInfo();
     setModalVisible2(true);
     setModalVisible3(true);
   };
@@ -495,7 +496,7 @@ const HomeScreen: FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const usersArray = await fetchAllJSONData();
+        const usersArray = await fetchJSONDataForContactInfo();
         setUsers(usersArray);
       } catch (error) {
         console.error('Error fetching users:', error);
@@ -505,7 +506,7 @@ const HomeScreen: FC = () => {
     readFromStorage(userId + '_profilePic');
   }, []);
 
-  const fetchAllJSONData = async () => {
+  const fetchJSONDataForContactInfo = async () => {
     const usersRef = ref(db, 'users');
     try {
       const snapshot = await get(usersRef);
@@ -577,7 +578,7 @@ const HomeScreen: FC = () => {
                     alignItems: 'center',
                     justifyContent: 'center',
                   }}>
-                  {url !== undefined ? (
+                  {!!url ? (
                     <Animated.Image
                       style={{
                         height: 250,
@@ -597,13 +598,8 @@ const HomeScreen: FC = () => {
                         borderRadius: 5,
                         marginBottom: 10,
                         opacity: fadeAnim,
-                        borderColor: '#eee7da',
-                        borderWidth: 2,
                       }}
-                      source={
-                        (userPhoto !== '' && {uri: userPhoto}) ||
-                        require('../../Images/profilepictureicon.png')
-                      }></Animated.Image>
+                      source={require('../../Images/profilepictureicon.png')}></Animated.Image>
                   )}
                   <TouchableOpacity
                     onPress={onPressTripInfo}
