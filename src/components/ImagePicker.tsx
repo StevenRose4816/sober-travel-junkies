@@ -21,7 +21,6 @@ import {useDispatch} from 'react-redux';
 import {setUserPhoto as setThisUserPhoto} from '../store/user/slice';
 import Routes from '../navigation/routes';
 import {NavPropAny} from '../navigation/types';
-import {supabase} from '../screens/SupabaseConfig';
 import auth from '@react-native-firebase/auth';
 import storage from '@react-native-firebase/storage';
 
@@ -73,32 +72,7 @@ const ImagePicker = () => {
     setSelectedImage(undefined);
   };
 
-  // const uploadPhoto = async (uri: any) => {
-  //   try {
-  //     const response = await fetch(uri);
-  //     const blob = await response.blob();
-  //     const arrayBuffer = await new Response(blob).arrayBuffer();
-  //     console.log('arrayBuffer.byteLength: ', arrayBuffer.byteLength);
-  //     const fileName = userId + 'profilePic';
-  //     const contentType = 'image/jpeg';
-  //     const {data, error} = await supabase.storage
-  //       .from('Photos2')
-  //       .upload(fileName, arrayBuffer, {contentType});
-
-  //     if (error) {
-  //       console.error('Error uploading photo:', error.message);
-  //     } else {
-  //       const photoUrl = data?.path;
-  //       setUserPhoto(photoUrl);
-  //       console.log('Uploaded photo URL:', photoUrl);
-  //     }
-  //   } catch (e: any) {
-  //     console.error('Error uploading photo:', e.message);
-  //   }
-  // };
-
   const onPressThisLooksGood = async () => {
-    // await uploadPhoto(selectedImage);
     await uploadImage();
     dispatch(setThisUserPhoto({userPhoto: selectedImage}));
     navigate(Routes.homeScreen);

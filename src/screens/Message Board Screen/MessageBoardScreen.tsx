@@ -10,8 +10,8 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {get, onValue, ref, set} from 'firebase/database';
-import {db} from '../HomeScreen/FirebaseConfigurations';
+// import {get, onValue, ref, set} from 'firebase/database';
+// import {db} from '../HomeScreen/FirebaseConfigurations';
 import {RouteProp} from '@react-navigation/native';
 import {useAppSelector} from '../../hooks';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
@@ -52,7 +52,7 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
   const [showReplies, setShowReplies] = useState<string[]>([]);
   const flatListRef = useRef<FlatList>(null!);
   console.log('re-render');
-  const messagesFromState = useAppSelector(state => state.user.messages);
+  // const messagesFromState = useAppSelector(state => state.user.messages);
   // console.log('Messages: ', messages);
   // console.log('MessagesFromState: ', messagesFromState);
 
