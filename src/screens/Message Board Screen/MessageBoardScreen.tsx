@@ -53,8 +53,8 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
   const flatListRef = useRef<FlatList>(null!);
   console.log('re-render');
   const messagesFromState = useAppSelector(state => state.user.messages);
-  console.log('Messages: ', messages);
-  console.log('MessagesFromState: ', messagesFromState);
+  // console.log('Messages: ', messages);
+  // console.log('MessagesFromState: ', messagesFromState);
 
   useEffect(() => {
     readDataFromFirestore('messages', 'messages');
@@ -113,7 +113,8 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
       await writeDataToFirestore('messages', updatedMessages, 'messages');
       setNewMessage('');
       onSetTitle(newTitle);
-      readDataFromFirestore('messages', 'messages');
+      //no longer need to make this call bc firestore
+      // readDataFromFirestore('messages', 'messages');
       flatListRef.current?.scrollToEnd();
     }
   };
@@ -138,7 +139,8 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
       setNewMessage('');
       setReplyingTo(null);
       setShowReplies(state => [...state, replyingTo.id]);
-      readDataFromFirestore('messages', 'messages');
+      //no longer need to make this call bc firestore
+      // readDataFromFirestore('messages', 'messages');
     }
     setIsReply(!isReply);
     console.log('Reply sent.');

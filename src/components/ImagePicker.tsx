@@ -6,6 +6,8 @@ import {
   Text,
   Animated,
   Dimensions,
+  Platform,
+  Alert,
 } from 'react-native';
 import {
   launchImageLibrary,
@@ -20,6 +22,7 @@ import Routes from '../navigation/routes';
 import {NavPropAny} from '../navigation/types';
 import {supabase} from '../screens/SupabaseConfig';
 import auth from '@react-native-firebase/auth';
+import storage from '@react-native-firebase/storage';
 
 const ImagePicker = () => {
   const [selectedImage, setSelectedImage] = useState<string | undefined>(
@@ -38,33 +41,64 @@ const ImagePicker = () => {
   const scaleX = useRef(new Animated.Value(1)).current;
   const [userPhoto, setUserPhoto] = useState<any>();
   const userId = auth().currentUser?.uid || '';
+  const [uploading, setUploading] = useState(false);
+  const [transferred, setTransferred] = useState(0);
 
-  const uploadPhoto = async (uri: any) => {
+  const uploadImage = async () => {
+    const uri = selectedImage;
+    const filename = uri?.substring(uri.lastIndexOf('/') + 1);
+    const uploadUri = Platform.OS === 'ios' ? uri?.replace('file://', '') : uri;
+    setUploading(true);
+    setTransferred(0);
+    const task = storage()
+      .ref(filename)
+      .putFile(uploadUri || '');
+    // set progress state
+    task.on('state_changed', snapshot => {
+      setTransferred(
+        Math.round(snapshot.bytesTransferred / snapshot.totalBytes) * 10000,
+      );
+    });
     try {
-      const response = await fetch(uri);
-      const blob = await response.blob();
-      const arrayBuffer = await new Response(blob).arrayBuffer();
-      console.log('arrayBuffer.byteLength: ', arrayBuffer.byteLength);
-      const fileName = userId + 'profilePic';
-      const contentType = 'image/jpeg';
-      const {data, error} = await supabase.storage
-        .from('Photos2')
-        .upload(fileName, arrayBuffer, {contentType});
-
-      if (error) {
-        console.error('Error uploading photo:', error.message);
-      } else {
-        const photoUrl = data?.path;
-        setUserPhoto(photoUrl);
-        console.log('Uploaded photo URL:', photoUrl);
-      }
-    } catch (e: any) {
-      console.error('Error uploading photo:', e.message);
+      await task;
+    } catch (e) {
+      console.error(e);
     }
+    setUploading(false);
+    Alert.alert(
+      'Photo uploaded!',
+      'Your photo has been uploaded to Firebase Cloud Storage!',
+    );
+    setSelectedImage(undefined);
   };
 
+  // const uploadPhoto = async (uri: any) => {
+  //   try {
+  //     const response = await fetch(uri);
+  //     const blob = await response.blob();
+  //     const arrayBuffer = await new Response(blob).arrayBuffer();
+  //     console.log('arrayBuffer.byteLength: ', arrayBuffer.byteLength);
+  //     const fileName = userId + 'profilePic';
+  //     const contentType = 'image/jpeg';
+  //     const {data, error} = await supabase.storage
+  //       .from('Photos2')
+  //       .upload(fileName, arrayBuffer, {contentType});
+
+  //     if (error) {
+  //       console.error('Error uploading photo:', error.message);
+  //     } else {
+  //       const photoUrl = data?.path;
+  //       setUserPhoto(photoUrl);
+  //       console.log('Uploaded photo URL:', photoUrl);
+  //     }
+  //   } catch (e: any) {
+  //     console.error('Error uploading photo:', e.message);
+  //   }
+  // };
+
   const onPressThisLooksGood = async () => {
-    await uploadPhoto(selectedImage);
+    // await uploadPhoto(selectedImage);
+    await uploadImage();
     dispatch(setThisUserPhoto({userPhoto: selectedImage}));
     navigate(Routes.homeScreen);
   };
