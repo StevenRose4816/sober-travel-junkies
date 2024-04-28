@@ -17,6 +17,7 @@ import {useAppSelector} from '../../hooks';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {AppStackParams} from '../../navigation/types';
 import Routes from '../../navigation/routes';
+import {firebase} from '@react-native-firebase/database';
 
 interface Message {
   text: string;
@@ -49,35 +50,80 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
   const [replyingTo, setReplyingTo] = useState<Message | null>(null);
   const [isReply, setIsReply] = useState(false);
   const [showReplies, setShowReplies] = useState<string[]>([]);
-  const bgPhoto = useAppSelector(state => state.user.uri);
   const flatListRef = useRef<FlatList>(null!);
   console.log('re-render');
 
   useEffect(() => {
-    readData();
+    // const messageData = {
+    //   text: newMessage,
+    //   id: Math.random().toString(),
+    //   title: newTitle,
+    //   name: fullName,
+    //   photo: userPhotoFromDB,
+    //   date: formattedDate,
+    //   time: formattedTime,
+    //   replies: [],
+    // };
+    // readData();
+    // writeDataToFirestore('messages', messageData, 'messages');
+    readDataFromFirestore('messages', 'messages');
   }, []);
 
-  const create = async (messages: Message[]) => {
-    await set(ref(db, 'messages/'), {messages});
-    console.log('db created/updated');
-  };
-
-  const readData = async () => {
-    const countRef = ref(db, 'messages/');
+  const writeDataToFirestore = async (
+    collection: any,
+    data: any,
+    docId: any,
+  ) => {
     try {
-      const snapshot = await get(countRef);
-      if (snapshot.exists()) {
-        const data = snapshot.val();
-        console.log('Data: ', data);
-        setMessages(data.messages);
-        setData(true);
-      } else {
-        console.log('No data available');
-      }
+      const ref = firebase.firestore().collection(collection).doc(docId);
+      const response = await ref.set({data});
+      return response;
     } catch (error) {
-      console.error('Error reading data from the database:', error);
+      console.log('error: ', error);
+      return error;
     }
   };
+
+  const readDataFromFirestore = async (collection: any, docId: any) => {
+    try {
+      const ref = firebase.firestore().collection(collection).doc(docId);
+      const response = await ref.get();
+      const data = response.data(); // Extract data from DocumentSnapshot
+      if (data && Array.isArray(data.data)) {
+        console.log('MessageS Array: ', JSON.stringify(data.data));
+        setMessages(data.data);
+        setData(true);
+      } else {
+        console.log('No data available or invalid format');
+      }
+      return response;
+    } catch (error) {
+      console.error('Error reading data from Firestore:', error);
+      return error;
+    }
+  };
+
+  // const create = async (messages: Message[]) => {
+  //   await set(ref(db, 'messages/'), {messages});
+  //   console.log('db created/updated');
+  // };
+
+  // const readData = async () => {
+  //   const messagesRef = ref(db, 'messages/');
+  //   try {
+  //     const snapshot = await get(messagesRef);
+  //     if (snapshot.exists()) {
+  //       const data = snapshot.val();
+  //       console.log('Data: ', data);
+  //       setMessages(data.messages);
+  //       setData(true);
+  //     } else {
+  //       console.log('No data available');
+  //     }
+  //   } catch (error) {
+  //     console.error('Error reading data from the database:', error);
+  //   }
+  // };
 
   const onSend = async () => {
     if (newMessage.trim() !== '') {
@@ -95,10 +141,11 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
         },
       ];
       setMessages(updatedMessages);
-      await create(updatedMessages);
+      // await create(updatedMessages);
+      await writeDataToFirestore('messages', updatedMessages, 'messages');
       setNewMessage('');
       onSetTitle(newTitle);
-      readData();
+      // readData();
       flatListRef.current?.scrollToEnd();
     }
   };
@@ -119,10 +166,10 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
           : message,
       );
       setMessages(updatedMessages);
-      await create(updatedMessages);
+      // await create(updatedMessages);
+      await writeDataToFirestore('messages', updatedMessages, 'messages');
       setNewMessage('');
       setReplyingTo(null);
-      readData();
       setShowReplies(state => [...state, replyingTo.id]);
     }
     setIsReply(!isReply);
@@ -404,7 +451,7 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
           <FlatList
             ref={flatListRef}
             data={messages}
-            keyExtractor={item => item.id}
+            keyExtractor={item => item.id + item.time}
             renderItem={renderItem}
           />
         )}

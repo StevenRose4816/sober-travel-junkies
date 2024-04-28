@@ -84,7 +84,6 @@ const HomeScreen: FC = () => {
   };
 
   const userId = auth().currentUser?.uid;
-  console.log('UID: ', userId);
   const [modalVisible, setModalVisible] = useState(false);
   const [data, setData] = useState(false);
   const [modalVisible2, setModalVisible2] = useState(false);
@@ -271,6 +270,8 @@ const HomeScreen: FC = () => {
     state => state.contacts.haveContactsBeenAdded,
   );
   console.log('haveContactsBeenAdded: ', haveContactsBeenAdded);
+  const messages = useAppSelector(state => state.user.messages);
+  console.log('Messages from listener: ', messages);
 
   useEffect(() => {
     if (Platform.OS === 'android') {
@@ -703,6 +704,9 @@ const HomeScreen: FC = () => {
                       }}>
                       {'Address: '}
                       <Text style={{fontFamily: 'Vonique64'}}>{address}</Text>
+                      <Text style={{fontFamily: 'HighTide-Sans'}}>
+                        {' ' + messages.name}
+                      </Text>
                     </Text>
                   </View>
                   <View
