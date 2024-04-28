@@ -54,18 +54,7 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
   console.log('re-render');
 
   useEffect(() => {
-    // const messageData = {
-    //   text: newMessage,
-    //   id: Math.random().toString(),
-    //   title: newTitle,
-    //   name: fullName,
-    //   photo: userPhotoFromDB,
-    //   date: formattedDate,
-    //   time: formattedTime,
-    //   replies: [],
-    // };
     // readData();
-    // writeDataToFirestore('messages', messageData, 'messages');
     readDataFromFirestore('messages', 'messages');
   }, []);
 
@@ -146,6 +135,7 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
       setNewMessage('');
       onSetTitle(newTitle);
       // readData();
+      readDataFromFirestore('messages', 'messages');
       flatListRef.current?.scrollToEnd();
     }
   };
@@ -171,6 +161,8 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
       setNewMessage('');
       setReplyingTo(null);
       setShowReplies(state => [...state, replyingTo.id]);
+      //readData()
+      readDataFromFirestore('messages', 'messages');
     }
     setIsReply(!isReply);
     console.log('Reply sent.');
@@ -300,7 +292,7 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
             </View>
           </View>
         </TouchableOpacity>
-        {item.replies && (
+        {!!item.replies && item.replies.length > 0 && (
           <TouchableOpacity onPress={() => onPressReplyTab(item.id)}>
             <View style={styles.redTab}>
               {showReplies.includes(item.id) ? (
