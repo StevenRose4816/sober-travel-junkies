@@ -1,4 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
+import * as Progress from 'react-native-progress';
 import {
   Image,
   View,
@@ -285,6 +286,7 @@ const ImagePicker = () => {
             </Text>
           </TouchableOpacity>
         </Animated.View>
+        {!!uploading && <Progress.Bar progress={transferred} width={300} />}
       </View>
     </View>
   );
