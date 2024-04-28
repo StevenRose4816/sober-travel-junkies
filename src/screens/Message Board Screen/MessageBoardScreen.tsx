@@ -52,16 +52,18 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
   const [showReplies, setShowReplies] = useState<string[]>([]);
   const flatListRef = useRef<FlatList>(null!);
   console.log('re-render');
+  const messagesFromState = useAppSelector(state => state.user.messages);
+  console.log('Messages: ', messages);
+  console.log('MessagesFromState: ', messagesFromState);
 
   useEffect(() => {
-    // readData();
     readDataFromFirestore('messages', 'messages');
   }, []);
 
   const writeDataToFirestore = async (
-    collection: any,
+    collection: string,
     data: any,
-    docId: any,
+    docId: string,
   ) => {
     try {
       const ref = firebase.firestore().collection(collection).doc(docId);
@@ -73,7 +75,7 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
     }
   };
 
-  const readDataFromFirestore = async (collection: any, docId: any) => {
+  const readDataFromFirestore = async (collection: string, docId: string) => {
     try {
       const ref = firebase.firestore().collection(collection).doc(docId);
       const response = await ref.get();
@@ -92,28 +94,6 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
     }
   };
 
-  // const create = async (messages: Message[]) => {
-  //   await set(ref(db, 'messages/'), {messages});
-  //   console.log('db created/updated');
-  // };
-
-  // const readData = async () => {
-  //   const messagesRef = ref(db, 'messages/');
-  //   try {
-  //     const snapshot = await get(messagesRef);
-  //     if (snapshot.exists()) {
-  //       const data = snapshot.val();
-  //       console.log('Data: ', data);
-  //       setMessages(data.messages);
-  //       setData(true);
-  //     } else {
-  //       console.log('No data available');
-  //     }
-  //   } catch (error) {
-  //     console.error('Error reading data from the database:', error);
-  //   }
-  // };
-
   const onSend = async () => {
     if (newMessage.trim() !== '') {
       const updatedMessages = [
@@ -130,11 +110,9 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
         },
       ];
       setMessages(updatedMessages);
-      // await create(updatedMessages);
       await writeDataToFirestore('messages', updatedMessages, 'messages');
       setNewMessage('');
       onSetTitle(newTitle);
-      // readData();
       readDataFromFirestore('messages', 'messages');
       flatListRef.current?.scrollToEnd();
     }
@@ -156,12 +134,10 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
           : message,
       );
       setMessages(updatedMessages);
-      // await create(updatedMessages);
       await writeDataToFirestore('messages', updatedMessages, 'messages');
       setNewMessage('');
       setReplyingTo(null);
       setShowReplies(state => [...state, replyingTo.id]);
-      //readData()
       readDataFromFirestore('messages', 'messages');
     }
     setIsReply(!isReply);

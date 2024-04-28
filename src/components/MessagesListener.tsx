@@ -9,7 +9,7 @@ const MessagesListener = () => {
   useEffect(() => {
     const subscriber = firestore()
       .collection('messages')
-      .doc('wcgE6qodrDqfZfE5tsY1')
+      .doc('messages')
       .onSnapshot(documentSnapshot => {
         dispatch(setMessages({messages: documentSnapshot.data()}));
         console.log('User data: ', documentSnapshot.data());
