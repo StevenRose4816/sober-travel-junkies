@@ -35,6 +35,7 @@ import {
   setHaveContactsBeenAdded,
   setContacts as setTheseContacts,
 } from '../../store/contacts/index';
+import {getDownloadURL, getStorage, ref as thisRef} from 'firebase/storage';
 
 export interface User {
   username?: string;
@@ -88,6 +89,15 @@ const HomeScreen: FC = () => {
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const translateX = useRef(new Animated.Value(0)).current;
   const scrollViewRef = useRef<ScrollView>(null);
+  const [url, setUrl] = useState<string | undefined>(undefined);
+
+  const readFromStorage = async (imageName: string) => {
+    const storage = getStorage();
+    const reference = thisRef(storage, imageName);
+    await getDownloadURL(reference).then(url => {
+      setUrl(url);
+    });
+  };
 
   const fadeIn = () => {
     Animated.timing(fadeAnim, {
@@ -500,6 +510,7 @@ const HomeScreen: FC = () => {
       }
     };
     fetchData();
+    readFromStorage(userId + '_profilePic');
   }, []);
 
   const fetchAllJSONData = async () => {
@@ -585,7 +596,7 @@ const HomeScreen: FC = () => {
                         borderColor: '#eee7da',
                         borderWidth: 2,
                       }}
-                      source={{uri: userPhotoFromDB}}></Animated.Image>
+                      source={{uri: url}}></Animated.Image>
                   ) : (
                     <Animated.Image
                       style={{

@@ -46,7 +46,8 @@ const ImagePicker = () => {
 
   const uploadImage = async () => {
     const uri = selectedImage;
-    const filename = uri?.substring(uri.lastIndexOf('/') + 1);
+    const currentUser = auth().currentUser!;
+    const filename = `${currentUser.uid}_profilePic`; // Concatenate UID with 'profilePic'
     const uploadUri = Platform.OS === 'ios' ? uri?.replace('file://', '') : uri;
     setUploading(true);
     setTransferred(0);
@@ -71,7 +72,6 @@ const ImagePicker = () => {
     );
     setSelectedImage(undefined);
   };
-
   const onPressThisLooksGood = async () => {
     await uploadImage();
     dispatch(setThisUserPhoto({userPhoto: selectedImage}));
