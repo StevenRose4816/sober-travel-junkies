@@ -7,6 +7,7 @@ enum Routes {
   booneScreen = 'booneScreen',
   messageBoardScreen = 'messageBoardScreen',
   contactScreen = 'contactScreen',
+  visionBoardScreen = 'visionBoardScreen',
 }
 
 export default Routes;

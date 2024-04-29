@@ -52,9 +52,6 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
   const [showReplies, setShowReplies] = useState<string[]>([]);
   const flatListRef = useRef<FlatList>(null!);
   console.log('re-render');
-  // const messagesFromState = useAppSelector(state => state.user.messages);
-  // console.log('Messages: ', messages);
-  // console.log('MessagesFromState: ', messagesFromState);
 
   useEffect(() => {
     readDataFromFirestore('messages', 'messages');

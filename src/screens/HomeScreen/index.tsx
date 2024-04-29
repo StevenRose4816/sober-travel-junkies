@@ -36,7 +36,6 @@ import {
   setContacts as setTheseContacts,
 } from '../../store/contacts/index';
 import {getDownloadURL, getStorage, ref as thisRef} from 'firebase/storage';
-import * as Progress from 'react-native-progress';
 
 export interface User {
   username?: string;
@@ -617,6 +616,18 @@ const HomeScreen: FC = () => {
                       borderColor: '#eee7da',
                     }}>
                     <Text style={styles.text2}>{'View Trip Info'}</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => navigation.navigate('visionBoardScreen')}
+                    style={{
+                      backgroundColor: '#b6e7cc',
+                      marginTop: 10,
+                      width: screenWidth * 0.8,
+                      borderRadius: 5,
+                      borderWidth: 2,
+                      borderColor: '#eee7da',
+                    }}>
+                    <Text style={styles.text2}>{'View Vision Board'}</Text>
                   </TouchableOpacity>
                   <TouchableOpacity
                     onPress={onPressMessageBoard}

@@ -22,4 +22,5 @@ export type AppStackParams = {
     users: User[];
     names: string[];
   };
+  [Routes.visionBoardScreen]: undefined;
 };
