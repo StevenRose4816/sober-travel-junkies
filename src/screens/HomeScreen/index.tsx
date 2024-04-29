@@ -618,7 +618,11 @@ const HomeScreen: FC = () => {
                     <Text style={styles.text2}>{'View Trip Info'}</Text>
                   </TouchableOpacity>
                   <TouchableOpacity
-                    onPress={() => navigation.navigate('visionBoardScreen')}
+                    onPress={() =>
+                      navigation.navigate('visionBoardScreen', {
+                        backgroundPhoto: source(),
+                      })
+                    }
                     style={{
                       backgroundColor: '#b6e7cc',
                       marginTop: 10,
