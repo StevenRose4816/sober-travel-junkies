@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 import * as Progress from 'react-native-progress';
 import {
   Image,
@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   Text,
   Animated,
-  Dimensions,
   Platform,
   Alert,
 } from 'react-native';
@@ -30,24 +29,19 @@ const ImagePicker = () => {
   );
   const {navigate} = useNavigation<NavPropAny>();
   const dispatch = useDispatch();
-  const screenWidth = Dimensions.get('window').width;
-  const navigation = useNavigation();
-  const routes = navigation.getState()?.routes;
-  const prevRoute = routes[routes.length - 2];
   const translateXLooksGood = useRef(new Animated.Value(0)).current;
   const translateYLooksGood = useRef(new Animated.Value(0)).current;
   const translateXChoose = useRef(new Animated.Value(0)).current;
   const translateYChoose = useRef(new Animated.Value(0)).current;
   const scaleX = useRef(new Animated.Value(1)).current;
-  const [userPhoto, setUserPhoto] = useState<any>();
-  const userId = auth().currentUser?.uid || '';
   const [uploading, setUploading] = useState(false);
   const [transferred, setTransferred] = useState(0);
 
   const uploadImage = async () => {
     const uri = selectedImage;
     const currentUser = auth().currentUser!;
-    const filename = `${currentUser.uid}_profilePic`; // Concatenate UID with 'profilePic'
+    // Concatenate UID with 'profilePic'
+    const filename = `${currentUser.uid}_profilePic`;
     const uploadUri = Platform.OS === 'ios' ? uri?.replace('file://', '') : uri;
     setUploading(true);
     setTransferred(0);
@@ -66,10 +60,7 @@ const ImagePicker = () => {
       console.error(e);
     }
     setUploading(false);
-    Alert.alert(
-      'Photo uploaded!',
-      'Your photo has been uploaded to Firebase Cloud Storage!',
-    );
+    Alert.alert('Your photo has been uploaded to Firebase Cloud Storage!');
     setSelectedImage(undefined);
   };
   const onPressThisLooksGood = async () => {
@@ -260,7 +251,7 @@ const ImagePicker = () => {
             </Text>
           </TouchableOpacity>
         </Animated.View>
-        {!!uploading && <Progress.Bar progress={transferred} width={300} />}
+        {uploading && <Progress.Bar progress={transferred} width={300} />}
       </View>
     </View>
   );

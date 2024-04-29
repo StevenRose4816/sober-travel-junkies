@@ -36,6 +36,7 @@ import {
   setContacts as setTheseContacts,
 } from '../../store/contacts/index';
 import {getDownloadURL, getStorage, ref as thisRef} from 'firebase/storage';
+import * as Progress from 'react-native-progress';
 
 export interface User {
   username?: string;
@@ -91,9 +92,13 @@ const HomeScreen: FC = () => {
   const readFromStorage = async (imageName: string) => {
     const storage = getStorage();
     const reference = thisRef(storage, imageName);
-    await getDownloadURL(reference).then(url => {
-      setUrl(url);
-    });
+    try {
+      await getDownloadURL(reference).then(url => {
+        setUrl(url);
+      });
+    } catch (e: any) {
+      console.log(e.message);
+    }
   };
 
   const fadeIn = () => {
@@ -274,7 +279,7 @@ const HomeScreen: FC = () => {
           Contacts.getAll().then(contacts => {
             setContacts(contacts);
             dispatch(setTheseContacts({contacts}));
-            console.log('contacts: ', JSON.stringify(contacts));
+            // console.log('contacts: ', JSON.stringify(contacts));
           });
         }
       });
@@ -282,14 +287,14 @@ const HomeScreen: FC = () => {
       Contacts.getAll().then(contacts => {
         setContacts(contacts);
         dispatch(setTheseContacts({contacts}));
-        console.log('contacts: ', JSON.stringify(contacts));
+        // console.log('contacts: ', JSON.stringify(contacts));
       });
     }
   }, []);
 
-  useEffect(() => {
-    console.log('contactsFromState: ', JSON.stringify(contactsFromState));
-  }, [contactsFromState]);
+  // useEffect(() => {
+  //   console.log('contactsFromState: ', JSON.stringify(contactsFromState));
+  // }, [contactsFromState]);
 
   const checkName = () => {
     if (
@@ -528,7 +533,7 @@ const HomeScreen: FC = () => {
             },
           };
         });
-        console.log('usersArray: ', usersArray);
+        // console.log('usersArray: ', usersArray);
         return usersArray;
       } else {
         console.log('No users available');
@@ -542,7 +547,7 @@ const HomeScreen: FC = () => {
 
   const copyToClipboard = (users: User[]) => {
     Clipboard.setString(JSON.stringify(users));
-    console.log('Copied to clipboard:', JSON.stringify(users));
+    // console.log('Copied to clipboard:', JSON.stringify(users));
   };
 
   const onPressOpenContacts = () => {
@@ -690,9 +695,6 @@ const HomeScreen: FC = () => {
                       }}>
                       {'Address: '}
                       <Text style={{fontFamily: 'Vonique64'}}>{address}</Text>
-                      <Text style={{fontFamily: 'HighTide-Sans'}}>
-                        {' ' + messages.name}
-                      </Text>
                     </Text>
                   </View>
                   <View
