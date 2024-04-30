@@ -70,13 +70,19 @@ export const VisionBoardScreen: FC = () => {
           <Draggable
             x={100}
             y={100}
+            minX={0}
+            minY={40}
+            maxX={375}
+            maxY={680}
             renderSize={56}
-            renderColor="blue"
+            renderColor="#fb445c"
             renderText="A"
+            isCircle
             onShortPressRelease={() => console.log('touched!!')}>
             <Image
               style={{height: 50, width: 50}}
-              source={{uri: selectedImage}}></Image>
+              source={{uri: selectedImage}}
+              resizeMode="stretch"></Image>
           </Draggable>
         )}
         <TouchableOpacity

@@ -46,7 +46,10 @@ const ImagePicker = () => {
     const uri = selectedImage;
     const currentUser = auth().currentUser!;
     // Concatenate UID with 'profilePic'
-    const filename = `${currentUser.uid}_profilePic`;
+    const filename =
+      prevRoute.name === 'homeScreen'
+        ? `${currentUser.uid}_profilePic`
+        : `${currentUser.uid}_visionBoardPic`;
     const uploadUri = Platform.OS === 'ios' ? uri?.replace('file://', '') : uri;
     setUploading(true);
     setTransferred(0);
