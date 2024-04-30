@@ -18,11 +18,6 @@ import {firebase} from '@react-native-firebase/firestore';
 import {getDownloadURL, getStorage, ref as thisRef} from 'firebase/storage';
 import auth from '@react-native-firebase/auth';
 
-interface IProps {
-  navigation?: NativeStackNavigationProp<any, any>;
-  route?: RouteProp<AppStackParams, Routes.visionBoardScreen>;
-}
-
 export const VisionBoardScreen: FC = () => {
   const route = useRoute<RouteProp<AppStackParams, Routes.visionBoardScreen>>();
   const navigation = useNavigation<NativeStackNavigationProp<any, any>>();
@@ -64,6 +59,8 @@ export const VisionBoardScreen: FC = () => {
   const [vBData, setVBData] = useState<any[]>([]);
   const [url, setUrl] = useState('');
   const userId = auth().currentUser?.uid;
+  const [modalVisible2, setModalVisible2] = useState(false);
+  const [updatedBool, setUpdatedBool] = useState(false);
 
   const handlePhotoDragRelease = (e: any, gesture: any) => {
     console.log(
@@ -105,6 +102,15 @@ export const VisionBoardScreen: FC = () => {
     setModalVisible(!modalVisible);
   };
 
+  const onPressCloseUpdateModal = () => {
+    toggleModal();
+    setUpdatedBool(false);
+  };
+
+  const toggleModal2 = () => {
+    setModalVisible2(!modalVisible2);
+  };
+
   const onPressOpenImagePicker = () => {
     navigation.navigate('imagePicker');
   };
@@ -124,7 +130,7 @@ export const VisionBoardScreen: FC = () => {
     toggleModal();
   };
 
-  const onPressUpdateBoard = async () => {
+  const updateBoard = async () => {
     const savedVisionPhotoInfo = {
       xCoords: photoDragPosition2.pageX,
       yCoords: photoDragPosition2.pageY,
@@ -145,6 +151,12 @@ export const VisionBoardScreen: FC = () => {
     ];
     setVBData(updatedData);
     await writeDataToFirestore('visionBoard', updatedData, 'visionBoard');
+    toggleModal();
+  };
+
+  const onPressUpdateBoard = async () => {
+    toggleModal();
+    setUpdatedBool(true);
   };
 
   const writeDataToFirestore = async (
@@ -308,7 +320,7 @@ export const VisionBoardScreen: FC = () => {
               textAlign: 'center',
               fontFamily: 'HighTide-Sans',
             }}>
-            Open image picker
+            Add Image
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -376,7 +388,7 @@ export const VisionBoardScreen: FC = () => {
               padding: 20,
             }}>
             <TouchableOpacity
-              onPress={toggleModal}
+              onPress={onPressCloseUpdateModal}
               style={{alignSelf: 'flex-end'}}>
               <Image
                 style={{height: 25, width: 25}}
@@ -384,37 +396,55 @@ export const VisionBoardScreen: FC = () => {
               />
             </TouchableOpacity>
             <View style={{alignItems: 'center', justifyContent: 'center'}}>
-              <Text
-                style={{
-                  color: '#0c0b09',
-                  fontSize: 12,
-                  textAlign: 'center',
-                  marginLeft: 10,
-                  marginRight: 10,
-                  marginTop: 5,
-                  fontFamily: 'Vonique64',
-                }}>
-                Add Note
-              </Text>
-              <TextInput
-                value={newNote}
-                placeholder=" Note"
-                onChangeText={note => setNewNote(note)}
-                secureTextEntry={false}
-                style={{
-                  fontFamily: 'HighTide-Sans',
-                  backgroundColor: '#eee7da',
-                  borderRadius: 5,
-                  height: 50,
-                  width: 150,
-                  borderWidth: 1,
-                  borderColor: '#5A6472',
-                  borderBottomWidth: 3,
-                  marginTop: 40,
-                  textAlign: 'center',
-                }}></TextInput>
+              {!updatedBool && (
+                <>
+                  <Text
+                    style={{
+                      color: '#0c0b09',
+                      fontSize: 12,
+                      textAlign: 'center',
+                      marginLeft: 10,
+                      marginRight: 10,
+                      marginTop: 5,
+                      fontFamily: 'Vonique64',
+                    }}>
+                    Add Note
+                  </Text>
+                  <TextInput
+                    value={newNote}
+                    placeholder=" Note"
+                    onChangeText={note => setNewNote(note)}
+                    secureTextEntry={false}
+                    style={{
+                      fontFamily: 'HighTide-Sans',
+                      backgroundColor: '#eee7da',
+                      borderRadius: 5,
+                      height: 50,
+                      width: 150,
+                      borderWidth: 1,
+                      borderColor: '#5A6472',
+                      borderBottomWidth: 3,
+                      marginTop: 40,
+                      textAlign: 'center',
+                    }}></TextInput>
+                </>
+              )}
+              {updatedBool && (
+                <Text
+                  style={{
+                    color: '#0c0b09',
+                    fontSize: 12,
+                    textAlign: 'center',
+                    marginLeft: 10,
+                    marginRight: 10,
+                    marginTop: 40,
+                    fontFamily: 'Vonique64',
+                  }}>
+                  Do you want to update the board?
+                </Text>
+              )}
               <TouchableOpacity
-                onPress={onSubmitNote}
+                onPress={!updatedBool ? onSubmitNote : updateBoard}
                 style={{
                   backgroundColor: '#e7b6cc',
                   borderRadius: 5,
@@ -432,7 +462,7 @@ export const VisionBoardScreen: FC = () => {
                     textAlign: 'center',
                     fontFamily: 'HighTide-Sans',
                   }}>
-                  {'Submit'}
+                  {!updatedBool ? 'Submit' : 'Update'}
                 </Text>
               </TouchableOpacity>
             </View>
