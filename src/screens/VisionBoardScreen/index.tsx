@@ -47,14 +47,12 @@ export const VisionBoardScreen: FC = () => {
   const [url, setUrl] = useState('');
   const userId = auth().currentUser?.uid;
 
-  const handlePhotoDragRelease = (event: any, gestureState: any) => {
-    const {x, y} = gestureState;
-    setPhotoDragPosition({x, y});
+  const handlePhotoDragRelease = () => {
+    // setPhotoDragPosition({x, y});
   };
 
-  const handleStickyDragRelease = (event: any, gestureState: any) => {
-    const {x, y} = gestureState;
-    setStickyDragPosition({x, y});
+  const handleStickyDragRelease = () => {
+    // setStickyDragPosition({x, y});
   };
   const toggleModal = () => {
     setModalVisible(!modalVisible);
@@ -188,8 +186,19 @@ export const VisionBoardScreen: FC = () => {
             renderColor="#fb445c"
             renderText="A"
             isCircle
-            onDragRelease={(event, gestureState) => {
-              handlePhotoDragRelease(gestureState.moveX, gestureState.moveY);
+            onDragRelease={e => {
+              console.log(
+                'pageX, pageY = ' +
+                  e.nativeEvent.pageX +
+                  ', ' +
+                  e.nativeEvent.pageY,
+              );
+              console.log(
+                'locX, locY = ' +
+                  e.nativeEvent.locationX +
+                  ', ' +
+                  e.nativeEvent.locationY,
+              );
             }}
             onShortPressRelease={() => console.log('touched!!')}>
             <Image
@@ -212,8 +221,19 @@ export const VisionBoardScreen: FC = () => {
             minY={40}
             maxX={375}
             maxY={640}
-            onDragRelease={(event, gestureState) => {
-              handleStickyDragRelease(gestureState.moveX, gestureState.moveY);
+            onDragRelease={e => {
+              console.log(
+                'pageX, pageY = ' +
+                  e.nativeEvent.pageX +
+                  ', ' +
+                  e.nativeEvent.pageY,
+              );
+              console.log(
+                'locX, locY = ' +
+                  e.nativeEvent.locationX +
+                  ', ' +
+                  e.nativeEvent.locationY,
+              );
             }}
             onShortPressRelease={() => console.log('touched!!')}>
             <ImageBackground
