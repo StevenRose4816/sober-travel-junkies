@@ -14,7 +14,6 @@ import {
 import Routes from '../../navigation/routes';
 import {AppStackParams, NavPropAny} from '../../navigation/types';
 import Draggable from 'react-native-draggable';
-import {vi} from 'date-fns/locale/vi';
 import {firebase} from '@react-native-firebase/firestore';
 import {getDownloadURL, getStorage, ref as thisRef} from 'firebase/storage';
 import auth from '@react-native-firebase/auth';
@@ -47,13 +46,38 @@ export const VisionBoardScreen: FC = () => {
   const [url, setUrl] = useState('');
   const userId = auth().currentUser?.uid;
 
-  const handlePhotoDragRelease = () => {
-    // setPhotoDragPosition({x, y});
+  const handlePhotoDragRelease = (e: any) => {
+    console.log(
+      'pageX, pageY = ' + e.nativeEvent.pageX + ', ' + e.nativeEvent.pageY,
+    );
+    console.log(
+      'locX, locY = ' +
+        e.nativeEvent.locationX +
+        ', ' +
+        e.nativeEvent.locationY,
+    );
+    setPhotoDragPosition({
+      x: e.nativeEvent.locationX,
+      y: e.nativeEvent.locationY,
+    });
   };
 
-  const handleStickyDragRelease = () => {
-    // setStickyDragPosition({x, y});
+  const handleStickyDragRelease = (e: any) => {
+    console.log(
+      'pageX, pageY = ' + e.nativeEvent.pageX + ', ' + e.nativeEvent.pageY,
+    );
+    console.log(
+      'locX, locY = ' +
+        e.nativeEvent.locationX +
+        ', ' +
+        e.nativeEvent.locationY,
+    );
+    setStickyDragPosition({
+      x: e.nativeEvent.locationX,
+      y: e.nativeEvent.locationY,
+    });
   };
+
   const toggleModal = () => {
     setModalVisible(!modalVisible);
   };
@@ -186,20 +210,7 @@ export const VisionBoardScreen: FC = () => {
             renderColor="#fb445c"
             renderText="A"
             isCircle
-            onDragRelease={e => {
-              console.log(
-                'pageX, pageY = ' +
-                  e.nativeEvent.pageX +
-                  ', ' +
-                  e.nativeEvent.pageY,
-              );
-              console.log(
-                'locX, locY = ' +
-                  e.nativeEvent.locationX +
-                  ', ' +
-                  e.nativeEvent.locationY,
-              );
-            }}
+            onDragRelease={e => handlePhotoDragRelease(e)}
             onShortPressRelease={() => console.log('touched!!')}>
             <Image
               style={{height: 50, width: 50}}
@@ -221,20 +232,7 @@ export const VisionBoardScreen: FC = () => {
             minY={40}
             maxX={375}
             maxY={640}
-            onDragRelease={e => {
-              console.log(
-                'pageX, pageY = ' +
-                  e.nativeEvent.pageX +
-                  ', ' +
-                  e.nativeEvent.pageY,
-              );
-              console.log(
-                'locX, locY = ' +
-                  e.nativeEvent.locationX +
-                  ', ' +
-                  e.nativeEvent.locationY,
-              );
-            }}
+            onDragRelease={e => handleStickyDragRelease(e)}
             onShortPressRelease={() => console.log('touched!!')}>
             <ImageBackground
               style={{
