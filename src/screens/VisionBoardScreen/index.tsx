@@ -62,6 +62,12 @@ export const VisionBoardScreen: FC = () => {
   const [modalVisible2, setModalVisible2] = useState(false);
   const [updatedBool, setUpdatedBool] = useState(false);
 
+  useEffect(() => {
+    readVBDataFromFirestore('visionBoard', 'visionBoard');
+    readFromStorage(userId + '_visionBoardPic');
+    console.log(vBData);
+  }, [vBData]);
+
   const handlePhotoDragRelease = (e: any, gesture: any) => {
     console.log(
       'pageX, pageY = ' + e.nativeEvent.pageX + ', ' + e.nativeEvent.pageY,
@@ -80,7 +86,7 @@ export const VisionBoardScreen: FC = () => {
     });
   };
 
-  const handleStickyDragRelease = (e: any) => {
+  const handleStickyDragRelease = (e: any, gesture: any) => {
     console.log(
       'pageX, pageY = ' + e.nativeEvent.pageX + ', ' + e.nativeEvent.pageY,
     );
@@ -205,12 +211,6 @@ export const VisionBoardScreen: FC = () => {
     }
   };
 
-  useEffect(() => {
-    readVBDataFromFirestore('visionBoard', 'visionBoard');
-    readFromStorage(userId + '_visionBoardPic');
-    console.log(vBData);
-  }, [vBData]);
-
   return (
     <View
       style={{
@@ -269,7 +269,9 @@ export const VisionBoardScreen: FC = () => {
             minY={40}
             maxX={375}
             maxY={640}
-            onDragRelease={e => handleStickyDragRelease(e)}
+            onDragRelease={(event, gesture) =>
+              handleStickyDragRelease(event, gesture)
+            }
             onShortPressRelease={() => console.log('touched!!')}>
             <ImageBackground
               style={{
