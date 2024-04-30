@@ -45,9 +45,17 @@ export const VisionBoardScreen: FC = () => {
   });
   const [vBData, setVBData] = useState<any[]>([]);
   const [url, setUrl] = useState('');
-
   const userId = auth().currentUser?.uid;
 
+  const handlePhotoDragRelease = (event: any, gestureState: any) => {
+    const {x, y} = gestureState;
+    setPhotoDragPosition({x, y});
+  };
+
+  const handleStickyDragRelease = (event: any, gestureState: any) => {
+    const {x, y} = gestureState;
+    setStickyDragPosition({x, y});
+  };
   const toggleModal = () => {
     setModalVisible(!modalVisible);
   };
@@ -180,6 +188,9 @@ export const VisionBoardScreen: FC = () => {
             renderColor="#fb445c"
             renderText="A"
             isCircle
+            onDragRelease={(event, gestureState) => {
+              handlePhotoDragRelease(gestureState.moveX, gestureState.moveY);
+            }}
             onShortPressRelease={() => console.log('touched!!')}>
             <Image
               style={{height: 50, width: 50}}
@@ -201,6 +212,9 @@ export const VisionBoardScreen: FC = () => {
             minY={40}
             maxX={375}
             maxY={640}
+            onDragRelease={(event, gestureState) => {
+              handleStickyDragRelease(gestureState.moveX, gestureState.moveY);
+            }}
             onShortPressRelease={() => console.log('touched!!')}>
             <ImageBackground
               style={{
