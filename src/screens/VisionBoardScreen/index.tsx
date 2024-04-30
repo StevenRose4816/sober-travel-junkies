@@ -1,6 +1,6 @@
-import {RouteProp, useRoute} from '@react-navigation/native';
+import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {FC, useState} from 'react';
+import {FC, useEffect, useState} from 'react';
 import {
   Dimensions,
   Image,
@@ -11,7 +11,7 @@ import {
   View,
 } from 'react-native';
 import Routes from '../../navigation/routes';
-import {AppStackParams} from '../../navigation/types';
+import {AppStackParams, NavPropAny} from '../../navigation/types';
 import Draggable from 'react-native-draggable';
 
 interface IProps {
@@ -21,8 +21,10 @@ interface IProps {
 
 export const VisionBoardScreen: FC = () => {
   const route = useRoute<RouteProp<AppStackParams, Routes.visionBoardScreen>>();
+  const navigation = useNavigation<NativeStackNavigationProp<any, any>>();
   const backgroundPhoto = route.params.backgroundPhoto;
-  const [showDraggable, setShowDraggable] = useState(false);
+  const selectedImage = route.params.selectedImage;
+  const [showDraggable, setShowDraggable] = useState(true);
   const screenHeight = Dimensions.get('window').height;
   const screenWidth = Dimensions.get('window').width;
   const [modalVisible, setModalVisible] = useState(false);
@@ -32,9 +34,15 @@ export const VisionBoardScreen: FC = () => {
   };
 
   const onPressOpenImagePicker = () => {
-    setShowDraggable(!showDraggable);
-    toggleModal();
+    navigation.navigate('imagePicker');
+    // setShowDraggable(!showDraggable);
+    // toggleModal();
   };
+
+  useEffect(() => {
+    console.log('selectedimage: ', selectedImage);
+    console.log('backgroundPhoto: ', backgroundPhoto);
+  }, [selectedImage, backgroundPhoto]);
 
   return (
     <View
@@ -63,12 +71,13 @@ export const VisionBoardScreen: FC = () => {
             x={100}
             y={100}
             renderSize={56}
-            renderColor="black"
+            renderColor="blue"
             renderText="A"
-            imageSource={backgroundPhoto}
-            shouldReverse
-            onShortPressRelease={() => console.log('touched!!')}
-          />
+            onShortPressRelease={() => console.log('touched!!')}>
+            <Image
+              style={{height: 50, width: 50}}
+              source={{uri: selectedImage}}></Image>
+          </Draggable>
         )}
         <TouchableOpacity
           onPress={onPressOpenImagePicker}
@@ -133,7 +142,7 @@ export const VisionBoardScreen: FC = () => {
                   marginTop: 5,
                   fontFamily: 'Vonique64',
                 }}>
-                {'Modal'}
+                {'Submit'}
               </Text>
             </View>
           </View>

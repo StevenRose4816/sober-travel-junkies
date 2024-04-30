@@ -8,6 +8,7 @@ import {
   Animated,
   Platform,
   Alert,
+  ImageSourcePropType,
 } from 'react-native';
 import {
   launchImageLibrary,
@@ -15,19 +16,20 @@ import {
   MediaType,
   ImagePickerResponse,
 } from 'react-native-image-picker';
-import {useNavigation} from '@react-navigation/native';
+import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import {setUserPhoto as setThisUserPhoto} from '../store/user/slice';
 import Routes from '../navigation/routes';
-import {NavPropAny} from '../navigation/types';
+import {AppStackParams, NavPropAny} from '../navigation/types';
 import auth from '@react-native-firebase/auth';
 import storage from '@react-native-firebase/storage';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
 const ImagePicker = () => {
   const [selectedImage, setSelectedImage] = useState<string | undefined>(
     undefined,
   );
-  const {navigate} = useNavigation<NavPropAny>();
+  const navigation = useNavigation<NativeStackNavigationProp<any, any>>();
   const dispatch = useDispatch();
   const translateXLooksGood = useRef(new Animated.Value(0)).current;
   const translateYLooksGood = useRef(new Animated.Value(0)).current;
@@ -36,6 +38,9 @@ const ImagePicker = () => {
   const scaleX = useRef(new Animated.Value(1)).current;
   const [uploading, setUploading] = useState(false);
   const [transferred, setTransferred] = useState(0);
+  const routes = navigation.getState()?.routes;
+  const prevRoute = routes[routes.length - 2];
+  console.log('previous route: ', prevRoute);
 
   const uploadImage = async () => {
     const uri = selectedImage;
@@ -63,10 +68,19 @@ const ImagePicker = () => {
     Alert.alert('Your photo has been uploaded to Firebase Cloud Storage!');
     setSelectedImage(undefined);
   };
+
   const onPressThisLooksGood = async () => {
-    await uploadImage();
-    dispatch(setThisUserPhoto({userPhoto: selectedImage}));
-    navigate(Routes.homeScreen);
+    // await uploadImage();
+    if (prevRoute.name === 'homeScreen') {
+      await uploadImage();
+      dispatch(setThisUserPhoto({userPhoto: selectedImage}));
+      navigation.navigate(Routes.homeScreen);
+    } else {
+      // dispatch a new action to save the visionBoardPhoto to state.
+      navigation.navigate('visionBoardScreen', {
+        selectedImage,
+      });
+    }
   };
 
   const resetValues = () => {
@@ -101,6 +115,7 @@ const ImagePicker = () => {
         let uri = response.assets?.[0]?.uri;
         setSelectedImage(uri);
         animateTouchables();
+        return selectedImage;
       }
     });
   };
