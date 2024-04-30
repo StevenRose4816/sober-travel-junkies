@@ -80,6 +80,7 @@ const ImagePicker = () => {
       navigation.navigate(Routes.homeScreen);
     } else {
       // dispatch a new action to save the visionBoardPhoto to state.
+      await uploadImage();
       navigation.navigate('visionBoardScreen', {
         selectedImage,
       });

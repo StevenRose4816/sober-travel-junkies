@@ -15,6 +15,9 @@ import Routes from '../../navigation/routes';
 import {AppStackParams, NavPropAny} from '../../navigation/types';
 import Draggable from 'react-native-draggable';
 import {vi} from 'date-fns/locale/vi';
+import {firebase} from '@react-native-firebase/firestore';
+import {getDownloadURL, getStorage, ref as thisRef} from 'firebase/storage';
+import auth from '@react-native-firebase/auth';
 
 interface IProps {
   navigation?: NativeStackNavigationProp<any, any>;
@@ -33,6 +36,17 @@ export const VisionBoardScreen: FC = () => {
   const [addNote, setAddNote] = useState(true);
   const [newNote, setNewNote] = useState('');
   const [visibleNote, setVisibleNote] = useState('');
+  const [draggableElements, setDraggableElements] = useState<any[]>([]);
+  const [notesInState, setNotesInState] = useState<any[]>([]);
+  const [photoDragPosition, setPhotoDragPosition] = useState({x: 100, y: 100});
+  const [stickyDragPosition, setStickyDragPosition] = useState({
+    x: 200,
+    y: 100,
+  });
+  const [vBData, setVBData] = useState<any[]>([]);
+  const [url, setUrl] = useState('');
+
+  const userId = auth().currentUser?.uid;
 
   const toggleModal = () => {
     setModalVisible(!modalVisible);
@@ -40,8 +54,6 @@ export const VisionBoardScreen: FC = () => {
 
   const onPressOpenImagePicker = () => {
     navigation.navigate('imagePicker');
-    // setShowDraggable(!showDraggable);
-    // toggleModal();
   };
 
   useEffect(() => {
@@ -50,14 +62,89 @@ export const VisionBoardScreen: FC = () => {
   }, [selectedImage, backgroundPhoto]);
 
   const onAddNote = () => {
-    // setAddNote(!addNote);
     toggleModal();
   };
 
   const onSubmitNote = () => {
     setVisibleNote(newNote);
+    setNewNote('');
     toggleModal();
   };
+
+  const onPressUpdateBoard = async () => {
+    const savedVisionPhotoInfo = {
+      xCoords: photoDragPosition.x,
+      yCoords: photoDragPosition.y,
+      source: url,
+    };
+    const savedStickyInfo = {
+      xCoords: stickyDragPosition.x,
+      yCoords: stickyDragPosition.y,
+      text: visibleNote,
+    };
+    const existingData: any = await readVBDataFromFirestore(
+      'visionBoard',
+      'visionBoard',
+    );
+    const updatedData = [
+      ...existingData,
+      {savedVisionPhotoInfo, savedStickyInfo},
+    ];
+    setVBData(updatedData);
+    await writeDataToFirestore('visionBoard', updatedData, 'visionBoard');
+  };
+
+  const writeDataToFirestore = async (
+    collection: string,
+    data: any,
+    docId: string,
+  ) => {
+    try {
+      const ref = firebase.firestore().collection(collection).doc(docId);
+      const response = await ref.set({data});
+      return response;
+    } catch (error) {
+      console.log('error: ', error);
+      return error;
+    }
+  };
+
+  const readVBDataFromFirestore = async (collection: string, docId: string) => {
+    try {
+      const ref = firebase.firestore().collection(collection).doc(docId);
+      const response = await ref.get();
+      const data = response.data(); // Extract data from DocumentSnapshot
+      if (data && Array.isArray(data.data)) {
+        const extractedData = data.data;
+        console.log('Extracted data:', extractedData);
+        return extractedData;
+      } else {
+        console.log('No data available or invalid format');
+        return [];
+      }
+    } catch (error) {
+      console.error('Error reading data from Firestore:', error);
+      return error;
+    }
+  };
+
+  const readFromStorage = async (imageName: string) => {
+    const storage = getStorage();
+    const reference = thisRef(storage, imageName);
+    try {
+      await getDownloadURL(reference).then(url => {
+        setUrl(url);
+      });
+    } catch (e: any) {
+      console.log(e.message);
+    }
+  };
+
+  useEffect(() => {
+    readVBDataFromFirestore('visionBoard', 'visionBoard');
+    readFromStorage(userId + '_visionBoardPic');
+    console.log(vBData);
+  }, [vBData]);
 
   return (
     <View
@@ -84,8 +171,8 @@ export const VisionBoardScreen: FC = () => {
         </Text>
         {showDraggable && (
           <Draggable
-            x={100}
-            y={100}
+            x={photoDragPosition.x}
+            y={photoDragPosition.y}
             minX={0}
             minY={40}
             maxX={375}
@@ -108,8 +195,8 @@ export const VisionBoardScreen: FC = () => {
         )}
         {addNote && (
           <Draggable
-            x={200}
-            y={100}
+            x={stickyDragPosition.x}
+            y={stickyDragPosition.y}
             minX={0}
             minY={40}
             maxX={375}
@@ -168,7 +255,7 @@ export const VisionBoardScreen: FC = () => {
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => console.log('save snapshot')}
+          onPress={onPressUpdateBoard}
           style={{
             backgroundColor: '#e7b6cc',
             borderRadius: 50,
@@ -186,7 +273,7 @@ export const VisionBoardScreen: FC = () => {
               fontFamily: 'HighTide-Sans',
               textAlign: 'center',
             }}>
-            Save snapshot
+            Update Board
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
