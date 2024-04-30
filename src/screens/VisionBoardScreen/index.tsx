@@ -37,16 +37,35 @@ export const VisionBoardScreen: FC = () => {
   const [visibleNote, setVisibleNote] = useState('');
   const [draggableElements, setDraggableElements] = useState<any[]>([]);
   const [notesInState, setNotesInState] = useState<any[]>([]);
-  const [photoDragPosition, setPhotoDragPosition] = useState({x: 100, y: 100});
+  const [photoDragPosition, setPhotoDragPosition] = useState({
+    x: 100,
+    y: 100,
+    pageX: 0,
+    pageY: 0,
+  });
   const [stickyDragPosition, setStickyDragPosition] = useState({
     x: 200,
     y: 100,
+    pageX: 0,
+    pageY: 0,
+  });
+  const [photoDragPosition2, setPhotoDragPosition2] = useState({
+    x: 100,
+    y: 100,
+    pageX: 0,
+    pageY: 0,
+  });
+  const [stickyDragPosition2, setStickyDragPosition2] = useState({
+    x: 200,
+    y: 100,
+    pageX: 0,
+    pageY: 0,
   });
   const [vBData, setVBData] = useState<any[]>([]);
   const [url, setUrl] = useState('');
   const userId = auth().currentUser?.uid;
 
-  const handlePhotoDragRelease = (e: any) => {
+  const handlePhotoDragRelease = (e: any, gesture: any) => {
     console.log(
       'pageX, pageY = ' + e.nativeEvent.pageX + ', ' + e.nativeEvent.pageY,
     );
@@ -56,9 +75,11 @@ export const VisionBoardScreen: FC = () => {
         ', ' +
         e.nativeEvent.locationY,
     );
-    setPhotoDragPosition({
-      x: e.nativeEvent.locationX,
-      y: e.nativeEvent.locationY,
+    setPhotoDragPosition2({
+      x: e.nativeEvent.pageX,
+      y: e.nativeEvent.pageY,
+      pageX: e.nativeEvent.pageX,
+      pageY: e.nativeEvent.pageY,
     });
   };
 
@@ -72,9 +93,11 @@ export const VisionBoardScreen: FC = () => {
         ', ' +
         e.nativeEvent.locationY,
     );
-    setStickyDragPosition({
-      x: e.nativeEvent.locationX,
-      y: e.nativeEvent.locationY,
+    setStickyDragPosition2({
+      x: e.nativeEvent.pageX,
+      y: e.nativeEvent.pageY,
+      pageX: e.nativeEvent.pageX,
+      pageY: e.nativeEvent.pageY,
     });
   };
 
@@ -103,13 +126,13 @@ export const VisionBoardScreen: FC = () => {
 
   const onPressUpdateBoard = async () => {
     const savedVisionPhotoInfo = {
-      xCoords: photoDragPosition.x,
-      yCoords: photoDragPosition.y,
+      xCoords: photoDragPosition2.pageX,
+      yCoords: photoDragPosition2.pageY,
       source: url,
     };
     const savedStickyInfo = {
-      xCoords: stickyDragPosition.x,
-      yCoords: stickyDragPosition.y,
+      xCoords: stickyDragPosition2.pageX,
+      yCoords: stickyDragPosition2.pageY,
       text: visibleNote,
     };
     const existingData: any = await readVBDataFromFirestore(
@@ -210,7 +233,9 @@ export const VisionBoardScreen: FC = () => {
             renderColor="#fb445c"
             renderText="A"
             isCircle
-            onDragRelease={e => handlePhotoDragRelease(e)}
+            onDragRelease={(event, gesture) =>
+              handlePhotoDragRelease(event, gesture)
+            }
             onShortPressRelease={() => console.log('touched!!')}>
             <Image
               style={{height: 50, width: 50}}
