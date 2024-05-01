@@ -31,8 +31,6 @@ export const VisionBoardScreen: FC = () => {
   const [addNote, setAddNote] = useState(true);
   const [newNote, setNewNote] = useState('');
   const [visibleNote, setVisibleNote] = useState('');
-  const [draggableElements, setDraggableElements] = useState<any[]>([]);
-  const [notesInState, setNotesInState] = useState<any[]>([]);
   const [photoDragPosition, setPhotoDragPosition] = useState({
     x: 100,
     y: 100,
@@ -71,6 +69,7 @@ export const VisionBoardScreen: FC = () => {
         format: 'jpg',
         quality: 0.8,
       }).then(uri => setScreenShotUri(uri));
+      setHideToucables(false);
     } catch (error) {
       console.error('Error capturing screenshot:', error);
     }
@@ -149,31 +148,34 @@ export const VisionBoardScreen: FC = () => {
   };
 
   const onUpdateBoard = async () => {
-    const savedVisionPhotoInfo = {
-      xCoords: photoDragPosition2.pageX,
-      yCoords: photoDragPosition2.pageY,
-      source: url,
-    };
-    const savedStickyInfo = {
-      xCoords: stickyDragPosition2.pageX,
-      yCoords: stickyDragPosition2.pageY,
-      text: visibleNote,
-    };
-    const existingData: any = await readVBDataFromFirestore(
-      'visionBoard',
-      'visionBoard',
-    );
-    const updatedData = [
-      ...existingData,
-      {savedVisionPhotoInfo, savedStickyInfo},
-    ];
-    setVBData(updatedData);
-    await writeDataToFirestore('visionBoard', updatedData, 'visionBoard');
+    // const savedVisionPhotoInfo = {
+    //   xCoords: photoDragPosition2.pageX,
+    //   yCoords: photoDragPosition2.pageY,
+    //   source: url,
+    // };
+    // const savedStickyInfo = {
+    //   xCoords: stickyDragPosition2.pageX,
+    //   yCoords: stickyDragPosition2.pageY,
+    //   text: visibleNote,
+    // };
+    // const existingData: any = await readVBDataFromFirestore(
+    //   'visionBoard',
+    //   'visionBoard',
+    // );
+    // const updatedData = [
+    //   ...existingData,
+    //   {savedVisionPhotoInfo, savedStickyInfo},
+    // ];
+    // setVBData(updatedData);
+    // await writeDataToFirestore('visionBoard', updatedData, 'visionBoard');
+    // toggleModal();
     toggleModal();
+    setTimeout(() => capScreen(), 1000);
   };
 
   const onPressUpdateBoard = async () => {
     toggleModal();
+    setHideToucables(true);
     setUpdatedBool(true);
   };
 
@@ -234,7 +236,7 @@ export const VisionBoardScreen: FC = () => {
       }}>
       <ImageBackground
         style={{flex: 1}}
-        imageStyle={{opacity: 0.3}}
+        // imageStyle={{opacity: 0.3}}
         source={
           screenShotUri
             ? {uri: screenShotUri}
