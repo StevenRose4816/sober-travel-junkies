@@ -17,6 +17,7 @@ import Draggable from 'react-native-draggable';
 import {firebase} from '@react-native-firebase/firestore';
 import {getDownloadURL, getStorage, ref as thisRef} from 'firebase/storage';
 import auth from '@react-native-firebase/auth';
+import {captureScreen} from 'react-native-view-shot';
 
 export const VisionBoardScreen: FC = () => {
   const route = useRoute<RouteProp<AppStackParams, Routes.visionBoardScreen>>();
@@ -61,11 +62,31 @@ export const VisionBoardScreen: FC = () => {
   const userId = auth().currentUser?.uid;
   const [modalVisible2, setModalVisible2] = useState(false);
   const [updatedBool, setUpdatedBool] = useState(false);
+  const [screenShotUri, setScreenShotUri] = useState('');
+  const [hideToucables, setHideToucables] = useState(false);
+
+  const capScreen = () => {
+    try {
+      captureScreen({
+        format: 'jpg',
+        quality: 0.8,
+      }).then(uri => setScreenShotUri(uri));
+    } catch (error) {
+      console.error('Error capturing screenshot:', error);
+    }
+  };
+
+  useEffect(() => {
+    console.log('selectedimage: ', selectedImage);
+    console.log('backgroundPhoto: ', backgroundPhoto);
+  }, [selectedImage, backgroundPhoto]);
 
   useEffect(() => {
     readVBDataFromFirestore('visionBoard', 'visionBoard');
     readFromStorage(userId + '_visionBoardPic');
     console.log(vBData);
+    // capScreen();
+    // console.log('screenShot: ', screenShotUri);
   }, [vBData]);
 
   const handlePhotoDragRelease = (e: any, gesture: any) => {
@@ -113,18 +134,9 @@ export const VisionBoardScreen: FC = () => {
     setUpdatedBool(false);
   };
 
-  const toggleModal2 = () => {
-    setModalVisible2(!modalVisible2);
-  };
-
   const onPressOpenImagePicker = () => {
     navigation.navigate('imagePicker');
   };
-
-  useEffect(() => {
-    console.log('selectedimage: ', selectedImage);
-    console.log('backgroundPhoto: ', backgroundPhoto);
-  }, [selectedImage, backgroundPhoto]);
 
   const onAddNote = () => {
     toggleModal();
@@ -136,7 +148,7 @@ export const VisionBoardScreen: FC = () => {
     toggleModal();
   };
 
-  const updateBoard = async () => {
+  const onUpdateBoard = async () => {
     const savedVisionPhotoInfo = {
       xCoords: photoDragPosition2.pageX,
       yCoords: photoDragPosition2.pageY,
@@ -223,17 +235,25 @@ export const VisionBoardScreen: FC = () => {
       <ImageBackground
         style={{flex: 1}}
         imageStyle={{opacity: 0.3}}
-        source={backgroundPhoto}>
-        <Text
-          style={{
-            fontSize: 18,
-            textAlign: 'center',
-            marginBottom: 10,
-            marginTop: 20,
-            fontFamily: 'HighTide-Sans',
-          }}>
-          Vision Board
-        </Text>
+        source={
+          screenShotUri
+            ? {uri: screenShotUri}
+            : backgroundPhoto
+            ? backgroundPhoto
+            : require('../../Images/backgroundPhoto1.jpeg')
+        }>
+        {!hideToucables && (
+          <Text
+            style={{
+              fontSize: 18,
+              textAlign: 'center',
+              marginBottom: 10,
+              marginTop: 20,
+              fontFamily: 'HighTide-Sans',
+            }}>
+            Vision Board
+          </Text>
+        )}
         {showDraggable && (
           <Draggable
             x={photoDragPosition.x}
@@ -294,81 +314,83 @@ export const VisionBoardScreen: FC = () => {
           </Draggable>
         )}
       </ImageBackground>
-      <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          position: 'absolute',
-          bottom: 0,
-          left: 15,
-          right: 15,
-        }}>
-        <TouchableOpacity
-          onPress={onPressOpenImagePicker}
+      {!hideToucables && (
+        <View
           style={{
-            backgroundColor: '#e7b6cc',
-            borderRadius: 5,
-            width: 100,
-            borderWidth: 1,
-            borderColor: '#eee7da',
-            height: 50,
-            justifyContent: 'center',
+            flexDirection: 'row',
             alignItems: 'center',
+            justifyContent: 'space-between',
+            position: 'absolute',
+            bottom: 0,
+            left: 15,
+            right: 15,
           }}>
-          <Text
+          <TouchableOpacity
+            onPress={onPressOpenImagePicker}
             style={{
-              color: '#0c0b09',
-              textAlign: 'center',
-              fontFamily: 'HighTide-Sans',
+              backgroundColor: '#e7b6cc',
+              borderRadius: 5,
+              width: 100,
+              borderWidth: 1,
+              borderColor: '#eee7da',
+              height: 50,
+              justifyContent: 'center',
+              alignItems: 'center',
             }}>
-            Add Image
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={onPressUpdateBoard}
-          style={{
-            backgroundColor: '#e7b6cc',
-            borderRadius: 50,
-            width: 80,
-            height: 80,
-            margin: 20,
-            borderWidth: 1,
-            borderColor: '#eee7da',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <Text
+            <Text
+              style={{
+                color: '#0c0b09',
+                textAlign: 'center',
+                fontFamily: 'HighTide-Sans',
+              }}>
+              Add Image
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={onPressUpdateBoard}
             style={{
-              color: '#0c0b09',
-              fontFamily: 'HighTide-Sans',
-              textAlign: 'center',
+              backgroundColor: '#e7b6cc',
+              borderRadius: 50,
+              width: 80,
+              height: 80,
+              margin: 20,
+              borderWidth: 1,
+              borderColor: '#eee7da',
+              justifyContent: 'center',
+              alignItems: 'center',
             }}>
-            Update Board
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={onAddNote}
-          style={{
-            backgroundColor: '#e7b6cc',
-            borderRadius: 5,
-            width: 100,
-            borderWidth: 1,
-            borderColor: '#eee7da',
-            height: 50,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <Text
+            <Text
+              style={{
+                color: '#0c0b09',
+                fontFamily: 'HighTide-Sans',
+                textAlign: 'center',
+              }}>
+              Update Board
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={onAddNote}
             style={{
-              color: '#0c0b09',
-              fontFamily: 'HighTide-Sans',
-              textAlign: 'center',
+              backgroundColor: '#e7b6cc',
+              borderRadius: 5,
+              width: 100,
+              borderWidth: 1,
+              borderColor: '#eee7da',
+              height: 50,
+              justifyContent: 'center',
+              alignItems: 'center',
             }}>
-            Add Note
-          </Text>
-        </TouchableOpacity>
-      </View>
+            <Text
+              style={{
+                color: '#0c0b09',
+                fontFamily: 'HighTide-Sans',
+                textAlign: 'center',
+              }}>
+              Add Note
+            </Text>
+          </TouchableOpacity>
+        </View>
+      )}
       <Modal
         visible={modalVisible}
         animationType={'slide'}
@@ -446,7 +468,7 @@ export const VisionBoardScreen: FC = () => {
                 </Text>
               )}
               <TouchableOpacity
-                onPress={!updatedBool ? onSubmitNote : updateBoard}
+                onPress={!updatedBool ? onSubmitNote : onUpdateBoard}
                 style={{
                   backgroundColor: '#e7b6cc',
                   borderRadius: 5,
