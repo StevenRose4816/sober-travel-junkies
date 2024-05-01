@@ -2,10 +2,13 @@ import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {FC, useEffect, useState} from 'react';
 import {
+  Alert,
   Dimensions,
   Image,
   ImageBackground,
   Modal,
+  Platform,
+  StatusBar,
   Text,
   TextInput,
   TouchableOpacity,
@@ -18,12 +21,13 @@ import {firebase} from '@react-native-firebase/firestore';
 import {getDownloadURL, getStorage, ref as thisRef} from 'firebase/storage';
 import auth from '@react-native-firebase/auth';
 import {captureScreen} from 'react-native-view-shot';
+import storage from '@react-native-firebase/storage';
 
 export const VisionBoardScreen: FC = () => {
   const route = useRoute<RouteProp<AppStackParams, Routes.visionBoardScreen>>();
   const navigation = useNavigation<NativeStackNavigationProp<any, any>>();
   const backgroundPhoto = route.params.backgroundPhoto;
-  const selectedImage = route.params.selectedImage;
+  const {selectedImage} = route.params;
   const [showDraggable, setShowDraggable] = useState(true);
   const screenHeight = Dimensions.get('window').height;
   const screenWidth = Dimensions.get('window').width;
@@ -62,14 +66,40 @@ export const VisionBoardScreen: FC = () => {
   const [updatedBool, setUpdatedBool] = useState(false);
   const [screenShotUri, setScreenShotUri] = useState('');
   const [hideToucables, setHideToucables] = useState(false);
+  const [showSelectedImage, setShowSelectedImage] = useState(true);
+  const routes = navigation.getState()?.routes;
+  const prevRoute = routes[routes.length - 2];
 
-  const capScreen = () => {
+  const uploadImage = async () => {
+    const uri = screenShotUri;
+    const uploadUri = Platform.OS === 'ios' ? uri?.replace('file://', '') : uri;
+    const task = storage()
+      .ref('visionBoardScreenShot')
+      .putFile(uploadUri || '');
     try {
-      captureScreen({
+      await task;
+    } catch (e) {
+      console.error(e);
+    }
+    Alert.alert('Vision Board has updated in Firebase Cloud Storage.');
+  };
+
+  const capScreen = async () => {
+    try {
+      await captureScreen({
         format: 'jpg',
         quality: 0.8,
-      }).then(uri => setScreenShotUri(uri));
-      setHideToucables(false);
+        snapshotContentContainer: false,
+        width: Dimensions.get('window').width,
+        height: Dimensions.get('window').height + 30,
+      }).then(uri => {
+        setScreenShotUri(uri);
+        setHideToucables(false);
+        setVisibleNote('');
+        setUpdatedBool(false);
+        setShowSelectedImage(false);
+      });
+      await uploadImage();
     } catch (error) {
       console.error('Error capturing screenshot:', error);
     }
@@ -104,8 +134,6 @@ export const VisionBoardScreen: FC = () => {
     readVBDataFromFirestore('visionBoard', 'visionBoard');
     readFromStorage(userId + '_visionBoardPic');
     console.log(vBData);
-    // capScreen();
-    // console.log('screenShot: ', screenShotUri);
   }, [vBData]);
 
   const handlePhotoDragRelease = (e: any, gesture: any) => {
@@ -154,6 +182,7 @@ export const VisionBoardScreen: FC = () => {
   };
 
   const onPressOpenImagePicker = () => {
+    setShowSelectedImage(true);
     navigation.navigate('imagePicker');
   };
 
@@ -168,27 +197,6 @@ export const VisionBoardScreen: FC = () => {
   };
 
   const onUpdateBoard = async () => {
-    // const savedVisionPhotoInfo = {
-    //   xCoords: photoDragPosition2.pageX,
-    //   yCoords: photoDragPosition2.pageY,
-    //   source: url,
-    // };
-    // const savedStickyInfo = {
-    //   xCoords: stickyDragPosition2.pageX,
-    //   yCoords: stickyDragPosition2.pageY,
-    //   text: visibleNote,
-    // };
-    // const existingData: any = await readVBDataFromFirestore(
-    //   'visionBoard',
-    //   'visionBoard',
-    // );
-    // const updatedData = [
-    //   ...existingData,
-    //   {savedVisionPhotoInfo, savedStickyInfo},
-    // ];
-    // setVBData(updatedData);
-    // await writeDataToFirestore('visionBoard', updatedData, 'visionBoard');
-    // toggleModal();
     toggleModal();
     setTimeout(() => capScreen(), 1000);
   };
@@ -246,17 +254,9 @@ export const VisionBoardScreen: FC = () => {
   };
 
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: 'flex-start',
-        padding: 8,
-        borderRadius: 5,
-        position: 'relative',
-      }}>
+    <>
       <ImageBackground
         style={{flex: 1}}
-        // imageStyle={{opacity: 0.3}}
         source={
           screenShotUri
             ? {uri: screenShotUri}
@@ -294,7 +294,7 @@ export const VisionBoardScreen: FC = () => {
             <Image
               style={{height: 50, width: 50}}
               source={
-                selectedImage
+                showSelectedImage && selectedImage
                   ? {
                       uri: selectedImage,
                     }
@@ -515,6 +515,6 @@ export const VisionBoardScreen: FC = () => {
           </View>
         </View>
       </Modal>
-    </View>
+    </>
   );
 };
