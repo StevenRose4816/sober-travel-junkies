@@ -117,6 +117,7 @@ const RootNavigator: FC = () => {
               headerTitleStyle: {
                 fontSize: 20,
               },
+              headerBackVisible: false,
             }}
           />
         </RootStack.Navigator>

@@ -73,14 +73,13 @@ const ImagePicker = () => {
   };
 
   const onPressThisLooksGood = async () => {
-    // await uploadImage();
     if (prevRoute.name === 'homeScreen') {
       await uploadImage();
       dispatch(setThisUserPhoto({userPhoto: selectedImage}));
       navigation.navigate(Routes.homeScreen);
     } else {
       // dispatch a new action to save the visionBoardPhoto to state.
-      await uploadImage();
+      // await uploadImage();
       navigation.navigate('visionBoardScreen', {
         selectedImage,
       });

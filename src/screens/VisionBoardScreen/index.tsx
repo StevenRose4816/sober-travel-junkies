@@ -76,6 +76,26 @@ export const VisionBoardScreen: FC = () => {
   };
 
   useEffect(() => {
+    if (hideToucables) {
+      navigation.setOptions({
+        headerLeft: () => null,
+      });
+    } else {
+      navigation.setOptions({
+        headerLeft: () => (
+          <TouchableOpacity
+            onPress={() => navigation.goBack()}
+            style={{width: 20, height: 20, marginTop: 10}}>
+            <Image
+              style={{width: 30, height: 30}}
+              source={require('../../Images/caret_left.png')}></Image>
+          </TouchableOpacity>
+        ),
+      });
+    }
+  }, [hideToucables, navigation]);
+
+  useEffect(() => {
     console.log('selectedimage: ', selectedImage);
     console.log('backgroundPhoto: ', backgroundPhoto);
   }, [selectedImage, backgroundPhoto]);
