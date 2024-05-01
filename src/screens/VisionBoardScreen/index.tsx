@@ -70,36 +70,40 @@ export const VisionBoardScreen: FC = () => {
   const routes = navigation.getState()?.routes;
   const prevRoute = routes[routes.length - 2];
 
-  const uploadImage = async () => {
-    const uri = screenShotUri;
-    const uploadUri = Platform.OS === 'ios' ? uri?.replace('file://', '') : uri;
-    const task = storage()
-      .ref('visionBoardScreenShot')
-      .putFile(uploadUri || '');
+  const uploadImage = async (uri: string | undefined) => {
+    if (!uri) {
+      console.error('Invalid URI:', uri);
+      return;
+    }
+
+    const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri;
+    const task = storage().ref('visionBoardScreenShot').putFile(uploadUri);
+
     try {
       await task;
+      Alert.alert('Vision Board has updated in Firebase Cloud Storage.');
     } catch (e) {
       console.error(e);
     }
-    Alert.alert('Vision Board has updated in Firebase Cloud Storage.');
   };
 
   const capScreen = async () => {
     try {
-      await captureScreen({
+      const uri = await captureScreen({
         format: 'jpg',
         quality: 0.8,
         snapshotContentContainer: false,
         width: Dimensions.get('window').width,
         height: Dimensions.get('window').height + 30,
-      }).then(uri => {
-        setScreenShotUri(uri);
-        setHideToucables(false);
-        setVisibleNote('');
-        setUpdatedBool(false);
-        setShowSelectedImage(false);
       });
-      await uploadImage();
+
+      setScreenShotUri(uri);
+      setHideToucables(false);
+      setVisibleNote('');
+      setUpdatedBool(false);
+      setShowSelectedImage(false);
+
+      await uploadImage(uri); // Upload the captured image
     } catch (error) {
       console.error('Error capturing screenshot:', error);
     }
@@ -131,46 +135,44 @@ export const VisionBoardScreen: FC = () => {
   }, [selectedImage, backgroundPhoto]);
 
   useEffect(() => {
-    readVBDataFromFirestore('visionBoard', 'visionBoard');
-    readFromStorage(userId + '_visionBoardPic');
-    console.log(vBData);
-  }, [vBData]);
+    readFromStorage('visionBoardScreenShot');
+  }, [screenShotUri]);
 
-  const handlePhotoDragRelease = (e: any, gesture: any) => {
-    console.log(
-      'pageX, pageY = ' + e.nativeEvent.pageX + ', ' + e.nativeEvent.pageY,
-    );
-    console.log(
-      'locX, locY = ' +
-        e.nativeEvent.locationX +
-        ', ' +
-        e.nativeEvent.locationY,
-    );
-    setPhotoDragPosition2({
-      x: e.nativeEvent.pageX,
-      y: e.nativeEvent.pageY,
-      pageX: e.nativeEvent.pageX,
-      pageY: e.nativeEvent.pageY,
-    });
-  };
+  //   const handlePhotoDragRelease = (e: any, gesture: any) => {
+  //     console.log(
+  //       'pageX, pageY = ' + e.nativeEvent.pageX + ', ' + e.nativeEvent.pageY,
+  //     );
+  //     console.log(
+  //       'locX, locY = ' +
+  //         e.nativeEvent.locationX +
+  //         ', ' +
+  //         e.nativeEvent.locationY,
+  //     );
+  //     setPhotoDragPosition2({
+  //       x: e.nativeEvent.pageX,
+  //       y: e.nativeEvent.pageY,
+  //       pageX: e.nativeEvent.pageX,
+  //       pageY: e.nativeEvent.pageY,
+  //     });
+  //   };
 
-  const handleStickyDragRelease = (e: any, gesture: any) => {
-    console.log(
-      'pageX, pageY = ' + e.nativeEvent.pageX + ', ' + e.nativeEvent.pageY,
-    );
-    console.log(
-      'locX, locY = ' +
-        e.nativeEvent.locationX +
-        ', ' +
-        e.nativeEvent.locationY,
-    );
-    setStickyDragPosition2({
-      x: e.nativeEvent.pageX,
-      y: e.nativeEvent.pageY,
-      pageX: e.nativeEvent.pageX,
-      pageY: e.nativeEvent.pageY,
-    });
-  };
+  //   const handleStickyDragRelease = (e: any, gesture: any) => {
+  //     console.log(
+  //       'pageX, pageY = ' + e.nativeEvent.pageX + ', ' + e.nativeEvent.pageY,
+  //     );
+  //     console.log(
+  //       'locX, locY = ' +
+  //         e.nativeEvent.locationX +
+  //         ', ' +
+  //         e.nativeEvent.locationY,
+  //     );
+  //     setStickyDragPosition2({
+  //       x: e.nativeEvent.pageX,
+  //       y: e.nativeEvent.pageY,
+  //       pageX: e.nativeEvent.pageX,
+  //       pageY: e.nativeEvent.pageY,
+  //     });
+  //   };
 
   const toggleModal = () => {
     setModalVisible(!modalVisible);
@@ -207,39 +209,39 @@ export const VisionBoardScreen: FC = () => {
     setUpdatedBool(true);
   };
 
-  const writeDataToFirestore = async (
-    collection: string,
-    data: any,
-    docId: string,
-  ) => {
-    try {
-      const ref = firebase.firestore().collection(collection).doc(docId);
-      const response = await ref.set({data});
-      return response;
-    } catch (error) {
-      console.log('error: ', error);
-      return error;
-    }
-  };
+  //   const writeDataToFirestore = async (
+  //     collection: string,
+  //     data: any,
+  //     docId: string,
+  //   ) => {
+  //     try {
+  //       const ref = firebase.firestore().collection(collection).doc(docId);
+  //       const response = await ref.set({data});
+  //       return response;
+  //     } catch (error) {
+  //       console.log('error: ', error);
+  //       return error;
+  //     }
+  //   };
 
-  const readVBDataFromFirestore = async (collection: string, docId: string) => {
-    try {
-      const ref = firebase.firestore().collection(collection).doc(docId);
-      const response = await ref.get();
-      const data = response.data(); // Extract data from DocumentSnapshot
-      if (data && Array.isArray(data.data)) {
-        const extractedData = data.data;
-        console.log('Extracted data:', extractedData);
-        return extractedData;
-      } else {
-        console.log('No data available or invalid format');
-        return [];
-      }
-    } catch (error) {
-      console.error('Error reading data from Firestore:', error);
-      return error;
-    }
-  };
+  //   const readVBDataFromFirestore = async (collection: string, docId: string) => {
+  //     try {
+  //       const ref = firebase.firestore().collection(collection).doc(docId);
+  //       const response = await ref.get();
+  //       const data = response.data(); // Extract data from DocumentSnapshot
+  //       if (data && Array.isArray(data.data)) {
+  //         const extractedData = data.data;
+  //         console.log('Extracted data:', extractedData);
+  //         return extractedData;
+  //       } else {
+  //         console.log('No data available or invalid format');
+  //         return [];
+  //       }
+  //     } catch (error) {
+  //       console.error('Error reading data from Firestore:', error);
+  //       return error;
+  //     }
+  //   };
 
   const readFromStorage = async (imageName: string) => {
     const storage = getStorage();
@@ -287,9 +289,9 @@ export const VisionBoardScreen: FC = () => {
             renderColor="#fb445c"
             renderText="A"
             isCircle
-            onDragRelease={(event, gesture) =>
-              handlePhotoDragRelease(event, gesture)
-            }
+            // onDragRelease={(event, gesture) =>
+            //   handlePhotoDragRelease(event, gesture)
+            // }
             onShortPressRelease={() => console.log('touched!!')}>
             <Image
               style={{height: 50, width: 50}}
@@ -311,9 +313,9 @@ export const VisionBoardScreen: FC = () => {
             minY={40}
             maxX={375}
             maxY={640}
-            onDragRelease={(event, gesture) =>
-              handleStickyDragRelease(event, gesture)
-            }
+            // onDragRelease={(event, gesture) =>
+            //   handleStickyDragRelease(event, gesture)
+            // }
             onShortPressRelease={() => console.log('touched!!')}>
             <ImageBackground
               style={{
