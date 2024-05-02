@@ -83,6 +83,8 @@ export const VisionBoardScreen: FC = () => {
       setVisibleNote('');
       setUpdatedBool(false);
       setShowSelectedImage(false);
+      setShowInitialPhotoDraggables(false);
+      setShowInitialStickyDraggables(false);
       await uploadImage(uri);
     } catch (error) {
       console.error('Error capturing screenshot:', error);
