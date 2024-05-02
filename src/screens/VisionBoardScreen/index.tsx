@@ -47,18 +47,7 @@ export const VisionBoardScreen: FC = () => {
     pageX: 0,
     pageY: 0,
   });
-  const [photoDragPosition2, setPhotoDragPosition2] = useState({
-    x: 100,
-    y: 100,
-    pageX: 0,
-    pageY: 0,
-  });
-  const [stickyDragPosition2, setStickyDragPosition2] = useState({
-    x: 200,
-    y: 100,
-    pageX: 0,
-    pageY: 0,
-  });
+
   const [vBData, setVBData] = useState<any[]>([]);
   const [url, setUrl] = useState('');
   const userId = auth().currentUser?.uid;
@@ -76,6 +65,7 @@ export const VisionBoardScreen: FC = () => {
     width: 120,
     height: 80,
   });
+  const [stickyFontSize, setStickyFontSize] = useState({fontSize: 8});
 
   const capScreen = async () => {
     try {
@@ -91,7 +81,7 @@ export const VisionBoardScreen: FC = () => {
       setVisibleNote('');
       setUpdatedBool(false);
       setShowSelectedImage(false);
-      await uploadImage(uri); // Upload the captured image
+      await uploadImage(uri);
     } catch (error) {
       console.error('Error capturing screenshot:', error);
     }
@@ -200,10 +190,13 @@ export const VisionBoardScreen: FC = () => {
     if (stickyShortPressCount < 4) {
       const newWidth = stickyDragSize.width * 1.1;
       const newHeight = stickyDragSize.height * 1.1;
+      const newFontSize = stickyFontSize.fontSize + 2;
       setStickyDragSize({width: newWidth, height: newHeight});
       setStickyShortPressCount(prevCount => prevCount + 1);
+      setStickyFontSize({fontSize: newFontSize});
     } else {
       setStickyDragSize({width: 120, height: 80});
+      setStickyFontSize({fontSize: 8});
       setStickyShortPressCount(0);
     }
   };
@@ -282,7 +275,7 @@ export const VisionBoardScreen: FC = () => {
               <Text
                 style={{
                   fontFamily: 'HighTide-Sans',
-                  fontSize: 8,
+                  fontSize: stickyFontSize.fontSize,
                   maxWidth: 40,
                 }}>
                 {visibleNote}
