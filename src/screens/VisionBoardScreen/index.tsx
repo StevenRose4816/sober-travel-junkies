@@ -64,6 +64,10 @@ export const VisionBoardScreen: FC = () => {
     fontSize: 8,
     maxWidth: 40,
   });
+  const [showInitialPhotoDraggables, setShowInitialPhotoDraggables] =
+    useState(false);
+  const [showInitialStickyDraggables, setShowInitialStickyDraggables] =
+    useState(false);
 
   const capScreen = async () => {
     try {
@@ -134,13 +138,18 @@ export const VisionBoardScreen: FC = () => {
     setUpdatedBool(false);
   };
 
+  const onPressAddImage = () => {
+    setShowInitialPhotoDraggables(true);
+  };
+
   const onPressOpenImagePicker = () => {
     setShowSelectedImage(true);
     navigation.navigate('imagePicker');
   };
 
   const onAddNote = () => {
-    toggleModal();
+    showInitialStickyDraggables && toggleModal();
+    !showInitialStickyDraggables && setShowInitialStickyDraggables(true);
   };
 
   const onSubmitNote = () => {
@@ -225,7 +234,7 @@ export const VisionBoardScreen: FC = () => {
             Vision Board
           </Text>
         )}
-        {showDraggable && (
+        {showDraggable && showInitialPhotoDraggables && (
           <Draggable
             x={photoDragPosition.x}
             y={photoDragPosition.y}
@@ -233,7 +242,7 @@ export const VisionBoardScreen: FC = () => {
             minY={40}
             maxX={375}
             maxY={640}
-            renderColor="#fb445c"
+            renderColor={hideToucables ? '#fb445c00' : '#fb445c'}
             renderText="A"
             isCircle
             onShortPressRelease={onShortPressPhoto}>
@@ -253,7 +262,7 @@ export const VisionBoardScreen: FC = () => {
               resizeMode="stretch"></Image>
           </Draggable>
         )}
-        {addNote && (
+        {addNote && showInitialStickyDraggables && (
           <Draggable
             x={stickyDragPosition.x}
             y={stickyDragPosition.y}
@@ -295,7 +304,11 @@ export const VisionBoardScreen: FC = () => {
             right: 15,
           }}>
           <TouchableOpacity
-            onPress={onPressOpenImagePicker}
+            onPress={
+              showInitialPhotoDraggables
+                ? onPressOpenImagePicker
+                : onPressAddImage
+            }
             style={{
               backgroundColor: '#e7b6cc',
               borderRadius: 5,
@@ -312,7 +325,7 @@ export const VisionBoardScreen: FC = () => {
                 textAlign: 'center',
                 fontFamily: 'HighTide-Sans',
               }}>
-              Add Image
+              {!showInitialPhotoDraggables ? 'Add Image' : 'Open Image Picker'}
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -355,7 +368,7 @@ export const VisionBoardScreen: FC = () => {
                 fontFamily: 'HighTide-Sans',
                 textAlign: 'center',
               }}>
-              Add Note
+              {!showInitialStickyDraggables ? 'Add Note' : 'Write Note'}
             </Text>
           </TouchableOpacity>
         </View>
