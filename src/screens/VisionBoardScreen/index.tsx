@@ -216,13 +216,7 @@ export const VisionBoardScreen: FC = () => {
       <ImageBackground
         style={{flex: 1}}
         source={
-          url !== ''
-            ? {url}
-            : screenShotUri
-            ? {uri: screenShotUri}
-            : backgroundPhoto
-            ? backgroundPhoto
-            : require('../../Images/backgroundPhoto1.jpeg')
+          url !== '' ? {url} : require('../../Images/corkbackground.jpg')
         }>
         {!hideToucables && (
           <Text
