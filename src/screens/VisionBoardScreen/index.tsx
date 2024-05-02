@@ -17,9 +17,7 @@ import {
 import Routes from '../../navigation/routes';
 import {AppStackParams, NavPropAny} from '../../navigation/types';
 import Draggable from 'react-native-draggable';
-import {firebase} from '@react-native-firebase/firestore';
 import {getDownloadURL, getStorage, ref as thisRef} from 'firebase/storage';
-import auth from '@react-native-firebase/auth';
 import {captureScreen} from 'react-native-view-shot';
 import storage from '@react-native-firebase/storage';
 
@@ -48,10 +46,7 @@ export const VisionBoardScreen: FC = () => {
     pageY: 0,
   });
 
-  const [vBData, setVBData] = useState<any[]>([]);
   const [url, setUrl] = useState('');
-  const userId = auth().currentUser?.uid;
-  const [modalVisible2, setModalVisible2] = useState(false);
   const [updatedBool, setUpdatedBool] = useState(false);
   const [screenShotUri, setScreenShotUri] = useState('');
   const [hideToucables, setHideToucables] = useState(false);
@@ -65,7 +60,10 @@ export const VisionBoardScreen: FC = () => {
     width: 120,
     height: 80,
   });
-  const [stickyFontSize, setStickyFontSize] = useState({fontSize: 8});
+  const [stickySize, setStickySize] = useState({
+    fontSize: 8,
+    maxWidth: 40,
+  });
 
   const capScreen = async () => {
     try {
@@ -190,13 +188,14 @@ export const VisionBoardScreen: FC = () => {
     if (stickyShortPressCount < 4) {
       const newWidth = stickyDragSize.width * 1.1;
       const newHeight = stickyDragSize.height * 1.1;
-      const newFontSize = stickyFontSize.fontSize + 2;
+      const newFontSize = stickySize.fontSize + 2;
+      const newMaxWidth = stickySize.maxWidth * 1.1;
       setStickyDragSize({width: newWidth, height: newHeight});
       setStickyShortPressCount(prevCount => prevCount + 1);
-      setStickyFontSize({fontSize: newFontSize});
+      setStickySize({fontSize: newFontSize, maxWidth: newMaxWidth});
     } else {
       setStickyDragSize({width: 120, height: 80});
-      setStickyFontSize({fontSize: 8});
+      setStickySize({fontSize: 8, maxWidth: 40});
       setStickyShortPressCount(0);
     }
   };
@@ -275,8 +274,8 @@ export const VisionBoardScreen: FC = () => {
               <Text
                 style={{
                   fontFamily: 'HighTide-Sans',
-                  fontSize: stickyFontSize.fontSize,
-                  maxWidth: 40,
+                  fontSize: stickySize.fontSize,
+                  maxWidth: stickySize.maxWidth,
                 }}>
                 {visibleNote}
               </Text>
