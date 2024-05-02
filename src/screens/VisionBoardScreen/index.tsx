@@ -75,13 +75,12 @@ export const VisionBoardScreen: FC = () => {
       console.error('Invalid URI:', uri);
       return;
     }
-
     const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri;
     const task = storage().ref('visionBoardScreenShot').putFile(uploadUri);
-
     try {
       await task;
       Alert.alert('Vision Board has updated in Firebase Cloud Storage.');
+      readFromStorage('visionBoardScreenShot');
     } catch (e) {
       console.error(e);
     }
@@ -130,49 +129,8 @@ export const VisionBoardScreen: FC = () => {
   }, [hideToucables, navigation]);
 
   useEffect(() => {
-    console.log('selectedimage: ', selectedImage);
-    console.log('backgroundPhoto: ', backgroundPhoto);
-  }, [selectedImage, backgroundPhoto]);
-
-  useEffect(() => {
     readFromStorage('visionBoardScreenShot');
-  }, [screenShotUri]);
-
-  //   const handlePhotoDragRelease = (e: any, gesture: any) => {
-  //     console.log(
-  //       'pageX, pageY = ' + e.nativeEvent.pageX + ', ' + e.nativeEvent.pageY,
-  //     );
-  //     console.log(
-  //       'locX, locY = ' +
-  //         e.nativeEvent.locationX +
-  //         ', ' +
-  //         e.nativeEvent.locationY,
-  //     );
-  //     setPhotoDragPosition2({
-  //       x: e.nativeEvent.pageX,
-  //       y: e.nativeEvent.pageY,
-  //       pageX: e.nativeEvent.pageX,
-  //       pageY: e.nativeEvent.pageY,
-  //     });
-  //   };
-
-  //   const handleStickyDragRelease = (e: any, gesture: any) => {
-  //     console.log(
-  //       'pageX, pageY = ' + e.nativeEvent.pageX + ', ' + e.nativeEvent.pageY,
-  //     );
-  //     console.log(
-  //       'locX, locY = ' +
-  //         e.nativeEvent.locationX +
-  //         ', ' +
-  //         e.nativeEvent.locationY,
-  //     );
-  //     setStickyDragPosition2({
-  //       x: e.nativeEvent.pageX,
-  //       y: e.nativeEvent.pageY,
-  //       pageX: e.nativeEvent.pageX,
-  //       pageY: e.nativeEvent.pageY,
-  //     });
-  //   };
+  }, []);
 
   const toggleModal = () => {
     setModalVisible(!modalVisible);
@@ -209,40 +167,6 @@ export const VisionBoardScreen: FC = () => {
     setUpdatedBool(true);
   };
 
-  //   const writeDataToFirestore = async (
-  //     collection: string,
-  //     data: any,
-  //     docId: string,
-  //   ) => {
-  //     try {
-  //       const ref = firebase.firestore().collection(collection).doc(docId);
-  //       const response = await ref.set({data});
-  //       return response;
-  //     } catch (error) {
-  //       console.log('error: ', error);
-  //       return error;
-  //     }
-  //   };
-
-  //   const readVBDataFromFirestore = async (collection: string, docId: string) => {
-  //     try {
-  //       const ref = firebase.firestore().collection(collection).doc(docId);
-  //       const response = await ref.get();
-  //       const data = response.data(); // Extract data from DocumentSnapshot
-  //       if (data && Array.isArray(data.data)) {
-  //         const extractedData = data.data;
-  //         console.log('Extracted data:', extractedData);
-  //         return extractedData;
-  //       } else {
-  //         console.log('No data available or invalid format');
-  //         return [];
-  //       }
-  //     } catch (error) {
-  //       console.error('Error reading data from Firestore:', error);
-  //       return error;
-  //     }
-  //   };
-
   const readFromStorage = async (imageName: string) => {
     const storage = getStorage();
     const reference = thisRef(storage, imageName);
@@ -260,7 +184,9 @@ export const VisionBoardScreen: FC = () => {
       <ImageBackground
         style={{flex: 1}}
         source={
-          screenShotUri
+          url !== ''
+            ? {url}
+            : screenShotUri
             ? {uri: screenShotUri}
             : backgroundPhoto
             ? backgroundPhoto
@@ -294,7 +220,7 @@ export const VisionBoardScreen: FC = () => {
             // }
             onShortPressRelease={() => console.log('touched!!')}>
             <Image
-              style={{height: 50, width: 50}}
+              style={{height: 70, width: 70, borderRadius: 5}}
               source={
                 showSelectedImage && selectedImage
                   ? {
@@ -313,9 +239,6 @@ export const VisionBoardScreen: FC = () => {
             minY={40}
             maxX={375}
             maxY={640}
-            // onDragRelease={(event, gesture) =>
-            //   handleStickyDragRelease(event, gesture)
-            // }
             onShortPressRelease={() => console.log('touched!!')}>
             <ImageBackground
               style={{
