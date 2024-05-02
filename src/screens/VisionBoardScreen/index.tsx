@@ -69,22 +69,13 @@ export const VisionBoardScreen: FC = () => {
   const [showSelectedImage, setShowSelectedImage] = useState(true);
   const routes = navigation.getState()?.routes;
   const prevRoute = routes[routes.length - 2];
-
-  const uploadImage = async (uri: string | undefined) => {
-    if (!uri) {
-      console.error('Invalid URI:', uri);
-      return;
-    }
-    const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri;
-    const task = storage().ref('visionBoardScreenShot').putFile(uploadUri);
-    try {
-      await task;
-      Alert.alert('Vision Board has updated in Firebase Cloud Storage.');
-      readFromStorage('visionBoardScreenShot');
-    } catch (e) {
-      console.error(e);
-    }
-  };
+  const [photoShortPressCount, setPhotoShortPressCount] = useState(0);
+  const [stickyShortPressCount, setStickyShortPressCount] = useState(0);
+  const [photoDragSize, setPhotoDragSize] = useState({width: 70, height: 70});
+  const [stickyDragSize, setStickyDragSize] = useState({
+    width: 120,
+    height: 80,
+  });
 
   const capScreen = async () => {
     try {
@@ -95,13 +86,11 @@ export const VisionBoardScreen: FC = () => {
         width: Dimensions.get('window').width,
         height: Dimensions.get('window').height + 30,
       });
-
       setScreenShotUri(uri);
       setHideToucables(false);
       setVisibleNote('');
       setUpdatedBool(false);
       setShowSelectedImage(false);
-
       await uploadImage(uri); // Upload the captured image
     } catch (error) {
       console.error('Error capturing screenshot:', error);
@@ -131,6 +120,22 @@ export const VisionBoardScreen: FC = () => {
   useEffect(() => {
     readFromStorage('visionBoardScreenShot');
   }, []);
+
+  const uploadImage = async (uri: string | undefined) => {
+    if (!uri) {
+      console.error('Invalid URI:', uri);
+      return;
+    }
+    const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri;
+    const task = storage().ref('visionBoardScreenShot').putFile(uploadUri);
+    try {
+      await task;
+      Alert.alert('Vision Board has updated in Firebase Cloud Storage.');
+      readFromStorage('visionBoardScreenShot');
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   const toggleModal = () => {
     setModalVisible(!modalVisible);
@@ -179,6 +184,30 @@ export const VisionBoardScreen: FC = () => {
     }
   };
 
+  const onShortPressPhoto = () => {
+    if (photoShortPressCount < 4) {
+      const newWidth = photoDragSize.width * 1.1;
+      const newHeight = photoDragSize.height * 1.1;
+      setPhotoDragSize({width: newWidth, height: newHeight});
+      setPhotoShortPressCount(prevCount => prevCount + 1);
+    } else {
+      setPhotoDragSize({width: 70, height: 70});
+      setPhotoShortPressCount(0);
+    }
+  };
+
+  const onShortPressSticky = () => {
+    if (stickyShortPressCount < 4) {
+      const newWidth = stickyDragSize.width * 1.1;
+      const newHeight = stickyDragSize.height * 1.1;
+      setStickyDragSize({width: newWidth, height: newHeight});
+      setStickyShortPressCount(prevCount => prevCount + 1);
+    } else {
+      setStickyDragSize({width: 120, height: 80});
+      setStickyShortPressCount(0);
+    }
+  };
+
   return (
     <>
       <ImageBackground
@@ -215,12 +244,13 @@ export const VisionBoardScreen: FC = () => {
             renderColor="#fb445c"
             renderText="A"
             isCircle
-            // onDragRelease={(event, gesture) =>
-            //   handlePhotoDragRelease(event, gesture)
-            // }
-            onShortPressRelease={() => console.log('touched!!')}>
+            onShortPressRelease={onShortPressPhoto}>
             <Image
-              style={{height: 70, width: 70, borderRadius: 5}}
+              style={{
+                width: photoDragSize.width,
+                height: photoDragSize.height,
+                borderRadius: 5,
+              }}
               source={
                 showSelectedImage && selectedImage
                   ? {
@@ -239,11 +269,11 @@ export const VisionBoardScreen: FC = () => {
             minY={40}
             maxX={375}
             maxY={640}
-            onShortPressRelease={() => console.log('touched!!')}>
+            onShortPressRelease={onShortPressSticky}>
             <ImageBackground
               style={{
-                height: 60,
-                width: 100,
+                width: stickyDragSize.width,
+                height: stickyDragSize.height,
                 justifyContent: 'center',
                 alignItems: 'center',
               }}
