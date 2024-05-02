@@ -219,16 +219,27 @@ export const VisionBoardScreen: FC = () => {
           url !== '' ? {url} : require('../../Images/corkbackground.jpg')
         }>
         {!hideToucables && (
-          <Text
+          <View
             style={{
-              fontSize: 18,
-              textAlign: 'center',
-              marginBottom: 10,
-              marginTop: 20,
-              fontFamily: 'HighTide-Sans',
+              flex: 1,
+              backgroundColor: '#eee7da80',
+              maxHeight: 50,
+              width: 225,
+              alignSelf: 'center',
+              margin: 10,
+              borderRadius: 8,
             }}>
-            Vision Board
-          </Text>
+            <Text
+              style={{
+                fontSize: 24,
+                textAlign: 'center',
+                marginTop: 15,
+                fontFamily: 'HighTide-Sans',
+                opacity: 0.5,
+              }}>
+              Vision Board
+            </Text>
+          </View>
         )}
         {showDraggable && showInitialPhotoDraggables && (
           <Draggable
