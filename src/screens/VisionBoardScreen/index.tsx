@@ -20,6 +20,7 @@ import Draggable from 'react-native-draggable';
 import {getDownloadURL, getStorage, ref as thisRef} from 'firebase/storage';
 import {captureScreen} from 'react-native-view-shot';
 import storage from '@react-native-firebase/storage';
+import {useAppSelector} from '../../hooks';
 
 export const VisionBoardScreen: FC = () => {
   const route = useRoute<RouteProp<AppStackParams, Routes.visionBoardScreen>>();
@@ -67,6 +68,9 @@ export const VisionBoardScreen: FC = () => {
     useState(false);
   const [showInitialStickyDraggables, setShowInitialStickyDraggables] =
     useState(false);
+  const visionBoardFromState = useAppSelector(
+    state => state.globalStore.visionBoardUrl,
+  );
 
   const capScreen = async () => {
     try {

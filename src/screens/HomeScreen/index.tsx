@@ -27,7 +27,7 @@ import {setBackgroundPhoto, setUserPhoto} from '../../store/user/slice';
 import {DocPicker} from '../../components/DocumentPicker';
 import {setSelected} from '../../store/user/slice';
 import {setSelectedDocument} from '../../store/document/slice';
-import {setNewUser} from '../../store/globalStore/slice';
+import {setNewUser, setVisionBoardUrl} from '../../store/globalStore/slice';
 import {NavPropAny} from '../../navigation/types';
 import Routes from '../../navigation/routes';
 import Clipboard from '@react-native-clipboard/clipboard';
@@ -87,13 +87,29 @@ const HomeScreen: FC = () => {
   const translateX = useRef(new Animated.Value(0)).current;
   const scrollViewRef = useRef<ScrollView>(null);
   const [url, setUrl] = useState<string | undefined>(undefined);
+  const [visionBoardPhoto, setVisionBoardPhoto] = useState<string | undefined>(
+    undefined,
+  );
 
-  const readFromStorage = async (imageName: string) => {
+  const readFromStorage1 = async (imageName: string) => {
     const storage = getStorage();
     const reference = thisRef(storage, imageName);
     try {
       await getDownloadURL(reference).then(url => {
         setUrl(url);
+      });
+    } catch (e: any) {
+      console.log(e.message);
+    }
+  };
+
+  const readFromStorage2 = async (imageName: string) => {
+    const storage = getStorage();
+    const reference = thisRef(storage, imageName);
+    try {
+      await getDownloadURL(reference).then(url => {
+        setVisionBoardPhoto(url);
+        dispatch(setVisionBoardUrl({visionBoardUrl: url}));
       });
     } catch (e: any) {
       console.log(e.message);
@@ -220,6 +236,7 @@ const HomeScreen: FC = () => {
     readDataFromRealTimeDB();
     fetchJSONDataForContactInfo();
     moveImage();
+    readFromStorage2('visionBoardScreenShot');
   }, [users]);
 
   useEffect(() => {
@@ -228,6 +245,7 @@ const HomeScreen: FC = () => {
       setShowCheckListIcon(true);
       console.log('dataFlag is true.');
       console.log('url: ', url);
+      console.log('visionBoardPhoto: ', visionBoardPhoto);
     } else if (!dataFlag) {
       console.log('dataFlag is false.');
     } else {
@@ -266,6 +284,13 @@ const HomeScreen: FC = () => {
     state => state.contacts.haveContactsBeenAdded,
   );
   const messages = useAppSelector(state => state.user.messages);
+  const visionBoardFromState = useAppSelector(
+    state => state.globalStore.visionBoardUrl,
+  );
+
+  useEffect(() => {
+    console.log('visionBoardFromState: ', visionBoardFromState);
+  }, [visionBoardFromState]);
 
   useEffect(() => {
     if (Platform.OS === 'android') {
@@ -507,7 +532,7 @@ const HomeScreen: FC = () => {
       }
     };
     fetchData();
-    readFromStorage(userId + '_profilePic');
+    readFromStorage1(userId + '_profilePic');
   }, []);
 
   const fetchJSONDataForContactInfo = async () => {

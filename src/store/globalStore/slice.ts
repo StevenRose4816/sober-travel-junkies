@@ -5,6 +5,7 @@ export interface IUserInfo {
   address?: string;
   name?: string;
   newUser?: boolean;
+  visionBoardUrl: string | undefined;
 }
 
 const initialState: IUserInfo = {
@@ -12,6 +13,7 @@ const initialState: IUserInfo = {
   address: '',
   name: '',
   newUser: false,
+  visionBoardUrl: undefined,
 };
 
 const userSlice = createSlice({
@@ -28,9 +30,15 @@ const userSlice = createSlice({
       const {newUser} = action.payload;
       state.newUser = newUser;
     },
+    setVisionBoardUrl(
+      state,
+      action: PayloadAction<{visionBoardUrl: string | undefined}>,
+    ) {
+      const {visionBoardUrl} = action.payload;
+      state.visionBoardUrl = visionBoardUrl;
+    },
   },
 });
 
-export const {setUserInfo} = userSlice.actions;
-export const {setNewUser} = userSlice.actions;
+export const {setUserInfo, setNewUser, setVisionBoardUrl} = userSlice.actions;
 export const globalStoreReducer = userSlice.reducer;
