@@ -24,7 +24,6 @@ import storage from '@react-native-firebase/storage';
 export const VisionBoardScreen: FC = () => {
   const route = useRoute<RouteProp<AppStackParams, Routes.visionBoardScreen>>();
   const navigation = useNavigation<NativeStackNavigationProp<any, any>>();
-  const backgroundPhoto = route.params.backgroundPhoto;
   const {selectedImage} = route.params;
   const [showDraggable, setShowDraggable] = useState(true);
   const screenHeight = Dimensions.get('window').height;
@@ -216,7 +215,11 @@ export const VisionBoardScreen: FC = () => {
       <ImageBackground
         style={{flex: 1}}
         source={
-          url !== '' ? {url} : require('../../Images/corkbackground.jpg')
+          screenShotUri !== ''
+            ? {uri: screenShotUri}
+            : url !== ''
+            ? {url}
+            : require('../../Images/browntextured.jpg')
         }>
         {!hideToucables && (
           <View
