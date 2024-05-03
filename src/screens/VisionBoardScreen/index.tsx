@@ -34,14 +34,14 @@ export const VisionBoardScreen: FC = () => {
   const [newNote, setNewNote] = useState('');
   const [visibleNote, setVisibleNote] = useState('');
   const [photoDragPosition, setPhotoDragPosition] = useState({
-    x: 100,
+    x: screenWidth / 2 - 30,
     y: 100,
     pageX: 0,
     pageY: 0,
   });
   const [stickyDragPosition, setStickyDragPosition] = useState({
-    x: 200,
-    y: 100,
+    x: screenWidth / 2 - 55,
+    y: 200,
     pageX: 0,
     pageY: 0,
   });
@@ -202,7 +202,7 @@ export const VisionBoardScreen: FC = () => {
     if (stickyShortPressCount < 4) {
       const newWidth = stickyDragSize.width * 1.1;
       const newHeight = stickyDragSize.height * 1.1;
-      const newFontSize = stickySize.fontSize + 2;
+      const newFontSize = stickySize.fontSize * 1.1;
       const newMaxWidth = stickySize.maxWidth * 1.1;
       setStickyDragSize({width: newWidth, height: newHeight});
       setStickyShortPressCount(prevCount => prevCount + 1);
