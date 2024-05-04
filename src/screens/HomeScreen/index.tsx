@@ -589,12 +589,12 @@ const HomeScreen: FC = () => {
             source={source()}>
             <View style={styles.nestedView1}>
               <Animated.Image
-                style={{
-                  marginTop: 20,
-                  height: 150,
-                  width: screenWidth * 0.9,
-                  opacity: fadeAnim,
-                }}
+                style={[
+                  styles.animated1,
+                  {
+                    opacity: fadeAnim,
+                  },
+                ]}
                 source={require('../../Images/STJLogoTransparent.png')}></Animated.Image>
             </View>
             {dataFlag && (
@@ -602,25 +602,21 @@ const HomeScreen: FC = () => {
                 <View style={styles.view2}>
                   {!!url ? (
                     <Animated.Image
-                      style={{
-                        height: 250,
-                        width: screenWidth * 0.7,
-                        marginBottom: 10,
-                        borderRadius: 5,
-                        opacity: fadeAnim,
-                        borderColor: '#eee7da',
-                        borderWidth: 2,
-                      }}
+                      style={[
+                        styles.animated2,
+                        {
+                          opacity: fadeAnim,
+                        },
+                      ]}
                       source={{uri: url}}></Animated.Image>
                   ) : (
                     <Animated.Image
-                      style={{
-                        height: 250,
-                        width: screenWidth * 0.7,
-                        borderRadius: 5,
-                        marginBottom: 10,
-                        opacity: fadeAnim,
-                      }}
+                      style={[
+                        styles.animated3,
+                        {
+                          opacity: fadeAnim,
+                        },
+                      ]}
                       source={require('../../Images/profilepictureicon.png')}></Animated.Image>
                   )}
                   <TouchableOpacity
@@ -644,26 +640,21 @@ const HomeScreen: FC = () => {
                   </TouchableOpacity>
                   <TouchableOpacity
                     onPress={onPressGroupContactInfo}
-                    style={{
-                      backgroundColor: '#b6e7cc',
-                      marginBottom: 10,
-                      width: screenWidth * 0.8,
-                      borderRadius: 5,
-                      borderWidth: 2,
-                      borderColor: '#eee7da',
-                      opacity: haveContactsBeenAdded ? 0.5 : 1,
-                    }}
+                    style={[
+                      styles.touchable5,
+                      {
+                        opacity: haveContactsBeenAdded ? 0.5 : 1,
+                      },
+                    ]}
                     disabled={haveContactsBeenAdded}>
                     <View style={styles.view3}>
                       <Text
-                        style={{
-                          borderRadius: 5,
-                          marginTop: 10,
-                          marginBottom: 10,
-                          textAlign: 'left',
-                          fontFamily: 'HighTide-Sans',
-                          opacity: haveContactsBeenAdded ? 0.5 : 1,
-                        }}>
+                        style={[
+                          styles.text20,
+                          {
+                            opacity: haveContactsBeenAdded ? 0.5 : 1,
+                          },
+                        ]}>
                         {"Get Your Group's Contact Info"}
                       </Text>
                       {haveContactsBeenAdded && (
@@ -688,13 +679,7 @@ const HomeScreen: FC = () => {
                     <Image
                       style={styles.image3}
                       source={require('../../Images/emailaddressicon.png')}></Image>
-                    <Text
-                      style={{
-                        marginLeft: 10,
-                        marginTop: 10,
-                        fontFamily: 'HighTide-Sans',
-                        maxWidth: screenWidth * 0.7,
-                      }}>
+                    <Text style={styles.text21}>
                       {'Email Address: '}
                       <Text style={styles.text5}>{email}</Text>
                     </Text>
@@ -703,13 +688,7 @@ const HomeScreen: FC = () => {
                     <Image
                       style={styles.image4}
                       source={require('../../Images/phonenumbericon.png')}></Image>
-                    <Text
-                      style={{
-                        marginLeft: 10,
-                        marginTop: 10,
-                        fontFamily: 'HighTide-Sans',
-                        maxWidth: screenWidth * 0.7,
-                      }}>
+                    <Text style={styles.text22}>
                       {'Phone number: '}
                       <Text style={styles.text6}>{phoneNumber}</Text>
                     </Text>
@@ -718,73 +697,33 @@ const HomeScreen: FC = () => {
                     <Image
                       style={styles.image5}
                       source={require('../../Images/appicon.png')}></Image>
-                    <Text
-                      style={{
-                        marginLeft: 10,
-                        marginTop: 10,
-                        fontFamily: 'HighTide-Sans',
-                        maxWidth: screenWidth * 0.7,
-                      }}>
+                    <Text style={styles.text23}>
                       {'Full name: '}
                       <Text style={styles.text7}>{fullName}</Text>
                     </Text>
                   </View>
                   <View style={styles.view8}>
-                    <Text
-                      style={{
-                        marginLeft: 10,
-                        marginTop: 10,
-                        marginBottom: 10,
-                        fontFamily: 'HighTide-Sans',
-                        maxWidth: screenWidth * 0.7,
-                      }}>
+                    <Text style={styles.text24}>
                       {'Emergency Contact Name: '}
                       <Text style={styles.text8}>{emergencyContact}</Text>
                     </Text>
                   </View>
-                  <View
-                    style={{
-                      backgroundColor: '#b6e7cc',
-                      margin: 10,
-                      borderRadius: 5,
-                    }}>
-                    <Text
-                      style={{
-                        marginLeft: 10,
-                        marginTop: 10,
-                        marginBottom: 10,
-                        fontFamily: 'HighTide-Sans',
-                        maxWidth: screenWidth * 0.7,
-                      }}>
+                  <View style={styles.view18}>
+                    <Text style={styles.text25}>
                       {'Emergency Contact Phone: '}
                       <Text style={styles.text9}>{emergencyContactPhone}</Text>
                     </Text>
                   </View>
                 </View>
                 <View style={styles.view10}>
-                  <Text
-                    style={{
-                      marginLeft: 10,
-                      marginBottom: 10,
-                      marginTop: 10,
-                      fontFamily: 'HighTide-Sans',
-                      maxWidth: screenWidth * 0.7,
-                    }}>
+                  <Text style={styles.text26}>
                     {'Bio: '}
                     <Text style={styles.text10}>{bio}</Text>
                   </Text>
                 </View>
                 <TouchableOpacity
                   onPress={onEditPress}
-                  style={{
-                    backgroundColor: '#e7b6cc',
-                    borderRadius: 5,
-                    marginLeft: screenWidth * 0.72,
-                    marginBottom: 20,
-                    width: 100,
-                    borderWidth: 1,
-                    borderColor: '#eee7da',
-                  }}>
+                  style={styles.touchable6}>
                   <Text style={styles.text11}>{'Edit'}</Text>
                 </TouchableOpacity>
               </>
@@ -797,12 +736,12 @@ const HomeScreen: FC = () => {
                 <View style={styles.view11}>
                   {url === undefined ? (
                     <Animated.Image
-                      style={{
-                        height: 300,
-                        width: screenWidth * 0.95,
-                        borderRadius: 5,
-                        opacity: fadeAnim,
-                      }}
+                      style={[
+                        styles.animated4,
+                        {
+                          opacity: fadeAnim,
+                        },
+                      ]}
                       source={
                         !userPhoto
                           ? require('../../Images/profilepictureicon.png')
@@ -811,14 +750,12 @@ const HomeScreen: FC = () => {
                     />
                   ) : (
                     <Animated.Image
-                      style={{
-                        height: 300,
-                        width: screenWidth * 0.95,
-                        borderRadius: 5,
-                        opacity: fadeAnim,
-                        borderColor: '#eee7da',
-                        borderWidth: 2,
-                      }}
+                      style={[
+                        styles.animated5,
+                        {
+                          opacity: fadeAnim,
+                        },
+                      ]}
                       source={{uri: userPhoto || url}}
                     />
                   )}
@@ -828,13 +765,12 @@ const HomeScreen: FC = () => {
                     <Text style={styles.text13}>{'Upload Photo ?'}</Text>
                     <TouchableOpacity onPress={openPicker}>
                       <Animated.Image
-                        style={{
-                          height: 50,
-                          width: 50,
-                          borderRadius: 5,
-                          marginRight: 20,
-                          transform: [{translateX}],
-                        }}
+                        style={[
+                          styles.animated6,
+                          {
+                            transform: [{translateX}],
+                          },
+                        ]}
                         source={require('../../Images/camerapictureicon.png')}></Animated.Image>
                     </TouchableOpacity>
                   </View>
@@ -842,13 +778,12 @@ const HomeScreen: FC = () => {
                     <Text style={styles.text14}>{'Upload NDA?'}</Text>
                     <TouchableOpacity onPress={toggleDocPickerSwitch}>
                       <Animated.Image
-                        style={{
-                          marginLeft: 23,
-                          height: 50,
-                          width: 50,
-                          borderRadius: 5,
-                          transform: [{translateX}],
-                        }}
+                        style={[
+                          styles.animated7,
+                          {
+                            transform: [{translateX}],
+                          },
+                        ]}
                         source={require('../../Images/ndaicon.png')}></Animated.Image>
                     </TouchableOpacity>
                   </View>
@@ -871,19 +806,7 @@ const HomeScreen: FC = () => {
                     placeholder=" full name"
                     onChangeText={fullName => setFullName(fullName)}
                     secureTextEntry={false}
-                    style={{
-                      fontFamily: 'HighTide-Sans',
-                      backgroundColor: '#eee7da',
-                      marginHorizontal: 10,
-                      marginBottom: 10,
-                      marginTop: 5,
-                      borderRadius: 5,
-                      minHeight: 50,
-                      borderWidth: 1,
-                      borderColor: '#5A6472',
-                      borderBottomWidth: 3,
-                      width: screenWidth * 0.9,
-                    }}></TextInput>
+                    style={styles.textInput1}></TextInput>
                   <View style={styles.view16}>
                     <Text style={styles.text16}>{'Phone Number'}</Text>
                   </View>
@@ -892,19 +815,7 @@ const HomeScreen: FC = () => {
                     placeholder=" phone number"
                     onChangeText={phoneNumber => setPhoneNumber(phoneNumber)}
                     secureTextEntry={false}
-                    style={{
-                      fontFamily: 'HighTide-Sans',
-                      backgroundColor: '#eee7da',
-                      marginHorizontal: 10,
-                      marginBottom: 10,
-                      marginTop: 5,
-                      borderRadius: 5,
-                      minHeight: 50,
-                      borderWidth: 1,
-                      borderColor: '#5A6472',
-                      borderBottomWidth: 3,
-                      width: screenWidth * 0.9,
-                    }}></TextInput>
+                    style={styles.textInput2}></TextInput>
                   <View style={styles.view17}>
                     <Text style={styles.text17}>{'Address'}</Text>
                   </View>
@@ -913,30 +824,9 @@ const HomeScreen: FC = () => {
                     placeholder=" address"
                     onChangeText={address => setAddress(address)}
                     secureTextEntry={false}
-                    style={{
-                      fontFamily: 'HighTide-Sans',
-                      backgroundColor: '#eee7da',
-                      marginHorizontal: 10,
-                      marginBottom: 10,
-                      marginTop: 5,
-                      borderRadius: 5,
-                      minHeight: 50,
-                      borderWidth: 1,
-                      borderBottomWidth: 3,
-                      borderColor: '#5A6472',
-                      width: screenWidth * 0.9,
-                    }}></TextInput>
-                  <View
-                    style={{
-                      flex: 1,
-                      alignSelf: 'flex-start',
-                    }}>
-                    <Text
-                      style={{
-                        marginLeft: 25,
-                        marginTop: 10,
-                        fontFamily: 'HighTide-Sans',
-                      }}>
+                    style={styles.textInput3}></TextInput>
+                  <View style={styles.view19}>
+                    <Text style={styles.text18}>
                       {'Emergency Contact Name'}
                     </Text>
                   </View>
@@ -947,30 +837,9 @@ const HomeScreen: FC = () => {
                       setEmergencyContact(emergencyContact)
                     }
                     secureTextEntry={false}
-                    style={{
-                      fontFamily: 'HighTide-Sans',
-                      backgroundColor: '#eee7da',
-                      marginHorizontal: 10,
-                      marginBottom: 10,
-                      marginTop: 5,
-                      borderRadius: 5,
-                      minHeight: 50,
-                      borderWidth: 1,
-                      borderBottomWidth: 3,
-                      borderColor: '#5A6472',
-                      width: screenWidth * 0.9,
-                    }}></TextInput>
-                  <View
-                    style={{
-                      flex: 1,
-                      alignSelf: 'flex-start',
-                    }}>
-                    <Text
-                      style={{
-                        marginLeft: 25,
-                        marginTop: 10,
-                        fontFamily: 'HighTide-Sans',
-                      }}>
+                    style={styles.textInput4}></TextInput>
+                  <View style={styles.view20}>
+                    <Text style={styles.text19}>
                       {'Emergency Contact Phone'}
                     </Text>
                   </View>
@@ -981,32 +850,9 @@ const HomeScreen: FC = () => {
                       setEmergencyContactPhone(emergencyContactPhone)
                     }
                     secureTextEntry={false}
-                    style={{
-                      fontFamily: 'HighTide-Sans',
-                      backgroundColor: '#eee7da',
-                      marginHorizontal: 10,
-                      marginBottom: 10,
-                      marginTop: 5,
-                      borderRadius: 5,
-                      minHeight: 50,
-                      borderWidth: 1,
-                      borderBottomWidth: 3,
-                      borderColor: '#5A6472',
-                      width: screenWidth * 0.9,
-                    }}></TextInput>
-                  <View
-                    style={{
-                      flex: 1,
-                      alignSelf: 'flex-start',
-                    }}>
-                    <Text
-                      style={{
-                        marginLeft: 25,
-                        marginTop: 10,
-                        fontFamily: 'HighTide-Sans',
-                      }}>
-                      {'Bio'}
-                    </Text>
+                    style={styles.textInput5}></TextInput>
+                  <View style={styles.view21}>
+                    <Text style={styles.text27}>{'Bio'}</Text>
                   </View>
                   <TextInput
                     value={bio}
@@ -1015,18 +861,7 @@ const HomeScreen: FC = () => {
                     secureTextEntry={false}
                     multiline={true}
                     maxLength={2000}
-                    style={{
-                      fontFamily: 'HighTide-Sans',
-                      backgroundColor: '#eee7da',
-                      marginBottom: 10,
-                      marginTop: 5,
-                      borderRadius: 5,
-                      minHeight: 50,
-                      borderWidth: 1,
-                      borderBottomWidth: 3,
-                      borderColor: '#5A6472',
-                      width: screenWidth * 0.9,
-                    }}></TextInput>
+                    style={styles.textInput6}></TextInput>
                 </View>
                 <View style={styles.nestedView6}>
                   <View
@@ -1036,20 +871,12 @@ const HomeScreen: FC = () => {
                     ]}>
                     {showCameraIcon ? (
                       <Image
-                        style={{
-                          height: 75,
-                          width: 75,
-                          borderRadius: 5,
-                        }}
+                        style={styles.image6}
                         source={require('../../Images/cameraIcon_Hollis.png')}></Image>
                     ) : (
                       !showCameraIcon && (
                         <Image
-                          style={{
-                            height: 75,
-                            width: 75,
-                            borderRadius: 5,
-                          }}
+                          style={styles.image7}
                           source={require('../../Images/checkIcon_Hollis.png')}></Image>
                       )
                     )}
@@ -1061,20 +888,12 @@ const HomeScreen: FC = () => {
                     ]}>
                     {showCheckListIcon ? (
                       <Image
-                        style={{
-                          height: 75,
-                          width: 75,
-                          borderRadius: 5,
-                        }}
+                        style={styles.image8}
                         source={require('../../Images/checklistIcon_Hollis.png')}></Image>
                     ) : (
                       !showCheckListIcon && (
                         <Image
-                          style={{
-                            height: 75,
-                            width: 75,
-                            borderRadius: 5,
-                          }}
+                          style={styles.image9}
                           source={require('../../Images/checkIcon_Hollis.png')}></Image>
                       )
                     )}
@@ -1086,20 +905,12 @@ const HomeScreen: FC = () => {
                     ]}>
                     {showFolderIcon ? (
                       <Image
-                        style={{
-                          height: 75,
-                          width: 75,
-                          borderRadius: 5,
-                        }}
+                        style={styles.image10}
                         source={require('../../Images/folderIcon_Hollis.png')}></Image>
                     ) : (
                       !showFolderIcon && (
                         <Image
-                          style={{
-                            height: 75,
-                            width: 75,
-                            borderRadius: 5,
-                          }}
+                          style={styles.image11}
                           source={require('../../Images/checkIcon_Hollis.png')}></Image>
                       )
                     )}
@@ -1110,28 +921,8 @@ const HomeScreen: FC = () => {
             {!dataFlag && (
               <TouchableOpacity
                 onPress={onPressSubmit}
-                style={{
-                  backgroundColor: '#e7b6cc',
-                  minHeight: 50,
-                  width: screenWidth * 0.7,
-                  justifyContent: 'center',
-                  borderRadius: 5,
-                  borderWidth: 2,
-                  borderColor: '#eee7da',
-                  marginHorizontal: 10,
-                  marginTop: 10,
-                  marginBottom: 10,
-                  alignSelf: 'center',
-                }}>
-                <Text
-                  style={{
-                    color: '#0c0b09',
-                    fontSize: 21,
-                    textAlign: 'center',
-                    fontFamily: 'HighTide-Sans',
-                  }}>
-                  {'Submit'}
-                </Text>
+                style={styles.touchable7}>
+                <Text style={styles.text28}>{'Submit'}</Text>
               </TouchableOpacity>
             )}
           </ImageBackground>
@@ -1146,31 +937,12 @@ const HomeScreen: FC = () => {
           <View style={styles.modalView2}>
             <View style={styles.modalView3}>
               {successMessage && !docPickerState ? (
-                <Text
-                  style={{
-                    textAlign: 'center',
-                    color: '#0c0b09',
-                    fontSize: 16,
-                    borderRadius: 5,
-                    marginLeft: 5,
-                    marginRight: 5,
-                    borderColor: '#0c0b09',
-                    fontFamily: 'HighTide-Sans',
-                  }}>
+                <Text style={styles.text29}>
                   {'Are you sure you want to make this change? '}
                 </Text>
               ) : (
                 !docPickerState && (
-                  <Text
-                    style={{
-                      textAlign: 'center',
-                      color: '#0c0b09',
-                      fontSize: 18,
-                      borderRadius: 5,
-                      marginLeft: 5,
-                      marginRight: 5,
-                      fontFamily: 'HighTide-Sans',
-                    }}>
+                  <Text style={styles.text30}>
                     {'Would you like to edit your information?'}
                   </Text>
                 )
@@ -1185,48 +957,12 @@ const HomeScreen: FC = () => {
               {!docPickerState && (
                 <TouchableOpacity
                   onPress={successMessage ? onPressYesSubmit : onPressYes}
-                  style={{
-                    // backgroundColor: '#b6e7cc',
-                    backgroundColor: '#e7b6cc',
-                    borderRadius: 5,
-                    margin: 10,
-                    width: 100,
-                    borderWidth: 2,
-                    borderColor: '#eee7da',
-                  }}>
-                  <Text
-                    style={{
-                      color: '#0c0b09',
-                      fontSize: 12,
-                      fontWeight: '600',
-                      margin: 10,
-                      textAlign: 'center',
-                      fontFamily: 'HighTide-Sans',
-                    }}>
-                    {'Yes'}
-                  </Text>
+                  style={styles.touchable8}>
+                  <Text style={styles.text31}>{'Yes'}</Text>
                 </TouchableOpacity>
               )}
-              <TouchableOpacity
-                onPress={onPressNo}
-                style={{
-                  //aqua blue
-                  backgroundColor: '#e7b6cc',
-                  borderRadius: 5,
-                  margin: 10,
-                  width: 100,
-                  borderWidth: 2,
-                  borderColor: '#eee7da',
-                }}>
-                <Text
-                  style={{
-                    color: '#0c0b09',
-                    fontSize: 12,
-                    fontWeight: '600',
-                    margin: 10,
-                    textAlign: 'center',
-                    fontFamily: 'HighTide-Sans',
-                  }}>
+              <TouchableOpacity onPress={onPressNo} style={styles.touchable9}>
+                <Text style={styles.text32}>
                   {!docPickerState ? 'No' : 'Cancel'}
                 </Text>
               </TouchableOpacity>
@@ -1240,28 +976,19 @@ const HomeScreen: FC = () => {
         transparent={true}
         onRequestClose={toggleBackgroundPhotoModal}>
         <View style={styles.modalView5}>
-          <View
-            style={{
-              flexDirection: 'row',
-              flexWrap: 'wrap',
-              justifyContent: 'space-evenly',
-              backgroundColor: '#b6e7cc',
-              height: 400,
-              width: '80%',
-              borderRadius: 5,
-            }}>
+          <View style={styles.view22}>
             <TouchableOpacity
               onPress={onPressCloseModal}
-              style={{position: 'absolute', top: 10, right: 15}}>
+              style={styles.touchable10}>
               <Image
-                style={{height: 25, width: 25}}
+                style={styles.image12}
                 source={require('../../Images/close2.png')}
               />
             </TouchableOpacity>
             {!showTripModal && !modalVisible3 && (
               <>
                 <TouchableOpacity
-                  style={{marginTop: 50}}
+                  style={styles.touchable11}
                   onPress={onPressFirstBackgroundPhoto}>
                   <Image
                     style={[
@@ -1272,7 +999,7 @@ const HomeScreen: FC = () => {
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={onPressSecondBackgroundPhoto}
-                  style={{marginTop: 50}}>
+                  style={styles.touchable12}>
                   <Image
                     style={[
                       !secondPhotoPressed && styles.backgroundBefore,
@@ -1282,7 +1009,7 @@ const HomeScreen: FC = () => {
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={onPressThirdBackgroundPhoto}
-                  style={{marginTop: 50}}>
+                  style={styles.touchable13}>
                   <Image
                     style={[
                       !thirdPhotoPressed && styles.backgroundBefore,
@@ -1305,105 +1032,31 @@ const HomeScreen: FC = () => {
             {showTripModal && !modalVisible3 && (
               <>
                 <TouchableOpacity
-                  style={{
-                    height: 100,
-                    width: screenWidth * 0.4,
-                    marginRight: 10,
-                    marginTop: 75,
-                    marginLeft: 10,
-                    backgroundColor: '#eee7da',
-                    borderRadius: 5,
-                  }}
+                  style={styles.touchable14}
                   onPress={onPressTripDest}>
-                  <Text
-                    style={{
-                      borderRadius: 5,
-                      textAlign: 'center',
-                      marginTop: 40,
-                      marginBottom: 10,
-                      fontFamily: 'HighTide-Sans',
-                      fontSize: 18,
-                    }}>
-                    {"Valle Crucis 24'"}
-                  </Text>
+                  <Text style={styles.text33}>{"Valle Crucis 24'"}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                  style={{
-                    height: 100,
-                    width: screenWidth * 0.4,
-                    marginRight: 10,
-                    marginTop: 60,
-                    marginLeft: 10,
-                    backgroundColor: '#eee7da',
-                    borderRadius: 5,
-                  }}
+                  style={styles.touchable15}
                   onPress={onPressTripDest}>
-                  <Text
-                    style={{
-                      borderRadius: 5,
-                      textAlign: 'center',
-                      marginTop: 40,
-                      marginBottom: 10,
-                      fontFamily: 'HighTide-Sans',
-                      fontSize: 18,
-                    }}>
-                    {"Cozumel 25'"}
-                  </Text>
+                  <Text style={styles.text34}>{"Cozumel 25'"}</Text>
                 </TouchableOpacity>
               </>
             )}
             {modalVisible3 && (
               <>
                 <View style={{}}>
-                  <Text
-                    style={{
-                      alignSelf: 'center',
-                      marginTop: 20,
-                      fontFamily: 'HighTide-Sans',
-                      fontSize: 18,
-                    }}>
-                    Valle Crucis 24'
-                  </Text>
-                  <View
-                    style={{
-                      marginTop: 20,
-                      backgroundColor: 'pink',
-                      maxHeight: screenHeight * 0.3,
-                      borderRadius: 10,
-                    }}>
+                  <Text style={styles.text35}>Valle Crucis 24'</Text>
+                  <View style={styles.view23}>
                     <FlatList
                       data={users}
                       renderItem={({item}) => (
-                        <View style={{width: screenWidth * 0.6, marginTop: 10}}>
-                          <View
-                            style={{
-                              borderTopColor: '#b6e7cc',
-                              borderTopWidth: 3,
-                            }}>
-                            <Text
-                              style={{
-                                borderRadius: 5,
-                                textAlign: 'left',
-                                marginTop: 30,
-                                marginBottom: 10,
-                                marginLeft: 5,
-                                fontFamily: 'HighTide-Sans',
-                                fontSize: 18,
-                              }}>
-                              {item.username}
-                            </Text>
+                        <View style={styles.flatList}>
+                          <View style={styles.view24}>
+                            <Text style={styles.text36}>{item.username}</Text>
                           </View>
                           <View>
-                            <Text
-                              style={{
-                                borderRadius: 5,
-                                textAlign: 'left',
-                                marginTop: 10,
-                                marginBottom: 10,
-                                marginLeft: 5,
-                                fontFamily: 'HighTide-Sans',
-                                fontSize: 18,
-                              }}>
+                            <Text style={styles.text37}>
                               {`Mobile: ${
                                 item.phoneNumbers.mobile || ''
                               }\nMain: ${
@@ -1421,55 +1074,16 @@ const HomeScreen: FC = () => {
                     />
                   </View>
                 </View>
-                <View
-                  style={{
-                    marginTop: 10,
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                  }}>
+                <View style={styles.view25}>
                   <TouchableOpacity
                     onPress={() => copyToClipboard(users)}
-                    style={{
-                      backgroundColor: '#b6e7cc',
-                      borderRadius: 5,
-                      margin: 10,
-                      width: 100,
-                      borderWidth: 1,
-                      borderColor: '#eee7da',
-                    }}>
-                    <Text
-                      style={{
-                        color: '#0c0b09',
-                        fontSize: 12,
-                        fontWeight: '600',
-                        margin: 10,
-                        textAlign: 'center',
-                        fontFamily: 'HighTide-Sans',
-                      }}>
-                      {'Copy Group Contact'}
-                    </Text>
+                    style={styles.touchable16}>
+                    <Text style={styles.text38}>{'Copy Group Contact'}</Text>
                   </TouchableOpacity>
                   <TouchableOpacity
                     onPress={onPressOpenContacts}
-                    style={{
-                      backgroundColor: '#b6e7cc',
-                      borderRadius: 5,
-                      margin: 10,
-                      width: 100,
-                      borderWidth: 1,
-                      borderColor: '#eee7da',
-                    }}>
-                    <Text
-                      style={{
-                        color: '#0c0b09',
-                        fontSize: 12,
-                        fontWeight: '600',
-                        margin: 10,
-                        textAlign: 'center',
-                        fontFamily: 'HighTide-Sans',
-                      }}>
-                      {'Open Contacts'}
-                    </Text>
+                    style={styles.touchable17}>
+                    <Text style={styles.text39}>{'Open Contacts'}</Text>
                   </TouchableOpacity>
                 </View>
               </>
