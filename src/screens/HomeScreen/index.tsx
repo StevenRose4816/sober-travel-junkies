@@ -14,7 +14,6 @@ import {
   ImageBackground,
   FlatList,
   Platform,
-  Linking,
   PermissionsAndroid,
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
@@ -23,7 +22,7 @@ import {useAppSelector} from '../../hooks';
 import {db} from '../HomeScreen/FirebaseConfigurations';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
-import {setBackgroundPhoto, setUserPhoto} from '../../store/user/slice';
+import {setUserPhoto} from '../../store/user/slice';
 import {DocPicker} from '../../components/DocumentPicker';
 import {setSelected} from '../../store/user/slice';
 import {setSelectedDocument} from '../../store/document/slice';

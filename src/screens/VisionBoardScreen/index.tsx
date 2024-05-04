@@ -40,7 +40,7 @@ export const VisionBoardScreen: FC = () => {
     pageY: 0,
   });
   const [stickyDragPosition, setStickyDragPosition] = useState({
-    x: screenWidth / 2 - 55,
+    x: screenWidth / 2 - 60,
     y: 200,
     pageX: 0,
     pageY: 0,
@@ -71,6 +71,7 @@ export const VisionBoardScreen: FC = () => {
   const visionBoardFromState = useAppSelector(
     state => state.globalStore.visionBoardUrl,
   );
+  const [showWelcomeModal, setShowWelcomeModal] = useState(true);
 
   const capScreen = async () => {
     try {
@@ -212,6 +213,11 @@ export const VisionBoardScreen: FC = () => {
       setStickySize({fontSize: 8, maxWidth: 40});
       setStickyShortPressCount(0);
     }
+  };
+
+  const onPressIAgree = () => {
+    console.log('pressed');
+    setShowWelcomeModal(!showWelcomeModal);
   };
 
   return (
@@ -388,7 +394,7 @@ export const VisionBoardScreen: FC = () => {
         </View>
       )}
       <Modal
-        visible={modalVisible}
+        visible={modalVisible || showWelcomeModal}
         animationType={'slide'}
         transparent={true}
         onRequestClose={toggleModal}>
@@ -416,7 +422,7 @@ export const VisionBoardScreen: FC = () => {
               />
             </TouchableOpacity>
             <View style={{alignItems: 'center', justifyContent: 'center'}}>
-              {!updatedBool && (
+              {!updatedBool && !showWelcomeModal && (
                 <>
                   <Text
                     style={{
@@ -449,7 +455,7 @@ export const VisionBoardScreen: FC = () => {
                     }}></TextInput>
                 </>
               )}
-              {updatedBool && (
+              {updatedBool && !showWelcomeModal && (
                 <Text
                   style={{
                     color: '#0c0b09',
@@ -463,8 +469,37 @@ export const VisionBoardScreen: FC = () => {
                   Do you want to update the board?
                 </Text>
               )}
+              {showWelcomeModal && (
+                <>
+                  <Text
+                    style={{
+                      marginTop: 40,
+                      color: '#0c0b09',
+                      fontFamily: 'HighTide-Sans',
+                      textAlign: 'center',
+                    }}>
+                    Welcome to the Vision Board!
+                  </Text>
+                  <Text
+                    style={{
+                      marginTop: 40,
+                      color: '#0c0b09',
+                      fontFamily: 'HighTide-Sans',
+                      textAlign: 'center',
+                      maxWidth: '90%',
+                    }}>
+                    Post one image and/or one note at a time.
+                  </Text>
+                </>
+              )}
               <TouchableOpacity
-                onPress={!updatedBool ? onSubmitNote : onUpdateBoard}
+                onPress={
+                  !updatedBool && !showWelcomeModal
+                    ? onSubmitNote
+                    : showWelcomeModal
+                    ? onPressIAgree
+                    : onUpdateBoard
+                }
                 style={{
                   backgroundColor: '#e7b6cc',
                   borderRadius: 5,
@@ -482,7 +517,11 @@ export const VisionBoardScreen: FC = () => {
                     textAlign: 'center',
                     fontFamily: 'HighTide-Sans',
                   }}>
-                  {!updatedBool ? 'Submit' : 'Update'}
+                  {!updatedBool && !showWelcomeModal
+                    ? 'Submit'
+                    : showWelcomeModal
+                    ? 'I agree.'
+                    : 'Update'}
                 </Text>
               </TouchableOpacity>
             </View>
