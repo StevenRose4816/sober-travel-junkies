@@ -12,6 +12,7 @@ import {
 import auth from '@react-native-firebase/auth';
 import {setNewUser} from '../../store/globalStore/slice';
 import {useDispatch} from 'react-redux';
+import styles from './styles';
 
 const LoginScreen: FC = () => {
   const dispatch = useDispatch();
@@ -86,27 +87,12 @@ const LoginScreen: FC = () => {
   return (
     <ImageBackground
       source={require('../../Images/STJLogin.jpeg')}
-      style={{
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}>
+      style={styles.imageBackground1}>
       <Image
         source={require('../../Images/STJ.png')}
-        style={{height: 275, width: 275, marginTop: 50}}></Image>
+        style={styles.image1}></Image>
       <TextInput
-        style={{
-          backgroundColor: '#0c0b09',
-          color: '#eee7da',
-          width: 175,
-          marginHorizontal: 10,
-          borderRadius: 10,
-          minHeight: 40,
-          borderWidth: 1,
-          borderColor: 'black',
-          textAlign: 'center',
-          fontFamily: 'Vonique64',
-        }}
+        style={styles.textInput1}
         placeholder=" email"
         placeholderTextColor={'#eee7da'}
         autoCapitalize={'none'}
@@ -114,20 +100,7 @@ const LoginScreen: FC = () => {
         onChangeText={email => setEmail(email)}
       />
       <TextInput
-        style={{
-          textAlign: 'center',
-          width: 175,
-          backgroundColor: '#0c0b09',
-          color: '#eee7da',
-          marginHorizontal: 10,
-          marginBottom: 10,
-          marginTop: 5,
-          borderRadius: 10,
-          minHeight: 40,
-          borderWidth: 1,
-          borderColor: 'black',
-          fontFamily: 'Vonique64',
-        }}
+        style={styles.textInput2}
         placeholder=" password"
         placeholderTextColor={'#eee7da'}
         value={password}
@@ -136,141 +109,51 @@ const LoginScreen: FC = () => {
       />
       <TouchableOpacity
         onPress={login}
-        style={{
-          backgroundColor: '#b6e7cc',
-          minHeight: 35,
-          width: screenWidth * 0.3,
-          justifyContent: 'center',
-          borderRadius: 10,
-          marginHorizontal: 10,
-          marginTop: 10,
-          marginBottom: 10,
-        }}>
-        <Text
-          style={{
-            color: '#0c0b09',
-            fontSize: 14,
-            textAlign: 'center',
-            fontFamily: 'Vonique64',
-            marginTop: 5,
-          }}>
-          {'LOGIN'}
-        </Text>
+        style={[
+          styles.touchable1,
+          {
+            width: screenWidth * 0.3,
+          },
+        ]}>
+        <Text style={styles.text1}>{'LOGIN'}</Text>
       </TouchableOpacity>
-      <View
-        style={{
-          flex: 1,
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}>
+      <View style={styles.view1}>
         <Image
           source={require('../../Images/arrowRight.png')}
-          style={{
-            height: 125,
-            width: 125,
-            marginRight: 10,
-            marginTop: 10,
-          }}></Image>
-        <Text
-          style={{
-            color: '#0c0b09',
-            fontSize: 12,
-            fontFamily: 'Vonique64',
-            textAlign: 'center',
-          }}>
-          {'OR'}
-        </Text>
+          style={styles.image2}></Image>
+        <Text style={styles.text2}>{'OR'}</Text>
         <Image
           source={require('../../Images/arrowLeft.png')}
-          style={{
-            height: 125,
-            width: 125,
-            marginLeft: 10,
-            marginTop: 10,
-          }}></Image>
+          style={styles.image3}></Image>
       </View>
       <TouchableOpacity
         onPress={() => onPressCreateAccount()}
-        style={{
-          backgroundColor: '#b6e7cc',
-          minHeight: 35,
-          width: screenWidth * 0.4,
-          justifyContent: 'center',
-          borderRadius: 10,
-          marginBottom: 80,
-          marginTop: 10,
-        }}>
-        <Text
-          style={{
-            color: '#0c0b09',
-            fontSize: 12,
-            textAlign: 'center',
-            marginLeft: 10,
-            marginRight: 10,
-            marginTop: 5,
-            fontFamily: 'Vonique64',
-          }}>
-          {'CREATE ACCOUNT'}
-        </Text>
+        style={[
+          styles.touchable2,
+          {
+            width: screenWidth * 0.4,
+          },
+        ]}>
+        <Text style={styles.text3}>{'CREATE ACCOUNT'}</Text>
       </TouchableOpacity>
       <Modal
         visible={errorModalVisible}
         animationType={'fade'}
         transparent={true}
         onRequestClose={toggleErrorModal}>
-        <View
-          style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: 'rgba(0, 0, 0, 0.5)',
-          }}>
-          <View
-            style={{
-              backgroundColor: '#b6e7cc',
-              minHeight: 300,
-              width: '80%',
-              borderRadius: 5,
-              padding: 20,
-            }}>
-            <View
-              style={{
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}>
-              <Text
-                style={{
-                  textAlign: 'center',
-                  color: '#0c0b09',
-                  marginTop: 60,
-                  marginBottom: 50,
-                  fontFamily: 'HighTide-Sans',
-                }}>
-                {formattedErrorMessage}
-              </Text>
+        <View style={styles.view2}>
+          <View style={styles.view3}>
+            <View style={styles.view4}>
+              <Text style={styles.text4}>{formattedErrorMessage}</Text>
               <TouchableOpacity
                 onPress={closeErrorModal}
-                style={{
-                  backgroundColor: '#fb445c',
-                  minHeight: 35,
-                  width: screenWidth * 0.4,
-                  justifyContent: 'center',
-                  borderRadius: 10,
-                  marginTop: 10,
-                }}>
-                <Text
-                  style={{
-                    color: '#0c0b09',
-                    fontSize: 12,
-                    textAlign: 'center',
-                    marginLeft: 10,
-                    marginRight: 10,
-                    marginTop: 5,
-                    fontFamily: 'Vonique64',
-                  }}>
-                  {'Close'}
-                </Text>
+                style={[
+                  styles.touchable3,
+                  {
+                    width: screenWidth * 0.4,
+                  },
+                ]}>
+                <Text style={styles.text5}>{'Close'}</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -281,45 +164,20 @@ const LoginScreen: FC = () => {
         animationType={'slide'}
         transparent={true}
         onRequestClose={toggleSignupModal}>
-        <View
-          style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: 'rgba(0, 0, 0, 0.5)',
-          }}>
-          <View
-            style={{
-              backgroundColor: '#b6e7cc',
-              minHeight: 300,
-              width: '80%',
-              borderRadius: 5,
-              padding: 20,
-            }}>
+        <View style={styles.view5}>
+          <View style={styles.view6}>
             <TouchableOpacity
               onPress={closeSignupModal}
-              style={{alignSelf: 'flex-end'}}>
+              style={styles.touchable4}>
               <Image
-                style={{height: 25, width: 25}}
+                style={styles.image4}
                 source={require('../../Images/close2.png')}
               />
             </TouchableOpacity>
-            <View style={{alignItems: 'center', justifyContent: 'center'}}>
+            <View style={styles.view7}>
               <>
                 <TextInput
-                  style={{
-                    backgroundColor: '#0c0b09',
-                    color: '#eee7da',
-                    width: 175,
-                    marginBottom: 10,
-                    marginTop: 40,
-                    borderRadius: 10,
-                    minHeight: 40,
-                    borderWidth: 1,
-                    borderColor: 'black',
-                    textAlign: 'center',
-                    fontFamily: 'Vonique64',
-                  }}
+                  style={styles.textInput3}
                   placeholder=" email"
                   placeholderTextColor={'#eee7da'}
                   autoCapitalize={'none'}
@@ -327,18 +185,7 @@ const LoginScreen: FC = () => {
                   onChangeText={val => setEmailCreate(val)}
                 />
                 <TextInput
-                  style={{
-                    backgroundColor: '#0c0b09',
-                    color: '#eee7da',
-                    width: 175,
-                    marginHorizontal: 10,
-                    borderRadius: 10,
-                    minHeight: 40,
-                    borderWidth: 1,
-                    borderColor: 'black',
-                    textAlign: 'center',
-                    fontFamily: 'Vonique64',
-                  }}
+                  style={styles.textInput4}
                   placeholder=" password"
                   placeholderTextColor={'#eee7da'}
                   autoCapitalize={'none'}
@@ -349,26 +196,13 @@ const LoginScreen: FC = () => {
               </>
               <TouchableOpacity
                 onPress={signUp}
-                style={{
-                  backgroundColor: '#fb445c',
-                  minHeight: 35,
-                  width: screenWidth * 0.4,
-                  justifyContent: 'center',
-                  borderRadius: 10,
-                  marginTop: 10,
-                }}>
-                <Text
-                  style={{
-                    color: '#0c0b09',
-                    fontSize: 12,
-                    textAlign: 'center',
-                    marginLeft: 10,
-                    marginRight: 10,
-                    marginTop: 5,
-                    fontFamily: 'Vonique64',
-                  }}>
-                  {'Submit'}
-                </Text>
+                style={[
+                  styles.textInput5,
+                  {
+                    width: screenWidth * 0.4,
+                  },
+                ]}>
+                <Text style={styles.text6}>{'Submit'}</Text>
               </TouchableOpacity>
             </View>
           </View>

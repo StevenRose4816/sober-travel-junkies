@@ -5,7 +5,7 @@ export interface IUserInfo {
   address?: string;
   name?: string;
   newUser?: boolean;
-  visionBoardUrl: string | undefined;
+  visionBoardUrl?: string | undefined;
 }
 
 const initialState: IUserInfo = {
