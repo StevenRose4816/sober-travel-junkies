@@ -193,40 +193,15 @@ const HomeScreen: FC = () => {
     navigation.setOptions({
       headerLeft: () =>
         showBackButton && (
-          <TouchableOpacity
-            onPress={onPressGoBack}
-            style={{
-              width: 20,
-            }}>
+          <TouchableOpacity onPress={onPressGoBack} style={styles.touchable18}>
             <Image
               source={require('../../Images/caret_left.png')}
-              style={{
-                height: 20,
-                width: 20,
-              }}></Image>
+              style={styles.image13}></Image>
           </TouchableOpacity>
         ),
       headerRight: () => (
-        <TouchableOpacity
-          onPress={logout}
-          style={{
-            backgroundColor: '#b6e7cc',
-            borderRadius: 5,
-            width: 65,
-            borderWidth: 2,
-            borderColor: '#eee7da',
-          }}>
-          <Text
-            style={{
-              color: '#0c0b09',
-              textAlign: 'center',
-              marginTop: 5,
-              marginBottom: 5,
-              fontSize: 12,
-              fontFamily: 'HighTide-Sans',
-            }}>
-            {'Log out'}
-          </Text>
+        <TouchableOpacity onPress={logout} style={styles.touchable19}>
+          <Text style={styles.text40}>{'Log out'}</Text>
         </TouchableOpacity>
       ),
     });
@@ -584,8 +559,8 @@ const HomeScreen: FC = () => {
       {(data || newUser) && (
         <ScrollView ref={scrollViewRef} style={styles.scrollView1}>
           <ImageBackground
-            style={{flex: 1}}
-            imageStyle={{opacity: 0.3}}
+            style={styles.imageBackground2}
+            imageStyle={styles.imageBackground1}
             source={source()}>
             <View style={styles.nestedView1}>
               <Animated.Image

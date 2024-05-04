@@ -144,6 +144,16 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#eee7da',
   },
+  touchable18: {
+    width: 20,
+  },
+  touchable19: {
+    backgroundColor: '#b6e7cc',
+    borderRadius: 5,
+    width: 65,
+    borderWidth: 2,
+    borderColor: '#eee7da',
+  },
   view3: {
     flex: 1,
     flexDirection: 'row',
@@ -207,6 +217,10 @@ const styles = StyleSheet.create({
   image12: {
     height: 25,
     width: 25,
+  },
+  image13: {
+    height: 20,
+    width: 20,
   },
   text3: {
     marginLeft: 10,
@@ -433,6 +447,20 @@ const styles = StyleSheet.create({
     margin: 10,
     textAlign: 'center',
     fontFamily: 'HighTide-Sans',
+  },
+  text40: {
+    color: '#0c0b09',
+    textAlign: 'center',
+    marginTop: 5,
+    marginBottom: 5,
+    fontSize: 12,
+    fontFamily: 'HighTide-Sans',
+  },
+  imageBackground1: {
+    opacity: 0.3,
+  },
+  imageBackground2: {
+    flex: 1,
   },
   textInput1: {
     fontFamily: 'HighTide-Sans',
