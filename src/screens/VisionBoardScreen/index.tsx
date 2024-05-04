@@ -2,7 +2,6 @@ import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {FC, useEffect, useState} from 'react';
 import {
-  Alert,
   Dimensions,
   Image,
   ImageBackground,
@@ -127,7 +126,7 @@ export const VisionBoardScreen: FC = () => {
     const task = storage().ref('visionBoardScreenShot').putFile(uploadUri);
     try {
       await task;
-      Alert.alert('Vision Board has updated in Firebase Cloud Storage.');
+      console.log('Vision Board has updated in Firebase Cloud Storage.');
       readFromStorage('visionBoardScreenShot');
     } catch (e) {
       console.error(e);

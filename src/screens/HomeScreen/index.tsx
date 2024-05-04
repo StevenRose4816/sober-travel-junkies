@@ -35,6 +35,7 @@ import {
   setContacts as setTheseContacts,
 } from '../../store/contacts/index';
 import {getDownloadURL, getStorage, ref as thisRef} from 'firebase/storage';
+import styles from './styles';
 
 export interface User {
   username?: string;
@@ -579,11 +580,9 @@ const HomeScreen: FC = () => {
   };
 
   return (
-    <View style={{flex: 1, backgroundColor: '#eee7da'}}>
+    <View style={styles.view1}>
       {(data || newUser) && (
-        <ScrollView
-          ref={scrollViewRef}
-          style={{flex: 1, backgroundColor: 'transparent'}}>
+        <ScrollView ref={scrollViewRef} style={styles.scrollView1}>
           <ImageBackground
             style={{flex: 1}}
             imageStyle={{opacity: 0.3}}
@@ -600,12 +599,7 @@ const HomeScreen: FC = () => {
             </View>
             {dataFlag && (
               <>
-                <View
-                  style={{
-                    flex: 1,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}>
+                <View style={styles.view2}>
                   {!!url ? (
                     <Animated.Image
                       style={{
@@ -631,14 +625,7 @@ const HomeScreen: FC = () => {
                   )}
                   <TouchableOpacity
                     onPress={onPressTripInfo}
-                    style={{
-                      backgroundColor: '#b6e7cc',
-                      marginTop: 10,
-                      width: screenWidth * 0.8,
-                      borderRadius: 5,
-                      borderWidth: 2,
-                      borderColor: '#eee7da',
-                    }}>
+                    style={styles.touchable1}>
                     <Text style={styles.text2}>{'View Trip Info'}</Text>
                   </TouchableOpacity>
                   <TouchableOpacity
@@ -647,27 +634,12 @@ const HomeScreen: FC = () => {
                         backgroundPhoto: source(),
                       })
                     }
-                    style={{
-                      backgroundColor: '#b6e7cc',
-                      marginTop: 10,
-                      width: screenWidth * 0.8,
-                      borderRadius: 5,
-                      borderWidth: 2,
-                      borderColor: '#eee7da',
-                    }}>
+                    style={styles.touchable2}>
                     <Text style={styles.text2}>{'View Vision Board'}</Text>
                   </TouchableOpacity>
                   <TouchableOpacity
                     onPress={onPressMessageBoard}
-                    style={{
-                      backgroundColor: '#b6e7cc',
-                      marginTop: 10,
-                      marginBottom: 10,
-                      width: screenWidth * 0.8,
-                      borderRadius: 5,
-                      borderWidth: 2,
-                      borderColor: '#eee7da',
-                    }}>
+                    style={styles.touchable3}>
                     <Text style={styles.text2}>{'View Message Board'}</Text>
                   </TouchableOpacity>
                   <TouchableOpacity
@@ -682,13 +654,7 @@ const HomeScreen: FC = () => {
                       opacity: haveContactsBeenAdded ? 0.5 : 1,
                     }}
                     disabled={haveContactsBeenAdded}>
-                    <View
-                      style={{
-                        flex: 1,
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                      }}>
+                    <View style={styles.view3}>
                       <Text
                         style={{
                           borderRadius: 5,
@@ -703,49 +669,24 @@ const HomeScreen: FC = () => {
                       {haveContactsBeenAdded && (
                         <Image
                           source={require('../../Images/check2.png')}
-                          style={{
-                            height: 30,
-                            width: 40,
-                          }}></Image>
+                          style={styles.image1}></Image>
                       )}
                     </View>
                   </TouchableOpacity>
                 </View>
-
                 <View style={styles.nestedView2}>
-                  <View
-                    style={{
-                      flex: 1,
-                      flexDirection: 'row',
-                      marginLeft: 10,
-                      marginRight: 10,
-                      marginTop: 10,
-                      backgroundColor: '#b6e7cc',
-                      borderRadius: 5,
-                    }}>
+                  <View style={styles.view4}>
                     <Image
-                      style={{width: 40, height: 40, marginLeft: 10}}
+                      style={styles.image2}
                       source={require('../../Images/homeaddressicon.png')}></Image>
-                    <Text
-                      style={{
-                        marginLeft: 10,
-                        marginTop: 10,
-                        fontFamily: 'HighTide-Sans',
-                      }}>
+                    <Text style={styles.text3}>
                       {'Address: '}
-                      <Text style={{fontFamily: 'Vonique64'}}>{address}</Text>
+                      <Text style={styles.text4}>{address}</Text>
                     </Text>
                   </View>
-                  <View
-                    style={{
-                      flex: 1,
-                      flexDirection: 'row',
-                      backgroundColor: '#b6e7cc',
-                      margin: 10,
-                      borderRadius: 5,
-                    }}>
+                  <View style={styles.view5}>
                     <Image
-                      style={{width: 40, height: 40, marginLeft: 10}}
+                      style={styles.image3}
                       source={require('../../Images/emailaddressicon.png')}></Image>
                     <Text
                       style={{
@@ -755,20 +696,12 @@ const HomeScreen: FC = () => {
                         maxWidth: screenWidth * 0.7,
                       }}>
                       {'Email Address: '}
-                      <Text style={{fontFamily: 'Vonique64'}}>{email}</Text>
+                      <Text style={styles.text5}>{email}</Text>
                     </Text>
                   </View>
-                  <View
-                    style={{
-                      flex: 1,
-                      flexDirection: 'row',
-                      backgroundColor: '#b6e7cc',
-                      marginLeft: 10,
-                      marginRight: 10,
-                      borderRadius: 5,
-                    }}>
+                  <View style={styles.view6}>
                     <Image
-                      style={{width: 40, height: 40, marginLeft: 10}}
+                      style={styles.image4}
                       source={require('../../Images/phonenumbericon.png')}></Image>
                     <Text
                       style={{
@@ -778,21 +711,12 @@ const HomeScreen: FC = () => {
                         maxWidth: screenWidth * 0.7,
                       }}>
                       {'Phone number: '}
-                      <Text style={{fontFamily: 'Vonique64'}}>
-                        {phoneNumber}
-                      </Text>
+                      <Text style={styles.text6}>{phoneNumber}</Text>
                     </Text>
                   </View>
-                  <View
-                    style={{
-                      flex: 1,
-                      flexDirection: 'row',
-                      backgroundColor: '#b6e7cc',
-                      margin: 10,
-                      borderRadius: 5,
-                    }}>
+                  <View style={styles.view7}>
                     <Image
-                      style={{width: 40, height: 40, marginLeft: 10}}
+                      style={styles.image5}
                       source={require('../../Images/appicon.png')}></Image>
                     <Text
                       style={{
@@ -802,16 +726,10 @@ const HomeScreen: FC = () => {
                         maxWidth: screenWidth * 0.7,
                       }}>
                       {'Full name: '}
-                      <Text style={{fontFamily: 'Vonique64'}}>{fullName}</Text>
+                      <Text style={styles.text7}>{fullName}</Text>
                     </Text>
                   </View>
-                  <View
-                    style={{
-                      marginLeft: 10,
-                      marginRight: 10,
-                      backgroundColor: '#b6e7cc',
-                      borderRadius: 5,
-                    }}>
+                  <View style={styles.view8}>
                     <Text
                       style={{
                         marginLeft: 10,
@@ -821,9 +739,7 @@ const HomeScreen: FC = () => {
                         maxWidth: screenWidth * 0.7,
                       }}>
                       {'Emergency Contact Name: '}
-                      <Text style={{fontFamily: 'Vonique64'}}>
-                        {emergencyContact}
-                      </Text>
+                      <Text style={styles.text8}>{emergencyContact}</Text>
                     </Text>
                   </View>
                   <View
@@ -841,18 +757,11 @@ const HomeScreen: FC = () => {
                         maxWidth: screenWidth * 0.7,
                       }}>
                       {'Emergency Contact Phone: '}
-                      <Text style={{fontFamily: 'Vonique64'}}>
-                        {emergencyContactPhone}
-                      </Text>
+                      <Text style={styles.text9}>{emergencyContactPhone}</Text>
                     </Text>
                   </View>
                 </View>
-                <View
-                  style={{
-                    backgroundColor: '#eee7da',
-                    margin: 10,
-                    borderRadius: 5,
-                  }}>
+                <View style={styles.view10}>
                   <Text
                     style={{
                       marginLeft: 10,
@@ -862,7 +771,7 @@ const HomeScreen: FC = () => {
                       maxWidth: screenWidth * 0.7,
                     }}>
                     {'Bio: '}
-                    <Text style={{fontFamily: 'Vonique64'}}>{bio}</Text>
+                    <Text style={styles.text10}>{bio}</Text>
                   </Text>
                 </View>
                 <TouchableOpacity
@@ -876,32 +785,16 @@ const HomeScreen: FC = () => {
                     borderWidth: 1,
                     borderColor: '#eee7da',
                   }}>
-                  <Text
-                    style={{
-                      color: '#0c0b09',
-                      fontSize: 12,
-                      fontWeight: '600',
-                      margin: 10,
-                      textAlign: 'center',
-                      fontFamily: 'HighTide-Sans',
-                    }}>
-                    {'Edit'}
-                  </Text>
+                  <Text style={styles.text11}>{'Edit'}</Text>
                 </TouchableOpacity>
               </>
             )}
             {(!dataFlag || newUser) && (
               <>
-                <Text
-                  style={{
-                    fontSize: 16,
-                    textAlign: 'center',
-                    marginBottom: 10,
-                    fontFamily: 'Vonique64',
-                  }}>
+                <Text style={styles.text12}>
                   {"Let's get some informaton."}
                 </Text>
-                <View style={{flex: 1, alignItems: 'center'}}>
+                <View style={styles.view11}>
                   {url === undefined ? (
                     <Animated.Image
                       style={{
@@ -930,17 +823,9 @@ const HomeScreen: FC = () => {
                     />
                   )}
                 </View>
-                <View style={{flex: 1}}>
+                <View style={styles.view12}>
                   <View style={styles.nestedView3}>
-                    <Text
-                      style={{
-                        marginLeft: 10,
-                        marginTop: 5,
-                        fontSize: 20,
-                        fontFamily: 'Vonique64',
-                      }}>
-                      {'Upload Photo ?'}
-                    </Text>
+                    <Text style={styles.text13}>{'Upload Photo ?'}</Text>
                     <TouchableOpacity onPress={openPicker}>
                       <Animated.Image
                         style={{
@@ -954,15 +839,7 @@ const HomeScreen: FC = () => {
                     </TouchableOpacity>
                   </View>
                   <View style={styles.nestedView4}>
-                    <Text
-                      style={{
-                        marginLeft: 10,
-                        marginTop: 5,
-                        fontSize: 20,
-                        fontFamily: 'Vonique64',
-                      }}>
-                      {'Upload NDA?'}
-                    </Text>
+                    <Text style={styles.text14}>{'Upload NDA?'}</Text>
                     <TouchableOpacity onPress={toggleDocPickerSwitch}>
                       <Animated.Image
                         style={{
@@ -975,51 +852,20 @@ const HomeScreen: FC = () => {
                         source={require('../../Images/ndaicon.png')}></Animated.Image>
                     </TouchableOpacity>
                   </View>
-                  <View
-                    style={{
-                      flex: 1,
-                      alignItems: 'flex-start',
-                      justifyContent: 'flex-start',
-                    }}>
+                  <View style={styles.view13}>
                     <TouchableOpacity
                       onPress={onPressChangeBackground}
-                      style={{
-                        backgroundColor: '#b6e7cc',
-                        marginLeft: 10,
-                        marginTop: 10,
-                        width: 250,
-                        borderRadius: 5,
-                        borderWidth: 2,
-                        borderColor: '#eee7da',
-                      }}>
+                      style={styles.touchable4}>
                       <Text style={styles.text1}>
                         {'Change background photo'}
                       </Text>
                     </TouchableOpacity>
                   </View>
                 </View>
-                <View
-                  style={{
-                    flex: 1,
-                    marginTop: 10,
-                    justifyContent: 'flex-start',
-                    alignItems: 'flex-start',
-                  }}>
-                  <Text
-                    style={{
-                      fontFamily: 'HighTide-Sans',
-                      marginLeft: 25,
-                      marginTop: 10,
-                    }}>
-                    {'Full Name'}
-                  </Text>
+                <View style={styles.view14}>
+                  <Text style={styles.text15}>{'Full Name'}</Text>
                 </View>
-                <View
-                  style={{
-                    flex: 1,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}>
+                <View style={styles.view15}>
                   <TextInput
                     value={fullName}
                     placeholder=" full name"
@@ -1038,19 +884,8 @@ const HomeScreen: FC = () => {
                       borderBottomWidth: 3,
                       width: screenWidth * 0.9,
                     }}></TextInput>
-                  <View
-                    style={{
-                      flex: 1,
-                      alignSelf: 'flex-start',
-                    }}>
-                    <Text
-                      style={{
-                        marginLeft: 25,
-                        marginTop: 10,
-                        fontFamily: 'HighTide-Sans',
-                      }}>
-                      {'Phone Number'}
-                    </Text>
+                  <View style={styles.view16}>
+                    <Text style={styles.text16}>{'Phone Number'}</Text>
                   </View>
                   <TextInput
                     value={phoneNumber}
@@ -1070,20 +905,8 @@ const HomeScreen: FC = () => {
                       borderBottomWidth: 3,
                       width: screenWidth * 0.9,
                     }}></TextInput>
-                  <View
-                    style={{
-                      flex: 1,
-                      alignSelf: 'flex-start',
-                    }}>
-                    <Text
-                      style={{
-                        marginLeft: 25,
-                        marginTop: 10,
-                        fontWeight: '600',
-                        fontFamily: 'HighTide-Sans',
-                      }}>
-                      {'Address'}
-                    </Text>
+                  <View style={styles.view17}>
+                    <Text style={styles.text17}>{'Address'}</Text>
                   </View>
                   <TextInput
                     value={address}
@@ -1657,143 +1480,5 @@ const HomeScreen: FC = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  circleBefore: {
-    marginTop: 20,
-    marginBottom: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: 50,
-    height: 50,
-    borderRadius: 100 / 2,
-    backgroundColor: '#eee7da',
-    borderWidth: 1,
-  },
-  circleAfter: {
-    marginTop: 20,
-    marginBottom: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: 50,
-    height: 50,
-    borderRadius: 100 / 2,
-    backgroundColor: 'green',
-  },
-  backgroundBefore: {
-    height: 125,
-    width: 125,
-    borderRadius: 5,
-  },
-  backgroundAfter: {
-    height: 125,
-    width: 125,
-    borderRadius: 5,
-    borderWidth: 5,
-    borderColor: '#f86ca7',
-  },
-  nestedView1: {
-    flex: 1,
-    alignItems: 'center',
-    width: '100%',
-  },
-  nestedView2: {
-    backgroundColor: '#eee7da',
-    margin: 10,
-    borderRadius: 5,
-  },
-  nestedView3: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    marginLeft: 10,
-    marginRight: 10,
-    marginTop: 20,
-    backgroundColor: '#eee7da',
-    borderRadius: 5,
-  },
-  nestedView4: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    marginLeft: 10,
-    marginRight: 10,
-    marginTop: 10,
-    backgroundColor: '#eee7da',
-    borderRadius: 5,
-  },
-  nestedView5: {
-    flex: 1,
-    marginTop: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  nestedView6: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-  },
-  modalView1: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  },
-  modalView2: {
-    borderColor: '#0c0b09',
-    backgroundColor: '#b6e7cc',
-    minHeight: 300,
-    width: '80%',
-    justifyContent: 'center',
-    borderRadius: 5,
-    padding: 20,
-  },
-  modalView3: {
-    flex: 1,
-    borderRadius: 5,
-    marginTop: 20,
-    // backgroundColor: '#f2f2f2',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  modalView4: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'flex-end',
-  },
-  modalView5: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  },
-  modalView6: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-evenly',
-    backgroundColor: '#b6e7cc',
-    height: 300,
-    width: '80%',
-    borderRadius: 5,
-  },
-  text1: {
-    borderRadius: 5,
-    marginTop: 10,
-    marginBottom: 10,
-    textAlign: 'center',
-    fontFamily: 'HighTide-Sans',
-  },
-  text2: {
-    borderRadius: 5,
-    marginTop: 10,
-    marginBottom: 10,
-    textAlign: 'center',
-    fontFamily: 'HighTide-Sans',
-  },
-});
 
 export default HomeScreen;
