@@ -9,7 +9,6 @@ import {
   ScrollView,
   Modal,
   Dimensions,
-  StyleSheet,
   Animated,
   ImageBackground,
   FlatList,
@@ -218,13 +217,7 @@ const HomeScreen: FC = () => {
     fadeIn();
     if (dataFlag) {
       setShowCheckListIcon(true);
-      console.log('dataFlag is true.');
-      console.log('url: ', url);
-      console.log('visionBoardPhoto: ', visionBoardPhoto);
     } else if (!dataFlag) {
-      console.log('dataFlag is false.');
-    } else {
-      console.log('How did we get here?');
     }
   }, [dataFlag]);
 
@@ -278,7 +271,6 @@ const HomeScreen: FC = () => {
           Contacts.getAll().then(contacts => {
             setContacts(contacts);
             dispatch(setTheseContacts({contacts}));
-            // console.log('contacts: ', JSON.stringify(contacts));
           });
         }
       });
@@ -286,14 +278,9 @@ const HomeScreen: FC = () => {
       Contacts.getAll().then(contacts => {
         setContacts(contacts);
         dispatch(setTheseContacts({contacts}));
-        // console.log('contacts: ', JSON.stringify(contacts));
       });
     }
   }, []);
-
-  // useEffect(() => {
-  //   console.log('contactsFromState: ', JSON.stringify(contactsFromState));
-  // }, [contactsFromState]);
 
   const checkName = () => {
     if (
@@ -309,11 +296,6 @@ const HomeScreen: FC = () => {
       console.log('None of the TextInputs have changed.');
     }
   };
-
-  // useEffect(() => {
-  //   console.log('userPhoto: ', userPhoto);
-  //   console.log('userPhotoFromDB: ', userPhotoFromDB);
-  // }, [userPhoto, userPhotoFromDB]);
 
   useEffect(() => {
     if (!dataFlag) {
@@ -518,7 +500,6 @@ const HomeScreen: FC = () => {
         const usersData = snapshot.val();
         const usersArray = Object.keys(usersData).map(userId => {
           const userData = usersData[userId];
-          //filter out the empty string usernames or disallow it to happen in general.
           return {
             username: userData.username,
             familyName: userData.username,
@@ -532,7 +513,6 @@ const HomeScreen: FC = () => {
             },
           };
         });
-        // console.log('usersArray: ', usersArray);
         return usersArray;
       } else {
         console.log('No users available');
@@ -546,7 +526,6 @@ const HomeScreen: FC = () => {
 
   const copyToClipboard = (users: User[]) => {
     Clipboard.setString(JSON.stringify(users));
-    // console.log('Copied to clipboard:', JSON.stringify(users));
   };
 
   const onPressOpenContacts = () => {

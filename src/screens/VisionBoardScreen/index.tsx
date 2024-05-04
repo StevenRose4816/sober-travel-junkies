@@ -19,6 +19,7 @@ import {getDownloadURL, getStorage, ref as thisRef} from 'firebase/storage';
 import {captureScreen} from 'react-native-view-shot';
 import storage from '@react-native-firebase/storage';
 import {useAppSelector} from '../../hooks';
+import styles from './styles';
 
 export const VisionBoardScreen: FC = () => {
   const route = useRoute<RouteProp<AppStackParams, Routes.visionBoardScreen>>();
@@ -103,9 +104,9 @@ export const VisionBoardScreen: FC = () => {
         headerLeft: () => (
           <TouchableOpacity
             onPress={() => navigation.goBack()}
-            style={{width: 20, height: 20, marginTop: 10}}>
+            style={styles.touchable1}>
             <Image
-              style={{width: 30, height: 30}}
+              style={styles.image1}
               source={require('../../Images/caret_left.png')}></Image>
           </TouchableOpacity>
         ),
@@ -221,7 +222,7 @@ export const VisionBoardScreen: FC = () => {
   return (
     <>
       <ImageBackground
-        style={{flex: 1}}
+        style={styles.imageBackground1}
         source={
           screenShotUri !== ''
             ? {uri: screenShotUri}
@@ -230,26 +231,8 @@ export const VisionBoardScreen: FC = () => {
             : require('../../Images/browntextured.jpg')
         }>
         {!hideToucables && (
-          <View
-            style={{
-              flex: 1,
-              backgroundColor: '#eee7da80',
-              maxHeight: 50,
-              width: 225,
-              alignSelf: 'center',
-              margin: 10,
-              borderRadius: 8,
-            }}>
-            <Text
-              style={{
-                fontSize: 24,
-                textAlign: 'center',
-                marginTop: 15,
-                fontFamily: 'HighTide-Sans',
-                opacity: 0.5,
-              }}>
-              Vision Board
-            </Text>
+          <View style={styles.view1}>
+            <Text style={styles.text1}>Vision Board</Text>
           </View>
         )}
         {showDraggable && showInitialPhotoDraggables && (
@@ -265,11 +248,13 @@ export const VisionBoardScreen: FC = () => {
             isCircle
             onShortPressRelease={onShortPressPhoto}>
             <Image
-              style={{
-                width: photoDragSize.width,
-                height: photoDragSize.height,
-                borderRadius: 5,
-              }}
+              style={[
+                styles.image2,
+                {
+                  width: photoDragSize.width,
+                  height: photoDragSize.height,
+                },
+              ]}
               source={
                 showSelectedImage && selectedImage
                   ? {
@@ -290,20 +275,23 @@ export const VisionBoardScreen: FC = () => {
             maxY={640}
             onShortPressRelease={onShortPressSticky}>
             <ImageBackground
-              style={{
-                width: stickyDragSize.width,
-                height: stickyDragSize.height,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
+              style={[
+                styles.imageBackground2,
+                {
+                  width: stickyDragSize.width,
+                  height: stickyDragSize.height,
+                },
+              ]}
               source={require('../../Images/sticky.png')}
               resizeMode="stretch">
               <Text
-                style={{
-                  fontFamily: 'HighTide-Sans',
-                  fontSize: stickySize.fontSize,
-                  maxWidth: stickySize.maxWidth,
-                }}>
+                style={[
+                  styles.text2,
+                  {
+                    fontSize: stickySize.fontSize,
+                    maxWidth: stickySize.maxWidth,
+                  },
+                ]}>
                 {visibleNote}
               </Text>
             </ImageBackground>
@@ -311,81 +299,25 @@ export const VisionBoardScreen: FC = () => {
         )}
       </ImageBackground>
       {!hideToucables && (
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            position: 'absolute',
-            bottom: 0,
-            left: 15,
-            right: 15,
-          }}>
+        <View style={styles.view2}>
           <TouchableOpacity
             onPress={
               showInitialPhotoDraggables
                 ? onPressOpenImagePicker
                 : onPressAddImage
             }
-            style={{
-              backgroundColor: '#e7b6cc',
-              borderRadius: 5,
-              width: 100,
-              borderWidth: 1,
-              borderColor: '#eee7da',
-              height: 50,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <Text
-              style={{
-                color: '#0c0b09',
-                textAlign: 'center',
-                fontFamily: 'HighTide-Sans',
-              }}>
+            style={styles.touchable2}>
+            <Text style={styles.text3}>
               {!showInitialPhotoDraggables ? 'Add Image' : 'Open Image Picker'}
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={onPressUpdateBoard}
-            style={{
-              backgroundColor: '#e7b6cc',
-              borderRadius: 50,
-              width: 80,
-              height: 80,
-              margin: 20,
-              borderWidth: 1,
-              borderColor: '#eee7da',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <Text
-              style={{
-                color: '#0c0b09',
-                fontFamily: 'HighTide-Sans',
-                textAlign: 'center',
-              }}>
-              Update Board
-            </Text>
+            style={styles.touchable3}>
+            <Text style={styles.text4}>Update Board</Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            onPress={onAddNote}
-            style={{
-              backgroundColor: '#e7b6cc',
-              borderRadius: 5,
-              width: 100,
-              borderWidth: 1,
-              borderColor: '#eee7da',
-              height: 50,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <Text
-              style={{
-                color: '#0c0b09',
-                fontFamily: 'HighTide-Sans',
-                textAlign: 'center',
-              }}>
+          <TouchableOpacity onPress={onAddNote} style={styles.touchable4}>
+            <Text style={styles.text5}>
               {!showInitialStickyDraggables ? 'Add Note' : 'Write Note'}
             </Text>
           </TouchableOpacity>
@@ -396,103 +328,39 @@ export const VisionBoardScreen: FC = () => {
         animationType={'slide'}
         transparent={true}
         onRequestClose={toggleModal}>
-        <View
-          style={{
-            flex: 1,
-            justifyContent: 'flex-start',
-            alignItems: 'center',
-            backgroundColor: 'rgba(0, 0, 0, 0.5)',
-          }}>
-          <View
-            style={{
-              backgroundColor: '#b6e7cc',
-              minHeight: 300,
-              width: '80%',
-              borderRadius: 5,
-              padding: 20,
-              marginTop: screenHeight * 0.2,
-            }}>
+        <View style={styles.view3}>
+          <View style={styles.view4}>
             {!showWelcomeModal && (
               <TouchableOpacity
                 onPress={onPressCloseUpdateModal}
-                style={{alignSelf: 'flex-end'}}>
+                style={styles.touchable5}>
                 <Image
-                  style={{
-                    height: 25,
-                    width: 25,
-                  }}
+                  style={styles.image3}
                   source={require('../../Images/close2.png')}
                 />
               </TouchableOpacity>
             )}
-            <View style={{alignItems: 'center', justifyContent: 'center'}}>
+            <View style={styles.view5}>
               {!updatedBool && !showWelcomeModal && (
                 <>
-                  <Text
-                    style={{
-                      color: '#0c0b09',
-                      fontSize: 12,
-                      textAlign: 'center',
-                      marginLeft: 10,
-                      marginRight: 10,
-                      marginTop: 5,
-                      fontFamily: 'Vonique64',
-                    }}>
-                    Add Note
-                  </Text>
+                  <Text style={styles.text6}>Add Note</Text>
                   <TextInput
                     value={newNote}
                     placeholder=" Note"
                     onChangeText={note => setNewNote(note)}
                     secureTextEntry={false}
-                    style={{
-                      fontFamily: 'HighTide-Sans',
-                      backgroundColor: '#eee7da',
-                      borderRadius: 5,
-                      height: 50,
-                      width: 150,
-                      borderWidth: 1,
-                      borderColor: '#5A6472',
-                      borderBottomWidth: 3,
-                      marginTop: 40,
-                      textAlign: 'center',
-                    }}></TextInput>
+                    style={styles.textInput1}></TextInput>
                 </>
               )}
               {updatedBool && !showWelcomeModal && (
-                <Text
-                  style={{
-                    color: '#0c0b09',
-                    fontSize: 12,
-                    textAlign: 'center',
-                    marginLeft: 10,
-                    marginRight: 10,
-                    marginTop: 40,
-                    fontFamily: 'Vonique64',
-                  }}>
+                <Text style={styles.text7}>
                   Do you want to update the board?
                 </Text>
               )}
               {showWelcomeModal && (
                 <>
-                  <Text
-                    style={{
-                      marginTop: 20,
-                      color: '#0c0b09',
-                      fontFamily: 'HighTide-Sans',
-                      textAlign: 'center',
-                      fontSize: 20,
-                    }}>
-                    Welcome to the Vision Board.
-                  </Text>
-                  <Text
-                    style={{
-                      marginTop: 40,
-                      color: '#0c0b09',
-                      fontFamily: 'HighTide-Sans',
-                      textAlign: 'left',
-                      maxWidth: '90%',
-                    }}>
+                  <Text style={styles.text8}>Welcome to the Vision Board.</Text>
+                  <Text style={styles.text9}>
                     Post your vision for the trip, one image and/or note at a
                     time.{'\n\n'}
                     Don't completely cover someone else's post.{'\n\n'}
@@ -508,23 +376,8 @@ export const VisionBoardScreen: FC = () => {
                     ? onPressIAgree
                     : onUpdateBoard
                 }
-                style={{
-                  backgroundColor: '#e7b6cc',
-                  borderRadius: 5,
-                  width: 100,
-                  borderWidth: 1,
-                  borderColor: '#eee7da',
-                  marginTop: 80,
-                }}>
-                <Text
-                  style={{
-                    color: '#0c0b09',
-                    fontSize: 12,
-                    fontWeight: '600',
-                    margin: 10,
-                    textAlign: 'center',
-                    fontFamily: 'HighTide-Sans',
-                  }}>
+                style={styles.textInput2}>
+                <Text style={styles.text10}>
                   {!updatedBool && !showWelcomeModal
                     ? 'Submit'
                     : showWelcomeModal
