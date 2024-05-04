@@ -8,7 +8,6 @@ import {
   ImageBackground,
   Modal,
   Platform,
-  StatusBar,
   Text,
   TextInput,
   TouchableOpacity,
@@ -401,7 +400,7 @@ export const VisionBoardScreen: FC = () => {
         <View
           style={{
             flex: 1,
-            justifyContent: 'center',
+            justifyContent: 'flex-start',
             alignItems: 'center',
             backgroundColor: 'rgba(0, 0, 0, 0.5)',
           }}>
@@ -412,15 +411,21 @@ export const VisionBoardScreen: FC = () => {
               width: '80%',
               borderRadius: 5,
               padding: 20,
+              marginTop: screenHeight * 0.2,
             }}>
-            <TouchableOpacity
-              onPress={onPressCloseUpdateModal}
-              style={{alignSelf: 'flex-end'}}>
-              <Image
-                style={{height: 25, width: 25}}
-                source={require('../../Images/close2.png')}
-              />
-            </TouchableOpacity>
+            {!showWelcomeModal && (
+              <TouchableOpacity
+                onPress={onPressCloseUpdateModal}
+                style={{alignSelf: 'flex-end'}}>
+                <Image
+                  style={{
+                    height: 25,
+                    width: 25,
+                  }}
+                  source={require('../../Images/close2.png')}
+                />
+              </TouchableOpacity>
+            )}
             <View style={{alignItems: 'center', justifyContent: 'center'}}>
               {!updatedBool && !showWelcomeModal && (
                 <>
@@ -473,22 +478,26 @@ export const VisionBoardScreen: FC = () => {
                 <>
                   <Text
                     style={{
-                      marginTop: 40,
+                      marginTop: 20,
                       color: '#0c0b09',
                       fontFamily: 'HighTide-Sans',
                       textAlign: 'center',
+                      fontSize: 20,
                     }}>
-                    Welcome to the Vision Board!
+                    Welcome to the Vision Board.
                   </Text>
                   <Text
                     style={{
                       marginTop: 40,
                       color: '#0c0b09',
                       fontFamily: 'HighTide-Sans',
-                      textAlign: 'center',
+                      textAlign: 'left',
                       maxWidth: '90%',
                     }}>
-                    Post one image and/or one note at a time.
+                    Post your vision for the trip, one image and/or note at a
+                    time.{'\n\n'}
+                    Don't completely cover someone else's post.{'\n\n'}
+                    Please be respectful and have fun :)
                   </Text>
                 </>
               )}
