@@ -250,27 +250,12 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
     </>
   );
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: 'flex-start',
-        padding: 8,
-        borderRadius: 5,
-      }}>
+    <View style={styles.view12}>
       <ImageBackground
-        style={{flex: 1}}
-        imageStyle={{opacity: 0.3}}
+        style={styles.imageBackground1}
+        imageStyle={styles.imageBackground2}
         source={backgroundPhoto}>
-        <Text
-          style={{
-            fontSize: 18,
-            textAlign: 'center',
-            marginBottom: 10,
-            marginTop: 20,
-            fontFamily: 'HighTide-Sans',
-          }}>
-          {'Message Board'}
-        </Text>
+        <Text style={styles.text15}>{'Message Board'}</Text>
 
         {data && (
           <FlatList
@@ -289,75 +274,18 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
           />
         </View>
       </ImageBackground>
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-        }}>
+      <View style={styles.view13}>
         <TouchableOpacity
-          style={{
-            backgroundColor: '#b6e7cc',
-            borderRadius: 5,
-            width: 100,
-            borderWidth: 1,
-            marginTop: 10,
-            borderColor: '#eee7da',
-          }}
+          style={styles.touchable1}
           onPress={!isReply ? onSend : onSendReply}>
           {!isReply ? (
-            <Text
-              style={{
-                color: '#0c0b09',
-                fontSize: 12,
-                textAlign: 'center',
-                justifyContent: 'center',
-                alignItems: 'center',
-                marginTop: 15,
-                marginBottom: 15,
-                fontFamily: 'HighTide-Sans',
-              }}>
-              {'Send'}
-            </Text>
+            <Text style={styles.text16}>{'Send'}</Text>
           ) : (
-            <Text
-              style={{
-                color: '#0c0b09',
-                fontSize: 12,
-                textAlign: 'center',
-                justifyContent: 'center',
-                alignItems: 'center',
-                marginTop: 15,
-                marginBottom: 15,
-                fontFamily: 'HighTide-Sans',
-              }}>
-              {'Reply'}
-            </Text>
+            <Text style={styles.text17}>{'Reply'}</Text>
           )}
         </TouchableOpacity>
-        <TouchableOpacity
-          style={{
-            backgroundColor: '#b6e7cc',
-            borderRadius: 5,
-            width: 100,
-            borderWidth: 1,
-            marginTop: 10,
-            borderColor: '#eee7da',
-          }}
-          onPress={onPressScroll}>
-          <Text
-            style={{
-              color: '#0c0b09',
-              fontSize: 12,
-              marginBottom: 10,
-              marginTop: 10,
-              marginRight: 10,
-              marginLeft: 10,
-              textAlign: 'center',
-              fontFamily: 'HighTide-Sans',
-            }}>
-            {'Scroll to bottom'}
-          </Text>
+        <TouchableOpacity style={styles.touchable2} onPress={onPressScroll}>
+          <Text style={styles.text18}>{'Scroll to bottom'}</Text>
         </TouchableOpacity>
       </View>
       <Modal
@@ -368,59 +296,16 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
         <View style={styles.modalView1}>
           <View style={styles.modalView2}>
             <View style={styles.modalView3}>
-              <Text
-                style={{
-                  color: '#0c0b09',
-                  fontSize: 21,
-                  textAlign: 'center',
-                  fontFamily: 'HighTide-Sans',
-                }}>
-                {'Reply?'}
-              </Text>
+              <Text style={styles.text19}>{'Reply?'}</Text>
             </View>
             <View style={styles.modalView4}>
               <TouchableOpacity
                 onPress={onPressYesSubmit}
-                style={{
-                  marginTop: 20,
-                  backgroundColor: '#e7b6cc',
-                  minHeight: 50,
-                  justifyContent: 'center',
-                  borderRadius: 5,
-                  marginHorizontal: 10,
-                  width: 120,
-                }}>
-                <Text
-                  style={{
-                    textAlign: 'center',
-                    color: '#0c0b09',
-                    fontSize: 18,
-                    fontFamily: 'HighTide-Sans',
-                  }}>
-                  {'Yes'}
-                </Text>
+                style={styles.touchable3}>
+                <Text style={styles.text20}>{'Yes'}</Text>
               </TouchableOpacity>
-              <TouchableOpacity
-                onPress={toggleModal}
-                style={{
-                  marginTop: 20,
-                  backgroundColor: '#e7b6cc',
-                  minHeight: 50,
-                  justifyContent: 'center',
-                  borderRadius: 5,
-                  marginHorizontal: 10,
-                  width: 120,
-                }}>
-                <Text
-                  style={{
-                    textAlign: 'center',
-                    color: '#0c0b09',
-                    fontSize: 18,
-                    borderRadius: 5,
-                    fontFamily: 'HighTide-Sans',
-                  }}>
-                  {'No'}
-                </Text>
+              <TouchableOpacity onPress={toggleModal} style={styles.touchable4}>
+                <Text style={styles.text21}>{'No'}</Text>
               </TouchableOpacity>
             </View>
           </View>
