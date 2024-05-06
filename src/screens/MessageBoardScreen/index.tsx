@@ -10,14 +10,12 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-// import {get, onValue, ref, set} from 'firebase/database';
-// import {db} from '../HomeScreen/FirebaseConfigurations';
 import {RouteProp} from '@react-navigation/native';
-import {useAppSelector} from '../../hooks';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {AppStackParams} from '../../navigation/types';
 import Routes from '../../navigation/routes';
 import {firebase} from '@react-native-firebase/database';
+import styles from './styles';
 
 interface Message {
   text: string;
@@ -76,7 +74,7 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
     try {
       const ref = firebase.firestore().collection(collection).doc(docId);
       const response = await ref.get();
-      const data = response.data(); // Extract data from DocumentSnapshot
+      const data = response.data();
       if (data && Array.isArray(data.data)) {
         console.log('MessageS Array: ', JSON.stringify(data.data));
         setMessages(data.data);
@@ -110,8 +108,6 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
       await writeDataToFirestore('messages', updatedMessages, 'messages');
       setNewMessage('');
       onSetTitle(newTitle);
-      //no longer need to make this call bc firestore
-      // readDataFromFirestore('messages', 'messages');
       flatListRef.current?.scrollToEnd();
     }
   };
@@ -136,8 +132,6 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
       setNewMessage('');
       setReplyingTo(null);
       setShowReplies(state => [...state, replyingTo.id]);
-      //no longer need to make this call bc firestore
-      // readDataFromFirestore('messages', 'messages');
     }
     setIsReply(!isReply);
     console.log('Reply sent.');
@@ -188,80 +182,24 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
     <>
       <View>
         <TouchableOpacity onPress={() => onPressMessage(item)}>
-          <View
-            style={{
-              flex: 1,
-              flexDirection: 'column',
-              backgroundColor: '#eee7da',
-              padding: 8,
-              marginVertical: 8,
-              marginBottom: 20,
-              borderRadius: 8,
-            }}>
-            <Text style={{fontSize: 16, fontFamily: 'HighTide-Sans'}}>
-              {item.title}
-            </Text>
-            <Text
-              style={{
-                fontSize: 16,
-                fontFamily: 'HighTide-Sans',
-                marginBottom: 10,
-              }}>
-              {item.text}
-            </Text>
-            <View style={{alignItems: 'flex-end', flexDirection: 'row'}}>
-              <View style={{flexDirection: 'column'}}>
-                <Text
-                  style={{
-                    fontSize: 12,
-                    fontFamily: 'HighTide-Sans',
-                    opacity: 0.4,
-                    marginBottom: 5,
-                  }}>
-                  {item.time}
-                </Text>
-                <Text
-                  style={{
-                    fontSize: 12,
-                    fontFamily: 'HighTide-Sans',
-                    opacity: 0.6,
-                  }}>
-                  {item.date}
-                </Text>
+          <View style={styles.view1}>
+            <Text style={styles.text3}>{item.title}</Text>
+            <Text style={styles.text4}>{item.text}</Text>
+            <View style={styles.view2}>
+              <View style={styles.view3}>
+                <Text style={styles.text5}>{item.time}</Text>
+                <Text style={styles.text6}>{item.date}</Text>
               </View>
-              <View style={{alignItems: 'flex-end', flex: 1}}>
-                <View
-                  style={{
-                    flex: 1,
-                    flexDirection: 'row',
-                    alignItems: 'flex-end',
-                    backgroundColor: '#b6e7cc',
-                    borderRadius: 8,
-                    maxHeight: 40,
-                    maxWidth: 100,
-                  }}>
+              <View style={styles.view4}>
+                <View style={styles.view5}>
                   <Image
-                    style={{
-                      height: 30,
-                      width: 30,
-                      borderRadius: 50,
-                      margin: 5,
-                    }}
+                    style={styles.image1}
                     source={
                       item.photo
                         ? {uri: item.photo}
                         : require('../../Images/profilepictureicon.png')
                     }></Image>
-                  <Text
-                    style={{
-                      fontSize: 12,
-                      marginRight: 5,
-                      marginBottom: 5,
-                      fontFamily: 'HighTide-Sans',
-                      width: 50,
-                    }}>
-                    {item.name}
-                  </Text>
+                  <Text style={styles.text7}>{item.name}</Text>
                 </View>
               </View>
             </View>
@@ -271,27 +209,9 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
           <TouchableOpacity onPress={() => onPressReplyTab(item.id)}>
             <View style={styles.redTab}>
               {showReplies.includes(item.id) ? (
-                <Text
-                  style={{
-                    marginLeft: 5,
-                    marginTop: 10,
-                    fontSize: 8,
-                    fontFamily: 'HighTide-Sans',
-                    opacity: 0.7,
-                  }}>
-                  {'hide'}
-                </Text>
+                <Text style={styles.text8}>{'hide'}</Text>
               ) : (
-                <Text
-                  style={{
-                    marginLeft: 5,
-                    marginTop: 10,
-                    fontSize: 8,
-                    fontFamily: 'HighTide-Sans',
-                    opacity: 0.7,
-                  }}>
-                  {'show'}
-                </Text>
+                <Text style={styles.text9}>{'show'}</Text>
               )}
             </View>
           </TouchableOpacity>
@@ -300,88 +220,26 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
       {item.replies &&
         item.replies.length > 0 &&
         showReplies.includes(item.id) && (
-          <View
-            style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+          <View style={styles.view6}>
             {item.replies.map(reply => (
-              <View
-                key={reply.id + reply.time}
-                style={{
-                  flex: 1,
-                  flexDirection: 'column',
-                  backgroundColor: '#eee7da99',
-                  padding: 8,
-                  marginTop: 10,
-                  marginVertical: 8,
-                  borderRadius: 8,
-                  minWidth: '90%',
-                }}>
-                <Text style={{fontSize: 16, fontFamily: 'HighTide-Sans'}}>
-                  {reply.title}
-                </Text>
-                <Text
-                  style={{
-                    fontSize: 16,
-                    fontFamily: 'HighTide-Sans',
-                    marginBottom: 10,
-                  }}>
-                  {reply.text}
-                </Text>
-                <View style={{alignItems: 'flex-end', flexDirection: 'row'}}>
-                  <View style={{flexDirection: 'column'}}>
-                    <Text
-                      style={{
-                        fontSize: 12,
-                        fontFamily: 'HighTide-Sans',
-                        opacity: 0.4,
-                        marginBottom: 5,
-                      }}>
-                      {reply.time}
-                    </Text>
-                    <Text
-                      style={{
-                        fontSize: 12,
-                        fontFamily: 'HighTide-Sans',
-                        opacity: 0.6,
-                      }}>
-                      {reply.date}
-                    </Text>
+              <View key={reply.id + reply.time} style={styles.view7}>
+                <Text style={styles.text10}>{reply.title}</Text>
+                <Text style={styles.text11}>{reply.text}</Text>
+                <View style={styles.view8}>
+                  <View style={styles.view9}>
+                    <Text style={styles.text12}>{reply.time}</Text>
+                    <Text style={styles.text13}>{reply.date}</Text>
                   </View>
-                  <View style={{flex: 1, alignItems: 'flex-end'}}>
-                    <View
-                      style={{
-                        flex: 1,
-                        flexDirection: 'row',
-                        alignItems: 'flex-end',
-                        backgroundColor: '#b6e7cc98',
-                        borderRadius: 8,
-                        maxHeight: 40,
-                        maxWidth: 100,
-                      }}>
+                  <View style={styles.view10}>
+                    <View style={styles.view11}>
                       <Image
-                        style={{
-                          height: 30,
-                          width: 30,
-                          borderRadius: 50,
-                          margin: 5,
-                          opacity: 0.7,
-                        }}
+                        style={styles.image2}
                         source={
                           reply.photo
                             ? {uri: reply.photo}
                             : require('../../Images/profilepictureicon.png')
                         }></Image>
-                      <Text
-                        style={{
-                          fontSize: 12,
-                          marginLeft: 5,
-                          marginRight: 5,
-                          marginBottom: 5,
-                          fontFamily: 'HighTide-Sans',
-                          opacity: 0.7,
-                          width: 50,
-                        }}>
-                        {reply.name}
-                      </Text>
+                      <Text style={styles.text14}>{reply.name}</Text>
                     </View>
                   </View>
                 </View>
@@ -571,103 +429,5 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-    borderColor: '#b6e7cc',
-    borderWidth: 3,
-    borderRadius: 5,
-  },
-  messageContainer: {
-    alignItems: 'flex-end',
-    backgroundColor: '#e0e0e0',
-    padding: 5,
-    marginVertical: 8,
-    borderRadius: 8,
-  },
-  messageText: {
-    fontSize: 16,
-  },
-  inputContainer: {
-    backgroundColor: '#eee7da',
-    height: 90,
-    justifyContent: 'flex-start',
-    borderRadius: 8,
-  },
-  input2: {
-    height: 90,
-    padding: 8,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    fontFamily: 'HighTide-Sans',
-  },
-  modalView5: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  },
-  modalView6: {
-    borderColor: '#0c0b09',
-    backgroundColor: '#b6e7cc',
-    minHeight: 300,
-    width: '80%',
-    justifyContent: 'center',
-    borderRadius: 5,
-    padding: 20,
-  },
-  modalView1: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  },
-  modalView2: {
-    borderColor: '#0c0b09',
-    backgroundColor: '#b6e7cc',
-    minHeight: 300,
-    width: '80%',
-    justifyContent: 'center',
-    borderRadius: 5,
-    padding: 20,
-  },
-  modalView3: {
-    flex: 1,
-    borderRadius: 5,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  modalView4: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  text1: {
-    borderRadius: 5,
-    marginTop: 10,
-    marginLeft: 10,
-    marginBottom: 10,
-    fontFamily: 'HighTide-Sans',
-  },
-  text2: {
-    borderRadius: 5,
-    marginTop: 10,
-    marginLeft: 10,
-    marginBottom: 10,
-    fontFamily: 'HighTide-Sans',
-  },
-  redTab: {
-    position: 'absolute',
-    bottom: 5,
-    left: '5%',
-    width: '90%',
-    height: 20,
-    backgroundColor: '#eee7da99',
-    borderRadius: 5,
-  },
-});
 
 export default MessageBoardScreen;

@@ -8,7 +8,7 @@ import {useAppDispatch, useAppSelector} from '../hooks';
 import ImagePicker from '../components/ImagePicker.tsx';
 import TripInfoScreen from '../screens/TripInfo/index.tsx';
 import BooneScreen from '../screens/BooneScreen/index.tsx';
-import MessageBoardScreen from '../screens/Message Board Screen/MessageBoardScreen.tsx';
+import MessageBoardScreen from '../screens/MessageBoardScreen/index.tsx';
 import {AppStackParams} from './types.ts';
 import Routes from '../navigation/routes.ts';
 import ContactScreen from '../screens/ContactScreen/index.tsx';
