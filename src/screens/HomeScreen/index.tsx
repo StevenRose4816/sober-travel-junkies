@@ -18,7 +18,7 @@ import {
 import auth from '@react-native-firebase/auth';
 import {get, onValue, ref, set} from 'firebase/database';
 import {useAppSelector} from '../../hooks';
-import {db} from '../HomeScreen/FirebaseConfigurations';
+import {db} from '../../Firebase/FirebaseConfigurations';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import {setUserPhoto} from '../../store/user/slice';

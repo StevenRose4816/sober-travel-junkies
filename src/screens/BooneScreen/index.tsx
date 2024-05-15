@@ -16,7 +16,6 @@ import CalendarPicker, {
 } from 'react-native-calendar-picker';
 import {AppStackParams, NavPropAny} from '../../navigation/types';
 import Routes from '../../navigation/routes';
-import {supabase} from '../SupabaseConfig';
 
 const BooneScreen: FC = () => {
   const [selectedStartDate, setSelectedStartDate] = useState<Date | null>(null);

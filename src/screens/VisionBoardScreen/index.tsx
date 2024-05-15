@@ -2,6 +2,7 @@ import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {FC, useEffect, useState} from 'react';
 import {
+  ActivityIndicator,
   Dimensions,
   Image,
   ImageBackground,
@@ -45,9 +46,11 @@ export const VisionBoardScreen: FC = () => {
     pageY: 0,
   });
 
-  const [url, setUrl] = useState('');
+  const [url, setUrl] = useState<string | undefined>(undefined);
   const [updatedBool, setUpdatedBool] = useState(false);
-  const [screenShotUri, setScreenShotUri] = useState('');
+  const [screenShotUri, setScreenShotUri] = useState<string | undefined>(
+    undefined,
+  );
   const [hideToucables, setHideToucables] = useState(false);
   const [showSelectedImage, setShowSelectedImage] = useState(true);
   const routes = navigation.getState()?.routes;
@@ -71,6 +74,8 @@ export const VisionBoardScreen: FC = () => {
     state => state.globalStore.visionBoardUrl,
   );
   const [showWelcomeModal, setShowWelcomeModal] = useState(true);
+  const [loading, setLoading] = useState(true);
+  const [firstLoad, setFirstLoad] = useState(false);
 
   const capScreen = async () => {
     try {
@@ -219,85 +224,98 @@ export const VisionBoardScreen: FC = () => {
     setShowWelcomeModal(!showWelcomeModal);
   };
 
+  useEffect(() => {
+    if (!visionBoardFromState) {
+      setFirstLoad(true);
+    }
+    if (url || screenShotUri || visionBoardFromState || firstLoad) {
+      setLoading(false);
+    }
+  }, [url, screenShotUri, visionBoardFromState, firstLoad]);
+
   return (
     <>
-      <ImageBackground
-        style={styles.imageBackground1}
-        source={
-          screenShotUri !== ''
-            ? {uri: screenShotUri}
-            : url !== ''
-            ? {url}
-            : require('../../Images/browntextured.jpg')
-        }>
-        {!hideToucables && (
-          <View style={styles.view1}>
-            <Text style={styles.text1}>Vision Board</Text>
-          </View>
-        )}
-        {showDraggable && showInitialPhotoDraggables && (
-          <Draggable
-            x={photoDragPosition.x}
-            y={photoDragPosition.y}
-            minX={0}
-            minY={40}
-            maxX={375}
-            maxY={640}
-            renderColor={hideToucables ? '#fb445c00' : '#fb445c'}
-            renderText="A"
-            isCircle
-            onShortPressRelease={onShortPressPhoto}>
-            <Image
-              style={[
-                styles.image2,
-                {
-                  width: photoDragSize.width,
-                  height: photoDragSize.height,
-                },
-              ]}
-              source={
-                showSelectedImage && selectedImage
-                  ? {
-                      uri: selectedImage,
-                    }
-                  : require('../../Images/camerapictureicon.png')
-              }
-              resizeMode="stretch"></Image>
-          </Draggable>
-        )}
-        {addNote && showInitialStickyDraggables && (
-          <Draggable
-            x={stickyDragPosition.x}
-            y={stickyDragPosition.y}
-            minX={0}
-            minY={40}
-            maxX={375}
-            maxY={640}
-            onShortPressRelease={onShortPressSticky}>
-            <ImageBackground
-              style={[
-                styles.imageBackground2,
-                {
-                  width: stickyDragSize.width,
-                  height: stickyDragSize.height,
-                },
-              ]}
-              source={require('../../Images/sticky.png')}
-              resizeMode="stretch">
-              <Text
+      {loading ? (
+        <ActivityIndicator size="large" color="#0000ff" />
+      ) : (
+        <ImageBackground
+          style={styles.imageBackground1}
+          source={
+            !!screenShotUri
+              ? {uri: screenShotUri}
+              : !!url
+              ? {uri: url}
+              : require('../../Images/browntextured.jpg')
+          }>
+          {!hideToucables && (
+            <View style={styles.view1}>
+              <Text style={styles.text1}>Vision Board</Text>
+            </View>
+          )}
+          {showDraggable && showInitialPhotoDraggables && (
+            <Draggable
+              x={photoDragPosition.x}
+              y={photoDragPosition.y}
+              minX={0}
+              minY={40}
+              maxX={375}
+              maxY={640}
+              renderColor={hideToucables ? '#fb445c00' : '#fb445c'}
+              renderText="A"
+              isCircle
+              onShortPressRelease={onShortPressPhoto}>
+              <Image
                 style={[
-                  styles.text2,
+                  styles.image2,
                   {
-                    fontSize: stickySize.fontSize,
-                    maxWidth: stickySize.maxWidth,
+                    width: photoDragSize.width,
+                    height: photoDragSize.height,
                   },
-                ]}>
-                {visibleNote}
-              </Text>
-            </ImageBackground>
-          </Draggable>
-        )}
-      </ImageBackground>
+                ]}
+                source={
+                  showSelectedImage && selectedImage
+                    ? {
+                        uri: selectedImage,
+                      }
+                    : require('../../Images/camerapictureicon.png')
+                }
+                resizeMode="stretch"></Image>
+            </Draggable>
+          )}
+          {addNote && showInitialStickyDraggables && (
+            <Draggable
+              x={stickyDragPosition.x}
+              y={stickyDragPosition.y}
+              minX={0}
+              minY={40}
+              maxX={375}
+              maxY={640}
+              onShortPressRelease={onShortPressSticky}>
+              <ImageBackground
+                style={[
+                  styles.imageBackground2,
+                  {
+                    width: stickyDragSize.width,
+                    height: stickyDragSize.height,
+                  },
+                ]}
+                source={require('../../Images/sticky.png')}
+                resizeMode="stretch">
+                <Text
+                  style={[
+                    styles.text2,
+                    {
+                      fontSize: stickySize.fontSize,
+                      maxWidth: stickySize.maxWidth,
+                    },
+                  ]}>
+                  {visibleNote}
+                </Text>
+              </ImageBackground>
+            </Draggable>
+          )}
+        </ImageBackground>
+      )}
       {!hideToucables && (
         <View style={styles.view2}>
           <TouchableOpacity
