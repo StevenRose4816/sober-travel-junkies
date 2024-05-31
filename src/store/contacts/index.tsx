@@ -1,5 +1,5 @@
 import {PayloadAction, createSlice} from '@reduxjs/toolkit';
-import {User} from '../../screens/HomeScreen';
+import {User} from '../../screens/HomeScreen_deprecated';
 import Contacts from 'react-native-contacts';
 
 export interface IContact {

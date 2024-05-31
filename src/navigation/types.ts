@@ -1,7 +1,7 @@
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import Routes from '../navigation/routes';
 import Contacts from 'react-native-contacts';
-import {User} from '../screens/HomeScreen';
+import {User} from '../screens/HomeScreen_deprecated';
 
 export type NavPropAny = NativeStackNavigationProp<any, any>;
 

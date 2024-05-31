@@ -14,7 +14,7 @@ import Routes from '../../navigation/routes';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Clipboard from '@react-native-clipboard/clipboard';
 import Contacts from 'react-native-contacts';
-import {User} from '../HomeScreen';
+import {User} from '../HomeScreen_deprecated';
 import {useAppSelector} from '../../hooks';
 import {
   setHaveContactsBeenAdded,
