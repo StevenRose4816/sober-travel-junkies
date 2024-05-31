@@ -10,6 +10,9 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
   },
+  imageStyle: {
+    opacity: 0.3,
+  },
   containerView: {
     flex: 1,
   },
@@ -17,6 +20,20 @@ const styles = StyleSheet.create({
     marginTop: 20,
     height: 150,
     width: screenWidth * 0.9,
+  },
+  scrollView: {
+    flexGrow: 1,
+  },
+  userImage: {
+    height: 250,
+    width: screenWidth * 0.7,
+    borderRadius: 5,
+    marginBottom: 10,
+    borderColor: '#eee7da',
+    borderWidth: 2,
+  },
+  dividerView: {
+    height: 10,
   },
 });
 

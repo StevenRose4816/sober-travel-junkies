@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
   containerView: {
     flex: 1,
     maxHeight: 50,
-    width: screenWidth * 0.8,
+    width: screenWidth * 0.9,
     flexDirection: 'row',
     backgroundColor: '#b6e7cc',
     borderRadius: 5,
