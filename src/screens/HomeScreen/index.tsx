@@ -443,20 +443,15 @@ const HomeScreen: FC = () => {
 
   const source = () => {
     if (firstPhotoPressed) {
-      const background1 = require('../../Images/backgroundPhoto1.jpeg');
-      return background1;
+      return require('../../Images/backgroundPhoto1.jpeg');
     } else if (secondPhotoPressed) {
-      const background2 = require('../../Images/backgroundPhoto2.jpeg');
-      return background2;
+      return require('../../Images/backgroundPhoto2.jpeg');
     } else if (thirdPhotoPressed) {
-      const background3 = require('../../Images/backgroundPhoto3.jpeg');
-      return background3;
+      return require('../../Images/backgroundPhoto3.jpeg');
     } else if (fourthPhotoPressed) {
-      const background4 = require('../../Images/backgroundPhoto4.jpeg');
-      return background4;
+      return require('../../Images/backgroundPhoto4.jpeg');
     } else {
-      const background1 = require('../../Images/backgroundPhoto1.jpeg');
-      return background1;
+      return require('../../Images/backgroundPhoto1.jpeg');
     }
   };
 

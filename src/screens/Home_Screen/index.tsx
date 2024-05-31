@@ -54,7 +54,25 @@ const Home_Screen: FC = () => {
     username: '',
     fullName: '',
   });
+  const [firstPhotoPressed, setFirstPhotoPressed] = useState(false);
+  const [secondPhotoPressed, setSecondPhotoPressed] = useState(false);
+  const [thirdPhotoPressed, setThirdPhotoPressed] = useState(false);
+  const [fourthPhotoPressed, setFourthPhotoPressed] = useState(false);
   const {address, email, phoneNumber, fullName} = dataFromStorage;
+
+  const source = () => {
+    if (firstPhotoPressed) {
+      return require('../../Images/backgroundPhoto1.jpeg');
+    } else if (secondPhotoPressed) {
+      return require('../../Images/backgroundPhoto2.jpeg');
+    } else if (thirdPhotoPressed) {
+      return require('../../Images/backgroundPhoto3.jpeg');
+    } else if (fourthPhotoPressed) {
+      return require('../../Images/backgroundPhoto4.jpeg');
+    } else {
+      return require('../../Images/backgroundPhoto1.jpeg');
+    }
+  };
 
   useEffect(() => {
     readDataFromRealTimeDB();
@@ -111,7 +129,7 @@ const Home_Screen: FC = () => {
             title={'View Trip Info'}
           />
           <HomeScreenButton
-            onPress={() => console.log('pressed')}
+            onPress={() => navigation.navigate(Routes.visionBoardScreen)}
             title={'View Vision Board'}
           />
           <HomeScreenButton

@@ -25,7 +25,6 @@ export type AppStackParams = {
     names: string[];
   };
   [Routes.visionBoardScreen]: {
-    backgroundPhoto: any;
-    selectedImage: any;
+    selectedImage?: any;
   };
 };

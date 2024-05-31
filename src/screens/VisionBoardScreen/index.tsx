@@ -25,7 +25,7 @@ import styles from './styles';
 export const VisionBoardScreen: FC = () => {
   const route = useRoute<RouteProp<AppStackParams, Routes.visionBoardScreen>>();
   const navigation = useNavigation<NativeStackNavigationProp<any, any>>();
-  const {selectedImage} = route.params;
+  const {selectedImage} = route?.params;
   const [showDraggable, setShowDraggable] = useState(true);
   const screenHeight = Dimensions.get('window').height;
   const screenWidth = Dimensions.get('window').width;
