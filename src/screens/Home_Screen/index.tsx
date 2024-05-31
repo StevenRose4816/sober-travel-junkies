@@ -60,7 +60,7 @@ const Home_Screen: FC = () => {
     if (userId) {
       getProfilePicFromStorage(userId + '_profilePic');
     }
-  }, [userId]);
+  }, [userId, dataFromStorage]);
 
   const getProfilePicFromStorage = async (imageName: string) => {
     const storage = getStorage();

@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginLeft: 10,
     marginRight: 10,
-    marginTop: 20,
+    marginTop: 10,
     backgroundColor: '#eee7da',
     borderRadius: 5,
     maxHeight: 60,
