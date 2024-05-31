@@ -5,7 +5,7 @@ import {setSelectedDocument} from '../store/document/slice';
 import {useAppSelector} from '../hooks';
 import {useDispatch} from 'react-redux';
 
-export const DocPicker = ({toggleModal, toggleDocPickerSwitch}) => {
+export const DocPicker = () => {
   const [fileResponse, setFileResponse] = useState([]);
   const documentSelected = useAppSelector(state => state.document.selected);
   const selectedDocumentFromState = useAppSelector(
@@ -25,8 +25,6 @@ export const DocPicker = ({toggleModal, toggleDocPickerSwitch}) => {
       });
       setFileResponse([response]);
       dispatch(setSelectedDocument({selectedDocument: [response]}));
-      toggleModal();
-      toggleDocPickerSwitch();
       console.log(fileResponse);
     } catch (err) {
       console.log(err);

@@ -20,6 +20,7 @@ import HomeScreenEditButton from '../../components/HomeScreenEditButton';
 import {useNavigation} from '@react-navigation/native';
 import {NavPropAny} from '../../navigation/types';
 import Routes from '../../navigation/routes';
+import DocumentPickerModal from '../../components/HomeScreenButton/DocumentPickerModal';
 
 interface IDataFromStorage {
   address: string;

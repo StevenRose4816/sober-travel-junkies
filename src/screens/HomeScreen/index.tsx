@@ -902,11 +902,7 @@ const HomeScreen: FC = () => {
                   </Text>
                 )
               )}
-              {docPickerState && (
-                <DocPicker
-                  toggleModal={toggleModal}
-                  toggleDocPickerSwitch={toggleDocPickerSwitch}></DocPicker>
-              )}
+              {docPickerState && <DocPicker></DocPicker>}
             </View>
             <View style={styles.modalView4}>
               {!docPickerState && (

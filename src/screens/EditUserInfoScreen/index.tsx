@@ -1,4 +1,4 @@
-import {FC, useEffect, useRef} from 'react';
+import {FC, useEffect, useRef, useState} from 'react';
 import {
   Animated,
   Dimensions,
@@ -22,6 +22,7 @@ import auth from '@react-native-firebase/auth';
 import {useNavigation} from '@react-navigation/native';
 import {NavPropAny} from '../../navigation/types';
 import Routes from '../../navigation/routes';
+import DocumentPickerModal from '../../components/HomeScreenButton/DocumentPickerModal';
 
 interface IDefaultFormValues {
   fullname: string;
@@ -44,6 +45,7 @@ const EditUserInfoScreen: FC = () => {
   const ndaIcon: ImageSourcePropType = require('../../Images/ndaicon.png');
   const logo: ImageSourcePropType = require('../../Images/STJLogoTransparent.png');
   const background1: ImageSourcePropType = require('../../Images/backgroundPhoto1.jpeg');
+  const [isVisible, setIsVisible] = useState(false);
 
   const writeToRealTimeDB = async (
     userId: string | undefined,
@@ -102,6 +104,10 @@ const EditUserInfoScreen: FC = () => {
     navigation.navigate(Routes.home_Screen);
   };
 
+  const onRequestClose = () => {
+    setIsVisible(false);
+  };
+
   return (
     <View style={styles.containerView}>
       <ScrollView contentContainerStyle={styles.scrollView}>
@@ -129,6 +135,7 @@ const EditUserInfoScreen: FC = () => {
             label={'Upload NDA?'}
             translateX={translateX}
             marginLeft={19}
+            onPress={() => setIsVisible(true)}
           />
           <HomeScreenButton
             title={'Change Background Photo'}
@@ -243,6 +250,10 @@ const EditUserInfoScreen: FC = () => {
           </TouchableOpacity>
         </ImageBackground>
       </ScrollView>
+      <DocumentPickerModal
+        isVisible={isVisible}
+        onRequestClose={onRequestClose}
+      />
     </View>
   );
 };
