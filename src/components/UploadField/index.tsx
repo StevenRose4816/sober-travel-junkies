@@ -13,6 +13,7 @@ interface IPassedProps {
   label: string;
   translateX: Animated.Value;
   marginLeft?: number;
+  onPress?: () => void;
 }
 
 const UploadField: FC<IPassedProps> = ({
@@ -20,11 +21,12 @@ const UploadField: FC<IPassedProps> = ({
   label,
   translateX,
   marginLeft,
+  onPress,
 }) => {
   return (
     <View style={styles.containerView}>
       <Text style={styles.labelText}>{label}</Text>
-      <TouchableOpacity onPress={() => console.log('pressed')}>
+      <TouchableOpacity onPress={onPress}>
         <Animated.Image
           style={[
             styles.animatedStyle,

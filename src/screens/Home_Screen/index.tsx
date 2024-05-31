@@ -57,7 +57,7 @@ const Home_Screen: FC = () => {
 
   useEffect(() => {
     readDataFromRealTimeDB();
-    if (userId) {
+    if (userId && !userPhotoFromRedux) {
       getProfilePicFromStorage(userId + '_profilePic');
     }
   }, [userId, dataFromStorage]);
@@ -106,7 +106,7 @@ const Home_Screen: FC = () => {
             }
           />
           <HomeScreenButton
-            onPress={() => console.log('pressed')}
+            onPress={() => navigation.navigate(Routes.booneScreen)}
             title={'View Trip Info'}
           />
           <HomeScreenButton

@@ -100,7 +100,6 @@ const EditUserInfoScreen: FC = () => {
   const onSubmit = (formValues: IDefaultFormValues) => {
     writeToRealTimeDB(userId, formValues);
     navigation.navigate(Routes.home_Screen);
-    console.log('Form trying to be submitted', formValues);
   };
 
   return (
@@ -120,6 +119,7 @@ const EditUserInfoScreen: FC = () => {
             }
           />
           <UploadField
+            onPress={() => navigation.navigate(Routes.imagePicker)}
             source={cameraIcon}
             label={'Upload Photo?'}
             translateX={translateX}

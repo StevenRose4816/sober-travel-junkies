@@ -24,7 +24,7 @@ const BooneScreen: FC = () => {
   const maxDate = new Date(2025, 1, 1);
   const route =
     useRoute<RouteProp<AppStackParams, Routes.messageBoardScreen>>();
-  const backgroundPhoto = route?.params.backgroundPhoto;
+  const backgroundPhoto = route?.params?.backgroundPhoto;
   const screenWidth = Dimensions.get('window').width;
   const navigation = useNavigation<NavPropAny>();
   const translateX = useRef(new Animated.Value(0)).current;
