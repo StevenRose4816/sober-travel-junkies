@@ -23,6 +23,7 @@ import {useNavigation} from '@react-navigation/native';
 import {NavPropAny} from '../../navigation/types';
 import Routes from '../../navigation/routes';
 import DocumentPickerModal from '../../components/HomeScreenButton/DocumentPickerModal';
+import SubmitUserInfoButton from '../../components/SubmitUserInfoButton';
 
 interface IDefaultFormValues {
   fullname: string;
@@ -161,7 +162,7 @@ const EditUserInfoScreen: FC = () => {
           <Controller
             control={control}
             name={'phoneNumber'}
-            // rules={{required: true}}
+            rules={{required: true}}
             render={({field: {onChange, value, onBlur}}) => (
               <View>
                 <TextInput
@@ -178,7 +179,7 @@ const EditUserInfoScreen: FC = () => {
           <Controller
             control={control}
             name={'email'}
-            // rules={{required: true}}
+            rules={{required: true}}
             render={({field: {onChange, value, onBlur}}) => (
               <View>
                 <TextInput
@@ -195,7 +196,7 @@ const EditUserInfoScreen: FC = () => {
           <Controller
             control={control}
             name={'address'}
-            // rules={{required: true}}
+            rules={{required: true}}
             render={({field: {onChange, value, onBlur}}) => (
               <View>
                 <TextInput
@@ -212,7 +213,7 @@ const EditUserInfoScreen: FC = () => {
           <Controller
             control={control}
             name={'emergencyContactName'}
-            // rules={{required: true}}
+            rules={{required: true}}
             render={({field: {onChange, value, onBlur}}) => (
               <View>
                 <TextInput
@@ -229,7 +230,7 @@ const EditUserInfoScreen: FC = () => {
           <Controller
             control={control}
             name={'emergencyContactPhone'}
-            // rules={{required: true}}
+            rules={{required: true}}
             render={({field: {onChange, value, onBlur}}) => (
               <View>
                 <TextInput
@@ -243,11 +244,10 @@ const EditUserInfoScreen: FC = () => {
               </View>
             )}
           />
-          <TouchableOpacity
+          <SubmitUserInfoButton
             onPress={handleSubmit(onSubmit)}
-            style={styles.submitTouchable}>
-            <Text style={styles.submitText}>{'Submit'}</Text>
-          </TouchableOpacity>
+            isValid={isValid}
+          />
         </ImageBackground>
       </ScrollView>
       <DocumentPickerModal

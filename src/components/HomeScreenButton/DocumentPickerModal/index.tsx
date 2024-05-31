@@ -1,6 +1,7 @@
 import {FC} from 'react';
 import {Image, Modal, TouchableOpacity, View} from 'react-native';
 import {DocPicker} from '../../DocumentPicker';
+import styles from './styles';
 
 interface IPassedProps {
   isVisible: boolean;
@@ -14,38 +15,17 @@ const DocumentPickerModal: FC<IPassedProps> = ({isVisible, onRequestClose}) => {
       animationType={'slide'}
       transparent={true}
       onRequestClose={onRequestClose}>
-      <View
-        style={{
-          flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center',
-          backgroundColor: 'rgba(0, 0, 0, 0.5)',
-        }}>
-        <View
-          style={{
-            borderColor: '#0c0b09',
-            backgroundColor: '#b6e7cc',
-            minHeight: 300,
-            width: '80%',
-            justifyContent: 'center',
-            borderRadius: 5,
-            padding: 20,
-          }}>
+      <View style={styles.containerView}>
+        <View style={styles.innerContainer}>
           <TouchableOpacity
             onPress={onRequestClose}
-            style={{alignSelf: 'flex-end'}}>
+            style={styles.closeTouchable}>
             <Image
-              style={{height: 25, width: 25}}
+              style={styles.closeIcon}
               source={require('../../../Images/close2.png')}
             />
           </TouchableOpacity>
-          <View
-            style={{
-              flex: 1,
-              borderRadius: 5,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
+          <View style={styles.docPickerContainer}>
             <DocPicker />
           </View>
         </View>
