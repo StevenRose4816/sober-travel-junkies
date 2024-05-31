@@ -59,8 +59,8 @@ const RootNavigator: FC = () => {
             headerTitle: '',
           }}>
           <RootStack.Screen
-            name={Routes.homeScreen}
-            component={HomeScreen}
+            name={Routes.home_Screen}
+            component={Home_Screen}
             options={{
               headerTitleStyle: {
                 fontSize: 20,
@@ -68,8 +68,8 @@ const RootNavigator: FC = () => {
             }}
           />
           <RootStack.Screen
-            name={Routes.home_Screen}
-            component={Home_Screen}
+            name={Routes.homeScreen}
+            component={HomeScreen}
             options={{
               headerTitleStyle: {
                 fontSize: 20,

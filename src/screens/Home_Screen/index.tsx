@@ -5,6 +5,8 @@ import {
   View,
   Image,
   ImageSourcePropType,
+  TouchableOpacity,
+  Text,
 } from 'react-native';
 import styles from './styles';
 import HomeScreenButton from '../../components/HomeScreenButton';
@@ -20,7 +22,8 @@ import HomeScreenEditButton from '../../components/HomeScreenEditButton';
 import {useNavigation} from '@react-navigation/native';
 import {NavPropAny} from '../../navigation/types';
 import Routes from '../../navigation/routes';
-import DocumentPickerModal from '../../components/HomeScreenButton/DocumentPickerModal';
+import {setSelectedDocument} from '../../store/document/slice';
+import {setNewUser} from '../../store/globalStore/slice';
 
 interface IDataFromStorage {
   address: string;
@@ -54,20 +57,22 @@ const Home_Screen: FC = () => {
     username: '',
     fullName: '',
   });
-  const [firstPhotoPressed, setFirstPhotoPressed] = useState(false);
-  const [secondPhotoPressed, setSecondPhotoPressed] = useState(false);
-  const [thirdPhotoPressed, setThirdPhotoPressed] = useState(false);
-  const [fourthPhotoPressed, setFourthPhotoPressed] = useState(false);
   const {address, email, phoneNumber, fullName} = dataFromStorage;
+  const [photoPressed, setPhotoPressed] = useState({
+    first: false,
+    second: false,
+    third: false,
+    fourth: false,
+  });
 
   const source = () => {
-    if (firstPhotoPressed) {
+    if (photoPressed.first) {
       return require('../../Images/backgroundPhoto1.jpeg');
-    } else if (secondPhotoPressed) {
+    } else if (photoPressed.second) {
       return require('../../Images/backgroundPhoto2.jpeg');
-    } else if (thirdPhotoPressed) {
+    } else if (photoPressed.third) {
       return require('../../Images/backgroundPhoto3.jpeg');
-    } else if (fourthPhotoPressed) {
+    } else if (photoPressed.fourth) {
       return require('../../Images/backgroundPhoto4.jpeg');
     } else {
       return require('../../Images/backgroundPhoto1.jpeg');
@@ -75,11 +80,25 @@ const Home_Screen: FC = () => {
   };
 
   useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity onPress={logout} style={styles.logoutTouchable}>
+          <Text style={styles.logoutText}>{'Log out'}</Text>
+        </TouchableOpacity>
+      ),
+    });
     readDataFromRealTimeDB();
     if (userId && !userPhotoFromRedux) {
       getProfilePicFromStorage(userId + '_profilePic');
     }
   }, [userId, dataFromStorage]);
+
+  const logout = () => {
+    dispatch(setUserPhoto({userPhoto: null}));
+    dispatch(setSelectedDocument({selectedDocument: undefined}));
+    dispatch(setNewUser({newUser: false}));
+    auth().signOut();
+  };
 
   const getProfilePicFromStorage = async (imageName: string) => {
     const storage = getStorage();
@@ -125,7 +144,11 @@ const Home_Screen: FC = () => {
             }
           />
           <HomeScreenButton
-            onPress={() => navigation.navigate(Routes.booneScreen)}
+            onPress={() =>
+              navigation.navigate(Routes.booneScreen, {
+                backgroundPhoto: source(),
+              })
+            }
             title={'View Trip Info'}
           />
           <HomeScreenButton
@@ -133,7 +156,13 @@ const Home_Screen: FC = () => {
             title={'View Vision Board'}
           />
           <HomeScreenButton
-            onPress={() => console.log('pressed')}
+            onPress={() =>
+              navigation.navigate(Routes.messageBoardScreen, {
+                fullName: fullName,
+                userPhotoFromDB: userPhotoFromRedux,
+                backgroundPhoto: source(),
+              })
+            }
             title={'View Message Board'}
           />
           <View style={styles.dividerView} />

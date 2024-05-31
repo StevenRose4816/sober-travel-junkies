@@ -1,5 +1,4 @@
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {FC, useEffect, useState} from 'react';
 import {
   ActivityIndicator,
@@ -24,8 +23,8 @@ import styles from './styles';
 
 export const VisionBoardScreen: FC = () => {
   const route = useRoute<RouteProp<AppStackParams, Routes.visionBoardScreen>>();
-  const navigation = useNavigation<NativeStackNavigationProp<any, any>>();
-  const {selectedImage} = route?.params;
+  const navigation = useNavigation<NavPropAny>();
+  const selectedImage = route?.params || {};
   const [showDraggable, setShowDraggable] = useState(true);
   const screenHeight = Dimensions.get('window').height;
   const screenWidth = Dimensions.get('window').width;
