@@ -1,48 +1,76 @@
 import React, {FC, useEffect, useState} from 'react';
-import {ImageBackground, ScrollView, View, Image} from 'react-native';
+import {
+  ImageBackground,
+  ScrollView,
+  View,
+  Image,
+  ImageSourcePropType,
+} from 'react-native';
 import styles from './styles';
 import HomeScreenButton from '../../components/HomeScreenButton';
 import UserInfoField from '../../components/UserInfoField';
-import {getDownloadURL, getStorage, ref as thisRef} from 'firebase/storage';
+import {getDownloadURL, getStorage, ref as storageRef} from 'firebase/storage';
 import auth from '@react-native-firebase/auth';
-import {get, onValue, ref, set} from 'firebase/database';
+import {get, ref} from 'firebase/database';
 import {db} from '../../Firebase/FirebaseConfigurations';
+import {useDispatch} from 'react-redux';
+import {setUserPhoto} from '../../store/user/slice';
+import {useAppSelector} from '../../hooks';
+import HomeScreenEditButton from '../../components/HomeScreenEditButton';
+
+interface IDataFromStorage {
+  address: string;
+  bio: string;
+  email: string;
+  emergencyContact: string;
+  phoneNumber: string;
+  userPhoto: string;
+  username: string;
+  fullName: string;
+}
 
 const Home_Screen: FC = () => {
-  const background1 = require('../../Images/backgroundPhoto1.jpeg');
-  const placeHolderAddressValue = '123 Address';
-  const logo = require('../../Images/STJLogoTransparent.png');
-  const homeIcon = require('../../Images/homeaddressicon.png');
-  const emailIcon = require('../../Images/emailaddressicon.png');
-  const phoneIcon = require('../../Images/phonenumbericon.png');
-  const nameIcon = require('../../Images/appicon.png');
+  const dispatch = useDispatch();
+  const background1: ImageSourcePropType = require('../../Images/backgroundPhoto1.jpeg');
+  const logo: ImageSourcePropType = require('../../Images/STJLogoTransparent.png');
+  const homeIcon: ImageSourcePropType = require('../../Images/homeaddressicon.png');
+  const emailIcon: ImageSourcePropType = require('../../Images/emailaddressicon.png');
+  const phoneIcon: ImageSourcePropType = require('../../Images/phonenumbericon.png');
+  const nameIcon: ImageSourcePropType = require('../../Images/appicon.png');
+  const userPhotoFromRedux = useAppSelector(state => state.user.userPhoto);
   const userId = auth().currentUser?.uid;
-  const [userPhoto, setUserPhoto] = useState<string | undefined>(undefined);
-  const [dataFromStorage, setDataFromStorage] = useState();
+  const [dataFromStorage, setDataFromStorage] = useState<IDataFromStorage>({
+    address: '',
+    bio: '',
+    email: '',
+    emergencyContact: '',
+    phoneNumber: '',
+    userPhoto: '',
+    username: '',
+    fullName: '',
+  });
+  const {address, email, phoneNumber, fullName} = dataFromStorage;
 
   useEffect(() => {
     readDataFromRealTimeDB();
-    getProfilePicFromStorage(userId + '_profilePic');
-  }, []);
-
-  useEffect(() => {
-    console.log('userPhoto: ', userPhoto);
-    console.log('dataFromStorage: ', dataFromStorage);
-  }, [userPhoto, dataFromStorage]);
+    if (userId) {
+      getProfilePicFromStorage(userId + '_profilePic');
+    }
+  }, [userId]);
 
   const getProfilePicFromStorage = async (imageName: string) => {
     const storage = getStorage();
-    const reference = thisRef(storage, imageName);
+    const reference = storageRef(storage, imageName);
     try {
-      await getDownloadURL(reference).then(url => {
-        setUserPhoto(url);
-      });
+      const url = await getDownloadURL(reference);
+      dispatch(setUserPhoto({userPhoto: url}));
     } catch (e: any) {
       console.log(e.message);
     }
   };
 
   const readDataFromRealTimeDB = async () => {
+    if (!userId) return;
     const countRef = ref(db, 'users/' + userId);
     try {
       const snapshot = await get(countRef);
@@ -68,7 +96,9 @@ const Home_Screen: FC = () => {
           <Image
             style={styles.userImage}
             source={
-              {uri: userPhoto} || require('../../Images/profilepictureicon.png')
+              userPhotoFromRedux
+                ? {uri: userPhotoFromRedux}
+                : require('../../Images/profilepictureicon.png')
             }
           />
           <HomeScreenButton
@@ -84,27 +114,20 @@ const Home_Screen: FC = () => {
             title={'View Message Board'}
           />
           <View style={styles.dividerView} />
-          <UserInfoField
-            label={'Address'}
-            uri={homeIcon}
-            value={placeHolderAddressValue}
-          />
+          <UserInfoField label={'Address'} uri={homeIcon} value={address} />
           <UserInfoField
             label={'Email Address'}
             uri={emailIcon}
-            value={placeHolderAddressValue}
+            value={email}
           />
           <UserInfoField
             label={'Phone Number'}
             uri={phoneIcon}
-            value={placeHolderAddressValue}
+            value={phoneNumber}
           />
-          <UserInfoField
-            label={'Full Name'}
-            uri={nameIcon}
-            value={placeHolderAddressValue}
-          />
+          <UserInfoField label={'Full Name'} uri={nameIcon} value={fullName} />
           <View style={styles.dividerView} />
+          <HomeScreenEditButton onPress={() => console.log('pressed')} />
         </ImageBackground>
       </ScrollView>
     </View>

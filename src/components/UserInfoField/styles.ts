@@ -22,6 +22,7 @@ const styles = StyleSheet.create({
   labelText: {
     fontFamily: 'HighTide-Sans',
     alignSelf: 'center',
+    maxWidth: screenWidth * 0.7,
   },
   valueText: {
     fontFamily: 'Vonique64',
