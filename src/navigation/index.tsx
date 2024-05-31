@@ -14,6 +14,7 @@ import Routes from '../navigation/routes.ts';
 import ContactScreen from '../screens/ContactScreen/index.tsx';
 import {VisionBoardScreen} from '../screens/VisionBoardScreen/index.tsx';
 import Home_Screen from '../screens/Home_Screen/index.tsx';
+import EditUserInfoScreen from '../screens/EditUserInfoScreen/index.tsx';
 
 const RootStack = createNativeStackNavigator<AppStackParams>();
 
@@ -69,6 +70,15 @@ const RootNavigator: FC = () => {
           <RootStack.Screen
             name={Routes.home_Screen}
             component={Home_Screen}
+            options={{
+              headerTitleStyle: {
+                fontSize: 20,
+              },
+            }}
+          />
+          <RootStack.Screen
+            name={Routes.editUserInfoScreen}
+            component={EditUserInfoScreen}
             options={{
               headerTitleStyle: {
                 fontSize: 20,

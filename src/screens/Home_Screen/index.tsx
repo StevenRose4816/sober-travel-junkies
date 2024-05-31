@@ -17,6 +17,9 @@ import {useDispatch} from 'react-redux';
 import {setUserPhoto} from '../../store/user/slice';
 import {useAppSelector} from '../../hooks';
 import HomeScreenEditButton from '../../components/HomeScreenEditButton';
+import {useNavigation} from '@react-navigation/native';
+import {NavPropAny} from '../../navigation/types';
+import Routes from '../../navigation/routes';
 
 interface IDataFromStorage {
   address: string;
@@ -30,6 +33,7 @@ interface IDataFromStorage {
 }
 
 const Home_Screen: FC = () => {
+  const navigation = useNavigation<NavPropAny>();
   const dispatch = useDispatch();
   const background1: ImageSourcePropType = require('../../Images/backgroundPhoto1.jpeg');
   const logo: ImageSourcePropType = require('../../Images/STJLogoTransparent.png');
@@ -127,7 +131,9 @@ const Home_Screen: FC = () => {
           />
           <UserInfoField label={'Full Name'} uri={nameIcon} value={fullName} />
           <View style={styles.dividerView} />
-          <HomeScreenEditButton onPress={() => console.log('pressed')} />
+          <HomeScreenEditButton
+            onPress={() => navigation.navigate(Routes.editUserInfoScreen)}
+          />
         </ImageBackground>
       </ScrollView>
     </View>
