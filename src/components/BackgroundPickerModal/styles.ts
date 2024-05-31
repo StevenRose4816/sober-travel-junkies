@@ -15,7 +15,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#b6e7cc',
     minHeight: 300,
     width: '80%',
-    justifyContent: 'center',
     borderRadius: 5,
     padding: 20,
   },
@@ -26,12 +25,22 @@ const styles = StyleSheet.create({
     height: 25,
     width: 25,
   },
-  docPickerContainer: {
-    flex: 1,
-    borderRadius: 5,
-    justifyContent: 'flex-start',
+  imageGrid: {
+    flexDirection: 'column',
+    justifyContent: 'space-around',
     alignItems: 'center',
-    marginTop: 30,
+  },
+  imageRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    marginBottom: 10,
+  },
+  image: {
+    height: 100,
+    width: 100,
+    marginHorizontal: 20,
+    marginVertical: 10,
   },
 });
 

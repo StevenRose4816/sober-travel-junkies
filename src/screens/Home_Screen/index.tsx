@@ -19,7 +19,7 @@ import {useDispatch} from 'react-redux';
 import {setUserPhoto} from '../../store/user/slice';
 import {useAppSelector} from '../../hooks';
 import HomeScreenEditButton from '../../components/HomeScreenEditButton';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import {NavPropAny} from '../../navigation/types';
 import Routes from '../../navigation/routes';
 import {setSelectedDocument} from '../../store/document/slice';
@@ -36,7 +36,11 @@ interface IDataFromStorage {
   fullName: string;
 }
 
-const Home_Screen: FC = () => {
+interface IPassedProps {
+  source: any;
+}
+
+const Home_Screen: FC<IPassedProps> = ({source}) => {
   const navigation = useNavigation<NavPropAny>();
   const dispatch = useDispatch();
   const background1: ImageSourcePropType = require('../../Images/backgroundPhoto1.jpeg');
@@ -58,26 +62,6 @@ const Home_Screen: FC = () => {
     fullName: '',
   });
   const {address, email, phoneNumber, fullName} = dataFromStorage;
-  const [photoPressed, setPhotoPressed] = useState({
-    first: false,
-    second: false,
-    third: false,
-    fourth: false,
-  });
-
-  const source = () => {
-    if (photoPressed.first) {
-      return require('../../Images/backgroundPhoto1.jpeg');
-    } else if (photoPressed.second) {
-      return require('../../Images/backgroundPhoto2.jpeg');
-    } else if (photoPressed.third) {
-      return require('../../Images/backgroundPhoto3.jpeg');
-    } else if (photoPressed.fourth) {
-      return require('../../Images/backgroundPhoto4.jpeg');
-    } else {
-      return require('../../Images/backgroundPhoto1.jpeg');
-    }
-  };
 
   useEffect(() => {
     navigation.setOptions({

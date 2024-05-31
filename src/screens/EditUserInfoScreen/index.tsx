@@ -14,14 +14,15 @@ import UploadField from '../../components/UploadField';
 import {useAppSelector} from '../../hooks';
 import HomeScreenButton from '../../components/HomeScreenButton';
 import {Controller, useForm} from 'react-hook-form';
-import {get, onValue, ref, set} from 'firebase/database';
+import {set, ref} from 'firebase/database';
 import {db} from '../../Firebase/FirebaseConfigurations';
 import auth from '@react-native-firebase/auth';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import {NavPropAny} from '../../navigation/types';
 import Routes from '../../navigation/routes';
 import DocumentPickerModal from '../../components/HomeScreenButton/DocumentPickerModal';
 import SubmitUserInfoButton from '../../components/SubmitUserInfoButton';
+import BackgroundPickerModal from '../../components/BackgroundPickerModal';
 
 interface IDefaultFormValues {
   fullname: string;
@@ -35,16 +36,23 @@ interface IDefaultFormValues {
 
 const EditUserInfoScreen: FC = () => {
   const navigation = useNavigation<NavPropAny>();
+  const route = useRoute();
   const userId = auth().currentUser?.uid;
   const userPhotoFromRedux = useAppSelector(state => state.user.userPhoto);
   const translateX = useRef(new Animated.Value(0)).current;
   const screenWidth = Dimensions.get('window').width;
-  const screenHeight = Dimensions.get('window').height;
   const cameraIcon: ImageSourcePropType = require('../../Images/camerapictureicon.png');
   const ndaIcon: ImageSourcePropType = require('../../Images/ndaicon.png');
   const logo: ImageSourcePropType = require('../../Images/STJLogoTransparent.png');
   const background1: ImageSourcePropType = require('../../Images/backgroundPhoto1.jpeg');
-  const [isVisible, setIsVisible] = useState(false);
+  const [docPickerVisible, setDocPickerIsVisible] = useState(false);
+  const [backgroundModalVisible, setBackgroundModalVisible] = useState(false);
+  const [photoPressed, setPhotoPressed] = useState({
+    first: false,
+    second: false,
+    third: false,
+    fourth: false,
+  });
 
   const writeToRealTimeDB = async (
     userId: string | undefined,
@@ -100,11 +108,25 @@ const EditUserInfoScreen: FC = () => {
 
   const onSubmit = (formValues: IDefaultFormValues) => {
     writeToRealTimeDB(userId, formValues);
-    navigation.navigate(Routes.home_Screen);
+    navigation.navigate(Routes.home_Screen, {source: source()});
+  };
+
+  const source = () => {
+    if (photoPressed.first) {
+      return require('../../Images/backgroundPhoto1.jpeg');
+    } else if (photoPressed.second) {
+      return require('../../Images/backgroundPhoto2.jpeg');
+    } else if (photoPressed.third) {
+      return require('../../Images/backgroundPhoto3.jpeg');
+    } else if (photoPressed.fourth) {
+      return require('../../Images/backgroundPhoto4.jpeg');
+    } else {
+      return require('../../Images/backgroundPhoto1.jpeg');
+    }
   };
 
   const onRequestClose = () => {
-    setIsVisible(false);
+    setDocPickerIsVisible(false);
   };
 
   return (
@@ -134,11 +156,11 @@ const EditUserInfoScreen: FC = () => {
             label={'Upload NDA?'}
             translateX={translateX}
             marginLeft={19}
-            onPress={() => setIsVisible(true)}
+            onPress={() => setDocPickerIsVisible(true)}
           />
           <HomeScreenButton
             title={'Change Background Photo'}
-            onPress={() => console.log('pressed')}
+            onPress={() => setBackgroundModalVisible(true)}
           />
           <Controller
             control={control}
@@ -249,8 +271,12 @@ const EditUserInfoScreen: FC = () => {
         </ImageBackground>
       </ScrollView>
       <DocumentPickerModal
-        isVisible={isVisible}
+        isVisible={docPickerVisible}
         onRequestClose={onRequestClose}
+      />
+      <BackgroundPickerModal
+        isVisible={backgroundModalVisible}
+        onRequestClose={() => setBackgroundModalVisible(false)}
       />
     </View>
   );

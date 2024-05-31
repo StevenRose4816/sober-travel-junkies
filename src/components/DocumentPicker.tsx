@@ -1,12 +1,16 @@
 import {useState, useCallback, useEffect} from 'react';
 import {Text, SafeAreaView, StatusBar, TouchableOpacity} from 'react-native';
-import DocumentPicker from 'react-native-document-picker';
+import DocumentPicker, {
+  DocumentPickerResponse,
+} from 'react-native-document-picker';
 import {setSelectedDocument} from '../store/document/slice';
 import {useAppSelector} from '../hooks';
 import {useDispatch} from 'react-redux';
 
 export const DocPicker = () => {
-  const [fileResponse, setFileResponse] = useState([]);
+  const [fileResponse, setFileResponse] = useState<DocumentPickerResponse[]>(
+    [],
+  );
   const documentSelected = useAppSelector(state => state.document.selected);
   const selectedDocumentFromState = useAppSelector(
     state => state.document.selectedDocument,
