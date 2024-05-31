@@ -1,5 +1,6 @@
 enum Routes {
   homeScreen = 'homeScreen',
+  home_Screen = 'home_Screen',
   imagePicker = 'imagePicker',
   loginScreen = 'loginScreen',
   signupScreen = 'signupScreen',

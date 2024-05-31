@@ -7,6 +7,7 @@ export type NavPropAny = NativeStackNavigationProp<any, any>;
 
 export type AppStackParams = {
   [Routes.homeScreen]: undefined;
+  [Routes.home_Screen]: undefined;
   [Routes.loginScreen]: undefined;
   [Routes.imagePicker]: undefined;
   [Routes.booneScreen]: undefined;

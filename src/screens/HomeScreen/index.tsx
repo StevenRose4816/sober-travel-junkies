@@ -424,9 +424,10 @@ const HomeScreen: FC = () => {
   };
 
   const onPressTripInfo = () => {
-    modalVisible3 && setModalVisible3(false);
-    setShowTripModal(true);
-    toggleBackgroundPhotoModal();
+    // modalVisible3 && setModalVisible3(false);
+    // setShowTripModal(true);
+    // toggleBackgroundPhotoModal();
+    navigation.navigate(Routes.home_Screen);
   };
 
   const toggleDocPickerSwitch = () => {
