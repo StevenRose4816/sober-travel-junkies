@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState} from 'react';
+import {FC, useEffect, useState} from 'react';
 import {
   ImageBackground,
   ScrollView,
@@ -8,20 +8,20 @@ import {
   TouchableOpacity,
   Text,
 } from 'react-native';
-import styles from './styles';
-import HomeScreenButton from '../../components/HomeScreenButton';
-import UserInfoField from '../../components/UserInfoField';
-import {getDownloadURL, getStorage, ref as storageRef} from 'firebase/storage';
 import auth from '@react-native-firebase/auth';
+import {useNavigation, useRoute} from '@react-navigation/native';
+import {getDownloadURL, getStorage, ref as storageRef} from 'firebase/storage';
 import {get, ref} from 'firebase/database';
 import {db} from '../../Firebase/FirebaseConfigurations';
 import {useDispatch} from 'react-redux';
 import {setUserPhoto} from '../../store/user/slice';
 import {useAppSelector} from '../../hooks';
+import HomeScreenButton from '../../components/HomeScreenButton';
+import UserInfoField from '../../components/UserInfoField';
 import HomeScreenEditButton from '../../components/HomeScreenEditButton';
-import {useNavigation, useRoute} from '@react-navigation/native';
-import {NavPropAny} from '../../navigation/types';
 import Routes from '../../navigation/routes';
+import styles from './styles';
+import {NavPropAny, HomeScreenRouteProp} from '../../navigation/types';
 import {setSelectedDocument} from '../../store/document/slice';
 import {setNewUser} from '../../store/globalStore/slice';
 
@@ -36,12 +36,9 @@ interface IDataFromStorage {
   fullName: string;
 }
 
-interface IPassedProps {
-  source: any;
-}
-
-const Home_Screen: FC<IPassedProps> = ({source}) => {
+const Home_Screen: FC = () => {
   const navigation = useNavigation<NavPropAny>();
+  const route = useRoute<HomeScreenRouteProp>();
   const dispatch = useDispatch();
   const background1: ImageSourcePropType = require('../../Images/backgroundPhoto1.jpeg');
   const logo: ImageSourcePropType = require('../../Images/STJLogoTransparent.png');
@@ -63,6 +60,8 @@ const Home_Screen: FC<IPassedProps> = ({source}) => {
   });
   const {address, email, phoneNumber, fullName} = dataFromStorage;
 
+  const backgroundSource = route.params?.source || background1;
+
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -75,7 +74,7 @@ const Home_Screen: FC<IPassedProps> = ({source}) => {
     if (userId && !userPhotoFromRedux) {
       getProfilePicFromStorage(userId + '_profilePic');
     }
-  }, [userId, dataFromStorage]);
+  }, []);
 
   const logout = () => {
     dispatch(setUserPhoto({userPhoto: null}));
@@ -115,7 +114,7 @@ const Home_Screen: FC<IPassedProps> = ({source}) => {
     <View style={styles.containerView}>
       <ScrollView contentContainerStyle={styles.scrollView}>
         <ImageBackground
-          source={background1}
+          source={backgroundSource}
           style={styles.imageBackground}
           imageStyle={styles.imageStyle}>
           <Image style={styles.profilePicture} source={logo} />
@@ -130,7 +129,7 @@ const Home_Screen: FC<IPassedProps> = ({source}) => {
           <HomeScreenButton
             onPress={() =>
               navigation.navigate(Routes.booneScreen, {
-                backgroundPhoto: source(),
+                backgroundPhoto: backgroundSource,
               })
             }
             title={'View Trip Info'}
@@ -144,7 +143,7 @@ const Home_Screen: FC<IPassedProps> = ({source}) => {
               navigation.navigate(Routes.messageBoardScreen, {
                 fullName: fullName,
                 userPhotoFromDB: userPhotoFromRedux,
-                backgroundPhoto: source(),
+                backgroundPhoto: backgroundSource,
               })
             }
             title={'View Message Board'}

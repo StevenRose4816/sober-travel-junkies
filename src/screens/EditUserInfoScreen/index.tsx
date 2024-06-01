@@ -98,6 +98,10 @@ const EditUserInfoScreen: FC = () => {
     moveImage();
   }, []);
 
+  useEffect(() => {
+    console.log('Pressed: ', photoPressed);
+  }, [photoPressed]);
+
   const moveImage = () => {
     Animated.timing(translateX, {
       toValue: screenWidth * 0.33,
@@ -108,7 +112,8 @@ const EditUserInfoScreen: FC = () => {
 
   const onSubmit = (formValues: IDefaultFormValues) => {
     writeToRealTimeDB(userId, formValues);
-    navigation.navigate(Routes.home_Screen, {source: source()});
+    const selectedSource = source();
+    navigation.navigate(Routes.home_Screen, {source: selectedSource});
   };
 
   const source = () => {
@@ -135,7 +140,7 @@ const EditUserInfoScreen: FC = () => {
         <ImageBackground
           style={styles.imageBackground}
           imageStyle={styles.imageStyle}
-          source={background1}>
+          source={source()}>
           <Image style={styles.logoImage} source={logo} />
           <Image
             style={styles.userPhoto}
@@ -277,6 +282,8 @@ const EditUserInfoScreen: FC = () => {
       <BackgroundPickerModal
         isVisible={backgroundModalVisible}
         onRequestClose={() => setBackgroundModalVisible(false)}
+        setPhotoPressed={setPhotoPressed}
+        photoPressed={photoPressed}
       />
     </View>
   );
