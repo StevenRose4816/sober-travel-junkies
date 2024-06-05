@@ -21,12 +21,12 @@ import storage from '@react-native-firebase/storage';
 import {useAppSelector} from '../../hooks';
 import styles from './styles';
 import PhotoDraggable from '../../components/PhotoDraggable';
+import NoteDraggable from '../../components/NoteDraggable';
 
 export const VisionBoardScreen: FC = () => {
   const route = useRoute<RouteProp<AppStackParams, Routes.visionBoardScreen>>();
   const navigation = useNavigation<NavPropAny>();
   const selectedImage = route?.params?.selectedImage || {};
-  const screenHeight = Dimensions.get('window').height;
   const screenWidth = Dimensions.get('window').width;
   const [modalVisible, setModalVisible] = useState(false);
   const [addNote, setAddNote] = useState(true);
@@ -241,33 +241,6 @@ export const VisionBoardScreen: FC = () => {
             </View>
           )}
           {showInitialPhotoDraggables && (
-            // <Draggable
-            //   x={screenWidth / 2 - 30}
-            //   y={100}
-            //   minX={0}
-            //   minY={40}
-            //   maxX={375}
-            //   maxY={640}
-            //   renderColor={hideToucables ? '#fb445c00' : '#fb445c'}
-            //   isCircle
-            //   onShortPressRelease={onShortPressPhoto}>
-            //   <Image
-            //     style={[
-            //       styles.image2,
-            //       {
-            //         width: photoDragSize.width,
-            //         height: photoDragSize.height,
-            //       },
-            //     ]}
-            //     source={
-            //       showSelectedImage && selectedImage
-            //         ? {
-            //             uri: selectedImage,
-            //           }
-            //         : require('../../Images/camerapictureicon.png')
-            //     }
-            //     resizeMode="stretch"></Image>
-            // </Draggable>
             <PhotoDraggable
               hideToucables={hideToucables}
               onShortPressPhoto={onShortPressPhoto}
@@ -277,36 +250,12 @@ export const VisionBoardScreen: FC = () => {
             />
           )}
           {addNote && showInitialStickyDraggables && (
-            <Draggable
-              x={screenWidth / 2 - 60}
-              y={200}
-              minX={0}
-              minY={40}
-              maxX={375}
-              maxY={640}
-              onShortPressRelease={onShortPressSticky}>
-              <ImageBackground
-                style={[
-                  styles.imageBackground2,
-                  {
-                    width: stickyDragSize.width,
-                    height: stickyDragSize.height,
-                  },
-                ]}
-                source={require('../../Images/sticky.png')}
-                resizeMode="stretch">
-                <Text
-                  style={[
-                    styles.text2,
-                    {
-                      fontSize: stickySize.fontSize,
-                      maxWidth: stickySize.maxWidth,
-                    },
-                  ]}>
-                  {visibleNote}
-                </Text>
-              </ImageBackground>
-            </Draggable>
+            <NoteDraggable
+              onShortPressSticky={onShortPressSticky}
+              stickyDragSize={stickyDragSize}
+              stickySize={stickySize}
+              visibleNote={visibleNote}
+            />
           )}
         </ImageBackground>
       )}
