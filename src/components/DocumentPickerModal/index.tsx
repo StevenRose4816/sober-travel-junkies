@@ -1,6 +1,6 @@
 import {FC} from 'react';
 import {Image, Modal, TouchableOpacity, View} from 'react-native';
-import {DocPicker} from '../../DocumentPicker';
+import {DocPicker} from '../DocumentPicker';
 import styles from './styles';
 
 interface IPassedProps {
@@ -22,7 +22,7 @@ const DocumentPickerModal: FC<IPassedProps> = ({isVisible, onRequestClose}) => {
             style={styles.closeTouchable}>
             <Image
               style={styles.closeIcon}
-              source={require('../../../Images/close2.png')}
+              source={require('../../Images/close2.png')}
             />
           </TouchableOpacity>
           <View style={styles.docPickerContainer}>

@@ -13,14 +13,14 @@ import styles from './styles';
 import UploadField from '../../components/UploadField';
 import {useAppSelector} from '../../hooks';
 import HomeScreenButton from '../../components/HomeScreenButton';
-import {Controller, useForm} from 'react-hook-form';
+import {useForm, Controller} from 'react-hook-form';
 import {set, ref} from 'firebase/database';
 import {db} from '../../Firebase/FirebaseConfigurations';
 import auth from '@react-native-firebase/auth';
-import {useNavigation, useRoute} from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import {NavPropAny} from '../../navigation/types';
 import Routes from '../../navigation/routes';
-import DocumentPickerModal from '../../components/HomeScreenButton/DocumentPickerModal';
+import DocumentPickerModal from '../../components/DocumentPickerModal';
 import SubmitUserInfoButton from '../../components/SubmitUserInfoButton';
 import BackgroundPickerModal from '../../components/BackgroundPickerModal';
 
@@ -36,7 +36,6 @@ interface IDefaultFormValues {
 
 const EditUserInfoScreen: FC = () => {
   const navigation = useNavigation<NavPropAny>();
-  const route = useRoute();
   const userId = auth().currentUser?.uid;
   const userPhotoFromRedux = useAppSelector(state => state.user.userPhoto);
   const translateX = useRef(new Animated.Value(0)).current;
@@ -44,7 +43,6 @@ const EditUserInfoScreen: FC = () => {
   const cameraIcon: ImageSourcePropType = require('../../Images/camerapictureicon.png');
   const ndaIcon: ImageSourcePropType = require('../../Images/ndaicon.png');
   const logo: ImageSourcePropType = require('../../Images/STJLogoTransparent.png');
-  const background1: ImageSourcePropType = require('../../Images/backgroundPhoto1.jpeg');
   const [docPickerVisible, setDocPickerIsVisible] = useState(false);
   const [backgroundModalVisible, setBackgroundModalVisible] = useState(false);
   const [photoPressed, setPhotoPressed] = useState({
@@ -58,7 +56,6 @@ const EditUserInfoScreen: FC = () => {
     userId: string | undefined,
     formValues: any,
   ) => {
-    console.log('userId: ', userId);
     set(ref(db, 'users/' + userId), {
       fullName: formValues.fullname || '',
       email: formValues.email || '',
@@ -97,10 +94,6 @@ const EditUserInfoScreen: FC = () => {
   useEffect(() => {
     moveImage();
   }, []);
-
-  useEffect(() => {
-    console.log('Pressed: ', photoPressed);
-  }, [photoPressed]);
 
   const moveImage = () => {
     Animated.timing(translateX, {

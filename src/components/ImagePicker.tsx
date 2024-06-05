@@ -8,7 +8,6 @@ import {
   Animated,
   Platform,
   Alert,
-  ImageSourcePropType,
 } from 'react-native';
 import {
   launchImageLibrary,
@@ -16,11 +15,10 @@ import {
   MediaType,
   ImagePickerResponse,
 } from 'react-native-image-picker';
-import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import {setUserPhoto as setThisUserPhoto} from '../store/user/slice';
 import Routes from '../navigation/routes';
-import {AppStackParams, NavPropAny} from '../navigation/types';
 import auth from '@react-native-firebase/auth';
 import storage from '@react-native-firebase/storage';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
@@ -40,7 +38,6 @@ const ImagePicker = () => {
   const [transferred, setTransferred] = useState(0);
   const routes = navigation.getState()?.routes;
   const prevRoute = routes[routes.length - 2];
-  console.log('previous route: ', prevRoute);
 
   const uploadImage = async () => {
     const uri = selectedImage;

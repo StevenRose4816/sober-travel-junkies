@@ -20,31 +20,18 @@ import {captureScreen} from 'react-native-view-shot';
 import storage from '@react-native-firebase/storage';
 import {useAppSelector} from '../../hooks';
 import styles from './styles';
+import PhotoDraggable from '../../components/PhotoDraggable';
 
 export const VisionBoardScreen: FC = () => {
   const route = useRoute<RouteProp<AppStackParams, Routes.visionBoardScreen>>();
   const navigation = useNavigation<NavPropAny>();
-  const selectedImage = route?.params || {};
-  const [showDraggable, setShowDraggable] = useState(true);
+  const selectedImage = route?.params?.selectedImage || {};
   const screenHeight = Dimensions.get('window').height;
   const screenWidth = Dimensions.get('window').width;
   const [modalVisible, setModalVisible] = useState(false);
   const [addNote, setAddNote] = useState(true);
   const [newNote, setNewNote] = useState('');
   const [visibleNote, setVisibleNote] = useState('');
-  const [photoDragPosition, setPhotoDragPosition] = useState({
-    x: screenWidth / 2 - 30,
-    y: 100,
-    pageX: 0,
-    pageY: 0,
-  });
-  const [stickyDragPosition, setStickyDragPosition] = useState({
-    x: screenWidth / 2 - 60,
-    y: 200,
-    pageX: 0,
-    pageY: 0,
-  });
-
   const [url, setUrl] = useState<string | undefined>(undefined);
   const [updatedBool, setUpdatedBool] = useState(false);
   const [screenShotUri, setScreenShotUri] = useState<string | undefined>(
@@ -52,8 +39,6 @@ export const VisionBoardScreen: FC = () => {
   );
   const [hideToucables, setHideToucables] = useState(false);
   const [showSelectedImage, setShowSelectedImage] = useState(true);
-  const routes = navigation.getState()?.routes;
-  const prevRoute = routes[routes.length - 2];
   const [photoShortPressCount, setPhotoShortPressCount] = useState(0);
   const [stickyShortPressCount, setStickyShortPressCount] = useState(0);
   const [photoDragSize, setPhotoDragSize] = useState({width: 70, height: 70});
@@ -119,8 +104,19 @@ export const VisionBoardScreen: FC = () => {
   }, [hideToucables, navigation]);
 
   useEffect(() => {
-    readFromStorage('visionBoardScreenShot');
-  }, []);
+    if (!url && !visionBoardFromState) {
+      readFromStorage('visionBoardScreenShot');
+    }
+  }, [url, visionBoardFromState]);
+
+  useEffect(() => {
+    if (!visionBoardFromState && !url && !screenShotUri) {
+      setFirstLoad(true);
+    }
+    if (url || screenShotUri || visionBoardFromState || firstLoad) {
+      setLoading(false);
+    }
+  }, [url, screenShotUri, visionBoardFromState, firstLoad]);
 
   const uploadImage = async (uri: string | undefined) => {
     if (!uri) {
@@ -157,8 +153,11 @@ export const VisionBoardScreen: FC = () => {
   };
 
   const onAddNote = () => {
-    showInitialStickyDraggables && toggleModal();
-    !showInitialStickyDraggables && setShowInitialStickyDraggables(true);
+    if (showInitialStickyDraggables) {
+      toggleModal();
+    } else if (!showInitialStickyDraggables) {
+      setShowInitialStickyDraggables(true);
+    }
   };
 
   const onSubmitNote = () => {
@@ -219,18 +218,8 @@ export const VisionBoardScreen: FC = () => {
   };
 
   const onPressIAgree = () => {
-    console.log('pressed');
     setShowWelcomeModal(!showWelcomeModal);
   };
-
-  useEffect(() => {
-    if (!visionBoardFromState) {
-      setFirstLoad(true);
-    }
-    if (url || screenShotUri || visionBoardFromState || firstLoad) {
-      setLoading(false);
-    }
-  }, [url, screenShotUri, visionBoardFromState, firstLoad]);
 
   return (
     <>
@@ -251,40 +240,46 @@ export const VisionBoardScreen: FC = () => {
               <Text style={styles.text1}>Vision Board</Text>
             </View>
           )}
-          {showDraggable && showInitialPhotoDraggables && (
-            <Draggable
-              x={photoDragPosition.x}
-              y={photoDragPosition.y}
-              minX={0}
-              minY={40}
-              maxX={375}
-              maxY={640}
-              renderColor={hideToucables ? '#fb445c00' : '#fb445c'}
-              renderText="A"
-              isCircle
-              onShortPressRelease={onShortPressPhoto}>
-              <Image
-                style={[
-                  styles.image2,
-                  {
-                    width: photoDragSize.width,
-                    height: photoDragSize.height,
-                  },
-                ]}
-                source={
-                  showSelectedImage && selectedImage
-                    ? {
-                        uri: selectedImage,
-                      }
-                    : require('../../Images/camerapictureicon.png')
-                }
-                resizeMode="stretch"></Image>
-            </Draggable>
+          {showInitialPhotoDraggables && (
+            // <Draggable
+            //   x={screenWidth / 2 - 30}
+            //   y={100}
+            //   minX={0}
+            //   minY={40}
+            //   maxX={375}
+            //   maxY={640}
+            //   renderColor={hideToucables ? '#fb445c00' : '#fb445c'}
+            //   isCircle
+            //   onShortPressRelease={onShortPressPhoto}>
+            //   <Image
+            //     style={[
+            //       styles.image2,
+            //       {
+            //         width: photoDragSize.width,
+            //         height: photoDragSize.height,
+            //       },
+            //     ]}
+            //     source={
+            //       showSelectedImage && selectedImage
+            //         ? {
+            //             uri: selectedImage,
+            //           }
+            //         : require('../../Images/camerapictureicon.png')
+            //     }
+            //     resizeMode="stretch"></Image>
+            // </Draggable>
+            <PhotoDraggable
+              hideToucables={hideToucables}
+              onShortPressPhoto={onShortPressPhoto}
+              photoDragSize={photoDragSize}
+              showSelectedImage={showSelectedImage}
+              selectedImage={selectedImage}
+            />
           )}
           {addNote && showInitialStickyDraggables && (
             <Draggable
-              x={stickyDragPosition.x}
-              y={stickyDragPosition.y}
+              x={screenWidth / 2 - 60}
+              y={200}
               minX={0}
               minY={40}
               maxX={375}
