@@ -5,16 +5,13 @@ import {
   Dimensions,
   Image,
   ImageBackground,
-  Modal,
   Platform,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
 import Routes from '../../navigation/routes';
 import {AppStackParams, NavPropAny} from '../../navigation/types';
-import Draggable from 'react-native-draggable';
 import {getDownloadURL, getStorage, ref as thisRef} from 'firebase/storage';
 import {captureScreen} from 'react-native-view-shot';
 import storage from '@react-native-firebase/storage';
@@ -22,12 +19,13 @@ import {useAppSelector} from '../../hooks';
 import styles from './styles';
 import PhotoDraggable from '../../components/PhotoDraggable';
 import NoteDraggable from '../../components/NoteDraggable';
+import VisionBoardModal from '../../components/VisionBoardModal';
+import VisionBoardTouchableBar from '../../components/VisionBoardTouchableBar';
 
 export const VisionBoardScreen: FC = () => {
   const route = useRoute<RouteProp<AppStackParams, Routes.visionBoardScreen>>();
   const navigation = useNavigation<NavPropAny>();
   const selectedImage = route?.params?.selectedImage || {};
-  const screenWidth = Dimensions.get('window').width;
   const [modalVisible, setModalVisible] = useState(false);
   const [addNote, setAddNote] = useState(true);
   const [newNote, setNewNote] = useState('');
@@ -260,96 +258,27 @@ export const VisionBoardScreen: FC = () => {
         </ImageBackground>
       )}
       {!hideToucables && (
-        <View style={styles.view2}>
-          <TouchableOpacity
-            onPress={
-              showInitialPhotoDraggables
-                ? onPressOpenImagePicker
-                : onPressAddImage
-            }
-            style={styles.touchable2}>
-            <Text style={styles.text3}>
-              {!showInitialPhotoDraggables ? 'Add Image' : 'Open Image Picker'}
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={onPressUpdateBoard}
-            style={styles.touchable3}>
-            <Text style={styles.text4}>Update Board</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={onAddNote} style={styles.touchable4}>
-            <Text style={styles.text5}>
-              {!showInitialStickyDraggables ? 'Add Note' : 'Write Note'}
-            </Text>
-          </TouchableOpacity>
-        </View>
+        <VisionBoardTouchableBar
+          showInitialPhotoDraggables={showInitialPhotoDraggables}
+          showInitialStickyDraggables={showInitialStickyDraggables}
+          onPressOpenImagePicker={onPressOpenImagePicker}
+          onPressAddImage={onPressAddImage}
+          onPressUpdateBoard={onPressUpdateBoard}
+          onAddNote={onAddNote}
+        />
       )}
-      <Modal
-        visible={modalVisible || showWelcomeModal}
-        animationType={'slide'}
-        transparent={true}
-        onRequestClose={toggleModal}>
-        <View style={styles.view3}>
-          <View style={styles.view4}>
-            {!showWelcomeModal && (
-              <TouchableOpacity
-                onPress={onPressCloseUpdateModal}
-                style={styles.touchable5}>
-                <Image
-                  style={styles.image3}
-                  source={require('../../Images/close2.png')}
-                />
-              </TouchableOpacity>
-            )}
-            <View style={styles.view5}>
-              {!updatedBool && !showWelcomeModal && (
-                <>
-                  <Text style={styles.text6}>Add Note</Text>
-                  <TextInput
-                    value={newNote}
-                    placeholder=" Note"
-                    onChangeText={note => setNewNote(note)}
-                    secureTextEntry={false}
-                    style={styles.textInput1}></TextInput>
-                </>
-              )}
-              {updatedBool && !showWelcomeModal && (
-                <Text style={styles.text7}>
-                  Do you want to update the board?
-                </Text>
-              )}
-              {showWelcomeModal && (
-                <>
-                  <Text style={styles.text8}>Welcome to the Vision Board.</Text>
-                  <Text style={styles.text9}>
-                    Post your vision for the trip, one image and/or note at a
-                    time.{'\n\n'}
-                    Don't completely cover someone else's post.{'\n\n'}
-                    Please be respectful and have fun :)
-                  </Text>
-                </>
-              )}
-              <TouchableOpacity
-                onPress={
-                  !updatedBool && !showWelcomeModal
-                    ? onSubmitNote
-                    : showWelcomeModal
-                    ? onPressIAgree
-                    : onUpdateBoard
-                }
-                style={styles.textInput2}>
-                <Text style={styles.text10}>
-                  {!updatedBool && !showWelcomeModal
-                    ? 'Submit'
-                    : showWelcomeModal
-                    ? 'I agree.'
-                    : 'Update'}
-                </Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-      </Modal>
+      <VisionBoardModal
+        modalVisible={modalVisible}
+        showWelcomeModal={showWelcomeModal}
+        toggleModal={toggleModal}
+        onPressCloseUpdateModal={onPressCloseUpdateModal}
+        updatedBool={updatedBool}
+        onSubmitNote={onSubmitNote}
+        onPressIAgree={onPressIAgree}
+        onUpdateBoard={onUpdateBoard}
+        newNote={newNote}
+        setNewNote={setNewNote}
+      />
     </>
   );
 };
