@@ -36,7 +36,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   view7: {
-    flex: 1,
     flexDirection: 'column',
     backgroundColor: '#eee7da99',
     padding: 8,

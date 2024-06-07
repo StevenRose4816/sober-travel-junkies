@@ -7,8 +7,6 @@ interface IPassedProps {
 }
 
 const HomeScreenEditButton: FC<IPassedProps> = ({onPress}) => {
-  const screenWidth = Dimensions.get('window').width;
-  const screenHeight = Dimensions.get('window').height;
   return (
     <View>
       <TouchableOpacity onPress={onPress} style={styles.touchable}>

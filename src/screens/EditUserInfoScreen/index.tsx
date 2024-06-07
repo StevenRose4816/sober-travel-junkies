@@ -123,10 +123,6 @@ const EditUserInfoScreen: FC = () => {
     }
   };
 
-  const onRequestClose = () => {
-    setDocPickerIsVisible(false);
-  };
-
   return (
     <View style={styles.containerView}>
       <ScrollView contentContainerStyle={styles.scrollView}>
@@ -270,7 +266,7 @@ const EditUserInfoScreen: FC = () => {
       </ScrollView>
       <DocumentPickerModal
         isVisible={docPickerVisible}
-        onRequestClose={onRequestClose}
+        onRequestClose={() => setDocPickerIsVisible(false)}
       />
       <BackgroundPickerModal
         isVisible={backgroundModalVisible}

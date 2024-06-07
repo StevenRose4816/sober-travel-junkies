@@ -19,7 +19,6 @@ import styles from './styles';
 interface Message {
   text: string;
   id: string;
-  title?: string;
   name?: string;
   photo?: string;
   date?: string;
@@ -35,7 +34,6 @@ interface IProps {
 const MessageBoardScreen: FC<IProps> = ({route}) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState<string>('');
-  const [newTitle, setNewTitle] = useState<string>('');
   const [modalVisible, setModalVisible] = useState(false);
   const [data, setData] = useState(false);
   const userPhotoFromDB = route?.params.userPhotoFromDB;
@@ -48,7 +46,6 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
   const [isReply, setIsReply] = useState(false);
   const [showReplies, setShowReplies] = useState<string[]>([]);
   const flatListRef = useRef<FlatList>(null!);
-  console.log('re-render');
 
   useEffect(() => {
     readDataFromFirestore('messages', 'messages');
@@ -95,7 +92,6 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
         {
           text: newMessage,
           id: Math.random().toString(),
-          title: newTitle,
           name: fullName,
           photo: userPhotoFromDB,
           date: formattedDate,
@@ -106,7 +102,6 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
       setMessages(updatedMessages);
       await writeDataToFirestore('messages', updatedMessages, 'messages');
       setNewMessage('');
-      onSetTitle(newTitle);
       flatListRef.current?.scrollToEnd();
     }
   };
@@ -133,30 +128,15 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
       setShowReplies(state => [...state, replyingTo.id]);
     }
     setIsReply(!isReply);
-    console.log('Reply sent.');
-  };
-
-  const onSetTitle = (title: string) => {
-    if (newTitle.trim() !== '') {
-      setNewTitle('');
-    }
-  };
-
-  const toggleModal = () => {
-    setModalVisible(!modalVisible);
-  };
-
-  const onPressScroll = () => {
-    flatListRef.current?.scrollToEnd();
   };
 
   const onPressMessage = (item: Message) => {
-    toggleModal();
+    setModalVisible(!modalVisible);
     setReplyingTo(item);
   };
 
   const onPressYesSubmit = () => {
-    toggleModal();
+    setModalVisible(!modalVisible);
     setIsReply(true);
   };
 
@@ -177,12 +157,35 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
     [setNewMessage],
   );
 
+  const renderReply = ({item}: {item: Message}) => (
+    <View key={item.id + item.time} style={styles.view7}>
+      <Text style={styles.text11}>{item.text}</Text>
+      <View style={styles.view8}>
+        <View style={styles.view9}>
+          <Text style={styles.text12}>{item.time}</Text>
+          <Text style={styles.text13}>{item.date}</Text>
+        </View>
+        <View style={styles.view10}>
+          <View style={styles.view11}>
+            <Image
+              style={styles.image2}
+              source={
+                item.photo
+                  ? {uri: item.photo}
+                  : require('../../Images/profilepictureicon.png')
+              }></Image>
+            <Text style={styles.text14}>{item.name}</Text>
+          </View>
+        </View>
+      </View>
+    </View>
+  );
+
   const renderItem = ({item}: {item: Message}) => (
     <>
       <View>
         <TouchableOpacity onPress={() => onPressMessage(item)}>
           <View style={styles.view1}>
-            <Text style={styles.text3}>{item.title}</Text>
             <Text style={styles.text4}>{item.text}</Text>
             <View style={styles.view2}>
               <View style={styles.view3}>
@@ -217,33 +220,14 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
         )}
       </View>
       {item.replies &&
-        item.replies.length > 0 &&
+        item.replies.length >= 1 &&
         showReplies.includes(item.id) && (
           <View style={styles.view6}>
-            {item.replies.map(reply => (
-              <View key={reply.id + reply.time} style={styles.view7}>
-                <Text style={styles.text10}>{reply.title}</Text>
-                <Text style={styles.text11}>{reply.text}</Text>
-                <View style={styles.view8}>
-                  <View style={styles.view9}>
-                    <Text style={styles.text12}>{reply.time}</Text>
-                    <Text style={styles.text13}>{reply.date}</Text>
-                  </View>
-                  <View style={styles.view10}>
-                    <View style={styles.view11}>
-                      <Image
-                        style={styles.image2}
-                        source={
-                          reply.photo
-                            ? {uri: reply.photo}
-                            : require('../../Images/profilepictureicon.png')
-                        }></Image>
-                      <Text style={styles.text14}>{reply.name}</Text>
-                    </View>
-                  </View>
-                </View>
-              </View>
-            ))}
+            <FlatList
+              data={item.replies}
+              keyExtractor={reply => reply.id + reply.time}
+              renderItem={renderReply}
+            />
           </View>
         )}
     </>
@@ -283,7 +267,9 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
             <Text style={styles.text17}>{'Reply'}</Text>
           )}
         </TouchableOpacity>
-        <TouchableOpacity style={styles.touchable2} onPress={onPressScroll}>
+        <TouchableOpacity
+          style={styles.touchable2}
+          onPress={() => flatListRef.current?.scrollToEnd()}>
           <Text style={styles.text18}>{'Scroll to bottom'}</Text>
         </TouchableOpacity>
       </View>
@@ -291,7 +277,7 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
         visible={modalVisible}
         animationType={'slide'}
         transparent={true}
-        onRequestClose={toggleModal}>
+        onRequestClose={() => setModalVisible(!modalVisible)}>
         <View style={styles.modalView1}>
           <View style={styles.modalView2}>
             <View style={styles.modalView3}>
@@ -303,7 +289,9 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
                 style={styles.touchable3}>
                 <Text style={styles.text20}>{'Yes'}</Text>
               </TouchableOpacity>
-              <TouchableOpacity onPress={toggleModal} style={styles.touchable4}>
+              <TouchableOpacity
+                onPress={() => setModalVisible(!modalVisible)}
+                style={styles.touchable4}>
                 <Text style={styles.text21}>{'No'}</Text>
               </TouchableOpacity>
             </View>
