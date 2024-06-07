@@ -173,7 +173,8 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
                 item.photo
                   ? {uri: item.photo}
                   : require('../../Images/profilepictureicon.png')
-              }></Image>
+              }
+            />
             <Text style={styles.text14}>{item.name}</Text>
           </View>
         </View>
@@ -182,7 +183,7 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
   );
 
   const renderItem = ({item}: {item: Message}) => (
-    <>
+    <View>
       <View>
         <TouchableOpacity onPress={() => onPressMessage(item)}>
           <View style={styles.view1}>
@@ -200,7 +201,8 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
                       item.photo
                         ? {uri: item.photo}
                         : require('../../Images/profilepictureicon.png')
-                    }></Image>
+                    }
+                  />
                   <Text style={styles.text7}>{item.name}</Text>
                 </View>
               </View>
@@ -230,7 +232,7 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
             />
           </View>
         )}
-    </>
+    </View>
   );
   return (
     <View style={styles.view12}>
@@ -239,7 +241,6 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
         imageStyle={styles.imageBackground2}
         source={backgroundPhoto}>
         <Text style={styles.text15}>{'Message Board'}</Text>
-
         {data && (
           <FlatList
             ref={flatListRef}

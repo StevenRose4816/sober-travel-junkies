@@ -24,15 +24,6 @@ const LoginScreen: FC = () => {
     string | undefined
   >(undefined);
   const screenWidth = Dimensions.get('window').width;
-
-  const toggleErrorModal = () => {
-    setErrorModalVisible(errorModalVisible => !errorModalVisible);
-  };
-
-  const toggleSignupModal = () => {
-    setSignupModalVisible(signupModalVisible => !signupModalVisible);
-  };
-
   const [passwordCreate, setPasswordCreate] = useState('');
   const [emailCreate, setEmailCreate] = useState('');
 
@@ -42,38 +33,40 @@ const LoginScreen: FC = () => {
     } catch (e: any) {
       formatError(e.message);
       console.log(e);
-      toggleErrorModal();
+      setErrorModalVisible(!errorModalVisible);
     }
   };
 
   const onPressCreateAccount = () => {
-    toggleSignupModal();
+    if (formattedErrorMessage) {
+      setFormattedErrorMessage(undefined);
+    }
+    setSignupModalVisible(!signupModalVisible);
     setEmailCreate('');
     setPasswordCreate('');
-    formattedErrorMessage && setFormattedErrorMessage(undefined);
   };
 
   const signUp = async () => {
-    toggleSignupModal();
+    setSignupModalVisible(!signupModalVisible);
     try {
       await auth().createUserWithEmailAndPassword(emailCreate, passwordCreate);
       dispatch(setNewUser({newUser: true}));
     } catch (e: any) {
       formatError(e.message);
-      toggleErrorModal();
+      setErrorModalVisible(!errorModalVisible);
     }
   };
 
   const closeErrorModal = () => {
     setPasswordCreate('');
     setEmailCreate('');
-    toggleErrorModal();
+    setErrorModalVisible(!errorModalVisible);
   };
 
   const closeSignupModal = () => {
     setPasswordCreate('');
     setEmailCreate('');
-    toggleSignupModal();
+    setSignupModalVisible(!signupModalVisible);
   };
 
   const formatError = (errorMessage: string) => {
@@ -140,7 +133,7 @@ const LoginScreen: FC = () => {
         visible={errorModalVisible}
         animationType={'fade'}
         transparent={true}
-        onRequestClose={toggleErrorModal}>
+        onRequestClose={() => setErrorModalVisible(!errorModalVisible)}>
         <View style={styles.view2}>
           <View style={styles.view3}>
             <View style={styles.view4}>
@@ -163,7 +156,7 @@ const LoginScreen: FC = () => {
         visible={signupModalVisible}
         animationType={'slide'}
         transparent={true}
-        onRequestClose={toggleSignupModal}>
+        onRequestClose={() => setSignupModalVisible(!signupModalVisible)}>
         <View style={styles.view5}>
           <View style={styles.view6}>
             <TouchableOpacity

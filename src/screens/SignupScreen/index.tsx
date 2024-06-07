@@ -4,6 +4,7 @@ import auth from '@react-native-firebase/auth';
 import {useDispatch} from 'react-redux';
 import {IUserInfo, setUserInfo} from '../../store/globalStore/slice';
 import {useAppSelector} from '../../hooks';
+import styles from './styles';
 
 const SignupScreen: FC = () => {
   const dispatch = useDispatch();
@@ -17,12 +18,7 @@ const SignupScreen: FC = () => {
   const userInfo = useAppSelector(state => state.globalStore);
   const [emailPasswordError, setEmailPasswordError] = useState('');
 
-  const toggleModal = () => {
-    setModalVisible(modalVisible => !modalVisible);
-  };
-
   const mapUser = () => {
-    // Captures textInput to access in global state.
     if (!!userInfo) {
       const mappedUserInfo: IUserInfo = {
         phoneNumber: phoneNumber,
@@ -42,7 +38,7 @@ const SignupScreen: FC = () => {
     } catch (e: any) {
       console.log(e);
       setErrorMessage(e);
-      toggleModal();
+      setModalVisible(!modalVisible);
     }
   };
 
@@ -51,140 +47,62 @@ const SignupScreen: FC = () => {
       setEmailPasswordError(
         'Your email address needs to be at least 12 characters and your password need to be at least 6 characters.',
       );
-      toggleModal();
+      setModalVisible(!modalVisible);
     } else if (email.length >= 12 && password.length <= 6) {
       setEmailPasswordError('Your password needs to be at least 6 characters.');
-      toggleModal();
+      setModalVisible(!modalVisible);
     } else if (password.length >= 6 && email.length <= 12) {
       setEmailPasswordError(
         'Your email address needs to be at least 12 characters.',
       );
-      toggleModal();
+      setModalVisible(!modalVisible);
     } else {
       signUp();
     }
   };
 
   return (
-    <View style={{flex: 1}}>
-      <View style={{flex: 1, backgroundColor: 'white'}}>
-        <Text style={{marginLeft: 10, marginTop: 10}}>{'email'}</Text>
+    <View style={styles.containerView}>
+      <View style={styles.innerContainerView}>
+        <Text style={styles.emailText}>{'email'}</Text>
         <TextInput
-          style={{
-            backgroundColor: 'white',
-            marginHorizontal: 10,
-            borderRadius: 5,
-            minHeight: 50,
-            borderWidth: 1,
-            borderColor: 'black',
-          }}
+          style={styles.emailInput}
           autoCapitalize={'none'}
           value={email}
           onChangeText={val => setEmail(val)}
           secureTextEntry={false}
         />
-        <Text style={{marginLeft: 10, marginTop: 10}}>{'password'}</Text>
+        <Text style={styles.passwordText}>{'password'}</Text>
         <TextInput
-          style={{
-            backgroundColor: 'white',
-            marginHorizontal: 10,
-            borderRadius: 5,
-            minHeight: 50,
-            borderWidth: 1,
-            borderColor: 'black',
-          }}
+          style={styles.passwordInput}
           value={password}
           onChangeText={val => setPassword(val)}
           secureTextEntry={true}
         />
-        <View
-          style={{
-            flex: 2,
-            justifyContent: 'flex-end',
-            marginBottom: 10,
-            backgroundColor: 'white',
-          }}>
+        <View style={styles.touchableContainer}>
           <TouchableOpacity
             onPress={() => checkEmail(email)}
-            style={{
-              backgroundColor: 'blue',
-              minHeight: 50,
-              justifyContent: 'center',
-              borderRadius: 5,
-              marginHorizontal: 10,
-              marginTop: 30,
-            }}>
-            <Text
-              style={{
-                color: 'white',
-                fontSize: 21,
-                fontWeight: '600',
-                textAlign: 'center',
-              }}>
-              {'Sign Up'}
-            </Text>
+            style={styles.signupTouchable}>
+            <Text style={styles.signupText}>{'Sign Up'}</Text>
           </TouchableOpacity>
           <Modal
             visible={modalVisible}
             animationType={'slide'}
             transparent={true}
-            onRequestClose={toggleModal}>
-            <View
-              style={{
-                flex: 1,
-                justifyContent: 'center',
-                alignItems: 'center',
-                backgroundColor: 'rgba(0, 0, 0, 0.5)',
-              }}>
-              <View
-                style={{
-                  backgroundColor: '#b6e7cc',
-                  minHeight: 300,
-                  width: '80%',
-                  justifyContent: 'center',
-                  borderRadius: 5,
-                  padding: 20,
-                }}>
+            onRequestClose={() => setModalVisible(!modalVisible)}>
+            <View style={styles.modalContainer}>
+              <View style={styles.innerModalContainer}>
                 {errorMessage ? (
-                  <Text
-                    style={{
-                      textAlign: 'center',
-                      color: '#0c0b09',
-                      marginBottom: 10,
-                    }}>
-                    {errorMessage}
-                  </Text>
+                  <Text style={styles.errorText}>{errorMessage}</Text>
                 ) : (
-                  <Text
-                    style={{
-                      textAlign: 'center',
-                      color: '#0c0b09',
-                      marginBottom: 10,
-                    }}>
+                  <Text style={styles.emailErrorText}>
                     {emailPasswordError}
                   </Text>
                 )}
                 <TouchableOpacity
-                  onPress={toggleModal}
-                  style={{
-                    marginTop: 20,
-                    backgroundColor: 'blue',
-                    minHeight: 50,
-                    justifyContent: 'center',
-                    borderRadius: 5,
-                    marginHorizontal: 10,
-                  }}>
-                  <Text
-                    style={{
-                      textAlign: 'center',
-                      color: 'white',
-                      fontSize: 21,
-                      fontWeight: '600',
-                      backgroundColor: 'blue',
-                      borderRadius: 5,
-                    }}>
-                    {'Close'}
-                  </Text>
+                  onPress={() => setModalVisible(!modalVisible)}
+                  style={styles.closeTouchable}>
+                  <Text style={styles.closeText}>{'Close'}</Text>
                 </TouchableOpacity>
               </View>
             </View>
