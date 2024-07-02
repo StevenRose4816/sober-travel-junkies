@@ -108,13 +108,13 @@ export const VisionBoardScreen: FC = () => {
   }, [url, visionBoardFromState]);
 
   useEffect(() => {
-    if (!visionBoardFromState && !url && !screenShotUri) {
+    if (!visionBoardFromState && !screenShotUri) {
       setFirstLoad(true);
     }
-    if (url || screenShotUri || visionBoardFromState || firstLoad) {
-      setLoading(false);
+    if (visionBoardFromState || firstLoad) {
+      setTimeout(() => setLoading(false), 1000);
     }
-  }, [url, screenShotUri, visionBoardFromState, firstLoad]);
+  }, [screenShotUri, visionBoardFromState, firstLoad]);
 
   const uploadImage = async (uri: string | undefined) => {
     if (!uri) {
