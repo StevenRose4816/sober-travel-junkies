@@ -62,8 +62,8 @@ const BooneScreen: FC = () => {
   }, []);
 
   const generateDisabledDates = () => {
-    const startDate = new Date(2025, 9, 1); // Month is 0-indexed
-    const endDate = new Date(2025, 9, 31);
+    const startDate = new Date(2024, 9, 1); // Month is 0-indexed
+    const endDate = new Date(2024, 9, 31);
     const datesArray = [];
     for (let d = startDate; d <= endDate; d.setDate(d.getDate() + 1)) {
       datesArray.push(new Date(d));
@@ -104,7 +104,7 @@ const BooneScreen: FC = () => {
   const onPressYes = () => {
     console.log('yes pressed');
     toggleModal();
-    navigation.navigate(Routes.homeScreen);
+    navigation.navigate(Routes.home_Screen);
   };
 
   const onPressNo = () => {
@@ -199,10 +199,7 @@ const BooneScreen: FC = () => {
                     <Text
                       style={{
                         fontFamily: 'HighTide-Sans',
-                        marginLeft: 10,
-                        marginTop: 10,
-                        marginBottom: 10,
-                        marginRight: 10,
+                        margin: 10,
                       }}>
                       Selected Start Date: {startDate || 'None'}
                     </Text>

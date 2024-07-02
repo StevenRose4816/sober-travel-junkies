@@ -13,6 +13,14 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#eee7da',
   },
+  editText: {
+    color: '#0c0b09',
+    fontSize: 12,
+    fontWeight: '600',
+    margin: 10,
+    textAlign: 'center',
+    fontFamily: 'HighTide-Sans',
+  },
 });
 
 export default styles;

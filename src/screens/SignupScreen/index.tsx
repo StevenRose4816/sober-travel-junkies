@@ -11,7 +11,6 @@ const SignupScreen: FC = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [address, setAddress] = useState('');
@@ -21,7 +20,6 @@ const SignupScreen: FC = () => {
   const mapUser = () => {
     if (!!userInfo) {
       const mappedUserInfo: IUserInfo = {
-        phoneNumber: phoneNumber,
         address: address,
         name: name,
       };

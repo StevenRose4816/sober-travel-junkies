@@ -7,7 +7,8 @@
     "ios": "react-native run-ios",
     "lint": "eslint .",
     "start": "react-native start",
-    "test": "jest"
+    "test": "jest",
+    "password": "python3 passwordGenerator.py"
   },
   "dependencies": {
     "@react-native-clipboard/clipboard": "^1.14.0",
