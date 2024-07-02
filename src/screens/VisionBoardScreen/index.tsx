@@ -44,7 +44,10 @@ export const VisionBoardScreen: FC = () => {
     width: 120,
     height: 80,
   });
-  const [stickySize, setStickySize] = useState({fontSize: 8, maxWidth: 40});
+  const [stickySize, setStickySize] = useState({
+    fontSize: 8,
+    maxWidth: 40,
+  });
   const [showInitialPhotoDraggables, setShowInitialPhotoDraggables] =
     useState(false);
   const [showInitialStickyDraggables, setShowInitialStickyDraggables] =
@@ -91,8 +94,7 @@ export const VisionBoardScreen: FC = () => {
             style={styles.touchable1}>
             <Image
               style={styles.image1}
-              source={require('../../Images/caret_left.png')}
-            />
+              source={require('../../Images/caret_left.png')}></Image>
           </TouchableOpacity>
         ),
       });
@@ -100,16 +102,19 @@ export const VisionBoardScreen: FC = () => {
   }, [hideToucables, navigation]);
 
   useEffect(() => {
-    const initializeBoard = async () => {
-      if (!visionBoardFromState) {
-        setFirstLoad(true);
-        await readFromStorage('visionBoardScreenShot');
-      } else if (firstLoad || screenShotUri || !!visionBoardFromState) {
-        setLoading(false);
-      }
-    };
-    initializeBoard();
-  }, [visionBoardFromState, screenShotUri, firstLoad]);
+    if (!url && !visionBoardFromState) {
+      readFromStorage('visionBoardScreenShot');
+    }
+  }, [url, visionBoardFromState]);
+
+  useEffect(() => {
+    if (!visionBoardFromState && !url && !screenShotUri) {
+      setFirstLoad(true);
+    }
+    if (url || screenShotUri || visionBoardFromState || firstLoad) {
+      setLoading(false);
+    }
+  }, [url, screenShotUri, visionBoardFromState, firstLoad]);
 
   const uploadImage = async (uri: string | undefined) => {
     if (!uri) {
@@ -121,7 +126,7 @@ export const VisionBoardScreen: FC = () => {
     try {
       await task;
       console.log('Vision Board has updated in Firebase Cloud Storage.');
-      await readFromStorage('visionBoardScreenShot');
+      readFromStorage('visionBoardScreenShot');
     } catch (e) {
       console.error(e);
     }
@@ -174,10 +179,11 @@ export const VisionBoardScreen: FC = () => {
     const storage = getStorage();
     const reference = thisRef(storage, imageName);
     try {
-      const url = await getDownloadURL(reference);
-      setUrl(url);
-    } catch (e) {
-      console.error(e.message);
+      await getDownloadURL(reference).then(url => {
+        setUrl(url);
+      });
+    } catch (e: any) {
+      console.log(e.message);
     }
   };
 
@@ -192,7 +198,6 @@ export const VisionBoardScreen: FC = () => {
       setPhotoShortPressCount(0);
     }
   };
-
   const onShortPressSticky = () => {
     if (stickyShortPressCount < 4) {
       const newWidth = stickyDragSize.width * 1.1;
@@ -208,25 +213,21 @@ export const VisionBoardScreen: FC = () => {
       setStickyShortPressCount(0);
     }
   };
-
   const onPressIAgree = () => {
     setShowWelcomeModal(!showWelcomeModal);
   };
-
   return (
     <>
       {loading ? (
-        <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color="#0000ff" />
-        </View>
+        <ActivityIndicator size="large" color="#0000ff" />
       ) : (
         <ImageBackground
           style={styles.imageBackground1}
           source={
             !!screenShotUri
               ? {uri: screenShotUri}
-              : !!visionBoardFromState
-              ? {uri: visionBoardFromState}
+              : !!url
+              ? {uri: url}
               : require('../../Images/browntextured.jpg')
           }>
           {!hideToucables && (
@@ -255,29 +256,26 @@ export const VisionBoardScreen: FC = () => {
       )}
       {!hideToucables && (
         <VisionBoardTouchableBar
-          hideToucables={hideToucables}
+          showInitialPhotoDraggables={showInitialPhotoDraggables}
+          showInitialStickyDraggables={showInitialStickyDraggables}
+          onPressOpenImagePicker={onPressOpenImagePicker}
           onPressAddImage={onPressAddImage}
-          onAddNote={onAddNote}
-          setAddNote={setAddNote}
-          addNote={addNote}
           onPressUpdateBoard={onPressUpdateBoard}
-          setHideToucables={setHideToucables}
+          onAddNote={onAddNote}
         />
       )}
-      {modalVisible && (
-        <VisionBoardModal
-          modalVisible={modalVisible}
-          setModalVisible={setModalVisible}
-          newNote={newNote}
-          setNewNote={setNewNote}
-          onSubmitNote={onSubmitNote}
-          onPressCloseUpdateModal={onPressCloseUpdateModal}
-          onUpdateBoard={onUpdateBoard}
-          updatedBool={updatedBool}
-        />
-      )}
+      <VisionBoardModal
+        modalVisible={modalVisible}
+        showWelcomeModal={showWelcomeModal}
+        toggleModal={toggleModal}
+        onPressCloseUpdateModal={onPressCloseUpdateModal}
+        updatedBool={updatedBool}
+        onSubmitNote={onSubmitNote}
+        onPressIAgree={onPressIAgree}
+        onUpdateBoard={onUpdateBoard}
+        newNote={newNote}
+        setNewNote={setNewNote}
+      />
     </>
   );
 };
-
-export default VisionBoardScreen;
