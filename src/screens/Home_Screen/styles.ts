@@ -24,13 +24,23 @@ const styles = StyleSheet.create({
   scrollView: {
     flexGrow: 1,
   },
-  userImage: {
+  imageContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  userImageWithBorder: {
     height: 250,
     width: screenWidth * 0.7,
     borderRadius: 5,
     marginBottom: 10,
     borderColor: '#eee7da',
     borderWidth: 2,
+  },
+  userImageWithOutBorder: {
+    height: 250,
+    width: screenWidth * 0.7,
+    borderRadius: 5,
+    marginBottom: 10,
   },
   dividerView: {
     height: 10,

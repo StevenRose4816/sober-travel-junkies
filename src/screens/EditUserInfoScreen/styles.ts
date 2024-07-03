@@ -21,13 +21,19 @@ const styles = StyleSheet.create({
     height: 150,
     width: screenWidth * 0.9,
   },
-  userPhoto: {
+  userPhotoWithBorder: {
     height: 250,
     width: screenWidth * 0.7,
     borderRadius: 5,
     marginBottom: 10,
     borderColor: '#eee7da',
     borderWidth: 2,
+  },
+  userPhotoWithOutBorder: {
+    height: 250,
+    width: screenWidth * 0.7,
+    borderRadius: 5,
+    marginBottom: 10,
   },
   textInput: {
     fontFamily: 'HighTide-Sans',
@@ -60,6 +66,10 @@ const styles = StyleSheet.create({
     fontSize: 21,
     textAlign: 'center',
     fontFamily: 'HighTide-Sans',
+  },
+  imageContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 

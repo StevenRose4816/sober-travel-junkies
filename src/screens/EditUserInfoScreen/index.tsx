@@ -1,5 +1,6 @@
 import {FC, useEffect, useRef, useState} from 'react';
 import {
+  ActivityIndicator,
   Animated,
   Dimensions,
   Image,
@@ -51,6 +52,7 @@ const EditUserInfoScreen: FC = () => {
     third: false,
     fourth: false,
   });
+  const [load, setLoad] = useState(false);
 
   const writeToRealTimeDB = async (
     userId: string | undefined,
@@ -131,14 +133,27 @@ const EditUserInfoScreen: FC = () => {
           imageStyle={styles.imageStyle}
           source={source()}>
           <Image style={styles.logoImage} source={logo} />
-          <Image
-            style={styles.userPhoto}
-            source={
-              userPhotoFromRedux
-                ? {uri: userPhotoFromRedux}
-                : require('../../Images/profilepictureicon.png')
-            }
-          />
+          <View style={styles.imageContainer}>
+            {load && <ActivityIndicator size="large" color="#0000ff" />}
+            <Image
+              style={
+                load
+                  ? styles.userPhotoWithOutBorder
+                  : styles.userPhotoWithBorder
+              }
+              source={
+                userPhotoFromRedux
+                  ? {uri: userPhotoFromRedux}
+                  : require('../../Images/profilepictureicon.png')
+              }
+              onLoadStart={() => {
+                setLoad(true);
+              }}
+              onLoadEnd={() => {
+                setLoad(false);
+              }}
+            />
+          </View>
           <UploadField
             onPress={() => navigation.navigate(Routes.imagePicker)}
             source={cameraIcon}

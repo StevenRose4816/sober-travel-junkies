@@ -7,6 +7,7 @@ import {
   ImageSourcePropType,
   TouchableOpacity,
   Text,
+  ActivityIndicator,
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import {useNavigation, useRoute} from '@react-navigation/native';
@@ -59,8 +60,8 @@ const Home_Screen: FC = () => {
     fullName: '',
   });
   const {address, email, phoneNumber, fullName} = dataFromStorage;
-
   const backgroundSource = route.params?.source || background1;
+  const [load, setLoad] = useState(false);
 
   useEffect(() => {
     navigation.setOptions({
@@ -77,10 +78,10 @@ const Home_Screen: FC = () => {
   }, []);
 
   const logout = () => {
+    auth().signOut();
     dispatch(setUserPhoto({userPhoto: null}));
     dispatch(setSelectedDocument({selectedDocument: undefined}));
     dispatch(setNewUser({newUser: false}));
-    auth().signOut();
   };
 
   const getProfilePicFromStorage = async (imageName: string) => {
@@ -118,14 +119,27 @@ const Home_Screen: FC = () => {
           style={styles.imageBackground}
           imageStyle={styles.imageStyle}>
           <Image style={styles.profilePicture} source={logo} />
-          <Image
-            style={styles.userImage}
-            source={
-              userPhotoFromRedux
-                ? {uri: userPhotoFromRedux}
-                : require('../../Images/profilepictureicon.png')
-            }
-          />
+          <View style={styles.imageContainer}>
+            {load && <ActivityIndicator size="large" color="#0000ff" />}
+            <Image
+              style={
+                load
+                  ? styles.userImageWithOutBorder
+                  : styles.userImageWithBorder
+              }
+              source={
+                userPhotoFromRedux
+                  ? {uri: userPhotoFromRedux}
+                  : require('../../Images/profilepictureicon.png')
+              }
+              onLoadStart={() => {
+                setLoad(true);
+              }}
+              onLoadEnd={() => {
+                setLoad(false);
+              }}
+            />
+          </View>
           <HomeScreenButton
             onPress={() =>
               navigation.navigate(Routes.booneScreen, {

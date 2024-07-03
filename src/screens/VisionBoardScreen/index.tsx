@@ -5,6 +5,7 @@ import {
   Dimensions,
   Image,
   ImageBackground,
+  ImageSourcePropType,
   Platform,
   Text,
   TouchableOpacity,
@@ -102,7 +103,7 @@ export const VisionBoardScreen: FC = () => {
   }, [hideToucables, navigation]);
 
   useEffect(() => {
-    if (!url && !visionBoardFromState) {
+    if (!visionBoardFromState) {
       readFromStorage('visionBoardScreenShot');
     }
   }, [url, visionBoardFromState]);
@@ -112,7 +113,7 @@ export const VisionBoardScreen: FC = () => {
       setFirstLoad(true);
     }
     if (visionBoardFromState || firstLoad) {
-      setTimeout(() => setLoading(false), 1000);
+      setTimeout(() => setLoading(false), 500);
     }
   }, [screenShotUri, visionBoardFromState, firstLoad]);
 
@@ -181,6 +182,7 @@ export const VisionBoardScreen: FC = () => {
     try {
       await getDownloadURL(reference).then(url => {
         setUrl(url);
+        // create and dispatch new action to save the new vision board screen shot in state.
       });
     } catch (e: any) {
       console.log(e.message);
@@ -189,47 +191,55 @@ export const VisionBoardScreen: FC = () => {
 
   const onShortPressPhoto = () => {
     if (photoShortPressCount < 4) {
-      const newWidth = photoDragSize.width * 1.1;
-      const newHeight = photoDragSize.height * 1.1;
-      setPhotoDragSize({width: newWidth, height: newHeight});
+      setPhotoDragSize({
+        width: photoDragSize.width * 1.1,
+        height: photoDragSize.width * 1.1,
+      });
       setPhotoShortPressCount(prevCount => prevCount + 1);
     } else {
       setPhotoDragSize({width: 70, height: 70});
       setPhotoShortPressCount(0);
     }
   };
+
   const onShortPressSticky = () => {
     if (stickyShortPressCount < 4) {
-      const newWidth = stickyDragSize.width * 1.1;
-      const newHeight = stickyDragSize.height * 1.1;
-      const newFontSize = stickySize.fontSize * 1.1;
-      const newMaxWidth = stickySize.maxWidth * 1.1;
-      setStickyDragSize({width: newWidth, height: newHeight});
+      setStickyDragSize({
+        width: stickyDragSize.width * 1.1,
+        height: stickyDragSize.height * 1.1,
+      });
       setStickyShortPressCount(prevCount => prevCount + 1);
-      setStickySize({fontSize: newFontSize, maxWidth: newMaxWidth});
+      setStickySize({
+        fontSize: stickySize.fontSize * 1.1,
+        maxWidth: stickySize.maxWidth * 1.1,
+      });
     } else {
       setStickyDragSize({width: 120, height: 80});
       setStickySize({fontSize: 8, maxWidth: 40});
       setStickyShortPressCount(0);
     }
   };
+
   const onPressIAgree = () => {
     setShowWelcomeModal(!showWelcomeModal);
   };
+
+  const source = () => {
+    if (!!screenShotUri) {
+      return {uri: screenShotUri};
+    } else if (!!url) {
+      return {uri: url};
+    } else {
+      return require('../../Images/browntextured.jpg');
+    }
+  };
+
   return (
     <>
       {loading ? (
         <ActivityIndicator size="large" color="#0000ff" />
       ) : (
-        <ImageBackground
-          style={styles.imageBackground1}
-          source={
-            !!screenShotUri
-              ? {uri: screenShotUri}
-              : !!url
-              ? {uri: url}
-              : require('../../Images/browntextured.jpg')
-          }>
+        <ImageBackground style={styles.imageBackground1} source={source()}>
           {!hideToucables && (
             <View style={styles.view1}>
               <Text style={styles.text1}>Vision Board</Text>

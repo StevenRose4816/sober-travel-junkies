@@ -152,7 +152,8 @@ const BooneScreen: FC = () => {
               backgroundColor: '#b6e7cc',
               borderRadius: 5,
               width: 120,
-              marginLeft: 20,
+              marginLeft: 40,
+              marginTop: 20,
               marginBottom: 10,
             }}
             onPress={onPressViewCalender}>
