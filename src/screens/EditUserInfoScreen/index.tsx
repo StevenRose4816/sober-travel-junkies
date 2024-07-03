@@ -67,7 +67,7 @@ const EditUserInfoScreen: FC = () => {
       emergencyContact: formValues.emergencyContact || '',
       emergencyContactPhone: formValues.emergencyContactPhone || '',
       bio: formValues.bio || '',
-      backgroundPhoto: source(),
+      backgroundPhoto: source() || sourceobject,
     })
       .then(() => {
         console.log('RTDB updated');
@@ -125,6 +125,8 @@ const EditUserInfoScreen: FC = () => {
       return require('../../Images/backgroundPhoto1.jpeg');
     }
   };
+
+  const sourceobject = source();
 
   return (
     <View style={styles.containerView}>

@@ -61,7 +61,13 @@ const Home_Screen: FC = () => {
   });
   const {address, email, phoneNumber, fullName} = dataFromStorage;
   const backgroundSource = route.params?.source || background1;
-  const [load, setLoad] = useState(false);
+  const [load, setLoad] = useState(true);
+
+  useEffect(() => {
+    if (userPhotoFromRedux) {
+      setLoad(false);
+    }
+  }, [userPhotoFromRedux]);
 
   useEffect(() => {
     navigation.setOptions({
@@ -79,7 +85,7 @@ const Home_Screen: FC = () => {
 
   const logout = () => {
     auth().signOut();
-    dispatch(setUserPhoto({userPhoto: null}));
+    setTimeout(() => dispatch(setUserPhoto({userPhoto: null})), 2000);
     dispatch(setSelectedDocument({selectedDocument: undefined}));
     dispatch(setNewUser({newUser: false}));
   };
@@ -128,23 +134,18 @@ const Home_Screen: FC = () => {
           imageStyle={styles.imageStyle}>
           <Image style={styles.profilePicture} source={logo} />
           <View style={styles.imageContainer}>
-            {load && <ActivityIndicator size="large" color="#0000ff" />}
-            <Image
-              style={
-                load
-                  ? styles.userImageWithOutBorder
-                  : styles.userImageWithBorder
-              }
-              source={source()}
-              onLoadStart={() => {
-                console.log('load start: ', load);
-                setLoad(true);
-              }}
-              onLoadEnd={() => {
-                console.log('load end: ', load);
-                setLoad(false);
-              }}
-            />
+            {load ? (
+              <ActivityIndicator size="large" color="#0000ff" />
+            ) : (
+              <Image
+                style={
+                  load
+                    ? styles.userImageWithOutBorder
+                    : styles.userImageWithBorder
+                }
+                source={source()}
+              />
+            )}
           </View>
           <HomeScreenButton
             onPress={() =>
