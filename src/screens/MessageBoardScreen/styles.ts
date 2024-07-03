@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
     marginRight: 5,
     marginBottom: 5,
     fontFamily: 'HighTide-Sans',
-    width: 50,
+    maxWidth: 50,
   },
   text8: {
     marginLeft: 5,

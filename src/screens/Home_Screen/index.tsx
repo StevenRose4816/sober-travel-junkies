@@ -75,7 +75,7 @@ const Home_Screen: FC = () => {
     if (userId && !userPhotoFromRedux) {
       getProfilePicFromStorage(userId + '_profilePic');
     }
-  }, []);
+  }, [dataFromStorage]);
 
   const logout = () => {
     auth().signOut();
@@ -111,6 +111,14 @@ const Home_Screen: FC = () => {
     }
   };
 
+  const source = () => {
+    if (userPhotoFromRedux) {
+      return {uri: userPhotoFromRedux};
+    } else {
+      return require('../../Images/profilepictureicon.png');
+    }
+  };
+
   return (
     <View style={styles.containerView}>
       <ScrollView contentContainerStyle={styles.scrollView}>
@@ -127,22 +135,20 @@ const Home_Screen: FC = () => {
                   ? styles.userImageWithOutBorder
                   : styles.userImageWithBorder
               }
-              source={
-                userPhotoFromRedux
-                  ? {uri: userPhotoFromRedux}
-                  : require('../../Images/profilepictureicon.png')
-              }
+              source={source()}
               onLoadStart={() => {
+                console.log('load start: ', load);
                 setLoad(true);
               }}
               onLoadEnd={() => {
+                console.log('load end: ', load);
                 setLoad(false);
               }}
             />
           </View>
           <HomeScreenButton
             onPress={() =>
-              navigation.navigate(Routes.booneScreen, {
+              navigation.navigate(Routes.calenderScreen, {
                 backgroundPhoto: backgroundSource,
               })
             }

@@ -6,8 +6,7 @@ import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
 import {IUser, setUser} from '../store/auth/slice';
 import {useAppDispatch, useAppSelector} from '../hooks';
 import ImagePicker from '../components/ImagePicker.tsx';
-import TripInfoScreen from '../screens/TripInfo/index.tsx';
-import BooneScreen from '../screens/BooneScreen/index.tsx';
+import BooneScreen from '../screens/CalenderScreen/index.tsx';
 import MessageBoardScreen from '../screens/MessageBoardScreen/index.tsx';
 import {AppStackParams} from './types.ts';
 import Routes from '../navigation/routes.ts';
@@ -15,6 +14,7 @@ import ContactScreen from '../screens/ContactScreen/index.tsx';
 import {VisionBoardScreen} from '../screens/VisionBoardScreen/index.tsx';
 import Home_Screen from '../screens/Home_Screen/index.tsx';
 import EditUserInfoScreen from '../screens/EditUserInfoScreen/index.tsx';
+import CalenderScreen from '../screens/CalenderScreen/index.tsx';
 
 const RootStack = createNativeStackNavigator<AppStackParams>();
 
@@ -95,17 +95,8 @@ const RootNavigator: FC = () => {
             }}
           />
           <RootStack.Screen
-            name={Routes.tripInfoScreen}
-            component={TripInfoScreen}
-            options={{
-              headerTitleStyle: {
-                fontSize: 20,
-              },
-            }}
-          />
-          <RootStack.Screen
-            name={Routes.booneScreen}
-            component={BooneScreen}
+            name={Routes.calenderScreen}
+            component={CalenderScreen}
             options={{
               headerTitleStyle: {
                 fontSize: 20,

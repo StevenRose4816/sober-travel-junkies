@@ -11,7 +11,7 @@ interface IPassedProps {
     height: number;
   };
   showSelectedImage: boolean;
-  selectedImage: string;
+  selectedImage?: string;
 }
 
 const PhotoDraggable: FC<IPassedProps> = ({

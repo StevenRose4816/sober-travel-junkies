@@ -102,6 +102,7 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
       setMessages(updatedMessages);
       await writeDataToFirestore('messages', updatedMessages, 'messages');
       setNewMessage('');
+      readDataFromFirestore('messages', 'messages');
       flatListRef.current?.scrollToEnd();
     }
   };
@@ -175,7 +176,12 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
                   : require('../../Images/profilepictureicon.png')
               }
             />
-            <Text style={styles.text14}>{item.name}</Text>
+            <Text
+              ellipsizeMode={'tail'}
+              numberOfLines={1}
+              style={styles.text14}>
+              {item.name}
+            </Text>
           </View>
         </View>
       </View>
@@ -203,7 +209,12 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
                         : require('../../Images/profilepictureicon.png')
                     }
                   />
-                  <Text style={styles.text7}>{item.name}</Text>
+                  <Text
+                    ellipsizeMode={'tail'}
+                    numberOfLines={1}
+                    style={styles.text7}>
+                    {item.name}
+                  </Text>
                 </View>
               </View>
             </View>

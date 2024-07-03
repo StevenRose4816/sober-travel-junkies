@@ -13,14 +13,13 @@ export type AppStackParams = {
   [Routes.editUserInfoScreen]: {source?: () => any};
   [Routes.loginScreen]: undefined;
   [Routes.imagePicker]: undefined;
-  [Routes.booneScreen]: undefined;
+  [Routes.calenderScreen]: undefined;
   [Routes.messageBoardScreen]: {
     fullName: string;
     userPhotoFromDB: string;
     backgroundPhoto: any;
   };
   [Routes.signupScreen]: undefined;
-  [Routes.tripInfoScreen]: undefined;
   [Routes.contactScreen]: {
     contacts: Contacts.Contact[];
     users: User[];

@@ -67,6 +67,7 @@ const EditUserInfoScreen: FC = () => {
       emergencyContact: formValues.emergencyContact || '',
       emergencyContactPhone: formValues.emergencyContactPhone || '',
       bio: formValues.bio || '',
+      backgroundPhoto: source(),
     })
       .then(() => {
         console.log('RTDB updated');
@@ -147,9 +148,11 @@ const EditUserInfoScreen: FC = () => {
                   : require('../../Images/profilepictureicon.png')
               }
               onLoadStart={() => {
+                console.log('load start: ', load);
                 setLoad(true);
               }}
               onLoadEnd={() => {
+                console.log('load end: ', load);
                 setLoad(false);
               }}
             />

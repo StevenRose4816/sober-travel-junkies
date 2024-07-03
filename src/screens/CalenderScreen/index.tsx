@@ -17,7 +17,7 @@ import CalendarPicker, {
 import {AppStackParams, NavPropAny} from '../../navigation/types';
 import Routes from '../../navigation/routes';
 
-const BooneScreen: FC = () => {
+const CalenderScreen: FC = () => {
   const [selectedStartDate, setSelectedStartDate] = useState<Date | null>(null);
   const [selectedEndDate, setSelectedEndDate] = useState<Date | null>(null);
   const minDate = new Date();
@@ -43,15 +43,15 @@ const BooneScreen: FC = () => {
   const moveImage = () => {
     Animated.parallel([
       Animated.timing(translateY, {
-        toValue: 480,
-        duration: 1500,
+        toValue: 460,
+        duration: 900,
         useNativeDriver: true, // Delay translateY animation (same as translateX duration)
       }),
       Animated.timing(translateX, {
         toValue: 100,
-        duration: 400,
+        duration: 200,
         useNativeDriver: true,
-        delay: 1500,
+        delay: 900,
       }),
     ]).start();
   };
@@ -378,4 +378,4 @@ const BooneScreen: FC = () => {
   );
 };
 
-export default BooneScreen;
+export default CalenderScreen;
