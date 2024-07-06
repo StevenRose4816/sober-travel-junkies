@@ -151,13 +151,12 @@ const EditUserInfoScreen: FC = () => {
                   : require('../../Images/profilepictureicon.png')
               }
               onLoadStart={() => {
-                console.log('load start: ', load);
                 setLoad(true);
               }}
               onLoadEnd={() => {
-                console.log('load end: ', load);
                 setLoad(false);
               }}
+              resizeMode={FastImage.resizeMode.cover}
             />
           </View>
           <UploadField

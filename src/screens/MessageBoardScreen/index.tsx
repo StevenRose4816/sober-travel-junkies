@@ -218,6 +218,7 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
                         ? {uri: item.photo}
                         : require('../../Images/profilepictureicon.png')
                     }
+                    resizeMode={FastImage.resizeMode.cover}
                   />
                   <Text
                     ellipsizeMode={'tail'}

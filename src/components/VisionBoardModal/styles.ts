@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     marginTop: 40,
     color: '#0c0b09',
     fontFamily: 'HighTide-Sans',
-    textAlign: 'left',
+    textAlign: 'center',
     maxWidth: '90%',
   },
   variableInput: {

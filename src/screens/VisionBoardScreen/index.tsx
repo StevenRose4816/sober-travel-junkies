@@ -22,6 +22,7 @@ import PhotoDraggable from '../../components/PhotoDraggable';
 import NoteDraggable from '../../components/NoteDraggable';
 import VisionBoardModal from '../../components/VisionBoardModal';
 import VisionBoardTouchableBar from '../../components/VisionBoardTouchableBar';
+import FastImage from 'react-native-fast-image';
 
 export const VisionBoardScreen: FC = () => {
   const route = useRoute<RouteProp<AppStackParams, Routes.visionBoardScreen>>();
@@ -239,7 +240,10 @@ export const VisionBoardScreen: FC = () => {
       {loading ? (
         <ActivityIndicator size="large" color="#0000ff" />
       ) : (
-        <ImageBackground style={styles.imageBackground1} source={source()}>
+        <FastImage
+          style={styles.imageBackground1}
+          source={source()}
+          resizeMode={FastImage.resizeMode.cover}>
           {!hideToucables && (
             <View style={styles.view1}>
               <Text style={styles.text1}>Vision Board</Text>
@@ -262,7 +266,7 @@ export const VisionBoardScreen: FC = () => {
               visibleNote={visibleNote}
             />
           )}
-        </ImageBackground>
+        </FastImage>
       )}
       {!hideToucables && (
         <VisionBoardTouchableBar
