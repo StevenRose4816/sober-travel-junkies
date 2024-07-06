@@ -15,6 +15,7 @@ import {AppStackParams} from '../../navigation/types';
 import Routes from '../../navigation/routes';
 import {firebase} from '@react-native-firebase/database';
 import styles from './styles';
+import FastImage from 'react-native-fast-image';
 
 interface Message {
   text: string;
@@ -168,13 +169,22 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
         </View>
         <View style={styles.view10}>
           <View style={styles.view11}>
-            <Image
+            {/* <Image
               style={styles.image2}
               source={
                 item.photo
                   ? {uri: item.photo}
                   : require('../../Images/profilepictureicon.png')
               }
+            /> */}
+            <FastImage
+              style={styles.image2}
+              source={
+                item.photo
+                  ? {uri: item.photo, priority: FastImage.priority.high}
+                  : require('../../Images/profilepictureicon.png')
+              }
+              resizeMode={FastImage.resizeMode.cover}
             />
             <Text
               ellipsizeMode={'tail'}
@@ -201,7 +211,7 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
               </View>
               <View style={styles.view4}>
                 <View style={styles.view5}>
-                  <Image
+                  <FastImage
                     style={styles.image1}
                     source={
                       item.photo

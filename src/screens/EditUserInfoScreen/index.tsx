@@ -24,6 +24,7 @@ import Routes from '../../navigation/routes';
 import DocumentPickerModal from '../../components/DocumentPickerModal';
 import SubmitUserInfoButton from '../../components/SubmitUserInfoButton';
 import BackgroundPickerModal from '../../components/BackgroundPickerModal';
+import FastImage from 'react-native-fast-image';
 
 interface IDefaultFormValues {
   fullname: string;
@@ -138,7 +139,7 @@ const EditUserInfoScreen: FC = () => {
           <Image style={styles.logoImage} source={logo} />
           <View style={styles.imageContainer}>
             {load && <ActivityIndicator size="large" color="#0000ff" />}
-            <Image
+            <FastImage
               style={
                 load
                   ? styles.userPhotoWithOutBorder

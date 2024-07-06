@@ -25,6 +25,7 @@ import styles from './styles';
 import {NavPropAny, HomeScreenRouteProp} from '../../navigation/types';
 import {setSelectedDocument} from '../../store/document/slice';
 import {setNewUser} from '../../store/globalStore/slice';
+import FastImage from 'react-native-fast-image';
 
 interface IDataFromStorage {
   address: string;
@@ -137,7 +138,7 @@ const Home_Screen: FC = () => {
             {load ? (
               <ActivityIndicator size="large" color="#0000ff" />
             ) : (
-              <Image
+              <FastImage
                 style={
                   load
                     ? styles.userImageWithOutBorder
