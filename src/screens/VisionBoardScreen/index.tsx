@@ -28,7 +28,8 @@ export const VisionBoardScreen: FC = () => {
   const route = useRoute<RouteProp<AppStackParams, Routes.visionBoardScreen>>();
   const navigation = useNavigation<NavPropAny>();
   const dispatch = useDispatch();
-  const selectedImage = route?.params?.selectedImage || {};
+  const selectedImage = route?.params?.selectedImage || '';
+  const newUser = useAppSelector(state => state.globalStore.newUser);
   const [modalVisible, setModalVisible] = useState(false);
   const [addNote, setAddNote] = useState(true);
   const [newNote, setNewNote] = useState('');
@@ -106,12 +107,13 @@ export const VisionBoardScreen: FC = () => {
 
   useEffect(() => {
     if (!visionBoardFromState && !url) {
+      console.log('read from DB');
       readFromStorage('visionBoardScreenShot');
     }
   }, [url, visionBoardFromState]);
 
   useEffect(() => {
-    if (!visionBoardFromState && !screenShotUri) {
+    if ((!visionBoardFromState && !screenShotUri) || newUser) {
       setFirstLoad(true);
       console.log('first load: true');
     }
@@ -143,6 +145,7 @@ export const VisionBoardScreen: FC = () => {
   const onPressCloseUpdateModal = () => {
     toggleModal();
     setUpdatedBool(false);
+    setHideToucables(false);
   };
 
   const onPressAddImage = () => {

@@ -4,7 +4,7 @@ export interface IUserInfo {
   phoneNumber?: string | number;
   address?: string;
   name?: string;
-  newUser?: boolean;
+  newUser: boolean;
   visionBoardUrl?: string | undefined;
 }
 

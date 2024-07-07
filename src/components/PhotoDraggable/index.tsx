@@ -1,5 +1,5 @@
 import {FC} from 'react';
-import {View, Text, Image, Dimensions} from 'react-native';
+import {View, Image, Dimensions} from 'react-native';
 import Draggable from 'react-native-draggable';
 import styles from './styles';
 
@@ -22,6 +22,10 @@ const PhotoDraggable: FC<IPassedProps> = ({
   selectedImage,
 }) => {
   const screenWidth = Dimensions.get('window').width;
+  const source =
+    showSelectedImage && selectedImage
+      ? {uri: selectedImage}
+      : require('../../Images/camerapictureicon.png');
   return (
     <View>
       <Draggable
@@ -42,13 +46,7 @@ const PhotoDraggable: FC<IPassedProps> = ({
               height: photoDragSize.height,
             },
           ]}
-          source={
-            showSelectedImage && selectedImage
-              ? {
-                  uri: selectedImage,
-                }
-              : require('../../Images/camerapictureicon.png')
-          }
+          source={source}
           resizeMode="stretch"></Image>
       </Draggable>
     </View>
