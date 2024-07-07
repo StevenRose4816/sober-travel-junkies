@@ -4,8 +4,6 @@ import {
   ActivityIndicator,
   Dimensions,
   Image,
-  ImageBackground,
-  ImageSourcePropType,
   Platform,
   Text,
   TouchableOpacity,
@@ -23,10 +21,13 @@ import NoteDraggable from '../../components/NoteDraggable';
 import VisionBoardModal from '../../components/VisionBoardModal';
 import VisionBoardTouchableBar from '../../components/VisionBoardTouchableBar';
 import FastImage from 'react-native-fast-image';
+import {useDispatch} from 'react-redux';
+import {setVisionBoardUrl} from '../../store/globalStore/slice';
 
 export const VisionBoardScreen: FC = () => {
   const route = useRoute<RouteProp<AppStackParams, Routes.visionBoardScreen>>();
   const navigation = useNavigation<NavPropAny>();
+  const dispatch = useDispatch();
   const selectedImage = route?.params?.selectedImage || {};
   const [modalVisible, setModalVisible] = useState(false);
   const [addNote, setAddNote] = useState(true);
@@ -104,7 +105,7 @@ export const VisionBoardScreen: FC = () => {
   }, [hideToucables, navigation]);
 
   useEffect(() => {
-    if (!visionBoardFromState) {
+    if (!visionBoardFromState && !url) {
       readFromStorage('visionBoardScreenShot');
     }
   }, [url, visionBoardFromState]);
@@ -112,6 +113,7 @@ export const VisionBoardScreen: FC = () => {
   useEffect(() => {
     if (!visionBoardFromState && !screenShotUri) {
       setFirstLoad(true);
+      console.log('first load: true');
     }
     if (visionBoardFromState || firstLoad) {
       setTimeout(() => setLoading(false), 500);
@@ -183,7 +185,7 @@ export const VisionBoardScreen: FC = () => {
     try {
       await getDownloadURL(reference).then(url => {
         setUrl(url);
-        // create and dispatch new action to save the new vision board screen shot in state.
+        dispatch(setVisionBoardUrl({visionBoardUrl: url}));
       });
     } catch (e: any) {
       console.log(e.message);
@@ -228,8 +230,8 @@ export const VisionBoardScreen: FC = () => {
   const source = () => {
     if (!!screenShotUri) {
       return {uri: screenShotUri};
-    } else if (!!url) {
-      return {uri: url};
+    } else if (!!visionBoardFromState) {
+      return {uri: visionBoardFromState};
     } else {
       return require('../../Images/browntextured.jpg');
     }
