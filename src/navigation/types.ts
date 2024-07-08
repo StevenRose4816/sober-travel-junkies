@@ -9,14 +9,14 @@ export type NavPropAny = NativeStackNavigationProp<any, any>;
 
 export type AppStackParams = {
   [Routes.homeScreen]: undefined;
-  [Routes.home_Screen]: {source?: () => any};
-  [Routes.editUserInfoScreen]: {source?: () => any};
+  [Routes.home_Screen]: {source?: ImageSourcePropType};
+  [Routes.editUserInfoScreen]: {source?: ImageSourcePropType};
   [Routes.loginScreen]: undefined;
   [Routes.imagePicker]: undefined;
   [Routes.calenderScreen]: undefined;
   [Routes.messageBoardScreen]: {
     fullName: string;
-    backgroundPhoto: any;
+    backgroundPhoto: ImageSourcePropType;
   };
   [Routes.signupScreen]: undefined;
   [Routes.contactScreen]: {

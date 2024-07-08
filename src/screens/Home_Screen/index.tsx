@@ -10,7 +10,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
-import {useNavigation, useRoute} from '@react-navigation/native';
+import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {getDownloadURL, getStorage, ref as storageRef} from 'firebase/storage';
 import {get, ref} from 'firebase/database';
 import {db} from '../../Firebase/FirebaseConfigurations';
@@ -22,7 +22,11 @@ import UserInfoField from '../../components/UserInfoField';
 import HomeScreenEditButton from '../../components/HomeScreenEditButton';
 import Routes from '../../navigation/routes';
 import styles from './styles';
-import {NavPropAny, HomeScreenRouteProp} from '../../navigation/types';
+import {
+  NavPropAny,
+  HomeScreenRouteProp,
+  AppStackParams,
+} from '../../navigation/types';
 import {setSelectedDocument} from '../../store/document/slice';
 import {setNewUser} from '../../store/globalStore/slice';
 import FastImage from 'react-native-fast-image';
@@ -40,7 +44,7 @@ interface IDataFromStorage {
 
 const Home_Screen: FC = () => {
   const navigation = useNavigation<NavPropAny>();
-  const route = useRoute<HomeScreenRouteProp>();
+  const route = useRoute<RouteProp<AppStackParams, Routes.home_Screen>>();
   const dispatch = useDispatch();
   const background1: ImageSourcePropType = require('../../Images/backgroundPhoto1.jpeg');
   const logo: ImageSourcePropType = require('../../Images/STJLogoTransparent.png');
