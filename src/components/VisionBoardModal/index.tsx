@@ -79,7 +79,7 @@ const VisionBoardModal: FC<IPassedProps> = ({
                     Post your vision for the trip, one image and/or note at a
                     time.{'\n\n'}
                     Don't completely cover someone else's post.{'\n\n'}
-                    Please be respectful and have fun :)
+                    Please be respectful and have fun!
                   </Text>
                 </>
               )}

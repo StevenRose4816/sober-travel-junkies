@@ -154,21 +154,20 @@ const Home_Screen: FC = () => {
                 backgroundPhoto: backgroundSource,
               })
             }
-            title={'View Trip Info'}
+            title={'Events'}
           />
           <HomeScreenButton
             onPress={() => navigation.navigate(Routes.visionBoardScreen)}
-            title={'View Vision Board'}
+            title={'Vision Board'}
           />
           <HomeScreenButton
             onPress={() =>
               navigation.navigate(Routes.messageBoardScreen, {
                 fullName: fullName,
-                userPhotoFromDB: userPhotoFromRedux,
                 backgroundPhoto: backgroundSource,
               })
             }
-            title={'View Message Board'}
+            title={'Message Board'}
           />
           <View style={styles.dividerView} />
           <UserInfoField label={'Address'} uri={homeIcon} value={address} />

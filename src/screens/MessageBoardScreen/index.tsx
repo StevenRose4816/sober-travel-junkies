@@ -16,6 +16,7 @@ import Routes from '../../navigation/routes';
 import {firebase} from '@react-native-firebase/database';
 import styles from './styles';
 import FastImage from 'react-native-fast-image';
+import {useAppSelector} from '../../hooks';
 
 interface Message {
   text: string;
@@ -37,7 +38,7 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
   const [newMessage, setNewMessage] = useState<string>('');
   const [modalVisible, setModalVisible] = useState(false);
   const [data, setData] = useState(false);
-  const userPhotoFromDB = route?.params.userPhotoFromDB;
+  const userPhotoFromDB = useAppSelector(state => state.user.userPhoto);
   const fullName = route?.params.fullName;
   const backgroundPhoto = route?.params.backgroundPhoto;
   const date = new Date();

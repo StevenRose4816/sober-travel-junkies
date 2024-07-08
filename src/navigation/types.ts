@@ -16,7 +16,6 @@ export type AppStackParams = {
   [Routes.calenderScreen]: undefined;
   [Routes.messageBoardScreen]: {
     fullName: string;
-    userPhotoFromDB: string;
     backgroundPhoto: any;
   };
   [Routes.signupScreen]: undefined;

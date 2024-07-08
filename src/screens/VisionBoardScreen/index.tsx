@@ -113,7 +113,7 @@ export const VisionBoardScreen: FC = () => {
   }, [url, visionBoardFromState]);
 
   useEffect(() => {
-    if ((!visionBoardFromState && !screenShotUri) || newUser) {
+    if (newUser) {
       setFirstLoad(true);
       console.log('first load: true');
     }
