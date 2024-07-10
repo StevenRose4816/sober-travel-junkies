@@ -45,39 +45,41 @@ export const NoteDraggable: FC<IPassedProps> = ({
         maxX={375}
         maxY={640}
         onShortPressRelease={onShortPressSticky}>
-        {!hideTouchables && (
-          <TouchableOpacity
-            onPress={() => {
-              setShowInitialStickyDraggables(false);
-            }}
-            style={styles.closeTouchable}>
-            <Image
-              style={styles.closeIcon}
-              source={require('../../Images/close2.png')}
-            />
-          </TouchableOpacity>
-        )}
-        <ImageBackground
-          style={[
-            styles.imageBackground,
-            {
-              width: stickyDragSize.width,
-              height: stickyDragSize.height,
-            },
-          ]}
-          source={require('../../Images/sticky.png')}
-          resizeMode="stretch">
-          <Text
+        <View>
+          {!hideTouchables && (
+            <TouchableOpacity
+              onPress={() => {
+                setShowInitialStickyDraggables(false);
+              }}
+              style={styles.closeTouchable}>
+              <Image
+                style={styles.closeIcon}
+                source={require('../../Images/close2.png')}
+              />
+            </TouchableOpacity>
+          )}
+          <ImageBackground
             style={[
-              styles.text,
+              styles.imageBackground,
               {
-                fontSize: stickySize.fontSize,
-                maxWidth: stickySize.maxWidth,
+                width: stickyDragSize.width,
+                height: stickyDragSize.height,
               },
-            ]}>
-            {visibleNote}
-          </Text>
-        </ImageBackground>
+            ]}
+            source={require('../../Images/sticky.png')}
+            resizeMode="stretch">
+            <Text
+              style={[
+                styles.text,
+                {
+                  fontSize: stickySize.fontSize,
+                  maxWidth: stickySize.maxWidth,
+                },
+              ]}>
+              {visibleNote}
+            </Text>
+          </ImageBackground>
+        </View>
       </Draggable>
     </View>
   );

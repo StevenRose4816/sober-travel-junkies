@@ -42,25 +42,27 @@ const PhotoDraggable: FC<IPassedProps> = ({
         renderColor={'transparent'}
         isCircle
         onShortPressRelease={onShortPressPhoto}>
-        {!hideTouchables && (
-          <TouchableOpacity
-            onPress={() => {
-              setShowInitialPhotoDraggables(false);
-            }}
-            style={styles.closeTouchable}>
-            <Image
-              style={styles.closeIcon}
-              source={require('../../Images/close2.png')}
-            />
-          </TouchableOpacity>
-        )}
-        <Image
-          style={
-            (styles.image,
-            {width: photoDragSize.width, height: photoDragSize.height})
-          }
-          source={source}
-          resizeMode="stretch"></Image>
+        <View>
+          {!hideTouchables && (
+            <TouchableOpacity
+              onPress={() => {
+                setShowInitialPhotoDraggables(false);
+              }}
+              style={styles.closeTouchable}>
+              <Image
+                style={styles.closeIcon}
+                source={require('../../Images/close2.png')}
+              />
+            </TouchableOpacity>
+          )}
+          <Image
+            style={
+              (styles.image,
+              {width: photoDragSize.width, height: photoDragSize.height})
+            }
+            source={source}
+            resizeMode="stretch"></Image>
+        </View>
       </Draggable>
     </View>
   );

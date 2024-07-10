@@ -1,7 +1,6 @@
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {FC, useEffect, useState} from 'react';
 import {
-  ActivityIndicator,
   Dimensions,
   Image,
   Platform,
