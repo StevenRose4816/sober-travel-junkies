@@ -11,6 +11,14 @@ const styles = StyleSheet.create({
   text: {
     fontFamily: 'HighTide-Sans',
   },
+  closeTouchable: {
+    alignSelf: 'flex-end',
+  },
+  closeIcon: {
+    height: 25,
+    width: 25,
+    marginBottom: 5,
+  },
 });
 
 export default styles;

@@ -4,7 +4,7 @@ import Draggable from 'react-native-draggable';
 import styles from './styles';
 
 interface IPassedProps {
-  hideToucables: boolean;
+  hideTouchables: boolean;
   setHideTouchables: Dispatch<SetStateAction<boolean>>;
   onShortPressPhoto: () => void;
   photoDragSize: {
@@ -17,7 +17,7 @@ interface IPassedProps {
 }
 
 const PhotoDraggable: FC<IPassedProps> = ({
-  hideToucables,
+  hideTouchables,
   onShortPressPhoto,
   photoDragSize,
   showSelectedImage,
@@ -42,7 +42,7 @@ const PhotoDraggable: FC<IPassedProps> = ({
         renderColor={'transparent'}
         isCircle
         onShortPressRelease={onShortPressPhoto}>
-        {!hideToucables && (
+        {!hideTouchables && (
           <TouchableOpacity
             onPress={() => {
               setShowInitialPhotoDraggables(false);

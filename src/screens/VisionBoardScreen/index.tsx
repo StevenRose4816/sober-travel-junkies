@@ -39,7 +39,7 @@ export const VisionBoardScreen: FC = () => {
   const [screenShotUri, setScreenShotUri] = useState<string | undefined>(
     undefined,
   );
-  const [hideToucables, setHideToucables] = useState(false);
+  const [hideTouchables, setHideTouchables] = useState(false);
   const [showSelectedImage, setShowSelectedImage] = useState(true);
   const [photoShortPressCount, setPhotoShortPressCount] = useState(0);
   const [stickyShortPressCount, setStickyShortPressCount] = useState(0);
@@ -73,7 +73,7 @@ export const VisionBoardScreen: FC = () => {
         height: Dimensions.get('window').height + 30,
       });
       setScreenShotUri(uri);
-      setHideToucables(false);
+      setHideTouchables(false);
       setVisibleNote('');
       setUpdatedBool(false);
       setShowSelectedImage(false);
@@ -86,7 +86,7 @@ export const VisionBoardScreen: FC = () => {
   };
 
   useEffect(() => {
-    if (hideToucables) {
+    if (hideTouchables) {
       navigation.setOptions({
         headerLeft: () => null,
       });
@@ -103,7 +103,7 @@ export const VisionBoardScreen: FC = () => {
         ),
       });
     }
-  }, [hideToucables, navigation]);
+  }, [hideTouchables, navigation]);
 
   useEffect(() => {
     if (!visionBoardFromState && !url) {
@@ -135,7 +135,7 @@ export const VisionBoardScreen: FC = () => {
   const onPressCloseUpdateModal = () => {
     toggleModal();
     setUpdatedBool(false);
-    setHideToucables(false);
+    setHideTouchables(false);
   };
 
   const onPressAddImage = () => {
@@ -168,7 +168,7 @@ export const VisionBoardScreen: FC = () => {
 
   const onPressUpdateBoard = async () => {
     toggleModal();
-    setHideToucables(true);
+    setHideTouchables(true);
     setUpdatedBool(true);
   };
 
@@ -236,20 +236,20 @@ export const VisionBoardScreen: FC = () => {
         style={styles.imageBackground1}
         source={source()}
         resizeMode={FastImage.resizeMode.cover}>
-        {!hideToucables && (
+        {!hideTouchables && (
           <View style={styles.view1}>
             <Text style={styles.text1}>Vision Board</Text>
           </View>
         )}
         {showInitialPhotoDraggables && (
           <PhotoDraggable
-            hideToucables={hideToucables}
+            hideTouchables={hideTouchables}
             onShortPressPhoto={onShortPressPhoto}
             photoDragSize={photoDragSize}
             showSelectedImage={showSelectedImage}
             selectedImage={selectedImage}
             setShowInitialPhotoDraggables={setShowInitialPhotoDraggables}
-            setHideTouchables={setHideToucables}
+            setHideTouchables={setHideTouchables}
           />
         )}
         {addNote && showInitialStickyDraggables && (
@@ -258,10 +258,13 @@ export const VisionBoardScreen: FC = () => {
             stickyDragSize={stickyDragSize}
             stickySize={stickySize}
             visibleNote={visibleNote}
+            hideTouchables={hideTouchables}
+            showInitialStickyDraggables={showInitialStickyDraggables}
+            setShowInitialStickyDraggables={setShowInitialStickyDraggables}
           />
         )}
       </FastImage>
-      {!hideToucables && (
+      {!hideTouchables && (
         <VisionBoardTouchableBar
           showInitialPhotoDraggables={showInitialPhotoDraggables}
           showInitialStickyDraggables={showInitialStickyDraggables}

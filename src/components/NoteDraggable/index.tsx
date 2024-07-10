@@ -1,5 +1,12 @@
-import {FC} from 'react';
-import {View, Text, ImageBackground, Dimensions} from 'react-native';
+import {Dispatch, FC, SetStateAction} from 'react';
+import {
+  View,
+  Text,
+  ImageBackground,
+  Dimensions,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
 import Draggable from 'react-native-draggable';
 import styles from './styles';
 
@@ -14,6 +21,9 @@ interface IPassedProps {
     maxWidth: number;
   };
   visibleNote: string;
+  hideTouchables: boolean;
+  showInitialStickyDraggables: boolean;
+  setShowInitialStickyDraggables: Dispatch<SetStateAction<boolean>>;
 }
 
 export const NoteDraggable: FC<IPassedProps> = ({
@@ -21,6 +31,8 @@ export const NoteDraggable: FC<IPassedProps> = ({
   stickyDragSize,
   stickySize,
   visibleNote,
+  hideTouchables,
+  setShowInitialStickyDraggables,
 }) => {
   const screenWidth = Dimensions.get('window').width;
   return (
@@ -33,6 +45,18 @@ export const NoteDraggable: FC<IPassedProps> = ({
         maxX={375}
         maxY={640}
         onShortPressRelease={onShortPressSticky}>
+        {!hideTouchables && (
+          <TouchableOpacity
+            onPress={() => {
+              setShowInitialStickyDraggables(false);
+            }}
+            style={styles.closeTouchable}>
+            <Image
+              style={styles.closeIcon}
+              source={require('../../Images/close2.png')}
+            />
+          </TouchableOpacity>
+        )}
         <ImageBackground
           style={[
             styles.imageBackground,
