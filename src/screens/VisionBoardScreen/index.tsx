@@ -59,8 +59,6 @@ export const VisionBoardScreen: FC = () => {
     state => state.globalStore.visionBoardUrl,
   );
   const [showWelcomeModal, setShowWelcomeModal] = useState(true);
-  const [loading, setLoading] = useState(true);
-  const [firstLoad, setFirstLoad] = useState(false);
 
   const capScreen = async () => {
     try {

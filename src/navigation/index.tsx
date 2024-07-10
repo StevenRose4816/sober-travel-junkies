@@ -1,20 +1,19 @@
 import {FC, useEffect, useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {HomeScreen, LoginScreen, SignupScreen} from '../screens';
 import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
 import {IUser, setUser} from '../store/auth/slice';
 import {useAppDispatch, useAppSelector} from '../hooks';
 import ImagePicker from '../components/ImagePicker.tsx';
-import BooneScreen from '../screens/CalenderScreen/index.tsx';
 import MessageBoardScreen from '../screens/MessageBoardScreen/index.tsx';
 import {AppStackParams} from './types.ts';
 import Routes from '../navigation/routes.ts';
-import ContactScreen from '../screens/ContactScreen/index.tsx';
 import {VisionBoardScreen} from '../screens/VisionBoardScreen/index.tsx';
 import Home_Screen from '../screens/Home_Screen/index.tsx';
 import EditUserInfoScreen from '../screens/EditUserInfoScreen/index.tsx';
 import CalenderScreen from '../screens/CalenderScreen/index.tsx';
+import LoginScreen from '../screens/LoginScreen/index.tsx';
+import SignupScreen from '../screens/SignupScreen/index.tsx';
 
 const RootStack = createNativeStackNavigator<AppStackParams>();
 
@@ -68,15 +67,6 @@ const RootNavigator: FC = () => {
             }}
           />
           <RootStack.Screen
-            name={Routes.homeScreen}
-            component={HomeScreen}
-            options={{
-              headerTitleStyle: {
-                fontSize: 20,
-              },
-            }}
-          />
-          <RootStack.Screen
             name={Routes.editUserInfoScreen}
             component={EditUserInfoScreen}
             options={{
@@ -106,15 +96,6 @@ const RootNavigator: FC = () => {
           <RootStack.Screen
             name={Routes.messageBoardScreen}
             component={MessageBoardScreen}
-            options={{
-              headerTitleStyle: {
-                fontSize: 20,
-              },
-            }}
-          />
-          <RootStack.Screen
-            name={Routes.contactScreen}
-            component={ContactScreen}
             options={{
               headerTitleStyle: {
                 fontSize: 20,

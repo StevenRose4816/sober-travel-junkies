@@ -1,14 +1,11 @@
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import Routes from '../navigation/routes';
-import Contacts from 'react-native-contacts';
-import {User} from '../screens/HomeScreen_deprecated';
 import {RouteProp} from '@react-navigation/native';
 import {ImageSourcePropType} from 'react-native';
 
 export type NavPropAny = NativeStackNavigationProp<any, any>;
 
 export type AppStackParams = {
-  [Routes.homeScreen]: undefined;
   [Routes.home_Screen]: {source?: ImageSourcePropType};
   [Routes.editUserInfoScreen]: {source?: ImageSourcePropType};
   [Routes.loginScreen]: undefined;
@@ -19,11 +16,6 @@ export type AppStackParams = {
     backgroundPhoto: ImageSourcePropType;
   };
   [Routes.signupScreen]: undefined;
-  [Routes.contactScreen]: {
-    contacts: Contacts.Contact[];
-    users: User[];
-    names: string[];
-  };
   [Routes.visionBoardScreen]: {
     selectedImage?: any;
   };

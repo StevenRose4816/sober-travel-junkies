@@ -3,7 +3,6 @@ import {authReducer} from './auth/slice';
 import {globalStoreReducer} from './globalStore/slice';
 import {userPhotoReducer} from './user/slice';
 import {documentReducer} from './document/slice';
-import {contactReducer} from './contacts';
 
 const store = configureStore({
   reducer: {
@@ -11,7 +10,6 @@ const store = configureStore({
     user: userPhotoReducer,
     document: documentReducer,
     globalStore: globalStoreReducer,
-    contacts: contactReducer,
   },
 });
 

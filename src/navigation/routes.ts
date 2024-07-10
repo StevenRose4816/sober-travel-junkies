@@ -1,5 +1,4 @@
 enum Routes {
-  homeScreen = 'homeScreen',
   home_Screen = 'home_Screen',
   editUserInfoScreen = 'editUserInfoScreen',
   imagePicker = 'imagePicker',
@@ -7,7 +6,6 @@ enum Routes {
   signupScreen = 'signupScreen',
   calenderScreen = 'calenderScreen',
   messageBoardScreen = 'messageBoardScreen',
-  contactScreen = 'contactScreen',
   visionBoardScreen = 'visionBoardScreen',
 }
 
