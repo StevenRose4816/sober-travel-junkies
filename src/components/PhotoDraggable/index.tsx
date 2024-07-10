@@ -1,5 +1,5 @@
-import {FC} from 'react';
-import {View, Image, Dimensions} from 'react-native';
+import {Dispatch, FC, SetStateAction} from 'react';
+import {View, Image, Dimensions, TouchableOpacity} from 'react-native';
 import Draggable from 'react-native-draggable';
 import styles from './styles';
 
@@ -12,6 +12,7 @@ interface IPassedProps {
   };
   showSelectedImage: boolean;
   selectedImage?: string;
+  setShowInitialPhotoDraggables: Dispatch<SetStateAction<boolean>>;
 }
 
 const PhotoDraggable: FC<IPassedProps> = ({
@@ -20,6 +21,7 @@ const PhotoDraggable: FC<IPassedProps> = ({
   photoDragSize,
   showSelectedImage,
   selectedImage,
+  setShowInitialPhotoDraggables,
 }) => {
   const screenWidth = Dimensions.get('window').width;
   const source =
@@ -35,9 +37,17 @@ const PhotoDraggable: FC<IPassedProps> = ({
         minY={40}
         maxX={375}
         maxY={640}
-        renderColor={hideToucables ? '#fb445c00' : '#fb445c'}
+        renderColor={'transparent'}
         isCircle
         onShortPressRelease={onShortPressPhoto}>
+        <TouchableOpacity
+          onPress={() => setShowInitialPhotoDraggables(false)}
+          style={styles.closeTouchable}>
+          <Image
+            style={styles.closeIcon}
+            source={require('../../Images/close2.png')}
+          />
+        </TouchableOpacity>
         <Image
           style={[
             styles.image,

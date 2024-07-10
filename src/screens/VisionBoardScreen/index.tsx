@@ -261,6 +261,7 @@ export const VisionBoardScreen: FC = () => {
               photoDragSize={photoDragSize}
               showSelectedImage={showSelectedImage}
               selectedImage={selectedImage}
+              setShowInitialPhotoDraggables={setShowInitialPhotoDraggables}
             />
           )}
           {addNote && showInitialStickyDraggables && (
