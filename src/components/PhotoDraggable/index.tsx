@@ -5,6 +5,7 @@ import styles from './styles';
 
 interface IPassedProps {
   hideToucables: boolean;
+  setHideTouchables: Dispatch<SetStateAction<boolean>>;
   onShortPressPhoto: () => void;
   photoDragSize: {
     width: number;
@@ -22,6 +23,7 @@ const PhotoDraggable: FC<IPassedProps> = ({
   showSelectedImage,
   selectedImage,
   setShowInitialPhotoDraggables,
+  setHideTouchables,
 }) => {
   const screenWidth = Dimensions.get('window').width;
   const source =
@@ -40,22 +42,23 @@ const PhotoDraggable: FC<IPassedProps> = ({
         renderColor={'transparent'}
         isCircle
         onShortPressRelease={onShortPressPhoto}>
-        <TouchableOpacity
-          onPress={() => setShowInitialPhotoDraggables(false)}
-          style={styles.closeTouchable}>
-          <Image
-            style={styles.closeIcon}
-            source={require('../../Images/close2.png')}
-          />
-        </TouchableOpacity>
+        {!hideToucables && (
+          <TouchableOpacity
+            onPress={() => {
+              setShowInitialPhotoDraggables(false);
+            }}
+            style={styles.closeTouchable}>
+            <Image
+              style={styles.closeIcon}
+              source={require('../../Images/close2.png')}
+            />
+          </TouchableOpacity>
+        )}
         <Image
-          style={[
-            styles.image,
-            {
-              width: photoDragSize.width,
-              height: photoDragSize.height,
-            },
-          ]}
+          style={
+            (styles.image,
+            {width: photoDragSize.width, height: photoDragSize.height})
+          }
           source={source}
           resizeMode="stretch"></Image>
       </Draggable>

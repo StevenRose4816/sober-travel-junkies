@@ -112,16 +112,6 @@ export const VisionBoardScreen: FC = () => {
     }
   }, [url, visionBoardFromState]);
 
-  useEffect(() => {
-    if (newUser) {
-      setFirstLoad(true);
-      console.log('first load: true');
-    }
-    if (visionBoardFromState || firstLoad) {
-      setTimeout(() => setLoading(false), 500);
-    }
-  }, [screenShotUri, visionBoardFromState, firstLoad]);
-
   const uploadImage = async (uri: string | undefined) => {
     if (!uri) {
       console.error('Invalid URI:', uri);
@@ -242,38 +232,35 @@ export const VisionBoardScreen: FC = () => {
 
   return (
     <>
-      {loading ? (
-        <ActivityIndicator size="large" color="#0000ff" />
-      ) : (
-        <FastImage
-          style={styles.imageBackground1}
-          source={source()}
-          resizeMode={FastImage.resizeMode.cover}>
-          {!hideToucables && (
-            <View style={styles.view1}>
-              <Text style={styles.text1}>Vision Board</Text>
-            </View>
-          )}
-          {showInitialPhotoDraggables && (
-            <PhotoDraggable
-              hideToucables={hideToucables}
-              onShortPressPhoto={onShortPressPhoto}
-              photoDragSize={photoDragSize}
-              showSelectedImage={showSelectedImage}
-              selectedImage={selectedImage}
-              setShowInitialPhotoDraggables={setShowInitialPhotoDraggables}
-            />
-          )}
-          {addNote && showInitialStickyDraggables && (
-            <NoteDraggable
-              onShortPressSticky={onShortPressSticky}
-              stickyDragSize={stickyDragSize}
-              stickySize={stickySize}
-              visibleNote={visibleNote}
-            />
-          )}
-        </FastImage>
-      )}
+      <FastImage
+        style={styles.imageBackground1}
+        source={source()}
+        resizeMode={FastImage.resizeMode.cover}>
+        {!hideToucables && (
+          <View style={styles.view1}>
+            <Text style={styles.text1}>Vision Board</Text>
+          </View>
+        )}
+        {showInitialPhotoDraggables && (
+          <PhotoDraggable
+            hideToucables={hideToucables}
+            onShortPressPhoto={onShortPressPhoto}
+            photoDragSize={photoDragSize}
+            showSelectedImage={showSelectedImage}
+            selectedImage={selectedImage}
+            setShowInitialPhotoDraggables={setShowInitialPhotoDraggables}
+            setHideTouchables={setHideToucables}
+          />
+        )}
+        {addNote && showInitialStickyDraggables && (
+          <NoteDraggable
+            onShortPressSticky={onShortPressSticky}
+            stickyDragSize={stickyDragSize}
+            stickySize={stickySize}
+            visibleNote={visibleNote}
+          />
+        )}
+      </FastImage>
       {!hideToucables && (
         <VisionBoardTouchableBar
           showInitialPhotoDraggables={showInitialPhotoDraggables}
