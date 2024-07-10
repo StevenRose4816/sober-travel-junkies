@@ -238,7 +238,7 @@ const EditUserInfoScreen: FC = () => {
                   value={value}
                   onBlur={onBlur}
                   onChangeText={onChange}
-                  placeholder=" Address"
+                  placeholder=" Mailing Address"
                   textAlign="left"
                 />
               </View>

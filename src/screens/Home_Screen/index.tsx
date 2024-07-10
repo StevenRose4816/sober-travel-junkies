@@ -174,7 +174,11 @@ const Home_Screen: FC = () => {
             title={'Message Board'}
           />
           <View style={styles.dividerView} />
-          <UserInfoField label={'Address'} uri={homeIcon} value={address} />
+          <UserInfoField
+            label={'Mailing Address'}
+            uri={homeIcon}
+            value={address}
+          />
           <UserInfoField
             label={'Email Address'}
             uri={emailIcon}
