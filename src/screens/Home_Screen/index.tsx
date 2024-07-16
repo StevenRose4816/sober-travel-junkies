@@ -12,7 +12,7 @@ import {
 import auth from '@react-native-firebase/auth';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {getDownloadURL, getStorage, ref as storageRef} from 'firebase/storage';
-import {get, ref} from 'firebase/database';
+import {get, set, ref} from 'firebase/database';
 import {db} from '../../Firebase/FirebaseConfigurations';
 import {useDispatch} from 'react-redux';
 import {setUserPhoto} from '../../store/user/slice';
@@ -104,6 +104,28 @@ const Home_Screen: FC = () => {
     } catch (e: any) {
       console.log(e.message);
     }
+  };
+  const writeToRealTimeDB = async (
+    userId: string | undefined,
+    formValues: any,
+  ) => {
+    set(ref(db, 'users/' + userId), {
+      fullName: formValues.fullname || '',
+      email: formValues.email || '',
+      address: formValues.address || '',
+      phoneNumber: formValues.phoneNumber || '',
+      userPhoto: userPhotoFromRedux || '',
+      emergencyContact: formValues.emergencyContact || '',
+      emergencyContactPhone: formValues.emergencyContactPhone || '',
+      bio: formValues.bio || '',
+      backgroundPhoto: source(),
+    })
+      .then(() => {
+        console.log('RTDB updated');
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
 
   const readDataFromRealTimeDB = async () => {
