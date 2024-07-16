@@ -1,4 +1,6 @@
-import {FC, useEffect, useState} from 'react';
+import {FC, useState} from 'react';
+import {set, ref} from 'firebase/database';
+import {db} from '../../Firebase/FirebaseConfigurations';
 import {
   View,
   Text,
@@ -13,6 +15,21 @@ import auth from '@react-native-firebase/auth';
 import {setNewUser} from '../../store/globalStore/slice';
 import {useDispatch} from 'react-redux';
 import styles from './styles';
+import {Controller, useForm} from 'react-hook-form';
+import {
+  setFullname,
+  setEmail as dispatchSetEmail,
+  setMailingAddress,
+  setPhoneNumber,
+} from '../../store/user/slice';
+
+interface IDefaultFormValues {
+  fullName: string;
+  phoneNumber: string;
+  mailingAddress: string;
+  email: string;
+  password: string;
+}
 
 const LoginScreen: FC = () => {
   const dispatch = useDispatch();
@@ -24,8 +41,6 @@ const LoginScreen: FC = () => {
     string | undefined
   >(undefined);
   const screenWidth = Dimensions.get('window').width;
-  const [passwordCreate, setPasswordCreate] = useState('');
-  const [emailCreate, setEmailCreate] = useState('');
 
   const login = async () => {
     try {
@@ -42,31 +57,36 @@ const LoginScreen: FC = () => {
       setFormattedErrorMessage(undefined);
     }
     setSignupModalVisible(!signupModalVisible);
-    setEmailCreate('');
-    setPasswordCreate('');
+    reset();
   };
 
-  const signUp = async () => {
+  const signUp = async (formValues: IDefaultFormValues) => {
     setSignupModalVisible(!signupModalVisible);
     try {
-      await auth().createUserWithEmailAndPassword(emailCreate, passwordCreate);
+      await auth().createUserWithEmailAndPassword(
+        formValues.email,
+        formValues.password,
+      );
       dispatch(setNewUser({newUser: true}));
+      dispatch(setFullname({fullname: formValues.fullName}));
+      dispatch(dispatchSetEmail({email: formValues.email}));
+      dispatch(setMailingAddress({mailingAddress: formValues.mailingAddress}));
+      dispatch(setPhoneNumber({phoneNumber: formValues.phoneNumber}));
     } catch (e: any) {
+      console.log('error signing up: ', e);
       formatError(e.message);
       setErrorModalVisible(!errorModalVisible);
     }
   };
 
   const closeErrorModal = () => {
-    setPasswordCreate('');
-    setEmailCreate('');
     setErrorModalVisible(!errorModalVisible);
+    reset();
   };
 
   const closeSignupModal = () => {
-    setPasswordCreate('');
-    setEmailCreate('');
     setSignupModalVisible(!signupModalVisible);
+    reset();
   };
 
   const formatError = (errorMessage: string) => {
@@ -76,6 +96,22 @@ const LoginScreen: FC = () => {
       return formattedErrorMessage;
     }
   };
+
+  const {
+    control,
+    handleSubmit,
+    formState: {errors, isValid},
+    reset,
+  } = useForm<IDefaultFormValues>({
+    defaultValues: {
+      fullName: '',
+      phoneNumber: '',
+      mailingAddress: '',
+      email: '',
+      password: '',
+    },
+    mode: 'onBlur',
+  });
 
   return (
     <ImageBackground
@@ -120,7 +156,7 @@ const LoginScreen: FC = () => {
           style={styles.image3}></Image>
       </View>
       <TouchableOpacity
-        onPress={() => onPressCreateAccount()}
+        onPress={onPressCreateAccount}
         style={[
           styles.touchable2,
           {
@@ -167,37 +203,107 @@ const LoginScreen: FC = () => {
                 source={require('../../Images/close2.png')}
               />
             </TouchableOpacity>
-            <View style={styles.view7}>
-              <>
-                <TextInput
-                  style={styles.textInput3}
-                  placeholder=" email"
-                  placeholderTextColor={'#eee7da'}
-                  autoCapitalize={'none'}
-                  value={emailCreate}
-                  onChangeText={val => setEmailCreate(val)}
-                />
-                <TextInput
-                  style={styles.textInput4}
-                  placeholder=" password"
-                  placeholderTextColor={'#eee7da'}
-                  autoCapitalize={'none'}
-                  secureTextEntry={true}
-                  value={passwordCreate}
-                  onChangeText={val => setPasswordCreate(val)}
-                />
-              </>
-              <TouchableOpacity
-                onPress={signUp}
-                style={[
-                  styles.textInput5,
-                  {
-                    width: screenWidth * 0.4,
-                  },
-                ]}>
-                <Text style={styles.text6}>{'Submit'}</Text>
-              </TouchableOpacity>
-            </View>
+            <Controller
+              control={control}
+              name={'fullName'}
+              rules={{required: true}}
+              render={({field: {onChange, value, onBlur}}) => (
+                <View>
+                  <TextInput
+                    style={styles.textInput}
+                    value={value}
+                    onBlur={onBlur}
+                    onChangeText={onChange}
+                    placeholder=" Full Name"
+                    textAlign="center"
+                  />
+                </View>
+              )}
+            />
+            <Controller
+              control={control}
+              name={'phoneNumber'}
+              rules={{required: true}}
+              render={({field: {onChange, value, onBlur}}) => (
+                <View>
+                  <TextInput
+                    style={styles.textInput}
+                    value={value}
+                    onBlur={onBlur}
+                    onChangeText={onChange}
+                    placeholder=" Phone Number"
+                    textAlign="center"
+                  />
+                </View>
+              )}
+            />
+            <Controller
+              control={control}
+              name={'mailingAddress'}
+              rules={{required: true}}
+              render={({field: {onChange, value, onBlur}}) => (
+                <View>
+                  <TextInput
+                    style={styles.textInput}
+                    value={value}
+                    onBlur={onBlur}
+                    onChangeText={onChange}
+                    placeholder=" Mailing Address"
+                    textAlign="center"
+                  />
+                </View>
+              )}
+            />
+            <Controller
+              control={control}
+              name={'email'}
+              rules={{required: true}}
+              render={({field: {onChange, value, onBlur}}) => (
+                <View>
+                  <TextInput
+                    style={styles.textInput}
+                    value={value}
+                    onBlur={onBlur}
+                    onChangeText={onChange}
+                    placeholder=" Email Address"
+                    textAlign="center"
+                  />
+                </View>
+              )}
+            />
+            <Controller
+              control={control}
+              name={'password'}
+              rules={{required: true}}
+              render={({field: {onChange, value, onBlur}}) => (
+                <View>
+                  <TextInput
+                    style={styles.textInput}
+                    value={value}
+                    onBlur={onBlur}
+                    onChangeText={onChange}
+                    placeholder=" Password"
+                    textAlign="center"
+                    secureTextEntry={true}
+                  />
+                </View>
+              )}
+            />
+            <TouchableOpacity
+              disabled={!isValid}
+              onPress={handleSubmit(signUp)}
+              style={
+                isValid
+                  ? styles.textInput5
+                  : [styles.textInput5, {backgroundColor: '#fb445c50'}]
+              }>
+              <Text
+                style={
+                  isValid ? styles.text6 : [styles.text6, {color: '#0c0b0950'}]
+                }>
+                {'Sign Up'}
+              </Text>
+            </TouchableOpacity>
           </View>
         </View>
       </Modal>

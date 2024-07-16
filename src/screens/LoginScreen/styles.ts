@@ -1,4 +1,8 @@
 import {StyleSheet} from 'react-native';
+import {Dimensions} from 'react-native';
+
+const screenWidth = Dimensions.get('window').width;
+const screenHeight = Dimensions.get('window').height;
 
 const styles = StyleSheet.create({
   imageBackground1: {
@@ -124,7 +128,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginLeft: 10,
     marginRight: 10,
-    marginTop: 5,
+    marginTop: 10,
     fontFamily: 'Vonique64',
   },
   view1: {
@@ -195,9 +199,22 @@ const styles = StyleSheet.create({
   textInput5: {
     backgroundColor: '#fb445c',
     minHeight: 35,
-    justifyContent: 'center',
+    alignSelf: 'center',
     borderRadius: 10,
     marginTop: 10,
+    width: screenWidth * 0.4,
+  },
+  textInput: {
+    fontFamily: 'HighTide-Sans',
+    backgroundColor: '#eee7da',
+    alignSelf: 'center',
+    margin: 10,
+    borderRadius: 5,
+    minHeight: 50,
+    borderWidth: 1,
+    borderColor: '#5A6472',
+    borderBottomWidth: 3,
+    width: screenWidth * 0.6,
   },
 });
 export default styles;

@@ -40,6 +40,7 @@ const EditUserInfoScreen: FC = () => {
   const navigation = useNavigation<NavPropAny>();
   const userId = auth().currentUser?.uid;
   const userPhotoFromRedux = useAppSelector(state => state.user.userPhoto);
+  const newUser = useAppSelector(state => state.globalStore.newUser);
   const translateX = useRef(new Animated.Value(0)).current;
   const screenWidth = Dimensions.get('window').width;
   const cameraIcon: ImageSourcePropType = require('../../Images/camerapictureicon.png');
@@ -141,7 +142,7 @@ const EditUserInfoScreen: FC = () => {
             {load && <ActivityIndicator size="large" color="#0000ff" />}
             <FastImage
               style={
-                load
+                load || newUser
                   ? styles.userPhotoWithOutBorder
                   : styles.userPhotoWithBorder
               }
@@ -239,40 +240,6 @@ const EditUserInfoScreen: FC = () => {
                   onBlur={onBlur}
                   onChangeText={onChange}
                   placeholder=" Mailing Address"
-                  textAlign="left"
-                />
-              </View>
-            )}
-          />
-          <Controller
-            control={control}
-            name={'emergencyContactName'}
-            rules={{required: true}}
-            render={({field: {onChange, value, onBlur}}) => (
-              <View>
-                <TextInput
-                  style={styles.textInput}
-                  value={value}
-                  onBlur={onBlur}
-                  onChangeText={onChange}
-                  placeholder=" Emergency Contact Name"
-                  textAlign="left"
-                />
-              </View>
-            )}
-          />
-          <Controller
-            control={control}
-            name={'emergencyContactPhone'}
-            rules={{required: true}}
-            render={({field: {onChange, value, onBlur}}) => (
-              <View>
-                <TextInput
-                  style={styles.textInput}
-                  value={value}
-                  onBlur={onBlur}
-                  onChangeText={onChange}
-                  placeholder=" Emergency Contact Phone number"
                   textAlign="left"
                 />
               </View>

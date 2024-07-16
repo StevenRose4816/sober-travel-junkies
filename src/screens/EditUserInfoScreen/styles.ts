@@ -38,9 +38,7 @@ const styles = StyleSheet.create({
   textInput: {
     fontFamily: 'HighTide-Sans',
     backgroundColor: '#eee7da',
-    marginHorizontal: 10,
-    marginBottom: 10,
-    marginTop: 10,
+    margin: 10,
     borderRadius: 5,
     minHeight: 50,
     borderWidth: 1,
@@ -56,9 +54,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderWidth: 2,
     borderColor: '#eee7da',
-    marginHorizontal: 10,
-    marginTop: 10,
-    marginBottom: 10,
+    margin: 10,
     alignSelf: 'center',
   },
   submitText: {
