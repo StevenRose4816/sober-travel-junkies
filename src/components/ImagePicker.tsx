@@ -44,7 +44,7 @@ const ImagePicker = () => {
     const currentUser = auth().currentUser!;
     // Concatenate UID with 'profilePic'
     const filename =
-      prevRoute.name === 'editUserInfoScreen'
+      prevRoute.name === 'editUserInfoScreen' || 'home_Screen'
         ? `${currentUser.uid}_profilePic`
         : `${currentUser.uid}_visionBoardPic`;
     const uploadUri = Platform.OS === 'ios' ? uri?.replace('file://', '') : uri;
@@ -70,10 +70,15 @@ const ImagePicker = () => {
   };
 
   const onPressThisLooksGood = async () => {
+    console.log('prevRoute.name: ', prevRoute.name);
     if (prevRoute.name === 'editUserInfoScreen') {
       await uploadImage();
       dispatch(setThisUserPhoto({userPhoto: selectedImage}));
       navigation.navigate(Routes.editUserInfoScreen);
+    } else if (prevRoute.name === 'home_Screen') {
+      await uploadImage();
+      dispatch(setThisUserPhoto({userPhoto: selectedImage}));
+      navigation.navigate(Routes.home_Screen);
     } else {
       // dispatch a new action to save the visionBoardPhoto to state.
       // await uploadImage();

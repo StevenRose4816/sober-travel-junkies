@@ -15,18 +15,20 @@ import {getDownloadURL, getStorage, ref as storageRef} from 'firebase/storage';
 import {get, set, ref} from 'firebase/database';
 import {db} from '../../Firebase/FirebaseConfigurations';
 import {useDispatch} from 'react-redux';
-import {setUserPhoto} from '../../store/user/slice';
+import {
+  setEmail,
+  setFullname,
+  setMailingAddress,
+  setPhoneNumber,
+  setUserPhoto,
+} from '../../store/user/slice';
 import {useAppSelector} from '../../hooks';
 import HomeScreenButton from '../../components/HomeScreenButton';
 import UserInfoField from '../../components/UserInfoField';
 import HomeScreenEditButton from '../../components/HomeScreenEditButton';
 import Routes from '../../navigation/routes';
 import styles from './styles';
-import {
-  NavPropAny,
-  HomeScreenRouteProp,
-  AppStackParams,
-} from '../../navigation/types';
+import {NavPropAny, AppStackParams} from '../../navigation/types';
 import {setSelectedDocument} from '../../store/document/slice';
 import {setNewUser} from '../../store/globalStore/slice';
 import FastImage from 'react-native-fast-image';
@@ -67,12 +69,34 @@ const Home_Screen: FC = () => {
   const {address, email, phoneNumber, fullName} = dataFromStorage;
   const backgroundSource = route.params?.source || background1;
   const [load, setLoad] = useState(true);
+  const phoneNewUser = useAppSelector(state => state.user.phoneNumber);
+  const addressNewUser = useAppSelector(state => state.user.mailingAddress);
+  const emailNewUser = useAppSelector(state => state.user.email);
+  const fullNameNewUser = useAppSelector(state => state.user.fullName);
+  const newUser = useAppSelector(state => state.globalStore.newUser);
 
   useEffect(() => {
-    if (userPhotoFromRedux) {
+    if (userPhotoFromRedux || newUser) {
       setLoad(false);
+      console.log('fullNameNewUser: ', fullNameNewUser);
+      if (
+        newUser &&
+        fullNameNewUser &&
+        emailNewUser &&
+        phoneNewUser &&
+        addressNewUser
+      ) {
+        writeToRealTimeDB(userId);
+      }
     }
-  }, [userPhotoFromRedux]);
+  }, [
+    newUser,
+    fullNameNewUser,
+    emailNewUser,
+    phoneNewUser,
+    addressNewUser,
+    userPhotoFromRedux,
+  ]);
 
   useEffect(() => {
     navigation.setOptions({
@@ -86,13 +110,17 @@ const Home_Screen: FC = () => {
     if (userId && !userPhotoFromRedux) {
       getProfilePicFromStorage(userId + '_profilePic');
     }
-  }, [dataFromStorage]);
+  }, []);
 
   const logout = () => {
     auth().signOut();
     setTimeout(() => dispatch(setUserPhoto({userPhoto: null})), 2000);
     dispatch(setSelectedDocument({selectedDocument: undefined}));
     dispatch(setNewUser({newUser: false}));
+    dispatch(setFullname({fullname: undefined}));
+    dispatch(setEmail({email: undefined}));
+    dispatch(setMailingAddress({mailingAddress: undefined}));
+    dispatch(setPhoneNumber({phoneNumber: undefined}));
   };
 
   const getProfilePicFromStorage = async (imageName: string) => {
@@ -105,20 +133,12 @@ const Home_Screen: FC = () => {
       console.log(e.message);
     }
   };
-  const writeToRealTimeDB = async (
-    userId: string | undefined,
-    formValues: any,
-  ) => {
+  const writeToRealTimeDB = async (userId: string | undefined) => {
     set(ref(db, 'users/' + userId), {
-      fullName: formValues.fullname || '',
-      email: formValues.email || '',
-      address: formValues.address || '',
-      phoneNumber: formValues.phoneNumber || '',
-      userPhoto: userPhotoFromRedux || '',
-      emergencyContact: formValues.emergencyContact || '',
-      emergencyContactPhone: formValues.emergencyContactPhone || '',
-      bio: formValues.bio || '',
-      backgroundPhoto: source(),
+      fullName: fullNameNewUser,
+      email: emailNewUser,
+      address: addressNewUser,
+      phoneNumber: phoneNewUser,
     })
       .then(() => {
         console.log('RTDB updated');
@@ -166,7 +186,7 @@ const Home_Screen: FC = () => {
             ) : (
               <FastImage
                 style={
-                  load
+                  !load
                     ? styles.userImageWithOutBorder
                     : styles.userImageWithBorder
                 }
@@ -174,6 +194,13 @@ const Home_Screen: FC = () => {
               />
             )}
           </View>
+          {newUser && (
+            <HomeScreenButton
+              title="Select Profile Photo"
+              onPress={() => navigation.navigate(Routes.imagePicker)}
+              overRiddenWidth={0.5}
+            />
+          )}
           <HomeScreenButton
             onPress={() =>
               navigation.navigate(Routes.calenderScreen, {
