@@ -74,11 +74,11 @@ const Home_Screen: FC = () => {
   const emailNewUser = useAppSelector(state => state.user.email);
   const fullNameNewUser = useAppSelector(state => state.user.fullName);
   const newUser = useAppSelector(state => state.globalStore.newUser);
+  console.log('uid: ', userId);
 
   useEffect(() => {
     if (userPhotoFromRedux || newUser) {
       setLoad(false);
-      console.log('fullNameNewUser: ', fullNameNewUser);
       if (
         newUser &&
         fullNameNewUser &&
@@ -226,19 +226,23 @@ const Home_Screen: FC = () => {
           <UserInfoField
             label={'Mailing Address'}
             uri={homeIcon}
-            value={address}
+            value={address || addressNewUser || ''}
           />
           <UserInfoField
             label={'Email Address'}
             uri={emailIcon}
-            value={email}
+            value={email || emailNewUser || ''}
           />
           <UserInfoField
             label={'Phone Number'}
             uri={phoneIcon}
-            value={phoneNumber}
+            value={phoneNumber || phoneNewUser || ''}
           />
-          <UserInfoField label={'Full Name'} uri={nameIcon} value={fullName} />
+          <UserInfoField
+            label={'Full Name'}
+            uri={nameIcon}
+            value={fullName || fullNameNewUser || ''}
+          />
           <View style={styles.dividerView} />
           <HomeScreenEditButton
             onPress={() => navigation.navigate(Routes.editUserInfoScreen)}
