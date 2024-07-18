@@ -67,6 +67,21 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  logoutText: {
+    color: '#0c0b09',
+    textAlign: 'center',
+    marginTop: 5,
+    marginBottom: 5,
+    fontSize: 12,
+    fontFamily: 'HighTide-Sans',
+  },
+  logoutTouchable: {
+    backgroundColor: '#b6e7cc',
+    borderRadius: 5,
+    width: 65,
+    borderWidth: 2,
+    borderColor: '#eee7da',
+  },
 });
 
 export default styles;

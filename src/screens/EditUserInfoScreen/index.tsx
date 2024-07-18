@@ -7,7 +7,9 @@ import {
   ImageBackground,
   ImageSourcePropType,
   ScrollView,
+  Text,
   TextInput,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import styles from './styles';
@@ -25,6 +27,16 @@ import DocumentPickerModal from '../../components/DocumentPickerModal';
 import SubmitUserInfoButton from '../../components/SubmitUserInfoButton';
 import BackgroundPickerModal from '../../components/BackgroundPickerModal';
 import FastImage from 'react-native-fast-image';
+import {useDispatch} from 'react-redux';
+import {
+  setEmail,
+  setFullname,
+  setMailingAddress,
+  setPhoneNumber,
+  setUserPhoto,
+} from '../../store/user/slice';
+import {setSelectedDocument} from '../../store/document/slice';
+import {setNewUser} from '../../store/globalStore/slice';
 
 interface IDefaultFormValues {
   fullname: string;
@@ -38,6 +50,7 @@ interface IDefaultFormValues {
 
 const EditUserInfoScreen: FC = () => {
   const navigation = useNavigation<NavPropAny>();
+  const dispatch = useDispatch();
   const userId = auth().currentUser?.uid;
   const userPhotoFromRedux = useAppSelector(state => state.user.userPhoto);
   const newUser = useAppSelector(state => state.globalStore.newUser);
@@ -55,6 +68,27 @@ const EditUserInfoScreen: FC = () => {
     fourth: false,
   });
   const [load, setLoad] = useState(false);
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity onPress={logout} style={styles.logoutTouchable}>
+          <Text style={styles.logoutText}>{'Log out'}</Text>
+        </TouchableOpacity>
+      ),
+    });
+  }, []);
+
+  const logout = () => {
+    auth().signOut();
+    setTimeout(() => dispatch(setUserPhoto({userPhoto: null})), 2000);
+    dispatch(setSelectedDocument({selectedDocument: undefined}));
+    dispatch(setNewUser({newUser: false}));
+    dispatch(setFullname({fullname: undefined}));
+    dispatch(setEmail({email: undefined}));
+    dispatch(setMailingAddress({mailingAddress: undefined}));
+    dispatch(setPhoneNumber({phoneNumber: undefined}));
+  };
 
   const writeToRealTimeDB = async (
     userId: string | undefined,

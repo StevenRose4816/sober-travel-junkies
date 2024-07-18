@@ -1,6 +1,4 @@
 import {FC, useState} from 'react';
-import {set, ref} from 'firebase/database';
-import {db} from '../../Firebase/FirebaseConfigurations';
 import {
   View,
   Text,
@@ -28,12 +26,13 @@ interface IDefaultFormValues {
   phoneNumber: string;
   mailingAddress: string;
   email: string;
+  username: string;
   password: string;
 }
 
 const LoginScreen: FC = () => {
   const dispatch = useDispatch();
-  const [email, setEmail] = useState('');
+  const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
   const [errorModalVisible, setErrorModalVisible] = useState(false);
   const [signupModalVisible, setSignupModalVisible] = useState(false);
@@ -44,7 +43,7 @@ const LoginScreen: FC = () => {
 
   const login = async () => {
     try {
-      await auth().signInWithEmailAndPassword(email, password);
+      await auth().signInWithEmailAndPassword(userName, password);
     } catch (e: any) {
       formatError(e.message);
       console.log(e);
@@ -64,7 +63,7 @@ const LoginScreen: FC = () => {
     setSignupModalVisible(!signupModalVisible);
     try {
       await auth().createUserWithEmailAndPassword(
-        formValues.email,
+        formValues.username,
         formValues.password,
       );
       dispatch(setNewUser({newUser: true}));
@@ -72,6 +71,7 @@ const LoginScreen: FC = () => {
       dispatch(dispatchSetEmail({email: formValues.email}));
       dispatch(setMailingAddress({mailingAddress: formValues.mailingAddress}));
       dispatch(setPhoneNumber({phoneNumber: formValues.phoneNumber}));
+      // create action to set user name in state. then send it with data to database on next screen
     } catch (e: any) {
       console.log('error signing up: ', e);
       formatError(e.message);
@@ -108,6 +108,7 @@ const LoginScreen: FC = () => {
       phoneNumber: '',
       mailingAddress: '',
       email: '',
+      username: '',
       password: '',
     },
     mode: 'onBlur',
@@ -122,11 +123,11 @@ const LoginScreen: FC = () => {
         style={styles.image1}></Image>
       <TextInput
         style={styles.textInput1}
-        placeholder=" email"
+        placeholder=" user name"
         placeholderTextColor={'#eee7da'}
         autoCapitalize={'none'}
-        value={email}
-        onChangeText={email => setEmail(email)}
+        value={userName}
+        onChangeText={userName => setUserName(userName)}
       />
       <TextInput
         style={styles.textInput2}
@@ -266,6 +267,23 @@ const LoginScreen: FC = () => {
                     onBlur={onBlur}
                     onChangeText={onChange}
                     placeholder=" Email Address"
+                    textAlign="center"
+                  />
+                </View>
+              )}
+            />
+            <Controller
+              control={control}
+              name={'username'}
+              rules={{required: true}}
+              render={({field: {onChange, value, onBlur}}) => (
+                <View>
+                  <TextInput
+                    style={styles.textInput}
+                    value={value}
+                    onBlur={onBlur}
+                    onChangeText={onChange}
+                    placeholder=" User Name"
                     textAlign="center"
                   />
                 </View>
