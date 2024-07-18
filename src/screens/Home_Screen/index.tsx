@@ -114,12 +114,7 @@ const Home_Screen: FC = () => {
   const logout = () => {
     auth().signOut();
     setTimeout(() => dispatch(setUserPhoto({userPhoto: null})), 2000);
-    dispatch(setSelectedDocument({selectedDocument: undefined}));
-    dispatch(setNewUser({newUser: false}));
-    dispatch(setFullname({fullname: undefined}));
-    dispatch(setEmail({email: undefined}));
-    dispatch(setMailingAddress({mailingAddress: undefined}));
-    dispatch(setPhoneNumber({phoneNumber: undefined}));
+    dispatch({type: 'LOGOUT'});
   };
 
   const getProfilePicFromStorage = async (imageName: string) => {

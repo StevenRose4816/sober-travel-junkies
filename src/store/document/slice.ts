@@ -24,6 +24,9 @@ const documentSlice = createSlice({
       state.selectedDocument = payload.selectedDocument;
     },
   },
+  extraReducers: builder => {
+    builder.addCase('LOGOUT', () => initialState);
+  },
 });
 
 export const {setDocumentSelected} = documentSlice.actions;

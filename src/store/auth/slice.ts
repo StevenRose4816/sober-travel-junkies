@@ -27,6 +27,9 @@ const authSlice = createSlice({
       state.user = payload.user;
     },
   },
+  extraReducers: builder => {
+    builder.addCase('LOGOUT', () => initialState);
+  },
 });
 
 export const {setUser} = authSlice.actions;

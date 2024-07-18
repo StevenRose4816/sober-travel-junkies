@@ -38,6 +38,9 @@ const userSlice = createSlice({
       state.visionBoardUrl = visionBoardUrl;
     },
   },
+  extraReducers: builder => {
+    builder.addCase('LOGOUT', () => initialState);
+  },
 });
 
 export const {setUserInfo, setNewUser, setVisionBoardUrl} = userSlice.actions;

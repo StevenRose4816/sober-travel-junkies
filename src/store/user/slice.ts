@@ -65,6 +65,9 @@ const userPhotoSlice = createSlice({
       state.password = payload.password;
     },
   },
+  extraReducers: builder => {
+    builder.addCase('LOGOUT', () => initialState);
+  },
 });
 
 export const {
