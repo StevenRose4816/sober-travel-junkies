@@ -1,5 +1,8 @@
 import {initializeApp} from 'firebase/app';
 import {getDatabase} from 'firebase/database';
+import {getApps, getApp} from 'firebase/app';
+import {getStorage} from 'firebase/storage';
+
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 const firebaseConfig = {
@@ -13,7 +16,10 @@ const firebaseConfig = {
 };
 
 //Initizalize firebase
-const app = initializeApp(firebaseConfig);
+
+// const app = initializeApp(firebaseConfig);
+const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 
 //Initialize database
 export const db = getDatabase(app);
+export const storage = getStorage(app);

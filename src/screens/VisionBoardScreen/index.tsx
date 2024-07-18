@@ -272,6 +272,7 @@ export const VisionBoardScreen: FC = () => {
         />
       )}
       <VisionBoardModal
+        navigation={navigation}
         modalVisible={modalVisible}
         showWelcomeModal={showWelcomeModal}
         toggleModal={toggleModal}

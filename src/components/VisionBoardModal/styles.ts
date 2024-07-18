@@ -79,7 +79,15 @@ const styles = StyleSheet.create({
     width: 100,
     borderWidth: 1,
     borderColor: '#eee7da',
-    marginTop: 80,
+    marginTop: 40,
+  },
+  variableInput2: {
+    backgroundColor: '#e7b6cc',
+    borderRadius: 5,
+    width: 100,
+    borderWidth: 1,
+    borderColor: '#eee7da',
+    marginTop: 10,
   },
   variableText: {
     color: '#0c0b09',

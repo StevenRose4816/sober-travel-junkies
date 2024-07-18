@@ -8,8 +8,10 @@ import {
   View,
 } from 'react-native';
 import styles from './styles';
+import {NavPropAny} from '../../navigation/types';
 
 interface IPassedProps {
+  navigation: NavPropAny;
   modalVisible: boolean;
   showWelcomeModal: boolean;
   toggleModal: () => void;
@@ -23,6 +25,7 @@ interface IPassedProps {
 }
 
 const VisionBoardModal: FC<IPassedProps> = ({
+  navigation,
   modalVisible,
   showWelcomeModal,
   toggleModal,
@@ -100,6 +103,13 @@ const VisionBoardModal: FC<IPassedProps> = ({
                     : 'Update'}
                 </Text>
               </TouchableOpacity>
+              {showWelcomeModal && (
+                <TouchableOpacity
+                  onPress={() => navigation.goBack()}
+                  style={styles.variableInput2}>
+                  <Text style={styles.variableText}>{'I do NOT agree.'}</Text>
+                </TouchableOpacity>
+              )}
             </View>
           </View>
         </View>
