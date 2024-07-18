@@ -116,11 +116,8 @@ const ImagePicker = () => {
       await uploadImage();
       console.log('selectedImage: ', selectedImage);
       dispatch(setThisUserPhoto({userPhoto: selectedImage}));
-      // writeToRealTimeDB(userId); Wait until we get the url back, and then write the url.
       navigation.navigate(Routes.home_Screen);
     } else {
-      // dispatch a new action to save the visionBoardPhoto to state.
-      // await uploadImage();
       navigation.navigate('visionBoardScreen', {
         selectedImage,
       });
