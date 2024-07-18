@@ -13,7 +13,6 @@ import Home_Screen from '../screens/Home_Screen/index.tsx';
 import EditUserInfoScreen from '../screens/EditUserInfoScreen/index.tsx';
 import CalenderScreen from '../screens/CalenderScreen/index.tsx';
 import LoginScreen from '../screens/LoginScreen/index.tsx';
-import SignupScreen from '../screens/SignupScreen/index.tsx';
 
 const RootStack = createNativeStackNavigator<AppStackParams>();
 
@@ -119,15 +118,6 @@ const RootNavigator: FC = () => {
           <RootStack.Screen
             name={Routes.loginScreen}
             component={LoginScreen}
-            options={{
-              headerTitleStyle: {
-                fontSize: 20,
-              },
-            }}
-          />
-          <RootStack.Screen
-            name={Routes.signupScreen}
-            component={SignupScreen}
             options={{
               headerTitleStyle: {
                 fontSize: 20,

@@ -15,7 +15,6 @@ export type AppStackParams = {
     fullName: string;
     backgroundPhoto: ImageSourcePropType;
   };
-  [Routes.signupScreen]: undefined;
   [Routes.visionBoardScreen]: {
     selectedImage?: any;
   };
