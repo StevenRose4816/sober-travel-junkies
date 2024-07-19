@@ -27,13 +27,11 @@ import FastImage from 'react-native-fast-image';
 
 interface IDataFromStorage {
   address: string;
-  bio: string;
   email: string;
-  emergencyContact: string;
   phoneNumber: string;
   userPhoto: string;
-  username: string;
   fullName: string;
+  backgroundphoto: string;
 }
 
 const Home_Screen: FC = () => {
@@ -50,13 +48,11 @@ const Home_Screen: FC = () => {
   const userId = auth().currentUser?.uid;
   const [dataFromStorage, setDataFromStorage] = useState<IDataFromStorage>({
     address: '',
-    bio: '',
     email: '',
-    emergencyContact: '',
     phoneNumber: '',
     userPhoto: '',
-    username: '',
     fullName: '',
+    backgroundphoto: '',
   });
   const {address, email, phoneNumber, fullName} = dataFromStorage;
   const backgroundSource = route.params?.source || background1;
@@ -101,7 +97,7 @@ const Home_Screen: FC = () => {
     if (userId && !userPhotoFromRedux) {
       getProfilePicFromStorage(userId + '_profilePic');
     }
-  }, []);
+  }, [dataFromStorage]);
 
   const logout = () => {
     auth().signOut();
@@ -119,6 +115,7 @@ const Home_Screen: FC = () => {
       console.log(e.message);
     }
   };
+
   const writeToRealTimeDB = async (userId: string | undefined) => {
     set(ref(db, 'users/' + userId), {
       fullName: fullNameNewUser,
@@ -134,33 +131,33 @@ const Home_Screen: FC = () => {
       });
   };
 
-  const updateRealTimeDB = async (
-    userId: string,
-    fullNameNewUser?: string,
-    emailNewUser?: string,
-    addressNewUser?: string,
-    phoneNewUser?: string,
-    userPhoto?: string,
-  ) => {
-    const updates: {[key: string]: string | undefined} = {};
+  // const updateRealTimeDB = async (
+  //   userId: string,
+  //   fullNameNewUser?: string,
+  //   emailNewUser?: string,
+  //   addressNewUser?: string,
+  //   phoneNewUser?: string,
+  //   userPhoto?: string,
+  // ) => {
+  //   const updates: {[key: string]: string | undefined} = {};
 
-    if (fullNameNewUser)
-      updates['/users/' + userId + '/fullName'] = fullNameNewUser;
-    if (emailNewUser) updates['/users/' + userId + '/email'] = emailNewUser;
-    if (addressNewUser)
-      updates['/users/' + userId + '/address'] = addressNewUser;
-    if (phoneNewUser)
-      updates['/users/' + userId + '/phoneNumber'] = phoneNewUser;
-    if (userPhoto) updates['/users/' + userId + '/userPhoto'] = userPhoto;
+  //   if (fullNameNewUser)
+  //     updates['/users/' + userId + '/fullName'] = fullNameNewUser;
+  //   if (emailNewUser) updates['/users/' + userId + '/email'] = emailNewUser;
+  //   if (addressNewUser)
+  //     updates['/users/' + userId + '/address'] = addressNewUser;
+  //   if (phoneNewUser)
+  //     updates['/users/' + userId + '/phoneNumber'] = phoneNewUser;
+  //   if (userPhoto) updates['/users/' + userId + '/userPhoto'] = userPhoto;
 
-    return update(ref(db), updates)
-      .then(() => {
-        console.log('RTDB updated');
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  };
+  //   return update(ref(db), updates)
+  //     .then(() => {
+  //       console.log('RTDB updated');
+  //     })
+  //     .catch(error => {
+  //       console.log(error);
+  //     });
+  // };
 
   const readDataFromRealTimeDB = async () => {
     if (!userId) return;

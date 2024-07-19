@@ -17,7 +17,7 @@ import UploadField from '../../components/UploadField';
 import {useAppSelector} from '../../hooks';
 import HomeScreenButton from '../../components/HomeScreenButton';
 import {useForm, Controller} from 'react-hook-form';
-import {set, ref} from 'firebase/database';
+import {set, ref, update} from 'firebase/database';
 import {db} from '../../Firebase/FirebaseConfigurations';
 import auth from '@react-native-firebase/auth';
 import {useNavigation} from '@react-navigation/native';
@@ -28,15 +28,6 @@ import SubmitUserInfoButton from '../../components/SubmitUserInfoButton';
 import BackgroundPickerModal from '../../components/BackgroundPickerModal';
 import FastImage from 'react-native-fast-image';
 import {useDispatch} from 'react-redux';
-import {
-  setEmail,
-  setFullname,
-  setMailingAddress,
-  setPhoneNumber,
-  setUserPhoto,
-} from '../../store/user/slice';
-import {setSelectedDocument} from '../../store/document/slice';
-import {setNewUser} from '../../store/globalStore/slice';
 
 interface IDefaultFormValues {
   fullname: string;
@@ -94,11 +85,33 @@ const EditUserInfoScreen: FC = () => {
       address: formValues.address || '',
       phoneNumber: formValues.phoneNumber || '',
       userPhoto: userPhotoFromRedux || '',
-      emergencyContact: formValues.emergencyContact || '',
-      emergencyContactPhone: formValues.emergencyContactPhone || '',
-      bio: formValues.bio || '',
-      backgroundPhoto: source() || sourceobject,
     })
+      .then(() => {
+        console.log('RTDB updated');
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
+  const updateRealTimeDB = async (
+    userId: string | undefined,
+    formValues?: any,
+  ) => {
+    const updates: {[key: string]: string | undefined} = {};
+
+    if (formValues.fullname)
+      updates['/users/' + userId + '/fullName'] = formValues.fullname;
+    if (formValues.email)
+      updates['/users/' + userId + '/email'] = formValues.email;
+    if (formValues.address)
+      updates['/users/' + userId + '/address'] = formValues.address;
+    if (formValues.phoneNumber)
+      updates['/users/' + userId + '/phoneNumber'] = formValues.phoneNumber;
+    if (userPhotoFromRedux)
+      updates['/users/' + userId + '/userPhoto'] = userPhotoFromRedux;
+
+    return update(ref(db), updates)
       .then(() => {
         console.log('RTDB updated');
       })
@@ -137,7 +150,8 @@ const EditUserInfoScreen: FC = () => {
   };
 
   const onSubmit = (formValues: IDefaultFormValues) => {
-    writeToRealTimeDB(userId, formValues);
+    // writeToRealTimeDB(userId, formValues);
+    updateRealTimeDB(userId, formValues);
     const selectedSource = source();
     navigation.navigate(Routes.home_Screen, {source: selectedSource});
   };
@@ -208,7 +222,7 @@ const EditUserInfoScreen: FC = () => {
           <Controller
             control={control}
             name={'fullname'}
-            rules={{required: true}}
+            rules={{required: false}}
             render={({field: {onChange, value, onBlur}}) => (
               <View>
                 <TextInput
@@ -225,7 +239,7 @@ const EditUserInfoScreen: FC = () => {
           <Controller
             control={control}
             name={'phoneNumber'}
-            rules={{required: true}}
+            rules={{required: false}}
             render={({field: {onChange, value, onBlur}}) => (
               <View>
                 <TextInput
@@ -242,7 +256,7 @@ const EditUserInfoScreen: FC = () => {
           <Controller
             control={control}
             name={'email'}
-            rules={{required: true}}
+            rules={{required: false}}
             render={({field: {onChange, value, onBlur}}) => (
               <View>
                 <TextInput
@@ -259,7 +273,7 @@ const EditUserInfoScreen: FC = () => {
           <Controller
             control={control}
             name={'address'}
-            rules={{required: true}}
+            rules={{required: false}}
             render={({field: {onChange, value, onBlur}}) => (
               <View>
                 <TextInput
