@@ -12,16 +12,10 @@ import {
 import auth from '@react-native-firebase/auth';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {getDownloadURL, getStorage, ref as storageRef} from 'firebase/storage';
-import {get, set, ref} from 'firebase/database';
+import {get, set, ref, update} from 'firebase/database';
 import {db} from '../../Firebase/FirebaseConfigurations';
 import {useDispatch} from 'react-redux';
-import {
-  setEmail,
-  setFullname,
-  setMailingAddress,
-  setPhoneNumber,
-  setUserPhoto,
-} from '../../store/user/slice';
+import {setUserPhoto} from '../../store/user/slice';
 import {useAppSelector} from '../../hooks';
 import HomeScreenButton from '../../components/HomeScreenButton';
 import UserInfoField from '../../components/UserInfoField';
@@ -29,8 +23,6 @@ import HomeScreenEditButton from '../../components/HomeScreenEditButton';
 import Routes from '../../navigation/routes';
 import styles from './styles';
 import {NavPropAny, AppStackParams} from '../../navigation/types';
-import {setSelectedDocument} from '../../store/document/slice';
-import {setNewUser} from '../../store/globalStore/slice';
 import FastImage from 'react-native-fast-image';
 
 interface IDataFromStorage {
@@ -113,7 +105,7 @@ const Home_Screen: FC = () => {
 
   const logout = () => {
     auth().signOut();
-    setTimeout(() => dispatch(setUserPhoto({userPhoto: null})), 2000);
+    setTimeout(() => dispatch(setUserPhoto({userPhoto: null})), 1000);
     dispatch({type: 'LOGOUT'});
   };
 
@@ -134,6 +126,34 @@ const Home_Screen: FC = () => {
       address: addressNewUser,
       phoneNumber: phoneNewUser,
     })
+      .then(() => {
+        console.log('RTDB updated');
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
+  const updateRealTimeDB = async (
+    userId: string,
+    fullNameNewUser?: string,
+    emailNewUser?: string,
+    addressNewUser?: string,
+    phoneNewUser?: string,
+    userPhoto?: string,
+  ) => {
+    const updates: {[key: string]: string | undefined} = {};
+
+    if (fullNameNewUser)
+      updates['/users/' + userId + '/fullName'] = fullNameNewUser;
+    if (emailNewUser) updates['/users/' + userId + '/email'] = emailNewUser;
+    if (addressNewUser)
+      updates['/users/' + userId + '/address'] = addressNewUser;
+    if (phoneNewUser)
+      updates['/users/' + userId + '/phoneNumber'] = phoneNewUser;
+    if (userPhoto) updates['/users/' + userId + '/userPhoto'] = userPhoto;
+
+    return update(ref(db), updates)
       .then(() => {
         console.log('RTDB updated');
       })
