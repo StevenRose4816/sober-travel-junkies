@@ -22,6 +22,7 @@ import VisionBoardTouchableBar from '../../components/VisionBoardTouchableBar';
 import FastImage from 'react-native-fast-image';
 import {useDispatch} from 'react-redux';
 import {setVisionBoardUrl} from '../../store/globalStore/slice';
+import Email from '../Email';
 
 export const VisionBoardScreen: FC = () => {
   const route = useRoute<RouteProp<AppStackParams, Routes.visionBoardScreen>>();
@@ -59,6 +60,8 @@ export const VisionBoardScreen: FC = () => {
     state => state.globalStore.visionBoardUrl,
   );
   const [showWelcomeModal, setShowWelcomeModal] = useState(true);
+  const screenWidth = Dimensions.get('window').width;
+  const screenHeight = Dimensions.get('window').height;
 
   const capScreen = async () => {
     try {
@@ -86,6 +89,7 @@ export const VisionBoardScreen: FC = () => {
     if (hideTouchables) {
       navigation.setOptions({
         headerLeft: () => null,
+        headerRight: () => null,
       });
     } else {
       navigation.setOptions({
@@ -97,6 +101,23 @@ export const VisionBoardScreen: FC = () => {
               style={styles.image1}
               source={require('../../Images/caret_left.png')}></Image>
           </TouchableOpacity>
+        ),
+        headerRight: () => (
+          <Email
+            subject="Report a Photo"
+            recipients={[
+              'steven_jangoh@yahoo.com',
+              'mstevenrose9517@gmail.com',
+            ]}
+            body="BODY"
+            style={{
+              height: 50,
+              width: 400,
+              backgroundColor: 'transparent',
+              marginLeft: screenWidth * 0.85,
+              marginTop: 25,
+            }}
+          />
         ),
       });
     }

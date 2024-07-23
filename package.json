@@ -1,5 +1,5 @@
 {
-  "name": "FirstMobileApp",
+  "name": "SoberTravelJunkies",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -34,6 +34,7 @@
     "react-native-draggable": "^3.3.0",
     "react-native-fast-image": "^8.6.3",
     "react-native-image-picker": "^7.1.0",
+    "react-native-mail": "^6.1.1",
     "react-native-progress": "^5.0.1",
     "react-native-safe-area-context": "^4.8.2",
     "react-native-screens": "^3.29.0",

@@ -46,6 +46,11 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
   },
+  headerRight: {
+    width: 30,
+    height: 30,
+    textAlign: 'right',
+  },
   image2: {
     borderRadius: 5,
   },
@@ -64,7 +69,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#eee7da80',
     maxHeight: 50,
-    width: 225,
+    width: 180,
     alignSelf: 'center',
     margin: 10,
     borderRadius: 8,

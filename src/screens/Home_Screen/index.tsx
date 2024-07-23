@@ -24,6 +24,7 @@ import Routes from '../../navigation/routes';
 import styles from './styles';
 import {NavPropAny, AppStackParams} from '../../navigation/types';
 import FastImage from 'react-native-fast-image';
+import Email from '../Email';
 
 interface IDataFromStorage {
   address: string;
