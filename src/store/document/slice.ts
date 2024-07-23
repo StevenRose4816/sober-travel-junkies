@@ -2,7 +2,7 @@ import {PayloadAction, createSlice} from '@reduxjs/toolkit';
 
 interface DocumentState {
   selected: boolean;
-  selectedDocument: string | undefined;
+  selectedDocument: any;
 }
 
 const initialState: DocumentState = {

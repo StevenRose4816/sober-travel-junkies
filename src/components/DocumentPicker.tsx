@@ -7,7 +7,11 @@ import {setSelectedDocument} from '../store/document/slice';
 import {useAppSelector} from '../hooks';
 import {useDispatch} from 'react-redux';
 
-export const DocPicker = () => {
+interface IPassedProps {
+  upload: any;
+}
+
+export const DocPicker = ({upload}: IPassedProps) => {
   const [fileResponse, setFileResponse] = useState<DocumentPickerResponse[]>(
     [],
   );
@@ -19,7 +23,7 @@ export const DocPicker = () => {
 
   useEffect(() => {
     console.log('documentSelected: ', documentSelected);
-    console.log('selectedDocumentFromState: ', selectedDocumentFromState);
+    console.log('selectedDocumentFromState:', selectedDocumentFromState);
   }, [documentSelected, selectedDocumentFromState]);
 
   const handleDocumentSelection = useCallback(async () => {
@@ -29,6 +33,8 @@ export const DocPicker = () => {
       });
       setFileResponse([response]);
       dispatch(setSelectedDocument({selectedDocument: [response]}));
+      // here we need to upload this pdf to storage
+      upload();
       console.log(fileResponse);
     } catch (err) {
       console.log(err);

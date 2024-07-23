@@ -1,11 +1,14 @@
 import {FC, useEffect, useRef, useState} from 'react';
+import storage from '@react-native-firebase/storage';
 import {
   ActivityIndicator,
+  Alert,
   Animated,
   Dimensions,
   Image,
   ImageBackground,
   ImageSourcePropType,
+  Platform,
   ScrollView,
   Text,
   TextInput,
@@ -60,6 +63,31 @@ const EditUserInfoScreen: FC = () => {
     fourth: false,
   });
   const [load, setLoad] = useState(false);
+  const selectedDocument = useAppSelector(
+    state => state.document.selectedDocument,
+  );
+
+  const uploadDocument = async () => {
+    const currentUser = auth().currentUser!;
+    const filename = `${currentUser.uid}_NDA`;
+    const document = selectedDocument[0].uri || [];
+
+    console.log('document: ', document);
+
+    const uploadUri =
+      Platform.OS === 'ios' ? document.replace('file://', '') : document;
+    const task = storage().ref(filename).putFile(uploadUri);
+    try {
+      await task;
+      Alert.alert('Your NDA has been uploaded to Firebase Cloud Storage!');
+    } catch (e) {
+      console.error(e);
+      Alert.alert(
+        'Upload failed',
+        'Something went wrong while uploading your NDA.',
+      );
+    }
+  };
 
   useEffect(() => {
     navigation.setOptions({
@@ -277,6 +305,7 @@ const EditUserInfoScreen: FC = () => {
       <DocumentPickerModal
         isVisible={docPickerVisible}
         onRequestClose={() => setDocPickerIsVisible(false)}
+        uploadDocument={uploadDocument}
       />
       <BackgroundPickerModal
         isVisible={backgroundModalVisible}

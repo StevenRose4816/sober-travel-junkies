@@ -6,9 +6,14 @@ import styles from './styles';
 interface IPassedProps {
   isVisible: boolean;
   onRequestClose: () => void;
+  uploadDocument(): any;
 }
 
-const DocumentPickerModal: FC<IPassedProps> = ({isVisible, onRequestClose}) => {
+const DocumentPickerModal: FC<IPassedProps> = ({
+  isVisible,
+  onRequestClose,
+  uploadDocument,
+}) => {
   return (
     <Modal
       visible={isVisible}
@@ -26,7 +31,7 @@ const DocumentPickerModal: FC<IPassedProps> = ({isVisible, onRequestClose}) => {
             />
           </TouchableOpacity>
           <View style={styles.docPickerContainer}>
-            <DocPicker />
+            <DocPicker upload={uploadDocument} />
           </View>
         </View>
       </View>
