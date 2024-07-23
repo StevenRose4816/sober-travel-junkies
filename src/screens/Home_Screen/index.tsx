@@ -158,7 +158,13 @@ const Home_Screen: FC = () => {
     <View style={styles.containerView}>
       <ScrollView contentContainerStyle={styles.scrollView}>
         <ImageBackground
-          source={{uri: backgroundphoto}}
+          source={{
+            uri:
+              backgroundphoto ||
+              Image.resolveAssetSource(
+                require('../../Images/backgroundPhoto1.jpeg').uri,
+              )?.toString(),
+          }}
           style={styles.imageBackground}
           imageStyle={styles.imageStyle}>
           <Image style={styles.profilePicture} source={logo} />
@@ -168,7 +174,7 @@ const Home_Screen: FC = () => {
             ) : (
               <FastImage
                 style={
-                  !load
+                  load
                     ? styles.userImageWithOutBorder
                     : styles.userImageWithBorder
                 }
