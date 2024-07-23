@@ -15,7 +15,7 @@ import {getDownloadURL, getStorage, ref as storageRef} from 'firebase/storage';
 import {get, set, ref, update} from 'firebase/database';
 import {db} from '../../Firebase/FirebaseConfigurations';
 import {useDispatch} from 'react-redux';
-import {setUserPhoto} from '../../store/user/slice';
+import {setBackgroundPhoto, setUserPhoto} from '../../store/user/slice';
 import {useAppSelector} from '../../hooks';
 import HomeScreenButton from '../../components/HomeScreenButton';
 import UserInfoField from '../../components/UserInfoField';
@@ -36,9 +36,7 @@ interface IDataFromStorage {
 
 const Home_Screen: FC = () => {
   const navigation = useNavigation<NavPropAny>();
-  const route = useRoute<RouteProp<AppStackParams, Routes.home_Screen>>();
   const dispatch = useDispatch();
-  const background1: ImageSourcePropType = require('../../Images/backgroundPhoto1.jpeg');
   const logo: ImageSourcePropType = require('../../Images/STJLogoTransparent.png');
   const homeIcon: ImageSourcePropType = require('../../Images/homeaddressicon.png');
   const emailIcon: ImageSourcePropType = require('../../Images/emailaddressicon.png');
@@ -54,8 +52,8 @@ const Home_Screen: FC = () => {
     fullName: '',
     backgroundphoto: '',
   });
-  const {address, email, phoneNumber, fullName} = dataFromStorage;
-  const backgroundSource = route.params?.source || background1;
+  const {address, email, phoneNumber, fullName, backgroundphoto} =
+    dataFromStorage;
   const [load, setLoad] = useState(true);
   const phoneNewUser = useAppSelector(state => state.user.phoneNumber);
   const addressNewUser = useAppSelector(state => state.user.mailingAddress);
@@ -131,34 +129,6 @@ const Home_Screen: FC = () => {
       });
   };
 
-  // const updateRealTimeDB = async (
-  //   userId: string,
-  //   fullNameNewUser?: string,
-  //   emailNewUser?: string,
-  //   addressNewUser?: string,
-  //   phoneNewUser?: string,
-  //   userPhoto?: string,
-  // ) => {
-  //   const updates: {[key: string]: string | undefined} = {};
-
-  //   if (fullNameNewUser)
-  //     updates['/users/' + userId + '/fullName'] = fullNameNewUser;
-  //   if (emailNewUser) updates['/users/' + userId + '/email'] = emailNewUser;
-  //   if (addressNewUser)
-  //     updates['/users/' + userId + '/address'] = addressNewUser;
-  //   if (phoneNewUser)
-  //     updates['/users/' + userId + '/phoneNumber'] = phoneNewUser;
-  //   if (userPhoto) updates['/users/' + userId + '/userPhoto'] = userPhoto;
-
-  //   return update(ref(db), updates)
-  //     .then(() => {
-  //       console.log('RTDB updated');
-  //     })
-  //     .catch(error => {
-  //       console.log(error);
-  //     });
-  // };
-
   const readDataFromRealTimeDB = async () => {
     if (!userId) return;
     const countRef = ref(db, 'users/' + userId);
@@ -167,6 +137,7 @@ const Home_Screen: FC = () => {
       if (snapshot.exists()) {
         const data = snapshot.val();
         setDataFromStorage(data);
+        dispatch(setBackgroundPhoto({uri: dataFromStorage.backgroundphoto}));
       } else {
         console.log('No data available');
       }
@@ -176,7 +147,7 @@ const Home_Screen: FC = () => {
   };
 
   const source = () => {
-    if (userPhotoFromRedux) {
+    if (userPhotoFromRedux && userPhotoFromRedux.trim() !== '') {
       return {uri: userPhotoFromRedux};
     } else {
       return require('../../Images/profilepictureicon.png');
@@ -187,7 +158,7 @@ const Home_Screen: FC = () => {
     <View style={styles.containerView}>
       <ScrollView contentContainerStyle={styles.scrollView}>
         <ImageBackground
-          source={backgroundSource}
+          source={{uri: backgroundphoto}}
           style={styles.imageBackground}
           imageStyle={styles.imageStyle}>
           <Image style={styles.profilePicture} source={logo} />
@@ -215,7 +186,7 @@ const Home_Screen: FC = () => {
           <HomeScreenButton
             onPress={() =>
               navigation.navigate(Routes.calenderScreen, {
-                backgroundPhoto: backgroundSource,
+                backgroundPhoto: backgroundphoto,
               })
             }
             title={'Events'}
@@ -228,7 +199,7 @@ const Home_Screen: FC = () => {
             onPress={() =>
               navigation.navigate(Routes.messageBoardScreen, {
                 fullName: fullName,
-                backgroundPhoto: backgroundSource,
+                backgroundPhoto: backgroundphoto,
               })
             }
             title={'Message Board'}

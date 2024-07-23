@@ -16,6 +16,7 @@ import CalendarPicker, {
 } from 'react-native-calendar-picker';
 import {AppStackParams, NavPropAny} from '../../navigation/types';
 import Routes from '../../navigation/routes';
+import {useAppSelector} from '../../hooks';
 
 const CalenderScreen: FC = () => {
   const [selectedStartDate, setSelectedStartDate] = useState<Date | null>(null);
@@ -24,7 +25,7 @@ const CalenderScreen: FC = () => {
   const maxDate = new Date(2025, 1, 1);
   const route =
     useRoute<RouteProp<AppStackParams, Routes.messageBoardScreen>>();
-  const backgroundPhoto = route?.params?.backgroundPhoto;
+  const backgroundPhoto = useAppSelector(state => state.user.uri);
   const screenWidth = Dimensions.get('window').width;
   const navigation = useNavigation<NavPropAny>();
   const translateX = useRef(new Animated.Value(0)).current;
@@ -134,7 +135,7 @@ const CalenderScreen: FC = () => {
       <ImageBackground
         style={{flex: 1}}
         imageStyle={!showCalender ? {opacity: 0.8} : {opacity: 0.4}}
-        source={backgroundPhoto}>
+        source={{uri: backgroundPhoto}}>
         <View>
           <Text
             style={{

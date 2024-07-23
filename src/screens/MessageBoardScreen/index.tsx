@@ -40,7 +40,7 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
   const [data, setData] = useState(false);
   const userPhotoFromDB = useAppSelector(state => state.user.userPhoto);
   const fullName = route?.params.fullName;
-  const backgroundPhoto = route?.params.backgroundPhoto;
+  const backgroundPhoto = useAppSelector(state => state.user.uri);
   const date = new Date();
   const formattedDate = date.toDateString();
   const formattedTime = date.toLocaleTimeString();
@@ -262,7 +262,7 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
       <ImageBackground
         style={styles.imageBackground1}
         imageStyle={styles.imageBackground2}
-        source={backgroundPhoto}>
+        source={{uri: backgroundPhoto}}>
         <Text style={styles.text15}>{'Message Board'}</Text>
         {data && (
           <FlatList

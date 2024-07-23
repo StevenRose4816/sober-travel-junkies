@@ -33,9 +33,6 @@ interface IDefaultFormValues {
   fullname: string;
   phoneNumber: string;
   address: string;
-  emergencyContactName: string;
-  emergencyContactPhone: string;
-  bio: string;
   email: string;
 }
 
@@ -52,6 +49,10 @@ const EditUserInfoScreen: FC = () => {
   const logo: ImageSourcePropType = require('../../Images/STJLogoTransparent.png');
   const [docPickerVisible, setDocPickerIsVisible] = useState(false);
   const [backgroundModalVisible, setBackgroundModalVisible] = useState(false);
+  const backgroundphoto = useAppSelector(state => state.user.uri);
+  const [localSourceUri, setLocalSourceUri] = useState<string | undefined>(
+    backgroundphoto,
+  );
   const [photoPressed, setPhotoPressed] = useState({
     first: false,
     second: false,
@@ -75,31 +76,11 @@ const EditUserInfoScreen: FC = () => {
     dispatch({type: 'LOGOUT'});
   };
 
-  const writeToRealTimeDB = async (
-    userId: string | undefined,
-    formValues: any,
-  ) => {
-    set(ref(db, 'users/' + userId), {
-      fullName: formValues.fullname || '',
-      email: formValues.email || '',
-      address: formValues.address || '',
-      phoneNumber: formValues.phoneNumber || '',
-      userPhoto: userPhotoFromRedux || '',
-    })
-      .then(() => {
-        console.log('RTDB updated');
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  };
-
   const updateRealTimeDB = async (
     userId: string | undefined,
     formValues?: any,
   ) => {
     const updates: {[key: string]: string | undefined} = {};
-
     if (formValues.fullname)
       updates['/users/' + userId + '/fullName'] = formValues.fullname;
     if (formValues.email)
@@ -110,6 +91,8 @@ const EditUserInfoScreen: FC = () => {
       updates['/users/' + userId + '/phoneNumber'] = formValues.phoneNumber;
     if (userPhotoFromRedux)
       updates['/users/' + userId + '/userPhoto'] = userPhotoFromRedux;
+    if (!!localSourceUri)
+      updates['/users/' + userId + '/backgroundphoto'] = localSourceUri;
 
     return update(ref(db), updates)
       .then(() => {
@@ -129,9 +112,6 @@ const EditUserInfoScreen: FC = () => {
       fullname: '',
       phoneNumber: '',
       address: '',
-      emergencyContactName: '',
-      emergencyContactPhone: '',
-      bio: '',
       email: '',
     },
     mode: 'onBlur',
@@ -149,11 +129,16 @@ const EditUserInfoScreen: FC = () => {
     }).start();
   };
 
-  const onSubmit = (formValues: IDefaultFormValues) => {
-    // writeToRealTimeDB(userId, formValues);
-    updateRealTimeDB(userId, formValues);
+  useEffect(() => {
     const selectedSource = source();
-    navigation.navigate(Routes.home_Screen, {source: selectedSource});
+    const resolvedSource = Image.resolveAssetSource(selectedSource);
+    setLocalSourceUri(resolvedSource?.uri);
+    console.log('resolvedSource.uri: ', resolvedSource?.uri);
+  }, [photoPressed]);
+
+  const onSubmit = (formValues: IDefaultFormValues) => {
+    updateRealTimeDB(userId, formValues);
+    navigation.navigate(Routes.home_Screen);
   };
 
   const source = () => {
@@ -165,12 +150,8 @@ const EditUserInfoScreen: FC = () => {
       return require('../../Images/backgroundPhoto3.jpeg');
     } else if (photoPressed.fourth) {
       return require('../../Images/backgroundPhoto4.jpeg');
-    } else {
-      return require('../../Images/backgroundPhoto1.jpeg');
     }
   };
-
-  const sourceobject = source();
 
   return (
     <View style={styles.containerView}>
@@ -178,7 +159,7 @@ const EditUserInfoScreen: FC = () => {
         <ImageBackground
           style={styles.imageBackground}
           imageStyle={styles.imageStyle}
-          source={source()}>
+          source={{uri: localSourceUri}}>
           <Image style={styles.logoImage} source={logo} />
           <View style={styles.imageContainer}>
             {load && <ActivityIndicator size="large" color="#0000ff" />}
