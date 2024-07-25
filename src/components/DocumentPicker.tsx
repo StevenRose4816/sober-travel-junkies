@@ -33,9 +33,7 @@ export const DocPicker = ({upload}: IPassedProps) => {
       });
       setFileResponse([response]);
       dispatch(setSelectedDocument({selectedDocument: [response]}));
-      // here we need to upload this pdf to storage
       upload();
-      console.log(fileResponse);
     } catch (err) {
       console.log(err);
     }

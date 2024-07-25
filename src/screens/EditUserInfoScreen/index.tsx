@@ -109,15 +109,15 @@ const EditUserInfoScreen: FC = () => {
     formValues?: any,
   ) => {
     const updates: {[key: string]: string | undefined} = {};
-    if (formValues.fullname)
+    if (!!formValues.fullname)
       updates['/users/' + userId + '/fullName'] = formValues.fullname;
-    if (formValues.email)
+    if (!!formValues.email)
       updates['/users/' + userId + '/email'] = formValues.email;
-    if (formValues.address)
+    if (!!formValues.address)
       updates['/users/' + userId + '/address'] = formValues.address;
-    if (formValues.phoneNumber)
+    if (!!formValues.phoneNumber)
       updates['/users/' + userId + '/phoneNumber'] = formValues.phoneNumber;
-    if (userPhotoFromRedux)
+    if (!!userPhotoFromRedux)
       updates['/users/' + userId + '/userPhoto'] = userPhotoFromRedux;
     if (!!localSourceUri)
       updates['/users/' + userId + '/backgroundphoto'] = localSourceUri;
@@ -161,7 +161,6 @@ const EditUserInfoScreen: FC = () => {
     const selectedSource = source();
     const resolvedSource = Image.resolveAssetSource(selectedSource);
     setLocalSourceUri(resolvedSource?.uri);
-    console.log('resolvedSource.uri: ', resolvedSource?.uri);
   }, [photoPressed]);
 
   const onSubmit = (formValues: IDefaultFormValues) => {

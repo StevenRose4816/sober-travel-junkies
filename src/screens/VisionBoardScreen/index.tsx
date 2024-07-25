@@ -111,11 +111,9 @@ export const VisionBoardScreen: FC = () => {
             ]}
             body="BODY"
             style={{
-              height: 50,
-              width: 400,
               backgroundColor: 'transparent',
-              marginLeft: screenWidth * 0.85,
               marginTop: 25,
+              alignSelf: 'center',
             }}
           />
         ),

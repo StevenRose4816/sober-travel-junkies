@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
   touchable: {
     backgroundColor: '#e7b6cc',
     borderRadius: 5,
-    marginLeft: screenWidth * 0.72,
+    marginLeft: screenWidth * 0.65,
     marginBottom: 20,
     width: 100,
     borderWidth: 1,
