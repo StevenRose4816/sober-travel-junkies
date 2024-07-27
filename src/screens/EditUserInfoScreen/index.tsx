@@ -61,10 +61,6 @@ const EditUserInfoScreen: FC = () => {
   const logo: ImageSourcePropType = require('../../Images/STJLogoTransparent.png');
   const [docPickerVisible, setDocPickerIsVisible] = useState(false);
   const [backgroundModalVisible, setBackgroundModalVisible] = useState(false);
-  const backgroundphoto = useAppSelector(state => state.user.uri);
-  const [localSourceUri, setLocalSourceUri] = useState<string | undefined>(
-    backgroundphoto,
-  );
   const [photoPressed, setPhotoPressed] = useState({
     first: false,
     second: false,
@@ -88,9 +84,6 @@ const EditUserInfoScreen: FC = () => {
     const currentUser = auth().currentUser!;
     const filename = `${currentUser.uid}_NDA`;
     const document = selectedDocument[0].uri || [];
-
-    console.log('document: ', document);
-
     const uploadUri =
       Platform.OS === 'ios' ? document.replace('file://', '') : document;
     const task = storage().ref(filename).putFile(uploadUri);
@@ -225,6 +218,8 @@ const EditUserInfoScreen: FC = () => {
       return require('../../Images/backgroundPhoto3.jpeg');
     } else if (photoPressed.fourth) {
       return require('../../Images/backgroundPhoto4.jpeg');
+    } else {
+      return;
     }
   };
 
@@ -234,7 +229,7 @@ const EditUserInfoScreen: FC = () => {
         <ImageBackground
           style={styles.imageBackground}
           imageStyle={styles.imageStyle}
-          source={backgroundsource()}>
+          source={source() || backgroundsource()}>
           <Image style={styles.logoImage} source={logo} />
           <View style={styles.imageContainer}>
             {load && <ActivityIndicator size="large" color="#0000ff" />}
