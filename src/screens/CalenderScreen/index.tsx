@@ -16,13 +16,12 @@ import CalendarPicker, {
 } from 'react-native-calendar-picker';
 import {AppStackParams, NavPropAny} from '../../navigation/types';
 import Routes from '../../navigation/routes';
-import {useAppSelector} from '../../hooks';
 
-const CalenderScreen: FC = () => {
+const CalendarScreen: FC = () => {
   const [selectedStartDate, setSelectedStartDate] = useState<Date | null>(null);
   const [selectedEndDate, setSelectedEndDate] = useState<Date | null>(null);
   const minDate = new Date();
-  const maxDate = new Date(2025, 1, 1);
+  const maxDate = new Date(2025, 6, 1);
   const route =
     useRoute<RouteProp<AppStackParams, Routes.messageBoardScreen>>();
   const backgroundPhoto = route.params.backgroundPhoto;
@@ -31,7 +30,13 @@ const CalenderScreen: FC = () => {
   const translateX = useRef(new Animated.Value(0)).current;
   const translateY = useRef(new Animated.Value(0)).current;
   const fadeAnim = useRef(new Animated.Value(0)).current;
-  const [photo, setPhoto] = useState<any>();
+  // Build out some logic that will look like below:
+  // const customDatesFromDB = dataFromStorage.customDates;
+
+  useEffect(() => {
+    moveImage();
+    fadeIn();
+  }, []);
 
   const fadeIn = () => {
     Animated.timing(fadeAnim, {
@@ -41,7 +46,7 @@ const CalenderScreen: FC = () => {
     }).start();
   };
 
-  const renderbackground = () => {
+  const renderBackground = () => {
     if (backgroundPhoto === '1') {
       return require('../../Images/backgroundPhoto1.jpeg');
     } else if (backgroundPhoto === '2') {
@@ -58,7 +63,7 @@ const CalenderScreen: FC = () => {
       Animated.timing(translateY, {
         toValue: 460,
         duration: 900,
-        useNativeDriver: true, // Delay translateY animation (same as translateX duration)
+        useNativeDriver: true,
       }),
       Animated.timing(translateX, {
         toValue: 100,
@@ -68,11 +73,6 @@ const CalenderScreen: FC = () => {
       }),
     ]).start();
   };
-
-  useEffect(() => {
-    moveImage();
-    fadeIn();
-  }, []);
 
   const generateDisabledDates = () => {
     const startDate = new Date(2024, 9, 1); // Month is 0-indexed
@@ -93,42 +93,38 @@ const CalenderScreen: FC = () => {
     }
   };
 
+  const importantDates = [
+    new Date(2024, 6, 28), // Example dates: July, 28th, 2024 (zero-indexed month!)
+    new Date(2024, 7, 25),
+    new Date(2024, 8, 29),
+    new Date(2024, 9, 27),
+  ];
+
+  const customDatesStyles = importantDates.map(date => ({
+    date,
+    style: {backgroundColor: 'red'},
+    textStyle: {color: 'white'},
+  }));
+
   const startDate = selectedStartDate
     ? selectedStartDate.toLocaleDateString()
     : '';
   const endDate = selectedEndDate ? selectedEndDate.toLocaleDateString() : '';
-  const [showCalender, setShowCalender] = useState(false);
+  const [showCalendar, setShowCalendar] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
-  const onPressViewCalender = () => {
-    console.log('photo: ', photo);
-    setShowCalender(showCalender => !showCalender);
-  };
-
-  const toggleModal = () => {
-    setShowModal(showModal => !showModal);
+  const onPressViewCalendar = () => {
+    setShowCalendar(showCalendar => !showCalendar);
   };
 
   const onSubmitDates = () => {
-    console.log('submit pressed');
-    toggleModal();
+    setShowModal(showModal => !showModal);
   };
 
   const onPressYes = () => {
-    console.log('yes pressed');
-    toggleModal();
+    setShowModal(showModal => !showModal);
     navigation.navigate(Routes.home_Screen);
   };
-
-  const onPressNo = () => {
-    console.log('no pressed');
-    toggleModal();
-  };
-
-  useEffect(() => {
-    console.log('startDate: ', startDate);
-    console.log('endDate: ', endDate);
-  }, [startDate, endDate]);
 
   const handleOnPress = () => {
     if (Platform.OS === 'ios') {
@@ -146,8 +142,8 @@ const CalenderScreen: FC = () => {
     <>
       <ImageBackground
         style={{flex: 1}}
-        imageStyle={!showCalender ? {opacity: 0.8} : {opacity: 0.4}}
-        source={renderbackground()}>
+        imageStyle={!showCalendar ? {opacity: 0.8} : {opacity: 0.4}}
+        source={renderBackground()}>
         <View>
           <Text
             style={{
@@ -166,10 +162,10 @@ const CalenderScreen: FC = () => {
               borderRadius: 5,
               width: 120,
               marginLeft: 40,
-              marginTop: 20,
+              marginTop: 10,
               marginBottom: 10,
             }}
-            onPress={onPressViewCalender}>
+            onPress={onPressViewCalendar}>
             <Text
               style={{
                 fontFamily: 'HighTide-Sans',
@@ -177,12 +173,13 @@ const CalenderScreen: FC = () => {
                 marginTop: 5,
                 marginBottom: 5,
               }}>
-              {!showCalender ? 'View Trip Calender' : 'Hide Trip Calender'}
+              {!showCalendar ? 'View Trip Calendar' : 'Hide Trip Calendar'}
             </Text>
           </TouchableOpacity>
-          {showCalender && (
+          {showCalendar && (
             <View style={{marginTop: 50}}>
               <CalendarPicker
+                initialDate={new Date()}
                 onDateChange={handleDateChange}
                 todayBackgroundColor={'grey'}
                 textStyle={{fontFamily: 'HighTide-Sans'}}
@@ -192,6 +189,7 @@ const CalenderScreen: FC = () => {
                 maxDate={maxDate}
                 disabledDates={generateDisabledDates()}
                 selectedRangeStyle={{backgroundColor: '#b6e7cc'}}
+                customDatesStyles={customDatesStyles}
               />
             </View>
           )}
@@ -202,7 +200,7 @@ const CalenderScreen: FC = () => {
                 alignItems: 'flex-start',
                 marginLeft: 20,
               }}>
-              {showCalender && (
+              {showCalendar && (
                 <>
                   <View
                     style={{
@@ -243,7 +241,7 @@ const CalenderScreen: FC = () => {
                         marginTop: 5,
                         marginBottom: 5,
                       }}>
-                      Add To Your Calender
+                      Add To Your Calendar
                     </Text>
                   </TouchableOpacity>
                 </>
@@ -251,7 +249,7 @@ const CalenderScreen: FC = () => {
             </View>
           )}
         </View>
-        {!showCalender && (
+        {!showCalendar && (
           <View
             style={{
               flex: 1,
@@ -296,7 +294,7 @@ const CalenderScreen: FC = () => {
           visible={showModal}
           animationType={'fade'}
           transparent={true}
-          onRequestClose={toggleModal}>
+          onRequestClose={() => setShowModal(showModal => !showModal)}>
           <View
             style={{
               flex: 1,
@@ -323,7 +321,7 @@ const CalenderScreen: FC = () => {
                     textAlign: 'center',
                     marginTop: 40,
                   }}>
-                  Do you want to submit the follwing dates?
+                  Do you want to submit the following dates?
                 </Text>
                 <Text
                   style={{
@@ -367,7 +365,7 @@ const CalenderScreen: FC = () => {
                       marginHorizontal: 10,
                       width: 120,
                     }}
-                    onPress={onPressNo}>
+                    onPress={() => setShowModal(showModal => !showModal)}>
                     <Text
                       style={{
                         textAlign: 'center',
@@ -391,4 +389,4 @@ const CalenderScreen: FC = () => {
   );
 };
 
-export default CalenderScreen;
+export default CalendarScreen;
