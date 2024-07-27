@@ -130,6 +130,18 @@ const Home_Screen: FC = () => {
       });
   };
 
+  const backgroundsource = () => {
+    if (dataFromStorage.backgroundphoto === '1') {
+      return require('../../Images/backgroundPhoto1.jpeg');
+    } else if (dataFromStorage.backgroundphoto === '2') {
+      return require('../../Images/backgroundPhoto2.jpeg');
+    } else if (dataFromStorage.backgroundphoto === '3') {
+      return require('../../Images/backgroundPhoto3.jpeg');
+    } else if (dataFromStorage.backgroundphoto === '4') {
+      return require('../../Images/backgroundPhoto4.jpeg');
+    }
+  };
+
   const readDataFromRealTimeDB = async () => {
     if (!userId) return;
     const countRef = ref(db, 'users/' + userId);
@@ -138,7 +150,6 @@ const Home_Screen: FC = () => {
       if (snapshot.exists()) {
         const data = snapshot.val();
         setDataFromStorage(data);
-        dispatch(setBackgroundPhoto({uri: dataFromStorage.backgroundphoto}));
       } else {
         console.log('No data available');
       }
@@ -159,13 +170,7 @@ const Home_Screen: FC = () => {
     <View style={styles.containerView}>
       <ScrollView contentContainerStyle={styles.scrollView}>
         <ImageBackground
-          source={{
-            uri:
-              backgroundphoto ||
-              Image.resolveAssetSource(
-                require('../../Images/backgroundPhoto1.jpeg').uri,
-              )?.toString(),
-          }}
+          source={backgroundsource()}
           style={styles.imageBackground}
           imageStyle={styles.imageStyle}>
           <Image style={styles.profilePicture} source={logo} />

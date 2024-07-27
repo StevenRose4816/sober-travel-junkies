@@ -20,7 +20,7 @@ import UploadField from '../../components/UploadField';
 import {useAppSelector} from '../../hooks';
 import HomeScreenButton from '../../components/HomeScreenButton';
 import {useForm, Controller} from 'react-hook-form';
-import {set, ref, update} from 'firebase/database';
+import {set, ref, update, get} from 'firebase/database';
 import {db} from '../../Firebase/FirebaseConfigurations';
 import auth from '@react-native-firebase/auth';
 import {useNavigation} from '@react-navigation/native';
@@ -31,6 +31,15 @@ import SubmitUserInfoButton from '../../components/SubmitUserInfoButton';
 import BackgroundPickerModal from '../../components/BackgroundPickerModal';
 import FastImage from 'react-native-fast-image';
 import {useDispatch} from 'react-redux';
+
+interface IDataFromStorage {
+  address: string;
+  email: string;
+  phoneNumber: string;
+  userPhoto: string;
+  fullName: string;
+  backgroundphoto: string;
+}
 
 interface IDefaultFormValues {
   fullname: string;
@@ -61,6 +70,14 @@ const EditUserInfoScreen: FC = () => {
     second: false,
     third: false,
     fourth: false,
+  });
+  const [dataFromStorage, setDataFromStorage] = useState<IDataFromStorage>({
+    address: '',
+    email: '',
+    phoneNumber: '',
+    userPhoto: '',
+    fullName: '',
+    backgroundphoto: '',
   });
   const [load, setLoad] = useState(false);
   const selectedDocument = useAppSelector(
@@ -119,8 +136,17 @@ const EditUserInfoScreen: FC = () => {
       updates['/users/' + userId + '/phoneNumber'] = formValues.phoneNumber;
     if (!!userPhotoFromRedux)
       updates['/users/' + userId + '/userPhoto'] = userPhotoFromRedux;
-    if (!!localSourceUri)
-      updates['/users/' + userId + '/backgroundphoto'] = localSourceUri;
+    if (photoPressed) {
+      if (photoPressed.first) {
+        updates['/users/' + userId + '/backgroundphoto'] = '1';
+      } else if (photoPressed.second) {
+        updates['/users/' + userId + '/backgroundphoto'] = '2';
+      } else if (photoPressed.third) {
+        updates['/users/' + userId + '/backgroundphoto'] = '3';
+      } else if (photoPressed.fourth) {
+        updates['/users/' + userId + '/backgroundphoto'] = '4';
+      }
+    }
 
     return update(ref(db), updates)
       .then(() => {
@@ -130,7 +156,6 @@ const EditUserInfoScreen: FC = () => {
         console.log(error);
       });
   };
-
   const {
     control,
     handleSubmit,
@@ -147,6 +172,7 @@ const EditUserInfoScreen: FC = () => {
 
   useEffect(() => {
     moveImage();
+    readDataFromRealTimeDB();
   }, []);
 
   const moveImage = () => {
@@ -157,15 +183,37 @@ const EditUserInfoScreen: FC = () => {
     }).start();
   };
 
-  useEffect(() => {
-    const selectedSource = source();
-    const resolvedSource = Image.resolveAssetSource(selectedSource);
-    setLocalSourceUri(resolvedSource?.uri);
-  }, [photoPressed]);
+  const readDataFromRealTimeDB = async () => {
+    if (!userId) return;
+    const countRef = ref(db, 'users/' + userId);
+    try {
+      const snapshot = await get(countRef);
+      if (snapshot.exists()) {
+        const data = snapshot.val();
+        setDataFromStorage(data);
+      } else {
+        console.log('No data available');
+      }
+    } catch (error) {
+      console.error('Error reading data from the database:', error);
+    }
+  };
 
   const onSubmit = (formValues: IDefaultFormValues) => {
     updateRealTimeDB(userId, formValues);
     navigation.navigate(Routes.home_Screen);
+  };
+
+  const backgroundsource = () => {
+    if (dataFromStorage.backgroundphoto === '1') {
+      return require('../../Images/backgroundPhoto1.jpeg');
+    } else if (dataFromStorage.backgroundphoto === '2') {
+      return require('../../Images/backgroundPhoto2.jpeg');
+    } else if (dataFromStorage.backgroundphoto === '3') {
+      return require('../../Images/backgroundPhoto3.jpeg');
+    } else if (dataFromStorage.backgroundphoto === '4') {
+      return require('../../Images/backgroundPhoto4.jpeg');
+    }
   };
 
   const source = () => {
@@ -186,7 +234,7 @@ const EditUserInfoScreen: FC = () => {
         <ImageBackground
           style={styles.imageBackground}
           imageStyle={styles.imageStyle}
-          source={{uri: localSourceUri}}>
+          source={backgroundsource()}>
           <Image style={styles.logoImage} source={logo} />
           <View style={styles.imageContainer}>
             {load && <ActivityIndicator size="large" color="#0000ff" />}

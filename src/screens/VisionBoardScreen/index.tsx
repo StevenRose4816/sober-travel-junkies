@@ -109,7 +109,7 @@ export const VisionBoardScreen: FC = () => {
               'steven_jangoh@yahoo.com',
               'mstevenrose9517@gmail.com',
             ]}
-            body="BODY"
+            body="Reporting VisionBoard Photo"
             style={{
               backgroundColor: 'transparent',
               marginTop: 25,

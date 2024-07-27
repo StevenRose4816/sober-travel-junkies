@@ -11,7 +11,7 @@ export const useSendEmail = ({subject, recipients, body}) => {
           {
             subject,
             recipients: recipients,
-            body: `${body}\n\n UID: ${userId}}`,
+            body: `${body}\n\n UID: ${userId}`,
             isHTML,
             attachments,
           },

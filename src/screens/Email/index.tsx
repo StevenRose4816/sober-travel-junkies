@@ -36,7 +36,7 @@ export default function Email({
             Alert.alert('Oops!', 'Something went wrong..');
           }
         }}>
-        <Text style={{fontFamily: 'HighTide-Sans', opacity: 0.5}}>
+        <Text style={{fontFamily: 'HighTide-Sans', opacity: 0.5, fontSize: 11}}>
           Report Image
         </Text>
       </TouchableOpacity>

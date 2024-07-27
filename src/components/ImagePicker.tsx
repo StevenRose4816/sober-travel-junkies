@@ -162,14 +162,15 @@ const ImagePicker = () => {
   };
 
   const handleCameraLaunch = () => {
+    console.log('handle camera launch');
     const options = {
       mediaType: 'photo' as MediaType,
-      includeBase64: false,
+      includeBase64: true,
       maxHeight: 2000,
       maxWidth: 2000,
     };
-
     launchCamera(options, response => {
+      console.log('launched camera');
       if (response.didCancel) {
         console.log('User cancelled camera');
       } else if (response.errorCode) {
@@ -179,7 +180,7 @@ const ImagePicker = () => {
         setSelectedImage(imageUri);
         console.log(imageUri);
       }
-    });
+    }).catch(error => console.log('error: ', error));
   };
 
   const animateTouchables = () => {
