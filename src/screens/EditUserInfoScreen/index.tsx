@@ -80,6 +80,21 @@ const EditUserInfoScreen: FC = () => {
     state => state.document.selectedDocument,
   );
 
+  useEffect(() => {
+    moveImage();
+    readDataFromRealTimeDB();
+  }, []);
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity onPress={logout} style={styles.logoutTouchable}>
+          <Text style={styles.logoutText}>{'Log out'}</Text>
+        </TouchableOpacity>
+      ),
+    });
+  }, []);
+
   const uploadDocument = async () => {
     const currentUser = auth().currentUser!;
     const filename = `${currentUser.uid}_NDA`;
@@ -98,16 +113,6 @@ const EditUserInfoScreen: FC = () => {
       );
     }
   };
-
-  useEffect(() => {
-    navigation.setOptions({
-      headerRight: () => (
-        <TouchableOpacity onPress={logout} style={styles.logoutTouchable}>
-          <Text style={styles.logoutText}>{'Log out'}</Text>
-        </TouchableOpacity>
-      ),
-    });
-  }, []);
 
   const logout = () => {
     auth().signOut();
@@ -149,6 +154,7 @@ const EditUserInfoScreen: FC = () => {
         console.log(error);
       });
   };
+
   const {
     control,
     handleSubmit,
@@ -162,11 +168,6 @@ const EditUserInfoScreen: FC = () => {
     },
     mode: 'onBlur',
   });
-
-  useEffect(() => {
-    moveImage();
-    readDataFromRealTimeDB();
-  }, []);
 
   const moveImage = () => {
     Animated.timing(translateX, {

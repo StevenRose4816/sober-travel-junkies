@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {RouteProp} from '@react-navigation/native';
+import {RouteProp, useRoute} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {AppStackParams} from '../../navigation/types';
 import Routes from '../../navigation/routes';
@@ -35,12 +35,12 @@ interface IProps {
 
 const MessageBoardScreen: FC<IProps> = ({route}) => {
   const [messages, setMessages] = useState<Message[]>([]);
+  const backgroundPhoto = route?.params.backgroundPhoto;
   const [newMessage, setNewMessage] = useState<string>('');
   const [modalVisible, setModalVisible] = useState(false);
   const [data, setData] = useState(false);
   const userPhotoFromDB = useAppSelector(state => state.user.userPhoto);
   const fullName = route?.params.fullName;
-  const backgroundPhoto = useAppSelector(state => state.user.uri);
   const date = new Date();
   const formattedDate = date.toDateString();
   const formattedTime = date.toLocaleTimeString();
@@ -160,6 +160,18 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
     [setNewMessage],
   );
 
+  const renderbackground = () => {
+    if (backgroundPhoto === '1') {
+      return require('../../Images/backgroundPhoto1.jpeg');
+    } else if (backgroundPhoto === '2') {
+      return require('../../Images/backgroundPhoto2.jpeg');
+    } else if (backgroundPhoto === '3') {
+      return require('../../Images/backgroundPhoto3.jpeg');
+    } else if (backgroundPhoto === '4') {
+      return require('../../Images/backgroundPhoto4.jpeg');
+    }
+  };
+
   const renderReply = ({item}: {item: Message}) => (
     <View key={item.id + item.time} style={styles.view7}>
       <Text style={styles.text11}>{item.text}</Text>
@@ -262,7 +274,7 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
       <ImageBackground
         style={styles.imageBackground1}
         imageStyle={styles.imageBackground2}
-        source={{uri: backgroundPhoto}}>
+        source={renderbackground()}>
         <Text style={styles.text15}>{'Message Board'}</Text>
         {data && (
           <FlatList

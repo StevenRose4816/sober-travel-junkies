@@ -13,7 +13,7 @@ export type AppStackParams = {
   [Routes.calenderScreen]: undefined;
   [Routes.messageBoardScreen]: {
     fullName: string;
-    backgroundPhoto: ImageSourcePropType;
+    backgroundPhoto: string;
   };
   [Routes.visionBoardScreen]: {
     selectedImage?: any;

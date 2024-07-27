@@ -25,7 +25,7 @@ const CalenderScreen: FC = () => {
   const maxDate = new Date(2025, 1, 1);
   const route =
     useRoute<RouteProp<AppStackParams, Routes.messageBoardScreen>>();
-  const backgroundPhoto = useAppSelector(state => state.user.uri);
+  const backgroundPhoto = route.params.backgroundPhoto;
   const screenWidth = Dimensions.get('window').width;
   const navigation = useNavigation<NavPropAny>();
   const translateX = useRef(new Animated.Value(0)).current;
@@ -39,6 +39,18 @@ const CalenderScreen: FC = () => {
       duration: 5000,
       useNativeDriver: true,
     }).start();
+  };
+
+  const renderbackground = () => {
+    if (backgroundPhoto === '1') {
+      return require('../../Images/backgroundPhoto1.jpeg');
+    } else if (backgroundPhoto === '2') {
+      return require('../../Images/backgroundPhoto2.jpeg');
+    } else if (backgroundPhoto === '3') {
+      return require('../../Images/backgroundPhoto3.jpeg');
+    } else if (backgroundPhoto === '4') {
+      return require('../../Images/backgroundPhoto4.jpeg');
+    }
   };
 
   const moveImage = () => {
@@ -135,7 +147,7 @@ const CalenderScreen: FC = () => {
       <ImageBackground
         style={{flex: 1}}
         imageStyle={!showCalender ? {opacity: 0.8} : {opacity: 0.4}}
-        source={{uri: backgroundPhoto}}>
+        source={renderbackground()}>
         <View>
           <Text
             style={{
