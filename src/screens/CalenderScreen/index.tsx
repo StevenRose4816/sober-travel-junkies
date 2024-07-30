@@ -22,8 +22,11 @@ import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
 const CalendarScreen: FC = () => {
   const [selectedStartDate, setSelectedStartDate] = useState<Date | null>(null);
   const [selectedEndDate, setSelectedEndDate] = useState<Date | null>(null);
+  const [selectedDateDescription, setSelectedDateDescription] = useState<
+    string | null
+  >(null);
   const minDate = new Date();
-  const maxDate = new Date(2025, 6, 1);
+  const maxDate = new Date(2040, 6, 1);
   const route =
     useRoute<RouteProp<AppStackParams, Routes.messageBoardScreen>>();
   const backgroundPhoto = route.params.backgroundPhoto;
@@ -33,14 +36,6 @@ const CalendarScreen: FC = () => {
   const translateY = useRef(new Animated.Value(0)).current;
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const [dataBool, setDataBool] = useState(false);
-  const [datesFromFirestore, setDatesFromFirestore] = useState<
-    FirebaseFirestoreTypes.DocumentData | undefined
-  >(undefined);
-  const [dateObject, setDateObject] = useState({
-    year: undefined,
-    month: undefined,
-    day: undefined,
-  });
   const [hikes, setHikes] = useState<any>(undefined);
 
   useEffect(() => {
@@ -69,11 +64,10 @@ const CalendarScreen: FC = () => {
   };
 
   useEffect(() => {
-    if (!!datesFromFirestore) {
-      console.log('datesFromFirestore: ', datesFromFirestore);
+    if (!!hikes) {
       console.log('hikes: ', hikes);
     }
-  }, [datesFromFirestore, hikes]);
+  }, [hikes]);
 
   useEffect(() => {
     readDatesFromFirestore('calender', 'calender');
@@ -88,8 +82,6 @@ const CalendarScreen: FC = () => {
       if (data) {
         console.log('Data from store: ', JSON.stringify(data));
         setHikes(data.dates);
-        setDatesFromFirestore(data.Hike);
-        setDateObject({year: data.year, month: data.month, day: data.day});
         setDataBool(true);
       } else {
         console.log('No data available or invalid format');
@@ -133,22 +125,35 @@ const CalendarScreen: FC = () => {
     } else {
       setSelectedStartDate(date);
       setSelectedEndDate(null);
+      const selectedHike = importantDates.find(
+        hike => hike.date.toDateString() === date.toDateString(),
+      );
+      setSelectedDateDescription(
+        selectedHike ? selectedHike.description : null,
+      );
     }
   };
 
-  const convertHikesToDates = (hikes: string[]): Date[] => {
+  const convertHikesToDates = (
+    hikes: string[],
+  ): {date: Date; description: string}[] => {
     return hikes.map(hike => {
-      const year = parseInt(hike.substring(0, 4));
-      const month = parseInt(hike.substring(4, 6)) - 1; // Months are 0-indexed
-      const day = parseInt(hike.substring(6, 8));
-      return new Date(year, month, day);
+      const dateStr = hike.substring(0, 8);
+      const description = hike.substring(9);
+      const year = parseInt(dateStr.substring(0, 4));
+      const month = parseInt(dateStr.substring(4, 6)) - 1; // Months are 0-indexed
+      const day = parseInt(dateStr.substring(6, 8));
+      return {
+        date: new Date(year, month, day),
+        description,
+      };
     });
   };
 
   const importantDates = convertHikesToDates(hikes || []);
 
-  const customDatesStyles = importantDates.map(date => ({
-    date,
+  const customDatesStyles = importantDates.map(item => ({
+    date: item.date,
     style: {backgroundColor: 'blue'},
     textStyle: {color: 'white'},
   }));
@@ -230,8 +235,8 @@ const CalendarScreen: FC = () => {
                 onDateChange={handleDateChange}
                 todayBackgroundColor={'grey'}
                 textStyle={{fontFamily: 'HighTide-Sans'}}
-                allowRangeSelection={true}
-                allowBackwardRangeSelect={true}
+                allowRangeSelection={false}
+                allowBackwardRangeSelect={false}
                 minDate={minDate}
                 maxDate={maxDate}
                 disabledDates={generateDisabledDates()}
@@ -260,16 +265,7 @@ const CalendarScreen: FC = () => {
                         fontFamily: 'HighTide-Sans',
                         margin: 10,
                       }}>
-                      Selected Start Date: {startDate || 'None'}
-                    </Text>
-                    <Text
-                      style={{
-                        fontFamily: 'HighTide-Sans',
-                        marginLeft: 10,
-                        marginTop: 10,
-                        marginBottom: 10,
-                      }}>
-                      Selected End Date: {endDate || 'None'}
+                      Selected Date: {startDate || 'None'}
                     </Text>
                   </View>
                   <TouchableOpacity
@@ -295,6 +291,20 @@ const CalendarScreen: FC = () => {
               )}
             </View>
           )}
+          {selectedDateDescription && showCalendar && (
+            <View
+              style={{
+                backgroundColor: '#eee7da',
+                maxWidth: screenWidth * 0.9,
+                borderRadius: 5,
+                margin: 20,
+                padding: 10,
+              }}>
+              <Text style={{fontFamily: 'HighTide-Sans'}}>
+                {selectedDateDescription}
+              </Text>
+            </View>
+          )}
         </View>
         {!showCalendar && (
           <View
@@ -316,15 +326,16 @@ const CalendarScreen: FC = () => {
           style={{flex: 1, justifyContent: 'flex-end', alignItems: 'flex-end'}}>
           <TouchableOpacity
             style={{
-              backgroundColor: endDate !== '' ? '#b6e7cc' : 'grey',
+              // backgroundColor: endDate !== '' ? '#b6e7cc' : 'grey',
+              backgroundColor: '#b6e7cc',
               borderRadius: 5,
               width: 120,
               marginLeft: 20,
               marginRight: 20,
               marginBottom: 5,
-              opacity: endDate !== '' ? 1 : 0.5,
+              // opacity: endDate !== '' ? 1 : 0.5,
             }}
-            disabled={endDate === ''}
+            // disabled={endDate === ''}
             onPress={onSubmitDates}>
             <Text
               style={{
@@ -333,7 +344,7 @@ const CalendarScreen: FC = () => {
                 marginTop: 5,
                 marginBottom: 5,
               }}>
-              Submit Dates
+              Submit Date
             </Text>
           </TouchableOpacity>
         </View>
