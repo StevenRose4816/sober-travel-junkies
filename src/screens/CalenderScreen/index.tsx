@@ -16,6 +16,8 @@ import CalendarPicker, {
 } from 'react-native-calendar-picker';
 import {AppStackParams, NavPropAny} from '../../navigation/types';
 import Routes from '../../navigation/routes';
+import {firebase} from '@react-native-firebase/database';
+import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
 
 const CalendarScreen: FC = () => {
   const [selectedStartDate, setSelectedStartDate] = useState<Date | null>(null);
@@ -30,8 +32,16 @@ const CalendarScreen: FC = () => {
   const translateX = useRef(new Animated.Value(0)).current;
   const translateY = useRef(new Animated.Value(0)).current;
   const fadeAnim = useRef(new Animated.Value(0)).current;
-  // Build out some logic that will look like below:
-  // const customDatesFromDB = dataFromStorage.customDates;
+  const [dataBool, setDataBool] = useState(false);
+  const [datesFromFirestore, setDatesFromFirestore] = useState<
+    FirebaseFirestoreTypes.DocumentData | undefined
+  >(undefined);
+  const [dateObject, setDateObject] = useState({
+    year: undefined,
+    month: undefined,
+    day: undefined,
+  });
+  const [hikes, setHikes] = useState<any>(undefined);
 
   useEffect(() => {
     moveImage();
@@ -55,6 +65,39 @@ const CalendarScreen: FC = () => {
       return require('../../Images/backgroundPhoto3.jpeg');
     } else if (backgroundPhoto === '4') {
       return require('../../Images/backgroundPhoto4.jpeg');
+    }
+  };
+
+  useEffect(() => {
+    if (!!datesFromFirestore) {
+      console.log('datesFromFirestore: ', datesFromFirestore);
+      console.log('hikes: ', hikes);
+    }
+  }, [datesFromFirestore, hikes]);
+
+  useEffect(() => {
+    readDatesFromFirestore('calender', 'calender');
+    readDatesFromFirestore('calender', 'hikes');
+  }, []);
+
+  const readDatesFromFirestore = async (collection: string, docId: string) => {
+    try {
+      const ref = firebase.firestore().collection(collection).doc(docId);
+      const response = await ref.get();
+      const data = response.data();
+      if (data) {
+        console.log('Data from store: ', JSON.stringify(data));
+        setHikes(data.dates);
+        setDatesFromFirestore(data.Hike);
+        setDateObject({year: data.year, month: data.month, day: data.day});
+        setDataBool(true);
+      } else {
+        console.log('No data available or invalid format');
+      }
+      return response;
+    } catch (error) {
+      console.error('Error reading data from Firestore:', error);
+      return error;
     }
   };
 
@@ -93,16 +136,20 @@ const CalendarScreen: FC = () => {
     }
   };
 
-  const importantDates = [
-    new Date(2024, 6, 28), // Example dates: July, 28th, 2024 (zero-indexed month!)
-    new Date(2024, 7, 25),
-    new Date(2024, 8, 29),
-    new Date(2024, 9, 27),
-  ];
+  const convertHikesToDates = (hikes: string[]): Date[] => {
+    return hikes.map(hike => {
+      const year = parseInt(hike.substring(0, 4));
+      const month = parseInt(hike.substring(4, 6)) - 1; // Months are 0-indexed
+      const day = parseInt(hike.substring(6, 8));
+      return new Date(year, month, day);
+    });
+  };
+
+  const importantDates = convertHikesToDates(hikes || []);
 
   const customDatesStyles = importantDates.map(date => ({
     date,
-    style: {backgroundColor: 'red'},
+    style: {backgroundColor: 'blue'},
     textStyle: {color: 'white'},
   }));
 
@@ -142,7 +189,7 @@ const CalendarScreen: FC = () => {
     <>
       <ImageBackground
         style={{flex: 1}}
-        imageStyle={!showCalendar ? {opacity: 0.8} : {opacity: 0.4}}
+        imageStyle={!showCalendar ? {opacity: 0.8} : {opacity: 0.2}}
         source={renderBackground()}>
         <View>
           <Text

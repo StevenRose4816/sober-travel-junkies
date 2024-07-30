@@ -6,6 +6,7 @@ export interface IUserInfo {
   name?: string;
   newUser: boolean;
   visionBoardUrl?: string | undefined;
+  hikeData?: string | undefined;
 }
 
 const initialState: IUserInfo = {
@@ -14,6 +15,7 @@ const initialState: IUserInfo = {
   name: '',
   newUser: false,
   visionBoardUrl: undefined,
+  hikeData: undefined,
 };
 
 const userSlice = createSlice({
@@ -37,11 +39,16 @@ const userSlice = createSlice({
       const {visionBoardUrl} = action.payload;
       state.visionBoardUrl = visionBoardUrl;
     },
+    setHikeDate(state, action: PayloadAction<{hikeData: string | undefined}>) {
+      const {hikeData} = action.payload;
+      state.hikeData = hikeData;
+    },
   },
   extraReducers: builder => {
     builder.addCase('LOGOUT', () => initialState);
   },
 });
 
-export const {setUserInfo, setNewUser, setVisionBoardUrl} = userSlice.actions;
+export const {setUserInfo, setNewUser, setVisionBoardUrl, setHikeDate} =
+  userSlice.actions;
 export const globalStoreReducer = userSlice.reducer;

@@ -5,6 +5,7 @@ import RootNavigator from './navigation';
 import MessagesListener from './components/MessagesListener';
 import {Provider} from 'react-redux';
 import store from './store';
+import CalenderListener from './components/CalenderListener';
 
 function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
@@ -23,6 +24,7 @@ function App(): React.JSX.Element {
         />
         <RootNavigator />
         <MessagesListener />
+        <CalenderListener />
       </SafeAreaView>
     </Provider>
   );
