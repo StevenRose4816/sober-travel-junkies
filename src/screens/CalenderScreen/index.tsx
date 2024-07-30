@@ -213,7 +213,7 @@ const CalendarScreen: FC = () => {
               backgroundColor: '#b6e7cc',
               borderRadius: 5,
               width: 120,
-              marginLeft: 40,
+              marginLeft: 20,
               marginTop: 10,
               marginBottom: 10,
             }}
@@ -268,6 +268,20 @@ const CalendarScreen: FC = () => {
                       Selected Date: {startDate || 'None'}
                     </Text>
                   </View>
+                  {selectedDateDescription && showCalendar && (
+                    <View
+                      style={{
+                        backgroundColor: '#eee7da',
+                        maxWidth: screenWidth * 0.9,
+                        borderRadius: 5,
+                        marginTop: 10,
+                        padding: 10,
+                      }}>
+                      <Text style={{fontFamily: 'HighTide-Sans'}}>
+                        {selectedDateDescription}
+                      </Text>
+                    </View>
+                  )}
                   <TouchableOpacity
                     style={{
                       backgroundColor: '#b6e7cc',
@@ -289,20 +303,6 @@ const CalendarScreen: FC = () => {
                   </TouchableOpacity>
                 </>
               )}
-            </View>
-          )}
-          {selectedDateDescription && showCalendar && (
-            <View
-              style={{
-                backgroundColor: '#eee7da',
-                maxWidth: screenWidth * 0.9,
-                borderRadius: 5,
-                margin: 20,
-                padding: 10,
-              }}>
-              <Text style={{fontFamily: 'HighTide-Sans'}}>
-                {selectedDateDescription}
-              </Text>
             </View>
           )}
         </View>
@@ -379,14 +379,14 @@ const CalendarScreen: FC = () => {
                     textAlign: 'center',
                     marginTop: 40,
                   }}>
-                  Do you want to submit the following dates?
+                  Do you want to submit the following date?
                 </Text>
                 <Text
                   style={{
                     fontFamily: 'HighTide-Sans',
                     marginTop: 50,
                   }}>
-                  {startDate}-{endDate}
+                  {startDate}
                 </Text>
                 <View style={{flex: 1, flexDirection: 'row'}}>
                   <TouchableOpacity
