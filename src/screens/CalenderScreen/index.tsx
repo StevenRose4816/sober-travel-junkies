@@ -45,6 +45,7 @@ const CalendarScreen: FC = () => {
   const userId = auth().currentUser?.uid;
   const username = useAppSelector(state => state.user.fullName);
   const useremail = useAppSelector(state => state.user.email);
+  const screenHeight = Dimensions.get('window').height;
 
   useEffect(() => {
     moveImage();
@@ -267,7 +268,7 @@ const CalendarScreen: FC = () => {
             </Text>
           </TouchableOpacity>
           {showCalendar && (
-            <View style={{marginTop: 50}}>
+            <View>
               <CalendarPicker
                 initialDate={new Date()}
                 onDateChange={handleDateChange}
