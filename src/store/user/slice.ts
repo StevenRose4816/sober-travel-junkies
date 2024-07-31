@@ -10,6 +10,7 @@ interface UserState {
   mailingAddress: string | undefined;
   email: string | undefined;
   password: string | undefined;
+  selectedDate: string | undefined;
 }
 
 const initialState: UserState = {
@@ -22,6 +23,7 @@ const initialState: UserState = {
   mailingAddress: undefined,
   email: undefined,
   password: undefined,
+  selectedDate: undefined,
 };
 
 type SetUserPhoto = PayloadAction<{userPhoto: any}>;
@@ -32,6 +34,7 @@ type SetPhoneNumber = PayloadAction<{phoneNumber: string | undefined}>;
 type SetMailingAddress = PayloadAction<{mailingAddress: string | undefined}>;
 type SetEmail = PayloadAction<{email: string | undefined}>;
 type SetPassword = PayloadAction<{password: string | undefined}>;
+type SetSelectedDate = PayloadAction<{selectedDate: string | undefined}>;
 
 const userPhotoSlice = createSlice({
   name: 'userPhoto',
@@ -64,6 +67,9 @@ const userPhotoSlice = createSlice({
     setPassword: (state, {payload}: SetPassword) => {
       state.password = payload.password;
     },
+    setSelectedDate: (state, {payload}: SetSelectedDate) => {
+      state.selectedDate = payload.selectedDate;
+    },
   },
   extraReducers: builder => {
     builder.addCase('LOGOUT', () => initialState);
@@ -80,6 +86,7 @@ export const {
   setMailingAddress,
   setEmail,
   setPassword,
+  setSelectedDate,
 } = userPhotoSlice.actions;
 
 export const userPhotoReducer = userPhotoSlice.reducer;

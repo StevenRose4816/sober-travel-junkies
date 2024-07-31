@@ -20,6 +20,7 @@ export default function Email({
   title,
 }: IPassedProps) {
   const {sendEmail} = useSendEmail({
+    dateFromRedux: undefined,
     subject: subject,
     recipients: recipients,
     body: body,

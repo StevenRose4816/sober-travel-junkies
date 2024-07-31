@@ -2,7 +2,7 @@ import React, {useCallback} from 'react';
 import Mailer from 'react-native-mail';
 import auth from '@react-native-firebase/auth';
 
-export const useSendEmail = ({subject, recipients, body}) => {
+export const useSendEmail = ({subject, recipients, body, dateFromRedux}) => {
   const userId = auth().currentUser?.uid;
   const sendEmail = useCallback(
     ({isHTML = false, attachments} = {}) => {
@@ -24,7 +24,7 @@ export const useSendEmail = ({subject, recipients, body}) => {
         );
       });
     },
-    [subject],
+    [subject, dateFromRedux],
   );
 
   return {

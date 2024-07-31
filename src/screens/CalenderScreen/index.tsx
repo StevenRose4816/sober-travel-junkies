@@ -20,8 +20,9 @@ import Routes from '../../navigation/routes';
 import {firebase} from '@react-native-firebase/database';
 import auth from '@react-native-firebase/auth';
 import {useAppSelector} from '../../hooks';
-import Email from '../Email';
 import {useSendEmail} from '../../hooks/SendEmail';
+import {useDispatch} from 'react-redux';
+import {setFullname, setSelectedDate} from '../../store/user/slice';
 
 const CalendarScreen: FC = () => {
   const [selectedStartDate, setSelectedStartDate] = useState<Date | null>(null);
@@ -29,7 +30,7 @@ const CalendarScreen: FC = () => {
   const [selectedDateDescription, setSelectedDateDescription] = useState<
     string | null
   >(null);
-  const [isDateValid, setIsDateValid] = useState(false); // Add this state
+  const [isDateValid, setIsDateValid] = useState(false);
   const minDate = new Date();
   const maxDate = new Date(2040, 6, 1);
   const route =
@@ -43,9 +44,9 @@ const CalendarScreen: FC = () => {
   const [dataBool, setDataBool] = useState(false);
   const [hikes, setHikes] = useState<any>(undefined);
   const userId = auth().currentUser?.uid;
-  const username = useAppSelector(state => state.user.fullName);
-  const useremail = useAppSelector(state => state.user.email);
   const screenHeight = Dimensions.get('window').height;
+  const dispatch = useDispatch();
+  const dateFromRedux = useAppSelector(state => state.user.selectedDate);
 
   useEffect(() => {
     moveImage();
@@ -76,12 +77,6 @@ const CalendarScreen: FC = () => {
   };
 
   useEffect(() => {
-    if (hikes) {
-      console.log('hikes: ', hikes);
-    }
-  }, [hikes]);
-
-  useEffect(() => {
     readDatesFromFirestore('calender', 'calender');
     readDatesFromFirestore('calender', 'hikes');
   }, []);
@@ -108,12 +103,12 @@ const CalendarScreen: FC = () => {
   const moveImage = () => {
     Animated.parallel([
       Animated.timing(translateY, {
-        toValue: 460,
+        toValue: screenHeight * 0.5,
         duration: 900,
         useNativeDriver: true,
       }),
       Animated.timing(translateX, {
-        toValue: 100,
+        toValue: screenWidth * 0.2,
         duration: 200,
         useNativeDriver: true,
         delay: 900,
@@ -140,6 +135,15 @@ const CalendarScreen: FC = () => {
       const selectedHike = importantDates.find(
         hike => hike.date.toDateString() === date.toDateString(),
       );
+      if (!!selectedHike) {
+        dispatch(
+          setSelectedDate({selectedDate: selectedHike.date.toISOString()}),
+        );
+        dispatch(setFullname({fullname: 'Test'}));
+        console.log(
+          'dispatched setSelectedDate, should see dateFromRedux soon...',
+        );
+      }
       setSelectedDateDescription(
         selectedHike ? selectedHike.description : null,
       );
@@ -154,7 +158,7 @@ const CalendarScreen: FC = () => {
       const dateStr = hike.substring(0, 8);
       const description = hike.substring(9);
       const year = parseInt(dateStr.substring(0, 4));
-      const month = parseInt(dateStr.substring(4, 6)) - 1;
+      const month = parseInt(dateStr.substring(4, 6)) - 1; // Months are 0-indexed
       const day = parseInt(dateStr.substring(6, 8));
       return {
         date: new Date(year, month, day),
@@ -186,22 +190,17 @@ const CalendarScreen: FC = () => {
     setShowModal(true);
   };
 
+  useEffect(() => {
+    if (!!dateFromRedux) {
+      console.log('dateFromRedux: ', dateFromRedux);
+    }
+  }, [dateFromRedux]);
+
   const {sendEmail} = useSendEmail({
+    dateFromRedux: dateFromRedux,
     subject: 'RSVP',
-    recipients: [
-      'steven_jangoh@yahoo.com',
-      'mstevenrose9517@gmail.com',
-      'hollisarose@gmail.com',
-    ],
-    body:
-      'Reservation Date: ' +
-      startDate +
-      ' UID: ' +
-      userId +
-      ' Name: ' +
-      username +
-      ' Email: ' +
-      useremail,
+    recipients: ['steven_jangoh@yahoo.com', 'mstevenrose9517@gmail.com'],
+    body: `Reservation Date: ${dateFromRedux} UID: ${userId}`,
   });
 
   const onPressYes = async () => {
@@ -267,6 +266,15 @@ const CalendarScreen: FC = () => {
               {!showCalendar ? 'View Trip Calendar' : 'Hide Trip Calendar'}
             </Text>
           </TouchableOpacity>
+          {!showCalendar && (
+            <Animated.Image
+              style={{
+                height: 150,
+                width: 300,
+                transform: [{translateY}, {translateX}],
+              }}
+              source={require('../../Images/STJLogoTransparent.png')}></Animated.Image>
+          )}
           {showCalendar && (
             <View>
               <CalendarPicker
@@ -355,20 +363,19 @@ const CalendarScreen: FC = () => {
                     </TouchableOpacity>
                     <TouchableOpacity
                       style={{
-                        backgroundColor: isDateValid ? '#b6e7cc' : 'gray', // Disable button if date is invalid
+                        backgroundColor: isDateValid ? '#b6e7cc' : 'gray',
                         borderRadius: 5,
                         padding: 10,
                         marginTop: 20,
                       }}
                       onPress={onSubmitDate}
-                      disabled={!isDateValid} // Disable button if date is invalid
-                    >
+                      disabled={!isDateValid}>
                       <Text
                         style={{
                           fontFamily: 'HighTide-Sans',
                           textAlign: 'center',
                           fontSize: 16,
-                          color: isDateValid ? 'black' : 'lightgray', // Change text color if button is disabled
+                          color: isDateValid ? 'black' : 'lightgray',
                         }}>
                         Submit
                       </Text>
