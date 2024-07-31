@@ -1,4 +1,3 @@
-import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import React, {FC, useEffect, useRef, useState} from 'react';
 import {
   Alert,
@@ -15,13 +14,14 @@ import {
 import CalendarPicker, {
   DateChangedCallback,
 } from 'react-native-calendar-picker';
+import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {AppStackParams, NavPropAny} from '../../navigation/types';
 import Routes from '../../navigation/routes';
 import {firebase} from '@react-native-firebase/database';
-import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
-import Email from '../Email';
 import auth from '@react-native-firebase/auth';
 import {useAppSelector} from '../../hooks';
+import Email from '../Email';
+import {useSendEmail} from '../../hooks/SendEmail';
 
 const CalendarScreen: FC = () => {
   const [selectedStartDate, setSelectedStartDate] = useState<Date | null>(null);
@@ -29,6 +29,7 @@ const CalendarScreen: FC = () => {
   const [selectedDateDescription, setSelectedDateDescription] = useState<
     string | null
   >(null);
+  const [isDateValid, setIsDateValid] = useState(false); // Add this state
   const minDate = new Date();
   const maxDate = new Date(2040, 6, 1);
   const route =
@@ -59,19 +60,22 @@ const CalendarScreen: FC = () => {
   };
 
   const renderBackground = () => {
-    if (backgroundPhoto === '1') {
-      return require('../../Images/backgroundPhoto1.jpeg');
-    } else if (backgroundPhoto === '2') {
-      return require('../../Images/backgroundPhoto2.jpeg');
-    } else if (backgroundPhoto === '3') {
-      return require('../../Images/backgroundPhoto3.jpeg');
-    } else if (backgroundPhoto === '4') {
-      return require('../../Images/backgroundPhoto4.jpeg');
+    switch (backgroundPhoto) {
+      case '1':
+        return require('../../Images/backgroundPhoto1.jpeg');
+      case '2':
+        return require('../../Images/backgroundPhoto2.jpeg');
+      case '3':
+        return require('../../Images/backgroundPhoto3.jpeg');
+      case '4':
+        return require('../../Images/backgroundPhoto4.jpeg');
+      default:
+        return null;
     }
   };
 
   useEffect(() => {
-    if (!!hikes) {
+    if (hikes) {
       console.log('hikes: ', hikes);
     }
   }, [hikes]);
@@ -117,7 +121,7 @@ const CalendarScreen: FC = () => {
   };
 
   const generateDisabledDates = () => {
-    const startDate = new Date(2024, 9, 1); // Month is 0-indexed
+    const startDate = new Date(2024, 9, 1);
     const endDate = new Date(2024, 9, 31);
     const datesArray = [];
     for (let d = startDate; d <= endDate; d.setDate(d.getDate() + 1)) {
@@ -138,6 +142,7 @@ const CalendarScreen: FC = () => {
       setSelectedDateDescription(
         selectedHike ? selectedHike.description : null,
       );
+      setIsDateValid(!!selectedHike);
     }
   };
 
@@ -148,7 +153,7 @@ const CalendarScreen: FC = () => {
       const dateStr = hike.substring(0, 8);
       const description = hike.substring(9);
       const year = parseInt(dateStr.substring(0, 4));
-      const month = parseInt(dateStr.substring(4, 6)) - 1; // Months are 0-indexed
+      const month = parseInt(dateStr.substring(4, 6)) - 1;
       const day = parseInt(dateStr.substring(6, 8));
       return {
         date: new Date(year, month, day),
@@ -177,13 +182,38 @@ const CalendarScreen: FC = () => {
   };
 
   const onSubmitDate = () => {
-    //we need to email Hollis and I for reservation
-    setShowModal(showModal => !showModal);
+    setShowModal(true);
   };
 
-  const onPressYes = () => {
-    setShowModal(showModal => !showModal);
-    navigation.navigate(Routes.home_Screen);
+  const {sendEmail} = useSendEmail({
+    subject: 'RSVP',
+    recipients: [
+      'steven_jangoh@yahoo.com',
+      'mstevenrose9517@gmail.com',
+      'hollisarose@gmail.com',
+    ],
+    body:
+      'Reservation Date: ' +
+      startDate +
+      ' UID: ' +
+      userId +
+      ' Name: ' +
+      username +
+      ' Email: ' +
+      useremail,
+  });
+
+  const onPressYes = async () => {
+    try {
+      const event = await sendEmail();
+      if (event !== 'cancelled') {
+        Alert.alert('Success!', 'Thank you for your feedback!');
+      }
+    } catch (err) {
+      console.log('error: ', err);
+      Alert.alert('Oops!', 'Something went wrong..');
+    }
+    setShowModal(false);
   };
 
   const handleOnPress = () => {
@@ -264,227 +294,160 @@ const CalendarScreen: FC = () => {
                 <>
                   <View
                     style={{
-                      backgroundColor: '#eee7da',
-                      maxWidth: screenWidth * 0.9,
-                      borderRadius: 5,
+                      marginTop: 10,
                     }}>
                     <Text
                       style={{
                         fontFamily: 'HighTide-Sans',
-                        margin: 10,
+                        fontSize: 16,
+                        fontWeight: 'bold',
                       }}>
-                      Selected Date: {startDate || 'None'}
+                      Selected Date:
                     </Text>
-                  </View>
-                  {selectedDateDescription && showCalendar && (
-                    <View
-                      style={{
-                        backgroundColor: '#eee7da',
-                        maxWidth: screenWidth * 0.9,
-                        borderRadius: 5,
-                        marginTop: 10,
-                        padding: 10,
-                      }}>
-                      <Text style={{fontFamily: 'HighTide-Sans'}}>
-                        {selectedDateDescription}
-                      </Text>
-                    </View>
-                  )}
-                  <TouchableOpacity
-                    style={{
-                      backgroundColor: '#b6e7cc',
-                      borderRadius: 5,
-                      width: 120,
-                      marginBottom: 10,
-                      marginTop: 10,
-                    }}
-                    onPress={handleOnPress}>
                     <Text
                       style={{
                         fontFamily: 'HighTide-Sans',
-                        textAlign: 'center',
-                        marginTop: 5,
-                        marginBottom: 5,
+                        fontSize: 16,
+                        color: 'gray',
                       }}>
-                      Add To Your Calendar
+                      Start Date: {startDate}
                     </Text>
-                  </TouchableOpacity>
+                    {endDate !== '' && (
+                      <Text
+                        style={{
+                          fontFamily: 'HighTide-Sans',
+                          fontSize: 16,
+                          color: 'gray',
+                        }}>
+                        End Date: {endDate}
+                      </Text>
+                    )}
+                    {selectedDateDescription && (
+                      <Text
+                        style={{
+                          fontFamily: 'HighTide-Sans',
+                          fontSize: 16,
+                          color: 'gray',
+                          marginTop: 10,
+                        }}>
+                        Description: {selectedDateDescription}
+                      </Text>
+                    )}
+                    <TouchableOpacity
+                      style={{
+                        backgroundColor: '#b6e7cc',
+                        borderRadius: 5,
+                        width: 120,
+                        marginBottom: 10,
+                        marginTop: 10,
+                      }}
+                      onPress={handleOnPress}>
+                      <Text
+                        style={{
+                          fontFamily: 'HighTide-Sans',
+                          textAlign: 'center',
+                          marginTop: 5,
+                          marginBottom: 5,
+                        }}>
+                        Add To Your Calendar
+                      </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={{
+                        backgroundColor: isDateValid ? '#b6e7cc' : 'gray', // Disable button if date is invalid
+                        borderRadius: 5,
+                        padding: 10,
+                        marginTop: 20,
+                      }}
+                      onPress={onSubmitDate}
+                      disabled={!isDateValid} // Disable button if date is invalid
+                    >
+                      <Text
+                        style={{
+                          fontFamily: 'HighTide-Sans',
+                          textAlign: 'center',
+                          fontSize: 16,
+                          color: isDateValid ? 'black' : 'lightgray', // Change text color if button is disabled
+                        }}>
+                        Submit
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
                 </>
               )}
             </View>
           )}
         </View>
-        {!showCalendar && (
+      </ImageBackground>
+
+      {/* Modal for confirmation */}
+      <Modal
+        visible={showModal}
+        transparent={true}
+        animationType="slide"
+        onRequestClose={() => setShowModal(false)}>
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: 'rgba(0,0,0,0.5)',
+          }}>
           <View
             style={{
-              flex: 1,
-              alignItems: 'flex-start',
-              justifyContent: 'flex-start',
+              width: '80%',
+              padding: 20,
+              backgroundColor: 'white',
+              borderRadius: 10,
+              alignItems: 'center',
             }}>
-            <Animated.Image
-              style={{
-                height: 150,
-                width: 300,
-                transform: [{translateY}, {translateX}],
-              }}
-              source={require('../../Images/STJLogoTransparent.png')}></Animated.Image>
-          </View>
-        )}
-        <View
-          style={{flex: 1, justifyContent: 'flex-end', alignItems: 'flex-end'}}>
-          {/* <TouchableOpacity
-            style={{
-              // backgroundColor: endDate !== '' ? '#b6e7cc' : 'grey',
-              backgroundColor: '#b6e7cc',
-              borderRadius: 5,
-              width: 120,
-              marginLeft: 20,
-              marginRight: 20,
-              marginBottom: 5,
-              // opacity: endDate !== '' ? 1 : 0.5,
-            }}
-            // disabled={endDate === ''}
-            onPress={onSubmitDate}>
             <Text
               style={{
                 fontFamily: 'HighTide-Sans',
-                textAlign: 'center',
-                marginTop: 5,
-                marginBottom: 5,
+                fontSize: 18,
+                marginBottom: 20,
               }}>
-              Submit Date
+              Are you sure you want to submit?
             </Text>
-          </TouchableOpacity> */}
-          <Email
-            // will need to set this up so that i can pass the onpress function in optionally for this use.
-            //figure out a way to pass in textStyle to handle the text, currently the style on;y handles the touchable
-            title="Submit"
-            subject="RSVP"
-            recipients={[
-              'steven_jangoh@yahoo.com',
-              'mstevenrose9517@gmail.com',
-              'hollisarose@gmail.com',
-            ]}
-            body={
-              'Resvervation Date: ' +
-              startDate +
-              ' UID: ' +
-              userId +
-              ' Name: ' +
-              username +
-              ' Email: ' +
-              useremail
-            }
-            touchableStyle={{
-              backgroundColor: '#b6e7cc',
-              borderRadius: 5,
-              width: 120,
-              marginLeft: 20,
-              marginRight: 20,
-              marginBottom: 5,
-              padding: 10,
-            }}
-            textStyle={{
-              fontFamily: 'HighTide-Sans',
-              fontSize: 11,
-            }}
-          />
-        </View>
-        <Modal
-          visible={showModal}
-          animationType={'fade'}
-          transparent={true}
-          onRequestClose={() => setShowModal(showModal => !showModal)}>
-          <View
-            style={{
-              flex: 1,
-              justifyContent: 'center',
-              alignItems: 'center',
-              backgroundColor: 'rgba(0, 0, 0, 0.5)',
-            }}>
-            <View
+            <TouchableOpacity
               style={{
                 backgroundColor: '#b6e7cc',
-                minHeight: 300,
-                width: '80%',
                 borderRadius: 5,
-                padding: 20,
-              }}>
-              <View
+                padding: 10,
+                marginBottom: 10,
+                width: '100%',
+                alignItems: 'center',
+              }}
+              onPress={onPressYes}>
+              <Text
                 style={{
-                  alignItems: 'center',
-                  justifyContent: 'center',
+                  fontFamily: 'HighTide-Sans',
+                  fontSize: 16,
                 }}>
-                <Text
-                  style={{
-                    fontFamily: 'HighTide-Sans',
-                    textAlign: 'center',
-                    marginTop: 40,
-                  }}>
-                  Do you want to submit the following date?
-                </Text>
-                <Text
-                  style={{
-                    fontFamily: 'HighTide-Sans',
-                    marginTop: 50,
-                  }}>
-                  {startDate}
-                </Text>
-                <View style={{flex: 1, flexDirection: 'row'}}>
-                  <TouchableOpacity
-                    style={{
-                      marginTop: 40,
-                      backgroundColor: 'blue',
-                      minHeight: 50,
-                      justifyContent: 'center',
-                      borderRadius: 5,
-                      marginHorizontal: 10,
-                      width: 120,
-                    }}
-                    onPress={onPressYes}>
-                    <Text
-                      style={{
-                        textAlign: 'center',
-                        color: '#eee7da',
-                        fontSize: 21,
-                        fontWeight: '600',
-                        backgroundColor: 'blue',
-                        borderRadius: 5,
-                        fontFamily: 'Vonique64',
-                      }}>
-                      Yes
-                    </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={{
-                      marginTop: 40,
-                      backgroundColor: 'blue',
-                      minHeight: 50,
-                      justifyContent: 'center',
-                      borderRadius: 5,
-                      marginHorizontal: 10,
-                      width: 120,
-                    }}
-                    onPress={() => setShowModal(showModal => !showModal)}>
-                    <Text
-                      style={{
-                        textAlign: 'center',
-                        color: '#eee7da',
-                        fontSize: 21,
-                        fontWeight: '600',
-                        backgroundColor: 'blue',
-                        borderRadius: 5,
-                        fontFamily: 'Vonique64',
-                      }}>
-                      No
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            </View>
+                Yes
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                backgroundColor: '#ff6f61',
+                borderRadius: 5,
+                padding: 10,
+                width: '100%',
+                alignItems: 'center',
+              }}
+              onPress={() => setShowModal(false)}>
+              <Text
+                style={{
+                  fontFamily: 'HighTide-Sans',
+                  fontSize: 16,
+                  color: 'white',
+                }}>
+                No
+              </Text>
+            </TouchableOpacity>
           </View>
-        </Modal>
-      </ImageBackground>
+        </View>
+      </Modal>
     </>
   );
 };
