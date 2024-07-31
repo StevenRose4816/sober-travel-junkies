@@ -1,6 +1,7 @@
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import React, {FC, useEffect, useRef, useState} from 'react';
 import {
+  Alert,
   Animated,
   Dimensions,
   ImageBackground,
@@ -18,6 +19,9 @@ import {AppStackParams, NavPropAny} from '../../navigation/types';
 import Routes from '../../navigation/routes';
 import {firebase} from '@react-native-firebase/database';
 import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
+import Email from '../Email';
+import auth from '@react-native-firebase/auth';
+import {useAppSelector} from '../../hooks';
 
 const CalendarScreen: FC = () => {
   const [selectedStartDate, setSelectedStartDate] = useState<Date | null>(null);
@@ -37,6 +41,9 @@ const CalendarScreen: FC = () => {
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const [dataBool, setDataBool] = useState(false);
   const [hikes, setHikes] = useState<any>(undefined);
+  const userId = auth().currentUser?.uid;
+  const username = useAppSelector(state => state.user.fullName);
+  const useremail = useAppSelector(state => state.user.email);
 
   useEffect(() => {
     moveImage();
@@ -169,7 +176,8 @@ const CalendarScreen: FC = () => {
     setShowCalendar(showCalendar => !showCalendar);
   };
 
-  const onSubmitDates = () => {
+  const onSubmitDate = () => {
+    //we need to email Hollis and I for reservation
     setShowModal(showModal => !showModal);
   };
 
@@ -324,7 +332,7 @@ const CalendarScreen: FC = () => {
         )}
         <View
           style={{flex: 1, justifyContent: 'flex-end', alignItems: 'flex-end'}}>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             style={{
               // backgroundColor: endDate !== '' ? '#b6e7cc' : 'grey',
               backgroundColor: '#b6e7cc',
@@ -336,7 +344,7 @@ const CalendarScreen: FC = () => {
               // opacity: endDate !== '' ? 1 : 0.5,
             }}
             // disabled={endDate === ''}
-            onPress={onSubmitDates}>
+            onPress={onSubmitDate}>
             <Text
               style={{
                 fontFamily: 'HighTide-Sans',
@@ -346,7 +354,41 @@ const CalendarScreen: FC = () => {
               }}>
               Submit Date
             </Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
+          <Email
+            // will need to set this up so that i can pass the onpress function in optionally for this use.
+            //figure out a way to pass in textStyle to handle the text, currently the style on;y handles the touchable
+            title="Submit"
+            subject="RSVP"
+            recipients={[
+              'steven_jangoh@yahoo.com',
+              'mstevenrose9517@gmail.com',
+              'hollisarose@gmail.com',
+            ]}
+            body={
+              'Resvervation Date: ' +
+              startDate +
+              ' UID: ' +
+              userId +
+              ' Name: ' +
+              username +
+              ' Email: ' +
+              useremail
+            }
+            touchableStyle={{
+              backgroundColor: '#b6e7cc',
+              borderRadius: 5,
+              width: 120,
+              marginLeft: 20,
+              marginRight: 20,
+              marginBottom: 5,
+              padding: 10,
+            }}
+            textStyle={{
+              fontFamily: 'HighTide-Sans',
+              fontSize: 11,
+            }}
+          />
         </View>
         <Modal
           visible={showModal}

@@ -26,6 +26,7 @@ const PhotoDraggable: FC<IPassedProps> = ({
   setHideTouchables,
 }) => {
   const screenWidth = Dimensions.get('window').width;
+  const screenHeight = Dimensions.get('window').height;
   const source =
     showSelectedImage && selectedImage
       ? {uri: selectedImage}
@@ -36,14 +37,14 @@ const PhotoDraggable: FC<IPassedProps> = ({
         x={screenWidth / 2 - 30}
         y={100}
         minX={0}
-        minY={40}
-        maxX={375}
-        maxY={640}
+        minY={0}
+        maxX={400}
+        maxY={screenHeight * 0.73}
         renderColor={'transparent'}
         isCircle
         onShortPressRelease={onShortPressPhoto}>
         <View>
-          {!hideTouchables && (
+          {!hideTouchables ? (
             <TouchableOpacity
               onPress={() => {
                 setShowInitialPhotoDraggables(false);
@@ -54,6 +55,9 @@ const PhotoDraggable: FC<IPassedProps> = ({
                 source={require('../../Images/close2.png')}
               />
             </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              style={[styles.closeTouchable, {height: 25}]}></TouchableOpacity>
           )}
           <Image
             style={

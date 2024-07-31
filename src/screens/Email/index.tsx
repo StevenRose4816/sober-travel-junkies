@@ -6,14 +6,18 @@ interface IPassedProps {
   subject: string;
   recipients: string[];
   body: string;
-  style: any;
+  touchableStyle?: any;
+  textStyle?: any;
+  title?: string;
 }
 
 export default function Email({
   subject,
   recipients,
   body,
-  style,
+  touchableStyle,
+  textStyle,
+  title,
 }: IPassedProps) {
   const {sendEmail} = useSendEmail({
     subject: subject,
@@ -24,7 +28,7 @@ export default function Email({
   return (
     <>
       <TouchableOpacity
-        style={style}
+        style={touchableStyle}
         onPress={async () => {
           try {
             const event = await sendEmail();
@@ -36,9 +40,7 @@ export default function Email({
             Alert.alert('Oops!', 'Something went wrong..');
           }
         }}>
-        <Text style={{fontFamily: 'HighTide-Sans', opacity: 0.5, fontSize: 11}}>
-          Report Image
-        </Text>
+        <Text style={textStyle}>{title}</Text>
       </TouchableOpacity>
     </>
   );

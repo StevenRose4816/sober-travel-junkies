@@ -35,6 +35,7 @@ export const NoteDraggable: FC<IPassedProps> = ({
   setShowInitialStickyDraggables,
 }) => {
   const screenWidth = Dimensions.get('window').width;
+  const screenHeight = Dimensions.get('window').height;
   return (
     <View>
       <Draggable
@@ -42,11 +43,11 @@ export const NoteDraggable: FC<IPassedProps> = ({
         y={200}
         minX={0}
         minY={40}
-        maxX={375}
-        maxY={640}
+        maxX={400}
+        maxY={screenHeight * 0.73}
         onShortPressRelease={onShortPressSticky}>
         <View>
-          {!hideTouchables && (
+          {!hideTouchables ? (
             <TouchableOpacity
               onPress={() => {
                 setShowInitialStickyDraggables(false);
@@ -57,6 +58,9 @@ export const NoteDraggable: FC<IPassedProps> = ({
                 source={require('../../Images/close2.png')}
               />
             </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              style={[styles.closeTouchable, {height: 25}]}></TouchableOpacity>
           )}
           <ImageBackground
             style={[

@@ -3,11 +3,7 @@ import {Dimensions, StyleSheet} from 'react-native';
 const screenHeight = Dimensions.get('window').height;
 
 const styles = StyleSheet.create({
-  touchable1: {
-    width: 20,
-    height: 20,
-    marginTop: 10,
-  },
+  touchable1: {width: 20, height: 20, marginTop: 10},
   touchable2: {
     backgroundColor: '#e7b6cc',
     borderRadius: 5,
@@ -67,7 +63,7 @@ const styles = StyleSheet.create({
   },
   view1: {
     flex: 1,
-    backgroundColor: '#eee7da80',
+    backgroundColor: 'transparent',
     maxHeight: 50,
     width: 180,
     alignSelf: 'center',

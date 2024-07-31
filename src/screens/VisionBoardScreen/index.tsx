@@ -110,11 +110,16 @@ export const VisionBoardScreen: FC = () => {
               'mstevenrose9517@gmail.com',
             ]}
             body="Reporting VisionBoard Photo"
-            style={{
+            touchableStyle={{
               backgroundColor: 'transparent',
               marginTop: 25,
-              alignSelf: 'center',
             }}
+            textStyle={{
+              fontFamily: 'HighTide-Sans',
+              opacity: 0.5,
+              fontSize: 11,
+            }}
+            title="Report a Photo"
           />
         ),
       });
@@ -252,9 +257,13 @@ export const VisionBoardScreen: FC = () => {
         style={styles.imageBackground1}
         source={source()}
         resizeMode={FastImage.resizeMode.cover}>
-        {!hideTouchables && (
+        {!hideTouchables ? (
           <View style={styles.view1}>
             <Text style={styles.text1}>Vision Board</Text>
+          </View>
+        ) : (
+          <View style={styles.view1}>
+            <Text style={styles.text1}></Text>
           </View>
         )}
         {showInitialPhotoDraggables && (
