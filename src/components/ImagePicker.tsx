@@ -16,7 +16,7 @@ import {
   ImagePickerResponse,
 } from 'react-native-image-picker';
 import {getDownloadURL, getStorage, ref as storageRef} from 'firebase/storage';
-import {set, ref, setWithPriority} from 'firebase/database';
+import {set, ref} from 'firebase/database';
 import {db} from '../Firebase/FirebaseConfigurations';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
@@ -25,7 +25,6 @@ import Routes from '../navigation/routes';
 import auth from '@react-native-firebase/auth';
 import storage from '@react-native-firebase/storage';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {useAppSelector} from '../hooks';
 
 const ImagePicker = () => {
   const [selectedImage, setSelectedImage] = useState<string | undefined>(
@@ -43,18 +42,10 @@ const ImagePicker = () => {
   const routes = navigation.getState()?.routes;
   const prevRoute = routes[routes.length - 2];
   const userId = auth().currentUser?.uid;
-  const phoneNewUser = useAppSelector(state => state.user.phoneNumber);
-  const addressNewUser = useAppSelector(state => state.user.mailingAddress);
-  const emailNewUser = useAppSelector(state => state.user.email);
-  const fullNameNewUser = useAppSelector(state => state.user.fullName);
 
   const writeToRealTimeDB = async (userId: string | undefined, url: string) => {
     set(ref(db, 'users/' + userId), {
       userPhoto: url,
-      fullName: fullNameNewUser,
-      email: emailNewUser,
-      address: addressNewUser,
-      phoneNumber: phoneNewUser,
     })
       .then(() => {
         console.log('RTDB updated');

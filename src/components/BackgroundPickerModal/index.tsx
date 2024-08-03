@@ -1,5 +1,12 @@
 import {Dispatch, FC, SetStateAction} from 'react';
-import {Dimensions, Image, Modal, TouchableOpacity, View} from 'react-native';
+import {
+  Dimensions,
+  Image,
+  Modal,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import styles from './styles';
 
 interface IPassedProps {
@@ -123,6 +130,15 @@ const BackgroundPickerModal: FC<IPassedProps> = ({
                 />
               </TouchableOpacity>
             </View>
+            <Text
+              style={{
+                color: '#0c0b09',
+                fontFamily: 'HighTide-Sans',
+                marginTop: 5,
+                textAlign: 'center',
+              }}>
+              Choose an image for your background
+            </Text>
           </View>
         </View>
       </View>

@@ -19,7 +19,9 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   closeTouchable: {
-    alignSelf: 'flex-end',
+    position: 'absolute',
+    top: 5,
+    right: 5,
   },
   closeIcon: {
     height: 25,
@@ -32,14 +34,12 @@ const styles = StyleSheet.create({
   },
   imageRow: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
     width: '100%',
-    marginBottom: 10,
   },
   image: {
     height: 100,
     width: 100,
-    marginHorizontal: 20,
     marginVertical: 10,
   },
 });

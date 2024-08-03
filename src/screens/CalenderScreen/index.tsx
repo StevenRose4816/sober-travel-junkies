@@ -366,7 +366,7 @@ const CalendarScreen: FC = () => {
                         backgroundColor: isDateValid ? '#b6e7cc' : 'gray',
                         borderRadius: 5,
                         padding: 10,
-                        marginTop: 20,
+                        marginTop: 10,
                       }}
                       onPress={onSubmitDate}
                       disabled={!isDateValid}>
