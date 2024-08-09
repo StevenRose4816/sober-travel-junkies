@@ -16,7 +16,7 @@ import {
   ImagePickerResponse,
 } from 'react-native-image-picker';
 import {getDownloadURL, getStorage, ref as storageRef} from 'firebase/storage';
-import {set, ref} from 'firebase/database';
+import {set, ref, setWithPriority} from 'firebase/database';
 import {db} from '../Firebase/FirebaseConfigurations';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
@@ -25,6 +25,7 @@ import Routes from '../navigation/routes';
 import auth from '@react-native-firebase/auth';
 import storage from '@react-native-firebase/storage';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {useAppSelector} from '../hooks';
 
 const ImagePicker = () => {
   const [selectedImage, setSelectedImage] = useState<string | undefined>(
@@ -42,25 +43,15 @@ const ImagePicker = () => {
   const routes = navigation.getState()?.routes;
   const prevRoute = routes[routes.length - 2];
   const userId = auth().currentUser?.uid;
-
-  const writeToRealTimeDB = async (userId: string | undefined, url: string) => {
-    set(ref(db, 'users/' + userId), {
-      userPhoto: url,
-    })
-      .then(() => {
-        console.log('RTDB updated');
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  };
+  const [firebaseUrl, setFirebaseUrl] = useState<string | undefined>(undefined);
 
   const getProfilePicFromStorage = async (imageName: string) => {
     const storage = getStorage();
     const reference = storageRef(storage, imageName);
     try {
       const url = await getDownloadURL(reference);
-      writeToRealTimeDB(userId, url);
+      console.log('url that is being written to db: ', url);
+      setFirebaseUrl(url);
     } catch (e: any) {
       console.log(e.message);
     }
@@ -101,7 +92,7 @@ const ImagePicker = () => {
     console.log('prevRoute.name: ', prevRoute.name);
     if (prevRoute.name === 'editUserInfoScreen') {
       await uploadImage();
-      dispatch(setThisUserPhoto({userPhoto: selectedImage}));
+      dispatch(setThisUserPhoto({userPhoto: firebaseUrl}));
       navigation.navigate(Routes.editUserInfoScreen);
     } else if (prevRoute.name === 'home_Screen') {
       await uploadImage();
