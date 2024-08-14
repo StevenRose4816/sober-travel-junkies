@@ -83,7 +83,7 @@ const ImagePicker = () => {
       console.error(e);
     }
     setUploading(false);
-    Alert.alert('Your photo has been uploaded to Firebase Cloud Storage!');
+    // Alert.alert('Your photo has been uploaded to Firebase Cloud Storage!');
     setSelectedImage(undefined);
     getProfilePicFromStorage(userId + '_profilePic');
   };
@@ -195,7 +195,7 @@ const ImagePicker = () => {
           style={{marginBottom: 20, height: 300, width: 300}}
         />
       ) : (
-        <View style={{marginBottom: 20, height: 300, width: 300}}></View>
+        <View style={{marginBottom: 20, height: 300, width: 300}} />
       )}
       <View
         style={{

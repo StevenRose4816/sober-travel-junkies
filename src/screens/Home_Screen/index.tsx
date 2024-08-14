@@ -63,8 +63,13 @@ const Home_Screen: FC = () => {
   const newUser = useAppSelector(state => state.globalStore.newUser);
 
   useEffect(() => {
-    if (userPhotoFromRedux || newUser) {
+    if (!!dataFromStorage) {
       setLoad(false);
+    }
+  }, [dataFromStorage]);
+
+  useEffect(() => {
+    if (userPhotoFromRedux || newUser) {
       if (
         newUser &&
         fullNameNewUser &&
@@ -139,6 +144,8 @@ const Home_Screen: FC = () => {
       return require('../../Images/backgroundPhoto3.jpeg');
     } else if (dataFromStorage.backgroundphoto === '4') {
       return require('../../Images/backgroundPhoto4.jpeg');
+    } else {
+      return require('../../Images/backgroundPhoto1.jpeg');
     }
   };
 
@@ -150,19 +157,12 @@ const Home_Screen: FC = () => {
       if (snapshot.exists()) {
         const data = snapshot.val();
         setDataFromStorage(data);
+        // need to dispatch this data to redux, so we can use it elsewhere and no longer need to readfromDB on edit screen.
       } else {
         console.log('No data available');
       }
     } catch (error) {
       console.error('Error reading data from the database:', error);
-    }
-  };
-
-  const source = () => {
-    if (userPhotoFromRedux && userPhotoFromRedux.trim() !== '') {
-      return {uri: userPhotoFromRedux};
-    } else {
-      return require('../../Images/profilepictureicon.png');
     }
   };
 
@@ -177,14 +177,15 @@ const Home_Screen: FC = () => {
           <View style={styles.imageContainer}>
             {load ? (
               <ActivityIndicator size="large" color="#0000ff" />
-            ) : (
+            ) : userPhotoFromRedux?.trim() !== '' ? (
               <FastImage
-                style={
-                  load
-                    ? styles.userImageWithOutBorder
-                    : styles.userImageWithBorder
-                }
-                source={source()}
+                style={styles.userImageWithBorder}
+                source={{uri: userPhotoFromRedux}}
+              />
+            ) : (
+              <Image
+                style={styles.userImageWithOutBorder}
+                source={require('../../Images/profilepictureicon.png')}
               />
             )}
           </View>

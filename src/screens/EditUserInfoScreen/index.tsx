@@ -207,6 +207,8 @@ const EditUserInfoScreen: FC = () => {
       return require('../../Images/backgroundPhoto3.jpeg');
     } else if (dataFromStorage.backgroundphoto === '4') {
       return require('../../Images/backgroundPhoto4.jpeg');
+    } else {
+      return require('../../Images/backgroundPhoto1.jpeg');
     }
   };
 
