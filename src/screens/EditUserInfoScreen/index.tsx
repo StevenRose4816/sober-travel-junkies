@@ -67,22 +67,16 @@ const EditUserInfoScreen: FC = () => {
     third: false,
     fourth: false,
   });
-  const [dataFromStorage, setDataFromStorage] = useState<IDataFromStorage>({
-    address: '',
-    email: '',
-    phoneNumber: '',
-    userPhoto: '',
-    fullName: '',
-    backgroundphoto: '',
-  });
   const [load, setLoad] = useState(false);
   const selectedDocument = useAppSelector(
     state => state.document.selectedDocument,
   );
+  const dataFromStorageRedux = useAppSelector(
+    state => state.user.dataFromStorage,
+  );
 
   useEffect(() => {
     moveImage();
-    readDataFromRealTimeDB();
   }, []);
 
   useEffect(() => {
@@ -177,35 +171,19 @@ const EditUserInfoScreen: FC = () => {
     }).start();
   };
 
-  const readDataFromRealTimeDB = async () => {
-    if (!userId) return;
-    const countRef = ref(db, 'users/' + userId);
-    try {
-      const snapshot = await get(countRef);
-      if (snapshot.exists()) {
-        const data = snapshot.val();
-        setDataFromStorage(data);
-      } else {
-        console.log('No data available');
-      }
-    } catch (error) {
-      console.error('Error reading data from the database:', error);
-    }
-  };
-
   const onSubmit = (formValues: IDefaultFormValues) => {
     updateRealTimeDB(userId, formValues);
     navigation.navigate(Routes.home_Screen);
   };
 
   const backgroundsource = () => {
-    if (dataFromStorage.backgroundphoto === '1') {
+    if (dataFromStorageRedux.backgroundphoto === '1') {
       return require('../../Images/backgroundPhoto1.jpeg');
-    } else if (dataFromStorage.backgroundphoto === '2') {
+    } else if (dataFromStorageRedux.backgroundphoto === '2') {
       return require('../../Images/backgroundPhoto2.jpeg');
-    } else if (dataFromStorage.backgroundphoto === '3') {
+    } else if (dataFromStorageRedux.backgroundphoto === '3') {
       return require('../../Images/backgroundPhoto3.jpeg');
-    } else if (dataFromStorage.backgroundphoto === '4') {
+    } else if (dataFromStorageRedux.backgroundphoto === '4') {
       return require('../../Images/backgroundPhoto4.jpeg');
     } else {
       return require('../../Images/backgroundPhoto1.jpeg');

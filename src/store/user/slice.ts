@@ -11,6 +11,7 @@ interface UserState {
   email: string | undefined;
   password: string | undefined;
   selectedDate: string | undefined;
+  dataFromStorage: any;
 }
 
 const initialState: UserState = {
@@ -24,6 +25,7 @@ const initialState: UserState = {
   email: undefined,
   password: undefined,
   selectedDate: undefined,
+  dataFromStorage: undefined,
 };
 
 type SetUserPhoto = PayloadAction<{userPhoto: any}>;
@@ -35,6 +37,7 @@ type SetMailingAddress = PayloadAction<{mailingAddress: string | undefined}>;
 type SetEmail = PayloadAction<{email: string | undefined}>;
 type SetPassword = PayloadAction<{password: string | undefined}>;
 type SetSelectedDate = PayloadAction<{selectedDate: string | undefined}>;
+type SetDataFromStorage = PayloadAction<{dataFromStorage: any}>;
 
 const userPhotoSlice = createSlice({
   name: 'userPhoto',
@@ -70,6 +73,9 @@ const userPhotoSlice = createSlice({
     setSelectedDate: (state, {payload}: SetSelectedDate) => {
       state.selectedDate = payload.selectedDate;
     },
+    setDataFromStorage: (state, {payload}: SetDataFromStorage) => {
+      state.dataFromStorage = payload.dataFromStorage;
+    },
   },
   extraReducers: builder => {
     builder.addCase('LOGOUT', () => initialState);
@@ -87,6 +93,7 @@ export const {
   setEmail,
   setPassword,
   setSelectedDate,
+  setDataFromStorage,
 } = userPhotoSlice.actions;
 
 export const userPhotoReducer = userPhotoSlice.reducer;

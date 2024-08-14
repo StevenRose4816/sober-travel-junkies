@@ -15,7 +15,11 @@ import {getDownloadURL, getStorage, ref as storageRef} from 'firebase/storage';
 import {get, set, ref, update} from 'firebase/database';
 import {db} from '../../Firebase/FirebaseConfigurations';
 import {useDispatch} from 'react-redux';
-import {setBackgroundPhoto, setUserPhoto} from '../../store/user/slice';
+import {
+  setBackgroundPhoto,
+  setUserPhoto,
+  setDataFromStorage as setDataFromStorageAlias,
+} from '../../store/user/slice';
 import {useAppSelector} from '../../hooks';
 import HomeScreenButton from '../../components/HomeScreenButton';
 import UserInfoField from '../../components/UserInfoField';
@@ -157,7 +161,7 @@ const Home_Screen: FC = () => {
       if (snapshot.exists()) {
         const data = snapshot.val();
         setDataFromStorage(data);
-        // need to dispatch this data to redux, so we can use it elsewhere and no longer need to readfromDB on edit screen.
+        dispatch(setDataFromStorageAlias({dataFromStorage}));
       } else {
         console.log('No data available');
       }
