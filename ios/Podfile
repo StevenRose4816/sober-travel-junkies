@@ -27,7 +27,7 @@ if linkage != nil
 end
 use_frameworks! :linkage => :static
 $RNFirebaseAsStaticFramework = true
-target 'FirstMobileApp' do
+target 'SoberTravelJunkies' do
   config = use_native_modules!
 
   use_react_native!(
@@ -41,7 +41,7 @@ target 'FirstMobileApp' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
-  target 'FirstMobileAppTests' do
+  target 'SoberTravelJunkiesTests' do
     inherit! :complete
     # Pods for testing
   end

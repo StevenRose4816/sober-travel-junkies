@@ -303,7 +303,7 @@ const CalendarScreen: FC = () => {
                 <>
                   <View
                     style={{
-                      marginTop: 10,
+                      marginRight: 5,
                     }}>
                     <Text
                       style={{
@@ -366,7 +366,7 @@ const CalendarScreen: FC = () => {
                         backgroundColor: isDateValid ? '#b6e7cc' : 'gray',
                         borderRadius: 5,
                         padding: 10,
-                        marginTop: 10,
+                        marginTop: 5,
                       }}
                       onPress={onSubmitDate}
                       disabled={!isDateValid}>

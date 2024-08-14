@@ -12,11 +12,11 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		16C1CC0A2B48733C009F2C4E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 16C1CC092B48733C009F2C4E /* GoogleService-Info.plist */; };
-		474CCE4C5696B19AB60E4CA0 /* Pods_FirstMobileApp_FirstMobileAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AF0C9AF23C00BCB550A1ED6 /* Pods_FirstMobileApp_FirstMobileAppTests.framework */; };
+		30A9C8A776CF7A92C545CAD9 /* Pods_SoberTravelJunkies_SoberTravelJunkiesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98C99DE13F928AE89740CAEC /* Pods_SoberTravelJunkies_SoberTravelJunkiesTests.framework */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		9C4139CD0CCB469890AAFAE6 /* High Tide Sans 400.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0C66737287644E08825941AA /* High Tide Sans 400.otf */; };
 		D197C50A05644B119E06E021 /* Vonique64.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1F6EE77E77E74D07B3A7A7BA /* Vonique64.ttf */; };
-		F37EC4A9B7DBB3F826A92334 /* Pods_FirstMobileApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6D1815FB4E300212C266EC3 /* Pods_FirstMobileApp.framework */; };
+		E282AF51E490B46347EAE733 /* Pods_SoberTravelJunkies.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 397E78466B7F4640511C20EA /* Pods_SoberTravelJunkies.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,14 +42,18 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = FirstMobileApp/main.m; sourceTree = "<group>"; };
 		16C1CC092B48733C009F2C4E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1F6EE77E77E74D07B3A7A7BA /* Vonique64.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Vonique64.ttf; path = ../assets/fonts/Vonique64.ttf; sourceTree = "<group>"; };
+		397E78466B7F4640511C20EA /* Pods_SoberTravelJunkies.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SoberTravelJunkies.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B4392A12AC88292D35C810B /* Pods-FirstMobileApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FirstMobileApp.debug.xcconfig"; path = "Target Support Files/Pods-FirstMobileApp/Pods-FirstMobileApp.debug.xcconfig"; sourceTree = "<group>"; };
-		4AF0C9AF23C00BCB550A1ED6 /* Pods_FirstMobileApp_FirstMobileAppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FirstMobileApp_FirstMobileAppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5709B34CF0A7D63546082F79 /* Pods-FirstMobileApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FirstMobileApp.release.xcconfig"; path = "Target Support Files/Pods-FirstMobileApp/Pods-FirstMobileApp.release.xcconfig"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-FirstMobileApp-FirstMobileAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FirstMobileApp-FirstMobileAppTests.debug.xcconfig"; path = "Target Support Files/Pods-FirstMobileApp-FirstMobileAppTests/Pods-FirstMobileApp-FirstMobileAppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = FirstMobileApp/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-FirstMobileApp-FirstMobileAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FirstMobileApp-FirstMobileAppTests.release.xcconfig"; path = "Target Support Files/Pods-FirstMobileApp-FirstMobileAppTests/Pods-FirstMobileApp-FirstMobileAppTests.release.xcconfig"; sourceTree = "<group>"; };
-		D6D1815FB4E300212C266EC3 /* Pods_FirstMobileApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FirstMobileApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		98C99DE13F928AE89740CAEC /* Pods_SoberTravelJunkies_SoberTravelJunkiesTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SoberTravelJunkies_SoberTravelJunkiesTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A0484C68085952A579C25F8E /* Pods-SoberTravelJunkies.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SoberTravelJunkies.debug.xcconfig"; path = "Target Support Files/Pods-SoberTravelJunkies/Pods-SoberTravelJunkies.debug.xcconfig"; sourceTree = "<group>"; };
+		DAA3E438CCC399047473D1F1 /* Pods-SoberTravelJunkies-SoberTravelJunkiesTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SoberTravelJunkies-SoberTravelJunkiesTests.debug.xcconfig"; path = "Target Support Files/Pods-SoberTravelJunkies-SoberTravelJunkiesTests/Pods-SoberTravelJunkies-SoberTravelJunkiesTests.debug.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		F4525D87F2944A3F61C188A5 /* Pods-SoberTravelJunkies.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SoberTravelJunkies.release.xcconfig"; path = "Target Support Files/Pods-SoberTravelJunkies/Pods-SoberTravelJunkies.release.xcconfig"; sourceTree = "<group>"; };
+		F5B24B74D45E8AF6473CB223 /* Pods-SoberTravelJunkies-SoberTravelJunkiesTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SoberTravelJunkies-SoberTravelJunkiesTests.release.xcconfig"; path = "Target Support Files/Pods-SoberTravelJunkies-SoberTravelJunkiesTests/Pods-SoberTravelJunkies-SoberTravelJunkiesTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,7 +61,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				474CCE4C5696B19AB60E4CA0 /* Pods_FirstMobileApp_FirstMobileAppTests.framework in Frameworks */,
+				30A9C8A776CF7A92C545CAD9 /* Pods_SoberTravelJunkies_SoberTravelJunkiesTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,7 +69,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F37EC4A9B7DBB3F826A92334 /* Pods_FirstMobileApp.framework in Frameworks */,
+				E282AF51E490B46347EAE733 /* Pods_SoberTravelJunkies.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -107,8 +111,8 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				D6D1815FB4E300212C266EC3 /* Pods_FirstMobileApp.framework */,
-				4AF0C9AF23C00BCB550A1ED6 /* Pods_FirstMobileApp_FirstMobileAppTests.framework */,
+				397E78466B7F4640511C20EA /* Pods_SoberTravelJunkies.framework */,
+				98C99DE13F928AE89740CAEC /* Pods_SoberTravelJunkies_SoberTravelJunkiesTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -161,6 +165,10 @@
 				5709B34CF0A7D63546082F79 /* Pods-FirstMobileApp.release.xcconfig */,
 				5B7EB9410499542E8C5724F5 /* Pods-FirstMobileApp-FirstMobileAppTests.debug.xcconfig */,
 				89C6BE57DB24E9ADA2F236DE /* Pods-FirstMobileApp-FirstMobileAppTests.release.xcconfig */,
+				A0484C68085952A579C25F8E /* Pods-SoberTravelJunkies.debug.xcconfig */,
+				F4525D87F2944A3F61C188A5 /* Pods-SoberTravelJunkies.release.xcconfig */,
+				DAA3E438CCC399047473D1F1 /* Pods-SoberTravelJunkies-SoberTravelJunkiesTests.debug.xcconfig */,
+				F5B24B74D45E8AF6473CB223 /* Pods-SoberTravelJunkies-SoberTravelJunkiesTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -293,15 +301,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-FirstMobileApp/Pods-FirstMobileApp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-SoberTravelJunkies/Pods-SoberTravelJunkies-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-FirstMobileApp/Pods-FirstMobileApp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-SoberTravelJunkies/Pods-SoberTravelJunkies-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FirstMobileApp/Pods-FirstMobileApp-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SoberTravelJunkies/Pods-SoberTravelJunkies-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		0F2626A86CEFBEE7D3B57987 /* [CP-User] [RNFB] Core Configuration */ = {
@@ -332,7 +340,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-FirstMobileApp-FirstMobileAppTests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-SoberTravelJunkies-SoberTravelJunkiesTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -354,7 +362,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-FirstMobileApp-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-SoberTravelJunkies-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -367,15 +375,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-FirstMobileApp-FirstMobileAppTests/Pods-FirstMobileApp-FirstMobileAppTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-SoberTravelJunkies-SoberTravelJunkiesTests/Pods-SoberTravelJunkies-SoberTravelJunkiesTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-FirstMobileApp-FirstMobileAppTests/Pods-FirstMobileApp-FirstMobileAppTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-SoberTravelJunkies-SoberTravelJunkiesTests/Pods-SoberTravelJunkies-SoberTravelJunkiesTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FirstMobileApp-FirstMobileAppTests/Pods-FirstMobileApp-FirstMobileAppTests-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SoberTravelJunkies-SoberTravelJunkiesTests/Pods-SoberTravelJunkies-SoberTravelJunkiesTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		E235C05ADACE081382539298 /* [CP] Copy Pods Resources */ = {
@@ -384,15 +392,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-FirstMobileApp/Pods-FirstMobileApp-resources-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-SoberTravelJunkies/Pods-SoberTravelJunkies-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-FirstMobileApp/Pods-FirstMobileApp-resources-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-SoberTravelJunkies/Pods-SoberTravelJunkies-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FirstMobileApp/Pods-FirstMobileApp-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SoberTravelJunkies/Pods-SoberTravelJunkies-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		F6A41C54EA430FDDC6A6ED99 /* [CP] Copy Pods Resources */ = {
@@ -401,15 +409,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-FirstMobileApp-FirstMobileAppTests/Pods-FirstMobileApp-FirstMobileAppTests-resources-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-SoberTravelJunkies-SoberTravelJunkiesTests/Pods-SoberTravelJunkies-SoberTravelJunkiesTests-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-FirstMobileApp-FirstMobileAppTests/Pods-FirstMobileApp-FirstMobileAppTests-resources-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-SoberTravelJunkies-SoberTravelJunkiesTests/Pods-SoberTravelJunkies-SoberTravelJunkiesTests-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FirstMobileApp-FirstMobileAppTests/Pods-FirstMobileApp-FirstMobileAppTests-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SoberTravelJunkies-SoberTravelJunkiesTests/Pods-SoberTravelJunkies-SoberTravelJunkiesTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -445,7 +453,7 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5B7EB9410499542E8C5724F5 /* Pods-FirstMobileApp-FirstMobileAppTests.debug.xcconfig */;
+			baseConfigurationReference = DAA3E438CCC399047473D1F1 /* Pods-SoberTravelJunkies-SoberTravelJunkiesTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -473,7 +481,7 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 89C6BE57DB24E9ADA2F236DE /* Pods-FirstMobileApp-FirstMobileAppTests.release.xcconfig */;
+			baseConfigurationReference = F5B24B74D45E8AF6473CB223 /* Pods-SoberTravelJunkies-SoberTravelJunkiesTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -498,7 +506,7 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3B4392A12AC88292D35C810B /* Pods-FirstMobileApp.debug.xcconfig */;
+			baseConfigurationReference = A0484C68085952A579C25F8E /* Pods-SoberTravelJunkies.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -526,7 +534,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5709B34CF0A7D63546082F79 /* Pods-FirstMobileApp.release.xcconfig */;
+			baseConfigurationReference = F4525D87F2944A3F61C188A5 /* Pods-SoberTravelJunkies.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;

@@ -113,11 +113,13 @@ export const VisionBoardScreen: FC = () => {
             touchableStyle={{
               backgroundColor: 'transparent',
               marginTop: 25,
+              maxWidth: 50,
             }}
             textStyle={{
               fontFamily: 'HighTide-Sans',
-              opacity: 0.5,
-              fontSize: 11,
+              opacity: 0.8,
+              fontSize: 10,
+              textAlign: 'center',
             }}
             title="Report a Photo"
           />
