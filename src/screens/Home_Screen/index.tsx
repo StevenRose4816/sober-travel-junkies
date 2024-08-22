@@ -8,11 +8,12 @@ import {
   TouchableOpacity,
   Text,
   ActivityIndicator,
+  Modal,
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import {useNavigation} from '@react-navigation/native';
 import {getDownloadURL, getStorage, ref as storageRef} from 'firebase/storage';
-import {get, set, ref, startAfter} from 'firebase/database';
+import {get, set, ref, startAfter, update} from 'firebase/database';
 import {db} from '../../Firebase/FirebaseConfigurations';
 import {useDispatch} from 'react-redux';
 import {
@@ -70,6 +71,8 @@ const Home_Screen: FC = () => {
   const dataFromStorageRedux = useAppSelector(
     state => state.user.dataFromStorage,
   );
+  const [isVisible, setIsVisible] = useState(false);
+  const [url, setUrl] = useState<string | undefined>(undefined);
 
   useEffect(() => {
     if (userPhotoFromRedux || newUser) {
@@ -110,9 +113,18 @@ const Home_Screen: FC = () => {
   }, [dataFromStorageRedux]);
 
   const logout = () => {
-    auth().signOut();
-    setTimeout(() => dispatch(setUserPhoto({userPhoto: null})), 1000);
-    dispatch({type: 'LOGOUT'});
+    if (
+      !userPhotoFromRedux ||
+      userPhotoFromRedux.trim() === '' ||
+      !dataFromStorage.userPhoto ||
+      dataFromStorage.userPhoto.trim() === ''
+    ) {
+      setIsVisible(true);
+    } else {
+      auth().signOut();
+      setTimeout(() => dispatch(setUserPhoto({userPhoto: null})), 1000);
+      dispatch({type: 'LOGOUT'});
+    }
   };
 
   const getProfilePicFromStorage = async (imageName: string) => {
@@ -126,6 +138,19 @@ const Home_Screen: FC = () => {
     }
   };
 
+  const readFromStorage = async (imageName: string) => {
+    const storage = getStorage();
+    const reference = storageRef(storage, imageName);
+    try {
+      await getDownloadURL(reference).then(url => {
+        setUrl(url);
+        dispatch(setUserPhoto({userPhoto: url}));
+      });
+    } catch (e: any) {
+      console.log(e.message);
+    }
+  };
+
   const writeToRealTimeDB = async (userId: string | undefined) => {
     if (!userPhotoFromRedux) {
       set(ref(db, 'users/' + userId), {
@@ -134,6 +159,8 @@ const Home_Screen: FC = () => {
         address: addressNewUser,
         phoneNumber: phoneNewUser,
         backgroundphoto: '1',
+        // below is wrong, need to upload default image to storage and then just pull the URL and set it as the userphoto here
+        // userPhoto: require('../../Images/profilepictureicon.png'),
       })
         .then(() => {
           console.log('RTDB updated');
@@ -147,7 +174,8 @@ const Home_Screen: FC = () => {
         email: emailNewUser,
         address: addressNewUser,
         phoneNumber: phoneNewUser,
-        userPhoto: userPhotoFromRedux,
+        userPhoto:
+          userPhotoFromRedux || require('../../Images/profilepictureicon.png'),
         backgroundphoto: backgroudPhoto ?? '1',
       })
         .then(() => {
@@ -276,6 +304,73 @@ const Home_Screen: FC = () => {
           />
         </ImageBackground>
       </ScrollView>
+      <Modal
+        visible={isVisible}
+        animationType={'slide'}
+        transparent={true}
+        onRequestClose={() => setIsVisible(false)}>
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          }}>
+          <View
+            style={{
+              borderColor: '#0c0b09',
+              backgroundColor: '#b6e7cc',
+              minHeight: 300,
+              width: '80%',
+              borderRadius: 5,
+              padding: 20,
+            }}>
+            <TouchableOpacity
+              onPress={() => setIsVisible(false)}
+              style={{
+                position: 'absolute',
+                top: 10,
+                right: 10,
+              }}>
+              <Image
+                style={{
+                  height: 25,
+                  width: 25,
+                }}
+                source={require('../../Images/close2.png')}
+              />
+            </TouchableOpacity>
+
+            <Text
+              style={{
+                textAlign: 'center',
+                marginVertical: 20,
+                marginBottom: 70,
+              }}>
+              Please select a profile photo before logging out.
+            </Text>
+
+            <View style={{alignItems: 'center'}}>
+              <HomeScreenButton
+                overRiddenWidth={0.7}
+                title="Select Photo From Library"
+                onPress={() => {
+                  setIsVisible(false);
+                  navigation.navigate(Routes.imagePicker);
+                }}
+              />
+              <HomeScreenButton
+                overRiddenWidth={0.7}
+                title="Select Default Photo"
+                onPress={() => {
+                  readFromStorage('profilepictureicon.png');
+                  setIsVisible(false);
+                }}
+              />
+            </View>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
