@@ -10,15 +10,15 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
-import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import {getDownloadURL, getStorage, ref as storageRef} from 'firebase/storage';
-import {get, set, ref, update} from 'firebase/database';
+import {get, set, ref, startAfter} from 'firebase/database';
 import {db} from '../../Firebase/FirebaseConfigurations';
 import {useDispatch} from 'react-redux';
 import {
-  setBackgroundPhoto,
   setUserPhoto,
   setDataFromStorage as setDataFromStorageAlias,
+  setBackgroundPhoto,
 } from '../../store/user/slice';
 import {useAppSelector} from '../../hooks';
 import HomeScreenButton from '../../components/HomeScreenButton';
@@ -26,9 +26,8 @@ import UserInfoField from '../../components/UserInfoField';
 import HomeScreenEditButton from '../../components/HomeScreenEditButton';
 import Routes from '../../navigation/routes';
 import styles from './styles';
-import {NavPropAny, AppStackParams} from '../../navigation/types';
+import {NavPropAny} from '../../navigation/types';
 import FastImage from 'react-native-fast-image';
-import Email from '../Email';
 
 interface IDataFromStorage {
   address: string;
@@ -48,6 +47,9 @@ const Home_Screen: FC = () => {
   const phoneIcon: ImageSourcePropType = require('../../Images/phonenumbericon.png');
   const nameIcon: ImageSourcePropType = require('../../Images/appicon.png');
   const userPhotoFromRedux = useAppSelector(state => state.user.userPhoto);
+  const backgroudPhoto = useAppSelector(
+    state => state.user.dataFromStorage?.backgroudPhoto,
+  );
   const userId = auth().currentUser?.uid;
   const [dataFromStorage, setDataFromStorage] = useState<IDataFromStorage>({
     address: '',
@@ -65,15 +67,14 @@ const Home_Screen: FC = () => {
   const emailNewUser = useAppSelector(state => state.user.email);
   const fullNameNewUser = useAppSelector(state => state.user.fullName);
   const newUser = useAppSelector(state => state.globalStore.newUser);
-
-  useEffect(() => {
-    if (!!dataFromStorage) {
-      setLoad(false);
-    }
-  }, [dataFromStorage]);
+  const dataFromStorageRedux = useAppSelector(
+    state => state.user.dataFromStorage,
+  );
 
   useEffect(() => {
     if (userPhotoFromRedux || newUser) {
+      // we need to force a user to select a userphoto before signing out otherwise it will load forever
+      setLoad(false);
       if (
         newUser &&
         fullNameNewUser &&
@@ -82,6 +83,7 @@ const Home_Screen: FC = () => {
         addressNewUser
       ) {
         writeToRealTimeDB(userId);
+        setTimeout(() => readDataFromRealTimeDB(), 1000);
       }
     }
   }, [
@@ -105,7 +107,7 @@ const Home_Screen: FC = () => {
     if (userId && !userPhotoFromRedux) {
       getProfilePicFromStorage(userId + '_profilePic');
     }
-  }, [dataFromStorage]);
+  }, [dataFromStorageRedux]);
 
   const logout = () => {
     auth().signOut();
@@ -117,39 +119,66 @@ const Home_Screen: FC = () => {
     const storage = getStorage();
     const reference = storageRef(storage, imageName);
     try {
-      const url = await getDownloadURL(reference);
-      dispatch(setUserPhoto({userPhoto: url}));
+      const firebaseUrl = await getDownloadURL(reference);
+      dispatch(setUserPhoto({userPhoto: firebaseUrl}));
     } catch (e: any) {
-      console.log(e.message);
+      // console.log(e.message);
     }
   };
 
   const writeToRealTimeDB = async (userId: string | undefined) => {
-    set(ref(db, 'users/' + userId), {
-      fullName: fullNameNewUser,
-      email: emailNewUser,
-      address: addressNewUser,
-      phoneNumber: phoneNewUser,
-    })
-      .then(() => {
-        console.log('RTDB updated');
+    if (!userPhotoFromRedux) {
+      set(ref(db, 'users/' + userId), {
+        fullName: fullNameNewUser,
+        email: emailNewUser,
+        address: addressNewUser,
+        phoneNumber: phoneNewUser,
+        backgroundphoto: '1',
       })
-      .catch(error => {
-        console.log(error);
-      });
+        .then(() => {
+          console.log('RTDB updated');
+        })
+        .catch(error => {
+          // console.log(error);
+        });
+    } else {
+      set(ref(db, 'users/' + userId), {
+        fullName: fullNameNewUser,
+        email: emailNewUser,
+        address: addressNewUser,
+        phoneNumber: phoneNewUser,
+        userPhoto: userPhotoFromRedux,
+        backgroundphoto: backgroudPhoto ?? '1',
+      })
+        .then(() => {
+          console.log('RTDB updated');
+        })
+        .catch(error => {
+          // console.log(error);
+        });
+    }
   };
 
   const backgroundsource = () => {
-    if (dataFromStorage.backgroundphoto === '1') {
-      return require('../../Images/backgroundPhoto1.jpeg');
-    } else if (dataFromStorage.backgroundphoto === '2') {
-      return require('../../Images/backgroundPhoto2.jpeg');
-    } else if (dataFromStorage.backgroundphoto === '3') {
-      return require('../../Images/backgroundPhoto3.jpeg');
-    } else if (dataFromStorage.backgroundphoto === '4') {
-      return require('../../Images/backgroundPhoto4.jpeg');
+    switch (dataFromStorage?.backgroundphoto) {
+      case '1':
+        return require('../../Images/backgroundPhoto1.jpeg');
+      case '2':
+        return require('../../Images/backgroundPhoto2.jpeg');
+      case '3':
+        return require('../../Images/backgroundPhoto3.jpeg');
+      case '4':
+        return require('../../Images/backgroundPhoto4.jpeg');
+      default:
+        return require('../../Images/backgroundPhoto1.jpeg');
+    }
+  };
+
+  const source = () => {
+    if (userPhotoFromRedux && userPhotoFromRedux.trim() !== '') {
+      return {uri: userPhotoFromRedux};
     } else {
-      return require('../../Images/backgroundPhoto1.jpeg');
+      return require('../../Images/profilepictureicon.png');
     }
   };
 
@@ -163,10 +192,10 @@ const Home_Screen: FC = () => {
         setDataFromStorage(data);
         dispatch(setDataFromStorageAlias({dataFromStorage}));
       } else {
-        console.log('No data available');
+        // console.log('No data available');
       }
     } catch (error) {
-      console.error('Error reading data from the database:', error);
+      // console.error('Error reading data from the database:', error);
     }
   };
 
@@ -181,19 +210,18 @@ const Home_Screen: FC = () => {
           <View style={styles.imageContainer}>
             {load ? (
               <ActivityIndicator size="large" color="#0000ff" />
-            ) : userPhotoFromRedux?.trim() !== '' ? (
-              <FastImage
-                style={styles.userImageWithBorder}
-                source={{uri: userPhotoFromRedux}}
-              />
             ) : (
-              <Image
-                style={styles.userImageWithOutBorder}
-                source={require('../../Images/profilepictureicon.png')}
+              <FastImage
+                style={
+                  load || newUser
+                    ? styles.userImageWithOutBorder
+                    : styles.userImageWithBorder
+                }
+                source={source()}
               />
             )}
           </View>
-          {newUser && (
+          {newUser && !userPhotoFromRedux && (
             <HomeScreenButton
               title="Select Profile Photo"
               onPress={() => navigation.navigate(Routes.imagePicker)}

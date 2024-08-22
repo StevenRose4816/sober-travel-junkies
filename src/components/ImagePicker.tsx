@@ -16,7 +16,7 @@ import {
   ImagePickerResponse,
 } from 'react-native-image-picker';
 import {getDownloadURL, getStorage, ref as storageRef} from 'firebase/storage';
-import {set, ref, setWithPriority} from 'firebase/database';
+import {set, ref, update, get} from 'firebase/database';
 import {db} from '../Firebase/FirebaseConfigurations';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
@@ -43,19 +43,6 @@ const ImagePicker = () => {
   const routes = navigation.getState()?.routes;
   const prevRoute = routes[routes.length - 2];
   const userId = auth().currentUser?.uid;
-  const [firebaseUrl, setFirebaseUrl] = useState<string | undefined>(undefined);
-
-  const getProfilePicFromStorage = async (imageName: string) => {
-    const storage = getStorage();
-    const reference = storageRef(storage, imageName);
-    try {
-      const url = await getDownloadURL(reference);
-      console.log('url that is being written to db: ', url);
-      setFirebaseUrl(url);
-    } catch (e: any) {
-      console.log(e.message);
-    }
-  };
 
   const uploadImage = async () => {
     const uri = selectedImage;
@@ -83,27 +70,56 @@ const ImagePicker = () => {
       console.error(e);
     }
     setUploading(false);
-    // Alert.alert('Your photo has been uploaded to Firebase Cloud Storage!');
     setSelectedImage(undefined);
     getProfilePicFromStorage(userId + '_profilePic');
   };
 
+  const getProfilePicFromStorage = async (
+    imageName: string,
+  ): Promise<string | undefined> => {
+    const storage = getStorage();
+    const reference = storageRef(storage, imageName);
+    try {
+      const url = await getDownloadURL(reference);
+      console.log('url that is being written to db: ', url);
+      return url;
+    } catch (e: any) {
+      console.log(e.message);
+      return undefined;
+    }
+  };
+
   const onPressThisLooksGood = async () => {
     console.log('prevRoute.name: ', prevRoute.name);
-    if (prevRoute.name === 'editUserInfoScreen') {
+    if (
+      prevRoute.name === 'editUserInfoScreen' ||
+      prevRoute.name === 'home_Screen'
+    ) {
       await uploadImage();
-      dispatch(setThisUserPhoto({userPhoto: firebaseUrl}));
-      navigation.navigate(Routes.editUserInfoScreen);
-    } else if (prevRoute.name === 'home_Screen') {
-      await uploadImage();
-      console.log('selectedImage: ', selectedImage);
-      dispatch(setThisUserPhoto({userPhoto: selectedImage}));
-      navigation.navigate(Routes.home_Screen);
+      const url = await getProfilePicFromStorage(userId + '_profilePic');
+      if (url) {
+        await updateRealTimeDB(userId, url);
+        dispatch(setThisUserPhoto({userPhoto: url}));
+      }
+      navigation.navigate(Routes[prevRoute.name]);
     } else {
-      navigation.navigate('visionBoardScreen', {
-        selectedImage,
-      });
+      navigation.navigate('visionBoardScreen', {selectedImage});
     }
+  };
+
+  const updateRealTimeDB = async (
+    userId: string | undefined,
+    firebaseUrl?: any,
+  ) => {
+    const updates: {[key: string]: string | undefined} = {};
+    if (!!firebaseUrl) updates['/users/' + userId + '/userPhoto'] = firebaseUrl;
+    return update(ref(db), updates)
+      .then(() => {
+        console.log('RTDB updated');
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
 
   const resetValues = () => {

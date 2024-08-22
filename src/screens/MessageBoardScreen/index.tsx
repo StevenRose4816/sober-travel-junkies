@@ -160,15 +160,18 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
     [setNewMessage],
   );
 
-  const renderbackground = () => {
-    if (backgroundPhoto === '1') {
-      return require('../../Images/backgroundPhoto1.jpeg');
-    } else if (backgroundPhoto === '2') {
-      return require('../../Images/backgroundPhoto2.jpeg');
-    } else if (backgroundPhoto === '3') {
-      return require('../../Images/backgroundPhoto3.jpeg');
-    } else if (backgroundPhoto === '4') {
-      return require('../../Images/backgroundPhoto4.jpeg');
+  const renderBackground = () => {
+    switch (backgroundPhoto) {
+      case '1':
+        return require('../../Images/backgroundPhoto1.jpeg');
+      case '2':
+        return require('../../Images/backgroundPhoto2.jpeg');
+      case '3':
+        return require('../../Images/backgroundPhoto3.jpeg');
+      case '4':
+        return require('../../Images/backgroundPhoto4.jpeg');
+      default:
+        return require('../../Images/backgroundPhoto1.jpeg');
     }
   };
 
@@ -274,7 +277,7 @@ const MessageBoardScreen: FC<IProps> = ({route}) => {
       <ImageBackground
         style={styles.imageBackground1}
         imageStyle={styles.imageBackground2}
-        source={renderbackground()}>
+        source={renderBackground()}>
         <Text style={styles.text15}>{'Message Board'}</Text>
         {data && (
           <FlatList

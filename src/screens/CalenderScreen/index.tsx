@@ -72,7 +72,7 @@ const CalendarScreen: FC = () => {
       case '4':
         return require('../../Images/backgroundPhoto4.jpeg');
       default:
-        return null;
+        return require('../../Images/backgroundPhoto1.jpeg');
     }
   };
 
@@ -88,6 +88,7 @@ const CalendarScreen: FC = () => {
       const data = response.data();
       if (data) {
         console.log('Data from store: ', JSON.stringify(data));
+        // save this in redux to use if user comes back
         setHikes(data.dates);
         setDataBool(true);
       } else {

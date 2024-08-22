@@ -32,15 +32,6 @@ import BackgroundPickerModal from '../../components/BackgroundPickerModal';
 import FastImage from 'react-native-fast-image';
 import {useDispatch} from 'react-redux';
 
-interface IDataFromStorage {
-  address: string;
-  email: string;
-  phoneNumber: string;
-  userPhoto: string;
-  fullName: string;
-  backgroundphoto: string;
-}
-
 interface IDefaultFormValues {
   fullname: string;
   phoneNumber: string;
@@ -76,10 +67,8 @@ const EditUserInfoScreen: FC = () => {
   );
 
   useEffect(() => {
+    console.log('dataFromStorageRedux: ', dataFromStorageRedux);
     moveImage();
-  }, []);
-
-  useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
         <TouchableOpacity onPress={logout} style={styles.logoutTouchable}>
@@ -177,13 +166,13 @@ const EditUserInfoScreen: FC = () => {
   };
 
   const backgroundsource = () => {
-    if (dataFromStorageRedux.backgroundphoto === '1') {
+    if (dataFromStorageRedux?.backgroundphoto === '1') {
       return require('../../Images/backgroundPhoto1.jpeg');
-    } else if (dataFromStorageRedux.backgroundphoto === '2') {
+    } else if (dataFromStorageRedux?.backgroundphoto === '2') {
       return require('../../Images/backgroundPhoto2.jpeg');
-    } else if (dataFromStorageRedux.backgroundphoto === '3') {
+    } else if (dataFromStorageRedux?.backgroundphoto === '3') {
       return require('../../Images/backgroundPhoto3.jpeg');
-    } else if (dataFromStorageRedux.backgroundphoto === '4') {
+    } else if (dataFromStorageRedux?.backgroundphoto === '4') {
       return require('../../Images/backgroundPhoto4.jpeg');
     } else {
       return require('../../Images/backgroundPhoto1.jpeg');
@@ -192,7 +181,7 @@ const EditUserInfoScreen: FC = () => {
 
   const source = () => {
     if (photoPressed.first) {
-      return require('../../Images/backgroundPhoto1.jpeg');
+      require('../../Images/backgroundPhoto1.jpeg');
     } else if (photoPressed.second) {
       return require('../../Images/backgroundPhoto2.jpeg');
     } else if (photoPressed.third) {
