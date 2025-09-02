@@ -2,11 +2,12 @@ import {initializeApp} from 'firebase/app';
 import {getDatabase} from 'firebase/database';
 import {getApps, getApp} from 'firebase/app';
 import {getStorage} from 'firebase/storage';
+import {FIREBASE_API_KEY} from '@env';
 
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyBxFFNg8EziZFEzXMKCzAcKtb0ieiVqSQo',
+  apiKey: FIREBASE_API_KEY,
   authDomain: 'first-app-b5011.firebaseapp.com',
   databaseURL: 'https://first-app-b5011-default-rtdb.firebaseio.com',
   projectId: 'first-app-b5011',
